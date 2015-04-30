@@ -32,23 +32,30 @@ install_repository() {
 }
 
 # zsh
-if ! install_package golang; then
-    echo "Failed to install 'golang'. Please install it manually and retry." > &2
-    exit 1
+if [[ "$(uname)" == "Darwin" ]]; then
+    if ! install_package go; then
+        echo "Failed to install 'go'. Please install it manually and retry." >&2
+        exit 1
+    fi
+else
+    if ! install_package golang; then
+        echo "Failed to install 'golang'. Please install it manually and retry." >&2
+        exit 1
+    fi
 fi
-GOHOME="$HOME/.go"
+GOPATH="$HOME/.go"
 if ! go get github.com/motemen/ghq; then
-    echo "Failed to install 'ghq'. Please install it manually (go get github.com/motemen/ghq) and retry." > &2
+    echo "Failed to install 'ghq'. Please install it manually (go get github.com/motemen/ghq) and retry." >&2
     exit 1
 fi
 
 # tmux
 bundle="${XDG_CONFIG_HOME}/tmux/bundle"
 if ! install_repository "https://github.com/seebi/tmux-colors-solarized" "${bundle}/tmux-colors-solarized"; then
-    echo "Faield to install 'tmux-colors-solarized'. Please install it manually." > &2
+    echo "Faield to install 'tmux-colors-solarized'. Please install it manually." >&2
 fi
 if ! install_repository "https://github.com/erikw/tmux-powerline" "${bundle}/tmux-powerline"; then
-    echo "Faield to install 'tmux-powerline'. Please install it manually." > &2
+    echo "Faield to install 'tmux-powerline'. Please install it manually." >&2
 fi
 if [[ "$(uname)" == "Darwin" ]]; then
     brew install tmux-mem-cpu-load
@@ -61,9 +68,8 @@ else
         exit 1
     fi
     if ! install_repository "https://github.com/thewtex/tmux-mem-cpu-load" "${bundle}/tmux-mem-cpu-load"; then
-        echo "Faield to install 'tmux-mem-cpu-load'. Please install it manually." > &2
+        echo "Faield to install 'tmux-mem-cpu-load'. Please install it manually." >&2
     fi
-    bundle thewtex tmux-mem-cpu-load
     cd ${bundle}/tmux-mem-cpu-load
     cmake CMakeLists.txt
     make
