@@ -5,7 +5,10 @@ if [[ ! -d "$HOME/.homesick/repos/homeshick" ]]; then
     printf '\nsource "$HOME/.homesick/repos/homeshick/homeshick.sh"' >> $HOME/.bashrc
 fi
 source $HOME/.homesick/repos/homeshick/homeshick.sh
-homeshick clone git@github.com:lambdalisue/rook -f
+
+if [[ ! -d "$HOME/.homesick/repos/rook" ]]; then
+    homeshick clone git@github.com:lambdalisue/rook -f
+fi
 homeshick cd rook
 ./tools/install_requirements.sh
 
