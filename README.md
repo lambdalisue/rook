@@ -9,3 +9,5 @@ As long as you don't disturb me, you can refer or use this on your own responsib
 # clone homeshick, rook and install them
 curl -L http://goo.gl/IrTY7b | bash
 ```
+
+![Screenshot](./miscs/screenshot_rook.png)
