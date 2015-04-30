@@ -1,0 +1,525 @@
+"
+" Vim configuration
+" Author:   Alisue <lambdalisue@hashnote.net>
+" URI:      http://hashnote.net/
+" Platform: Linux, Mac OS X
+" 
+
+" skip if the live Vim is vim-tiny or vim-small
+if !1 | finish | endif
+
+" platform recognition
+let s:is_windows = has('win16') || has('win32') || has('win64')
+let s:is_darwin = has('mac') || has('macunix') || has('gui_macvim')
+let s:is_linux = !s:is_windows && !s:is_darwin
+if s:is_windows
+  let s:delimiter = ';'
+else
+  let s:delimiter = ':'
+endif
+
+" reset settings for reloading vimrc
+augroup MyAutoCmd
+  autocmd!
+augroup END
+set runtimepath&
+
+" script functions {{{
+function! s:add_path(path)
+  let delimiter = s:delimiter
+  let pathlist = split($PATH, delimiter)
+  if isdirectory(a:path) && index(pathlist, a:path) == -1
+    let $PATH = a:path . delimiter . $PATH
+  endif
+endfunction
+
+function! s:add_pythonpath(path)
+  let delimiter = s:delimiter
+  let pathlist = split($PYTHONPATH, delimiter)
+  if isdirectory(a:path) && index(pathlist, a:path) == -1
+    let $PYTHONPATH = a:path . delimiter . $PYTHONPATH
+  endif
+endfunction
+
+function! s:load_source(path)
+  let path = fnamemodify(expand(a:path), ':p')
+  if filereadable(path)
+    execute "source" path
+    return 1
+  endif
+  return 0
+endfunction
+" }}}
+
+" environmental variables {{{
+set shell=/bin/bash
+
+call s:add_path("/usr/local/texlive/2013/bin/x86_64-linux")
+call s:add_path("/usr/local/texlive/2013/bin/x86_64-darwin")
+call s:add_path(expand("~/.anyenv/envs/pyenv/shims"))
+call s:add_path(expand("~/.anyenv/envs/plenv/shims"))
+call s:add_path(expand("~/.anyenv/envs/rbenv/shims"))
+call s:add_path(expand("~/.anyenv/envs/ndenv/shims"))
+call s:add_path(expand("~/.cabal/bin"))
+call s:add_path(expand("~/.vim/bundle/vim-themis/bin"))
+
+let $PYENV_ROOT = expand("~/.anyenv/envs/pyenv")
+call s:add_pythonpath(expand("~/Copy/Apps/Python/modules"))
+
+let $MY_VIMRUNTIME = expand('~/.vim')
+let $MYVIMRC = resolve($MY_VIMRUNTIME."/vimrc")
+let $MYGVIMRC = resolve($MY_VIMRUNTIME."/gvimrc")
+" }}}
+
+" fundemental config {{{
+
+" history ':' commands and search patterns as much as possible (max: 10000)
+set history=10000
+
+" define <Leader> and <LocalLeader>
+let g:mapleader = ';'
+let g:maplocalleader = ','
+" remove any existing keymap for leader and localleader
+nnoremap ; <Nop>
+xnoremap ; <Nop>
+nnoremap , <Nop>
+xnoremap , <Nop>
+
+if !has('gui_running')
+  set ttyfast         " enable fast terminal connection
+  set ttyscroll=3     " the maximum number of lines for scrolling.
+                      " use small value here to prefer redraw the screen
+                      " instead of scrolling
+  set t_Co=256        " use 256 colors
+
+  " to enable cursor keys in terminal
+  set notimeout ttimeout ttimeoutlen=100
+else
+  set timeout timeoutlen=1000 ttimeoutlen=100
+endif
+
+" }}}
+
+" ancient features {{{
+set noswapfile
+set nobackup
+set nowritebackup
+set noerrorbells
+set novisualbell
+set t_vb=
+" }}}
+
+" language and encoding {{{
+
+" prefer English interface
+language message C
+
+" prefer English help
+set helplang=en,ja
+
+" set default language for spell check
+" cjk - ignore spell check on Asian characters (China, Japan, Korea)
+set nospell
+set spelllang=en_us,cjk
+let &spellfile=expand("~/Copy/Apps/Vim/system/spellfile.utf-8.add")
+
+" prefer UTF-8
+if has('multi_byte')
+  set encoding=utf-8
+  set fileencoding=utf-8
+  set fileencodings=utf-8,cp932,sjis,iso-2022-jp,euc-jp
+  set fileformats=unix,dos,mac
+  scriptencoding utf-8
+endif
+
+" }}}
+
+" search {{{
+set smartcase       " override the ignorecase if the search pattern contains
+                    " upper case characters
+set incsearch       " use incremental search
+set nowrapscan      " do not wrap scan
+set hlsearch        " highlight found terms
+
+" K to search the help with the cursor word
+set keywordprg=:help
+
+" automatically escape / or ?
+cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
+cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
+
+" remove highlight with pressing ESC twice
+nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
+" }}}
+
+" edit {{{
+
+set smarttab      " insert blanks according to shiftwidth
+set expandtab     " use spaces instead of TAB
+set tabstop=8     " the number of spaces that a TAB counts for
+set softtabstop=4 " the number of spaces that a TAB counts for
+set shiftwidth=4  " the number of spaces of an indent
+set shiftround    " round indent to multiple of shiftwidth with > and <
+
+set autoindent    " copy indent from current line when starting a new line
+set copyindent    " copy the structure of the existing lines indent when
+                  " autoindenting a new line
+if v:version >= 704 && has('patch338')
+  set breakindent " every wrapped line will continue visually indented
+endif
+
+set hidden              " hide the buffer instead of close
+set switchbuf=useopen   " use an existing buffer instaed of creating a new one
+
+" store cursor, folds, slash, unix on view
+set viewoptions=cursor,slash,unix
+" change default view directory
+let &viewdir=$MY_VIMRUNTIME.'/.view'
+" save and restore the cursor position and folding level
+function! s:is_view_available()
+  if !&buflisted || &buftype !=# ''
+    return 0
+  elseif !filewritable(glob(expand('%:p')))
+    return 0
+  endif
+  return 1
+endfunction
+autocmd MyAutoCmd BufWritePost,BufLeave,WinLeave ?* if s:is_view_available() | mkview | endif
+autocmd MyAutoCmd BufWinEnter ?* if s:is_view_available() | silent loadview | endif
+
+" use clipboard register
+if has('unnamedplus')
+  set clipboard=unnamedplus,unnamed
+else
+  set clipboard=unnamed
+endif
+
+" keep undo history on undofile
+if has('persistent_undo')
+  let &undodir=$MY_VIMRUNTIME.'/.undo'
+  if !isdirectory(&undodir)
+    call mkdir(&undodir, 'p', 0700)
+  endif
+endif
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+" }}}
+
+" cursor {{{
+set showmatch             " highlight a partner of cursor character
+set matchtime=1           " highlight a partner ASAP
+set matchpairs& mps+=<:>  " add < and > pair
+set updatetime=1000       " increase speed of CursorHold autocommand
+
+set virtualedit=all       " allow virtual editing in all modes
+set nostartofline         " let C-D, C-U,... to keep same column
+
+" move cursor previous/next line when the cursor is first/last character in the
+" line and user move the cursor left/right
+set whichwrap=b,s,<,>,~,[,]
+
+" do not display cursorline/column (it makes Vim really slow)
+" this configure will be overwritten by autocmd
+set nocursorline
+set nocursorcolumn
+" }}}
+
+" folding {{{
+set foldenable
+set foldmethod=marker
+set foldlevel=99
+set foldnestmax=3         " maximum fold nesting level
+set foldcolumn=3          " show fold guide
+" }}}
+
+" interface {{{
+set number                " show line numbers
+set list                  " show invisible characters
+set laststatus=2          " always shows statusline
+set scrolloff=4           " minimum number of screen lines to keep in scroll
+set sidescrolloff=4       " minimum number of screen columns to keep in scroll
+set cmdheight=2           " the number of screen lines to use for command line
+set showcmd               " show command on statusline
+set lazyredraw            " do not redraw while command execution
+set nosplitbelow          " split to top
+set splitright            " vsplit to right
+set report=0              " report any changes
+set display=lastline      " display last line in a window AMAP
+set showtabline=2         " display tabline always
+
+set wrap                  " wrap long text
+set textwidth=0           " do not automatically break
+set breakat=\ \ ;:,!?     " characters which might cause a line break
+
+" do not display greeting message
+set shortmess=aTI
+
+" use rich completion system in command line
+set wildmenu
+set wildmode=list:longest,full
+set wildoptions=tagfile
+
+" completion settings
+set completeopt=menu,longest
+set complete=.            " don't complete from other buffer
+set pumheight=20          " height of popup menu
+set showfulltag           " show both the tag name and the search pattern
+
+if v:version >= 703
+  set conceallevel=2
+  set concealcursor=c
+  set colorcolumn=80
+endif
+
+if has('multi_byte')
+  set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:$
+else
+  set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%,eol:$
+endif
+" }}}
+
+" key mapping {{{
+
+" disable middle-click paste
+map <MiddleMouse>   <Nop>
+map <2-MiddleMouse> <Nop>
+map <3-MiddleMouse> <Nop>
+map <4-MiddleMouse> <Nop>
+imap <MiddleMouse>   <Nop>
+imap <2-MiddleMouse> <Nop>
+imap <3-MiddleMouse> <Nop>
+imap <4-MiddleMouse> <Nop>
+
+" remap j and k to act as expected when used on long, wrapped, lines
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
+
+" Y to yank the end of line
+nnoremap Y y$
+
+" <C-p> to paste from 0 register
+nnoremap <C-p> "0p
+
+" vv to select the line, like yy, dd
+nnoremap vv 0v$
+
+" simple window navigation
+nnoremap <C-w><C-j>  <C-w>j
+nnoremap <C-w><C-k>  <C-w>k
+nnoremap <C-w><C-h>  <C-w>h
+nnoremap <C-w><C-l>  <C-w>l
+
+" simple window resize navigation
+nnoremap <S-Left>  <C-w><<CR>
+nnoremap <S-Right> <C-w>><CR>
+nnoremap <S-Up>    <C-w>-<CR>
+nnoremap <S-Down>  <C-w>+<CR>
+
+" file navigation
+nnoremap {f  :<C-u>previous<CR>
+nnoremap }f  :<C-u>next<CR>
+nnoremap g{f :<C-u>first<CR>
+nnoremap g}f :<C-u>last<CR>
+" tab navigation
+nnoremap {t  :<C-u>tabprevious<CR>
+nnoremap }t  :<C-u>tabnext<CR>
+nnoremap g{t :<C-u>tabfirst<CR>
+nnoremap g}t :<C-u>tablast<CR>
+
+" tag navigation
+nnoremap [t  :<C-u>tprevious<CR>
+nnoremap ]t  :<C-u>tnext<CR>
+nnoremap g[t :<C-u>tfirst<CR>
+nnoremap g]t :<C-u>tlast<CR>
+" quickfix navigation
+nnoremap [q  :<C-u>cprevious<CR>
+nnoremap ]q  :<C-u>cnext<CR>
+nnoremap g[q :<C-u>cfirst<CR>
+nnoremap g]q :<C-u>clast<CR>
+nnoremap [l  :<C-u>lprevious<CR>
+nnoremap ]l  :<C-u>lnext<CR>
+nnoremap g[l :<C-u>lfirst<CR>
+nnoremap g]l :<C-u>llast<CR>
+
+" tab operation
+nnoremap [tab] <Nop>
+nmap <C-t> [tab]
+nnoremap <silent> [tab]c :<C-u>tablast <bar> tabnew<CR>
+nnoremap <silent> [tab]q :<C-u>tabclose<CR>
+nnoremap <silent> [tab]n :<C-u>tabnext<CR>
+nnoremap <silent> [tab]p :<C-u>tabprevious<CR>
+for s:n in range(1, 9)
+  execute 'nnoremap <silent> [tab]' . s:n  ':<C-u>tabnext' . s:n . '<CR>'
+endfor
+unlet s:n
+
+" switch options
+nnoremap [switch] <Nop>
+nmap <Leader>s [switch]
+nnoremap <silent> [switch]s :<C-u>setl spell! spell?<CR>
+nnoremap <silent> [switch]l :<C-u>setl list! list?<CR>
+nnoremap <silent> [switch]t :<C-u>setl expandtab! expandtab?<CR>
+nnoremap <silent> [switch]w :<C-u>setl wrap! wrap?<CR>
+nnoremap <silent> [switch]p :<C-u>setl paste! paste?<CR>
+nnoremap <silent> [switch]b :<C-u>setl scrollbind! scrollbind?<CR>
+nnoremap <silent> [switch]y :call <SID>toggle_syntax()<CR>
+function! s:toggle_syntax()
+  if exists('g:syntax_on')
+    syntax off
+    redraw
+    echo "syntax off"
+  else
+    syntax on
+    redraw
+    echo "syntax on"
+  endif
+endfunction
+" }}}
+
+" macros {{{
+
+" save the file as root with 'sudo'
+cabbr w!! w !sudo tee > /dev/null %
+
+" reload vimrc with <Leader><Leader>r {{{
+if has('vim_starting')
+  function s:reload_vimrc()
+    execute 'source' $MYVIMRC
+    if has('gui_running')
+      execute 'source' $MYGVIMRC
+    endif
+    if &filetype ==# 'vim'
+      doautocmd FileType
+    endif
+    redraw | echo 'vimrc has reloaded.'
+  endfunction
+endif
+nnoremap <silent> <Leader><Leader>r :<C-u>call <SID>reload_vimrc()<CR>
+" }}}
+
+" source/reload current vimscript file " {{{
+function! s:source_current_vimscript()
+  if &filetype !=# 'vim'
+    return
+  endif
+  if s:load_source(expand('%:p'))
+    redraw | echo expand('%:t') 'has sourced.'
+  endif
+endfunction
+" }}}
+
+" automatically create missing directories {{{
+autocmd MyAutoCmd BufWritePre * call s:makedirs(expand('<afile>:p:h'), v:cmdbang)
+function! s:makedirs(dir, force)
+  if !isdirectory(a:dir)
+    if a:force || input(printf('"%s" does not exist. Create? [y/N]', a:dir)) =~? '^y\%[es]$'
+      if v:version < 703 || (v:version == 703 && !has('patch177'))
+        " ref: http://ftp.vim.org/vim/patches/7.3/7.3.177
+        call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
+      else
+        call mkdir(a:dir, 'p')
+      endif
+    endif
+  endif
+endfunction
+" }}}
+
+" automatically change working directory on vim enter {{{
+autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
+function! s:workon(dir, bang)
+  let dir = (a:dir == '' ? expand('%') : a:dir)
+  " convert filename to directory if required
+  if filereadable(dir)
+    let dir = fnamemodify(expand(dir),":p:h")
+  else
+    let dir = fnamemodify(dir, ":p")
+  endif
+  " change directory to specified directory
+  if isdirectory(dir)
+    execute 'cd ' . fnameescape(dir)
+    if a:bang == ''
+        redraw | echo "Working on: ".dir
+    endif
+  endif
+endfunction
+command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
+" }}}
+
+" toggle quickfix window {{{
+function! s:toggle_qf()
+  let nwin = winnr('$')
+  cclose
+  if nwin == winnr('$')
+    cwindow
+  endif
+endfunction
+nnoremap <silent> <Leader>q :call <SID>toggle_qf()<CR>
+" }}}
+
+" highlight zenkaku spaces {{{
+autocmd MyAutoCmd ColorScheme * call s:highlight_zenkaku_spaces()
+autocmd MyAutoCmd VimEnter,WinEnter * match MyZenkakuSpace /　/
+function! s:highlight_zenkaku_spaces()
+  highlight MyZenkakuSpace
+        \ cterm=reverse ctermfg=DarkMagenta
+        \ gui=reverse guifg=DarkMagenta
+endfunction
+call s:highlight_zenkaku_spaces()
+" }}}
+"
+" }}}
+
+" plugins {{{
+let s:remote_bundle_root = $MY_VIMRUNTIME . "/bundle"
+let s:local_bundle_root = $MY_VIMRUNTIME . "/local_bundle"
+let s:neobundle_root = s:remote_bundle_root . "/neobundle.vim"
+
+if !filereadable(s:neobundle_root . '/plugin/neobundle.vim')
+  function! s:install_neobundle()
+    let url = "https://github.com/Shougo/neobundle.vim"
+    redraw | echo 'Installing neobundle.vim ...'
+    call system("git clone " . url . " " . s:neobundle_root)
+    execute 'set runtimepath+=' . s:neobundle_root
+    call neobundle#begin(s:remote_bundle_root)
+    call neobundle#local(s:local_bundle_root)
+
+    call s:load_source($MY_VIMRUNTIME . '/rc/neobundle.define.vim')
+    call s:load_source($MY_VIMRUNTIME . '/rc/neobundle.config.vim')
+
+    call neobundle#end()
+    redraw
+    echo "Done. Now run :NeoBundleInstall! to install missing plugins."
+  endfunction
+  command! InstallNeoBundle call s:install_neobundle()
+  redraw | echo 'Need plugins? Use :InstallNeoBundle'
+else
+  if has('vim_starting')
+    execute 'set runtimepath+=' . s:neobundle_root
+  endif
+  call neobundle#begin(s:remote_bundle_root)
+  call neobundle#local(s:local_bundle_root)
+
+  call s:load_source($MY_VIMRUNTIME . '/rc/neobundle.define.vim')
+  call s:load_source($MY_VIMRUNTIME . '/rc/neobundle.config.vim')
+
+  call neobundle#end()
+
+  NeoBundleCheck
+endif
+" }}}
+
+" misc {{{
+filetype plugin indent on
+syntax on
+
+let g:hybrid_use_Xresources = 1
+colorscheme hybrid
+
+call s:load_source(expand('~/.vimrc.local'))
+" }}}
+
+" vim:set et ts=2 sts=2 sw=2 tw=0 fdm=marker:

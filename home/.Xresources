@@ -1,0 +1,48 @@
+! hybrid terminal colours. uses the palette from tomorrow-night:
+! https://github.com/chriskempson/tomorrow-theme/blob/master/vim/colors/tomorrow-night.vim
+! https://gist.github.com/w0ng/3278077
+ 
+#define t_background        #1d1f21
+#define t_foreground        #c5c8c6
+
+#define t_normal_black      #282a2e
+#define t_normal_red        #a54242
+#define t_normal_green      #8c9440
+#define t_normal_yellow     #de935f
+#define t_normal_blue       #5f819d
+#define t_normal_magenta    #85678f
+#define t_normal_cyan       #5e8d87
+#define t_normal_white      #707880
+
+#define t_bright_black      #373b41
+#define t_bright_red        #cc6666
+#define t_bright_green      #b5bd68
+#define t_bright_yellow     #f0c674
+#define t_bright_blue       #81a2be
+#define t_bright_magenta    #b294bb
+#define t_bright_cyan       #8abeb7
+#define t_bright_white      #c5c8c6
+
+xterm*background:   t_background
+xterm*foreground:   t_foreground
+
+! black
+xterm*color0:       t_normal_black
+xterm*color1:       t_normal_red
+xterm*color2:       t_normal_green
+xterm*color3:       t_normal_yellow
+xterm*color4:       t_normal_blue
+xterm*color5:       t_normal_magenta
+xterm*color6:       t_normal_cyan
+xterm*color7:       t_normal_white
+
+xterm*color8:       t_bright_black
+xterm*color9:       t_bright_red
+xterm*color10:      t_bright_green
+xterm*color11:      t_bright_yellow
+xterm*color12:      t_bright_blue
+xterm*color13:      t_bright_magenta
+xterm*color14:      t_bright_cyan
+xterm*color15:      t_bright_white
+
+! vim: ft=xdefaults

@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#==============================================================================
+# A post text processor
+#==============================================================================
+# get text from stdin
+read -rd '' TEXT
+
+# translate SI prefixes
+# 100 uM => 100 &mu;M
+TEXT=$(echo -nE "$TEXT" | perl -pe "s!((?:\d+\s)|/)u([mNMgL]\b)!\1\&mu;\2!g")
+TEXT=$(echo -nE "$TEXT" | perl -pe "s!((?:\d+\s)|/)u(mol\b)!\1\&mu;\2!g")
+
+# translate times
+# 100 x 200 => 100 &times; 200
+# 100x200 => 100&times;200
+# 100 x g => 100 &times; g
+TEXT=$(echo -nE "$TEXT" | perl -pe "s!(\d+\s?)x(\s?\d+)!\1\&times;\2!g")
+TEXT=$(echo -nE "$TEXT" | perl -pe "s!(\d+\s)x(\sg)!\1\&times;\2!g")
+
+# translate tempelature and angstrom
+# 100 C => 100 &deg;C
+# 100 A => 100 &#8491;
+TEXT=$(echo -nE "$TEXT" | perl -pe 's/(\d+\s)C\b/\1\&amp;celsius;/g')
+TEXT=$(echo -nE "$TEXT" | perl -pe 's/\&amp;celsius;/\&deg;C/g')
+TEXT=$(echo -nE "$TEXT" | perl -pe 's/(\d+\s)A\b/\1\&amp;angstrom;/g')
+TEXT=$(echo -nE "$TEXT" | perl -pe 's/\&amp;angstrom;/\&#8491;/g')
+
+# output the result
+echo -nE "$TEXT"

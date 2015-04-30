@@ -1,0 +1,30 @@
+[include]
+    path = ~/.gitconfig.local
+
+[user]
+    email = lambdalisue@hashnote.net
+    name  = lambdalisue
+
+[core]
+    excludesfile = ~/.gitignore
+    editor = vim
+    pager  = less
+    quotepath = false
+
+[color]
+    ui = auto
+
+[github]
+    user = lambdalisue
+
+[push]
+    default = current
+
+[alias]
+    graph = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
+    remove-remote = !sh -c 'git push origin :$0'
+    remove = !sh -c 'git branch -d $0 && git push origin :$0'
+
+[ghq]
+    root = ~/.ghq
+    root = ~/.go/src
