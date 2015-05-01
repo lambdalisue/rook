@@ -52,7 +52,7 @@ zle -N peco-src
 function peco-homeshick () {
     local selected_dir=$(
         homeshick list |
-        sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" |
+        perl -pe 's/\e\[?.*?[\@-~]//g' |
         awk ' { print $1 }' |
         peco --query "$LBUFFER"
     )
