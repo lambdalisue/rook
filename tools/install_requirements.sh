@@ -43,7 +43,7 @@ else
         exit 1
     fi
 fi
-GOHOME="$HOME/.go"
+GOPATH="$HOME/.go"
 if ! go get github.com/motemen/ghq; then
     echo "Failed to install 'ghq'. Please install it manually (go get github.com/motemen/ghq) and retry." >&2
     exit 1
