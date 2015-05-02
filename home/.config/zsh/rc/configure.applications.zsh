@@ -59,11 +59,10 @@ fi
 
 # vim
 export EDITOR=vim
-if ! type vim > /dev/null 2>&1; then
+if [[ -d "/Applications/MacVim.app" ]]; then
+    alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
+elif ! type vim > /dev/null 2>&1; then
     alias vim=vi
-fi
-if type mvim > /dev/null 2>&1; then
-    alias gvim=mvim
 fi
 
 # hub
