@@ -2109,7 +2109,7 @@ if neobundle#tap('shareboard.vim') " {{{
         \ }})
 
   function! neobundle#tapped.hooks.on_source(bundle)
-    let txt2html = expand('~/.config/zsh/plugins/txt2html/txt2html')
+    let txt2html = expand('~/.config/zsh/tools/txt2html/txt2html')
     if filereadable(txt2html)
       let g:shareboard_command = txt2html
     endif
