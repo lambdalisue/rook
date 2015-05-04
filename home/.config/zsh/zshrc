@@ -1,6 +1,9 @@
 # disable promptcr to display last line without newline
 unsetopt promptcr
 
+# Disable Ctrl-D logout
+setopt IGNOREEOF
+
 # print character as eight bit to prevent mojibake
 setopt print_eight_bit
 

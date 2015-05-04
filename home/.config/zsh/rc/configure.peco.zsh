@@ -100,6 +100,42 @@ function peco-select-gitreset() {
 }
 zle -N peco-select-gitreset
 
+function peco-select-gitdelete() {
+    local selected_files="$(
+        git status --porcelain |
+        egrep -E '^([ MARC][MD]|DM|\?\?)' |
+        peco --query "$LBUFFER"
+        awk '$0 = substr($0, 4)'
+    )"
+    local relative_prefix="$(git rev-parse --show-cdup)"
+    # checkout from HEAD
+    local unstaged_files="$(
+        echo $selected_files |
+        egrep -E '^([ MARC][MD]|DM)' |
+        awk '$0 = substr($0, 4)'
+    )"
+    if [ -n "$unstaged_files" ]; then
+        unstaged_files="$(echo $unstaged_files | sed "s/^/$relative_prefix/g")"
+        BUFFER="git checkout HEAD -- $(echo $unstaged_files | tr '\n' ' ')"
+        CURSOR=$#BUFFER
+        zle accept-line
+    fi
+    # delete files
+    local untracked_files="$(
+        echo $selected_files |
+        egrep -E '^\?\?' |
+        awk '$0 = substr($0, 4)'
+    )"
+    if [ -n "$untracked_files" ]; then
+        untracked_files="$(echo $untracked_files | sed "s/^/$relative_prefix/g")"
+        BUFFER="rm -r --interactive $(echo $untracked_files | tr '\n' ' ')"
+        CURSOR=$#BUFFER
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N peco-select-gitdelete
+
 function peco-select-gitcheckout () {
     local selected_branch=$(
         git for-each-ref --format='%(refname)' --sort=-committerdate refs/heads |
@@ -140,5 +176,6 @@ bindkey '^X^H'      peco-homeshick
 
 bindkey "^G^A"      peco-select-gitadd
 bindkey "^G^R"      peco-select-gitreset
+bindkey "^G^D"      peco-select-gitdelete
 bindkey '^G^C'      peco-select-gitcheckout
 bindkey '^G^C^A'    peco-select-gitcheckout-all
