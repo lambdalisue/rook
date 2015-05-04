@@ -595,6 +595,9 @@ if neobundle#tap('lightline.vim') " {{{
 
       return 0
     endfunction " }}}
+    function! g:lightline.my.mode() " {{{
+      return lightline#mode()
+    endfunction " }}}
     function! g:lightline.my.modified() " {{{
       return self.is_featured() ? '' :
             \ &modified ? self.symbols.modified :
@@ -632,11 +635,8 @@ if neobundle#tap('lightline.vim') " {{{
     function! g:lightline.my.filetype() " {{{
       return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
     endfunction " }}}
-    function! g:lightline.my.encoding() "{{{
+    function! g:lightline.my.fileencoding() "{{{
       return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
-    endfunction " }}}
-    function! g:lightline.my.mode() " {{{
-      return lightline#mode()
     endfunction " }}}
     function! g:lightline.my.git_enable()
       return &filetype !~# '\v%(unite|gundo|vimshell)'
