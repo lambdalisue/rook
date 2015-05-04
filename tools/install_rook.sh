@@ -11,3 +11,7 @@ if [[ ! -d "$HOME/.homesick/repos/rook" ]]; then
 fi
 homeshick cd rook
 bash ./tools/install_requirements.sh
+
+if [[ "$(uname)" = "Linux" ]]; then
+    bash ./tools/configure_terminal.sh
+fi

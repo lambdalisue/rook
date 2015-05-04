@@ -87,9 +87,11 @@ xnoremap , <Nop>
 
 if !has('gui_running')
   set ttyfast         " enable fast terminal connection
-  set ttyscroll=3     " the maximum number of lines for scrolling.
-                      " use small value here to prefer redraw the screen
-                      " instead of scrolling
+  if has('*ttyscroll')
+    set ttyscroll=3     " the maximum number of lines for scrolling.
+                        " use small value here to prefer redraw the screen
+                        " instead of scrolling
+  endif
   set t_Co=256        " use 256 colors
 
   " to enable cursor keys in terminal

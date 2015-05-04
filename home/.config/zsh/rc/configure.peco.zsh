@@ -66,14 +66,16 @@ function peco-homeshick () {
 zle -N peco-homeshick
 
 function peco-select-gitadd() {
-    local selected_file=$(
+    local selected_files="$(
         git status --porcelain |
-        egrep -E '^([ MARC][MD]|DM|DD|AU|UD|UA|DU|AA|UU)' |
+        egrep -E '^([ MARC][MD]|DM|DD|AU|UD|UA|DU|AA|UU|\?\?)' |
         peco --query "$LBUFFER" |
         awk '$0 = substr($0, 4)'
-    )
-    if [ -n "$selected_file" ]; then
-        BUFFER="git add $(git rev-parse --show-cdup)$selected_file"
+    )"
+    local relative_prefix="$(git rev-parse --show-cdup)"
+    if [ -n "$selected_files" ]; then
+        selected_files="$(echo $selected_files | sed "s/^/$relative_prefix/g")"
+        BUFFER="git add $(echo $selected_files | tr '\n' ' ')"
         CURSOR=$#BUFFER
         zle accept-line
     fi
@@ -82,20 +84,21 @@ function peco-select-gitadd() {
 zle -N peco-select-gitadd
 
 function peco-select-gitreset() {
-    local selected_file=$(
+    local selected_files="$(
         git status --porcelain |
         egrep -E '^([MARC][ MD]|D[ M])' |
         peco --query "$LBUFFER" |
         awk '$0 = substr($0, 4)'
-    )
-    if [ -n "$selected_file" ]; then
-        BUFFER="git reset $(git rev-parse --show-cdup)$selected_file"
+    )"
+    if [ -n "$selected_files" ]; then
+        selected_files="$(echo $selected_files | sed "s/^/$relative_prefix/g")"
+        BUFFER="git reset $(echo $selected_files | tr '\n' ' ')"
         CURSOR=$#BUFFER
         zle accept-line
     fi
     zle clear-screen
 }
-zle -N peco-select-gitadd
+zle -N peco-select-gitreset
 
 function peco-select-gitcheckout () {
     local selected_branch=$(
@@ -136,5 +139,6 @@ bindkey '^X^S'      peco-src
 bindkey '^X^H'      peco-homeshick
 
 bindkey "^G^A"      peco-select-gitadd
+bindkey "^G^R"      peco-select-gitreset
 bindkey '^G^C'      peco-select-gitcheckout
 bindkey '^G^C^A'    peco-select-gitcheckout-all
