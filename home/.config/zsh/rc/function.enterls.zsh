@@ -11,3 +11,9 @@ __enterls() {
 }
 zle -N __enterls
 bindkey '^m' __enterls
+
+# automatically call
+function chpwd() {
+    emulate -L zsh
+    ls -C
+}

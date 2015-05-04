@@ -42,8 +42,8 @@ __prompt_dust_configure_vcsstyles() {
     zstyle ':vcs_info:*:dust:*' actionformats "%s $branchfmt" '%m' '<!%a>'
 
     if is-at-least 4.3.10; then
-        zstyle ':vcs_info:git:dust:*' formats $branchfmt '%m'
-        zstyle ':vcs_info:git:dust:*' actionformats $branchfmt '%m' '<!%a>'
+        zstyle ':vcs_info:git:dust:*' formats "$branchfmt" '%m'
+        zstyle ':vcs_info:git:dust:*' actionformats "$branchfmt" '%m' '<!%a>'
     fi
 
     if is-at-least 4.3.11; then
@@ -91,7 +91,7 @@ __prompt_dust_configure_vcsstyles() {
                 | tr -d ' ')
 
             if [[ "$ahead" -gt 0 ]]; then
-                if [[ ! "${hook_com[misc]}" =~ '^\s*$' ]]; then
+                if [[ ! "${hook_com[misc]}" =~ '^[ ]*$' ]]; then
                     hook_com[misc]+=" "
                 fi
                 hook_com[misc]+="%{%B%F{magenta}%}>${ahead}%{%b%f%}"
@@ -110,7 +110,7 @@ __prompt_dust_configure_vcsstyles() {
                 | tr -d ' ')
 
             if [[ "$behind" -gt 0 ]]; then
-                if [[ ! "${hook_com[misc]}" =~ '^\s*$' ]]; then
+                if [[ ! "${hook_com[misc]}" =~ '^[ ]*$' ]]; then
                     hook_com[misc]+=" "
                 fi
                 hook_com[misc]+="%{%B%F{cyan}%}${behind}<%{%b%f%}"
