@@ -29,7 +29,7 @@ __prompt_dust_eliminate_empty_elements() {
     done
 }
 __prompt_dust_configure_vcsstyles() {
-    local branchfmt="(%b:%r)"
+    local branchfmt="%b:%r"
     local actionfmt="%a%f"
 
     # $vcs_info_msg_0_ : Normal
@@ -67,14 +67,15 @@ __prompt_dust_configure_vcsstyles() {
             fi
             local gitstatus="$(command git status --ignore-submodules=all --porcelain 2> /dev/null)"
             if [[ $? == 0 ]]; then
-                local staged="$(command echo $gitstatus | command grep -E '^[MARUD].' | wc -l | tr -d ' ')"
-                local unstaged="$(command echo $gitstatus | command grep -E '^.[MD]' | wc -l | tr -d ' ')"
-                local untracked="$(command echo $gitstatus | command grep -E '^!!' | wc -l | tr -d ' ')"
+                local staged="$(command echo $gitstatus | command grep -E '^([MARC][ MD]|D[ M])' | wc -l | tr -d ' ')"
+                local unstaged="$(command echo $gitstatus | command grep -E '^([ MARC][MD]|DM)' | wc -l | tr -d ' ')"
+                local untracked="$(command echo $gitstatus | command grep -E '^\?\?' | wc -l | tr -d ' ')"
+                local indicator="$(__prompt_dust_get_config 'character' 'indicator')"
                 local -a messages
-                [[ $staged > 0 ]] && messages+=( "%{%F{blue}%}+%{%f%}" )
-                [[ $unstaged > 0 ]] && messages+=( "%{%F{red}%}-%{%f%}" )
-                [[ $untracked > 0 ]] && messages+=( "%{%F{green}%}?%{%f%}" )
-                hook_com[misc]+="%{%B%}${(j:|:)messages}%{%b%}"
+                [[ $staged > 0    ]] && messages+=( "%{%F{blue}%}$indicator%{%f%}" )
+                [[ $unstaged > 0  ]] && messages+=( "%{%F{red}$indicator%{%f%}" )
+                [[ $untracked > 0 ]] && messages+=( "%{%F{yellow}%}$indicator%{%f%}" )
+                hook_com[misc]+="%{%B%}${(j::)messages}%{%b%}"
             fi
         }
         function +vi-git-push-status() {
@@ -167,7 +168,7 @@ __prompt_dust_get_userinfo() {
 __prompt_dust_get_pwd() {
     local fcolor='blue'
     local kcolor=''
-    local lock="⭤"
+    local lock=$(__prompt_dust_get_config 'character' 'lock')
     # current path state
     local pwd_state
     if [[ ! -O $PWD ]]; then
@@ -182,7 +183,7 @@ __prompt_dust_get_pwd() {
     if [[ ! -w $PWD && ! -r $PWD ]]; then
         pwd_state="%{%F{red}%}$lock "
     fi
-    local pwd_path="%39<...<%~"
+    local pwd_path="%69<...<%~"
     __prompt_dust_get_segment "%{%B%}$pwd_state$pwd_path%{%f%b%}" $fcolor $kcolor
 }
 __prompt_dust_get_symbol() {
@@ -190,10 +191,11 @@ __prompt_dust_get_symbol() {
     local kcolor_normal=''
     local fcolor_error='red'
     local kcolor_error=''
+    local bullet=$(__prompt_dust_get_config 'character' 'bullet')
     if [[ $1 > 0 ]]; then
-        __prompt_dust_get_segment "%{%B%}*%?*>%{%b%}" $fcolor_error $kcolor_error
+        __prompt_dust_get_segment "%{%B%}$bullet%?$bullet>%{%b%}" $fcolor_error $kcolor_error
     else
-        __prompt_dust_get_segment "%{%B%}*>%{%b%}" $fcolor_normal $kcolor_normal
+        __prompt_dust_get_segment "%{%B%}$bullet>%{%b%}" $fcolor_normal $kcolor_normal
     fi
 }
 __prompt_dust_get_datetime() {
@@ -221,6 +223,16 @@ function() {
     autoload -Uz colors && colors
     # enable variable extraction in prompt
     setopt prompt_subst
+    # configure default options
+    if [[ "$LANG" == "C" ]]; then
+        __prompt_dust_set_config 'character' 'bullet' '*'
+        __prompt_dust_set_config 'character' 'indicator' '*'
+        __prompt_dust_set_config 'character' 'lock' '!'
+    else
+        __prompt_dust_set_config 'character' 'bullet' '•'
+        __prompt_dust_set_config 'character' 'indicator' '•'
+        __prompt_dust_set_config 'character' 'lock' '⭤'
+    fi
     # configure VCS
     __prompt_dust_configure_vcsstyles
     # configure PROMPT

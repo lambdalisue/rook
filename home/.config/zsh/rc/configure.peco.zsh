@@ -65,7 +65,39 @@ function peco-homeshick () {
 }
 zle -N peco-homeshick
 
-function peco-git-recent-branches () {
+function peco-select-gitadd() {
+    local selected_file=$(
+        git status --porcelain |
+        egrep -E '^([ MARC][MD]|DM|DD|AU|UD|UA|DU|AA|UU)' |
+        peco --query "$LBUFFER" |
+        awk '$0 = substr($0, 4)'
+    )
+    if [ -n "$selected_file" ]; then
+        BUFFER="git add $(git rev-parse --show-cdup)$selected_file"
+        CURSOR=$#BUFFER
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N peco-select-gitadd
+
+function peco-select-gitreset() {
+    local selected_file=$(
+        git status --porcelain |
+        egrep -E '^([MARC][ MD]|D[ M])' |
+        peco --query "$LBUFFER" |
+        awk '$0 = substr($0, 4)'
+    )
+    if [ -n "$selected_file" ]; then
+        BUFFER="git reset $(git rev-parse --show-cdup)$selected_file"
+        CURSOR=$#BUFFER
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N peco-select-gitadd
+
+function peco-select-gitcheckout () {
     local selected_branch=$(
         git for-each-ref --format='%(refname)' --sort=-committerdate refs/heads |
         perl -pne 's{^refs/heads/}{}' |
@@ -78,13 +110,13 @@ function peco-git-recent-branches () {
     fi
     zle clear-screen
 }
-zle -N peco-git-recent-branches
+zle -N peco-select-gitcheckout
 
-function peco-git-recent-all-branches () {
+function peco-select-gitcheckout-all () {
     local selected_branch=$(
         git for-each-ref --format='%(refname)' --sort=-committerdate refs/heads refs/remotes |
         perl -pne 's{^refs/(heads|remotes)/}{}' |
-        peco
+        peco --query "$LBUFFER"
     )
     if [ -n "$selected_branch" ]; then
         BUFFER="git checkout -t ${selected_branch}"
@@ -93,12 +125,16 @@ function peco-git-recent-all-branches () {
     fi
     zle clear-screen
 }
-zle -N peco-git-recent-all-branches
+zle -N peco-select-gitcheckout-all
+
+bindkey '^S'      peco-select-history
 
 bindkey '^X^R'      peco-select-history
 bindkey "^X^J"      peco-select-directory
 bindkey '^X^K'      peco-kill-process
 bindkey '^X^S'      peco-src
 bindkey '^X^H'      peco-homeshick
-bindkey '^X^G^G'    peco-git-recent-branches
-bindkey '^X^G^A'    peco-git-recent-all-branches
+
+bindkey "^G^A"      peco-select-gitadd
+bindkey '^G^C'      peco-select-gitcheckout
+bindkey '^G^C^A'    peco-select-gitcheckout-all
