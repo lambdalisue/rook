@@ -22,6 +22,7 @@ Programs configured
 - tmux
 - git
 - vim
+- neovim
 - peco
 - latexmk (TexLive)
 - matplotlib
