@@ -91,8 +91,10 @@ __prompt_dust_configure_vcsstyles() {
                 | tr -d ' ')
 
             if [[ "$ahead" -gt 0 ]]; then
-                # Add into misc (%m)
-                hook_com[misc]+=" %{%B%F{magenta}%}>${ahead}%{%b%f%}"
+                if [[ ! "${hook_com[misc]}" =~ '^\s*$' ]]; then
+                    hook_com[misc]+=" "
+                fi
+                hook_com[misc]+="%{%B%F{magenta}%}>${ahead}%{%b%f%}"
             fi
         }
         function +vi-git-pull-status() {
@@ -108,8 +110,10 @@ __prompt_dust_configure_vcsstyles() {
                 | tr -d ' ')
 
             if [[ "$behind" -gt 0 ]]; then
-                # Add into misc (%m)
-                hook_com[misc]+=" %{%B%F{cyan}%}${behind}<%{%b%f%}"
+                if [[ ! "${hook_com[misc]}" =~ '^\s*$' ]]; then
+                    hook_com[misc]+=" "
+                fi
+                hook_com[misc]+="%{%B%F{cyan}%}${behind}<%{%b%f%}"
             fi
         }
     fi
