@@ -87,7 +87,8 @@ xnoremap , <Nop>
 
 if !has('gui_running')
   set ttyfast         " enable fast terminal connection
-  if has('*ttyscroll')
+  if exists('&ttyscroll')
+    " neovim does not have 'ttyscroll'
     set ttyscroll=3     " the maximum number of lines for scrolling.
                         " use small value here to prefer redraw the screen
                         " instead of scrolling
@@ -202,6 +203,7 @@ if has('persistent_undo')
   if !isdirectory(&undodir)
     call mkdir(&undodir, 'p', 0700)
   endif
+  set undofile
 endif
 
 " allow backspacing over everything in insert mode
