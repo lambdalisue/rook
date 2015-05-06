@@ -1,6 +1,5 @@
 # http://qiita.com/o_ame/items/b9991d1f86b23f4a184d
 proxy="http://proxy.kuins.net:8080"
-switch_trigger="京都大学"
 
 function set_proxy() {
     export http_proxy=$proxy
@@ -31,15 +30,3 @@ function unset_proxy() {
     git config -f ~/.gitconfig.local --unset https.proxy
     git config -f ~/.gitconfig.local --unset url."https://".insteadOf
 }
-
-if [ $(uname) = "Darwin" ]; then
-    # Automatically detect which profile is used in system
-    if [ "$(networksetup -getcurrentlocation)" = "$switch_trigger" ]; then
-        echo "Switch to proxy for $switch_trigger"
-        set_proxy
-    else
-        unset_proxy
-    fi
-else
-    unset_proxy
-fi
