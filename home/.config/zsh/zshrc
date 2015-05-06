@@ -212,5 +212,10 @@ done
 zundle_install "zsh-users/zsh-syntax-highlighting"
 zundle_install "zsh-users/zsh-completions"
 
+# fundemental functions
+zsh_reload_rc() {
+    source ${ZDOTDIR}/.zshrc
+}
+
 # Load local configures
 [[ -f "$HOME/.profile" ]] && source "$HOME/.profile"
