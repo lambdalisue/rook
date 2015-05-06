@@ -179,16 +179,34 @@ set viewoptions=cursor,slash,unix
 " change default view directory
 let &viewdir=$MY_VIMRUNTIME.'/.view'
 " save and restore the cursor position and folding level
-function! s:is_view_available()
+function! s:is_view_available() " {{{
   if !&buflisted || &buftype !=# ''
     return 0
   elseif !filewritable(glob(expand('%:p')))
     return 0
   endif
   return 1
-endfunction
-autocmd MyAutoCmd BufWritePost,BufLeave,WinLeave ?* if s:is_view_available() | mkview | endif
-autocmd MyAutoCmd BufWinEnter ?* if s:is_view_available() | silent loadview | endif
+endfunction " }}}
+function! s:mkview() " {{{
+  if s:is_view_available()
+    try
+      silent mkview
+    catch
+      " fail silently
+    endtry
+  endif
+endfunction " }}}
+function! s:loadview() " {{{
+  if s:is_view_available()
+    try
+      silent loadview
+    catch
+      " fail silently
+    endtry
+  endif
+endfunction " }}}
+autocmd MyAutoCmd BufWritePost,BufLeave,WinLeave ?* call s:mkview()
+autocmd MyAutoCmd BufWinEnter ?* call s:loadview()
 
 " use clipboard register
 if has('unnamedplus')
