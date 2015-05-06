@@ -116,7 +116,7 @@ if type git > /dev/null; then
     function peco-select-git-add() {
         local selected="$(
             git status --porcelain |
-            grep -E '^([ MARC][MD]|DM|DD|AU|UD|UA|DU|AA|UU|\?\?)' |
+            grep -E '^([ MARC][MDT]|DM|DD|AU|UD|UA|DU|AA|UU|\?\?)' |
             peco --query "$1" |
             awk '$0 = substr($0, 4)'
         )"
@@ -140,7 +140,7 @@ if type git > /dev/null; then
     function peco-select-git-rm() {
         local selected="$(
             git status --porcelain |
-            grep -E '^([ MARC][MD]|DM|DD|AU|UD|UA|DU|AA|UU|\?\?)' |
+            grep -E '^([ MARC][MDT]|DM|DD|AU|UD|UA|DU|AA|UU|\?\?)' |
             peco --query "$1" |
             awk '$0 = substr($0, 4)'
         )"
@@ -164,7 +164,7 @@ if type git > /dev/null; then
     function peco-select-git-reset() {
         local selected="$(
             git status --porcelain |
-            grep -E '^([MARC][ MD]|D[ M])' |
+            grep -E '^([MARCT][ MD]|D[ M])' |
             peco --query "$1" |
             awk '$0 = substr($0, 4)'
         )"
@@ -187,7 +187,7 @@ if type git > /dev/null; then
     function peco-select-git-discard() {
         local selected="$(
             git status --porcelain |
-            grep -E '^([ MARC][MD]|DM|\?\?)' |
+            grep -E '^([ MARC][MDT]|DM|\?\?)' |
             peco --query "$1"
             awk '$0 = substr($0, 4)'
         )"
@@ -195,7 +195,7 @@ if type git > /dev/null; then
         # checkout from HEAD
         local unstaged_files="$(
             echo $selected |
-            egrep -E '^([ MARC][MD]|DM)' |
+            egrep -E '^([ MARC][MDT]|DM)' |
             awk '$0 = substr($0, 4)'
         )"
         if [[ -n "$unstaged_files" ]]; then
