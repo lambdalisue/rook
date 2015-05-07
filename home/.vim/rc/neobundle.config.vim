@@ -569,8 +569,13 @@ if neobundle#tap('lightline.vim') " {{{
           \}
     let g:lightline.my = {}
     let g:lightline.my.symbols = {}
-    let g:lightline.my.symbols.branch = '⭠'
-    let g:lightline.my.symbols.readonly = '⭤'
+    if $LANG == "C"
+      let g:lightline.my.symbols.branch = ''
+      let g:lightline.my.symbols.readonly = '!!'
+    else
+      let g:lightline.my.symbols.branch = '⭠'
+      let g:lightline.my.symbols.readonly = '⭤'
+    endif
     let g:lightline.my.symbols.modified = '+'
     let g:lightline.my.symbols.nomodifiable = '!'
     function! g:lightline.my.is_featured() " {{{
@@ -587,7 +592,6 @@ if neobundle#tap('lightline.vim') " {{{
       let filenames = [
             \ '__Tagbar__',
             \ '__Gundo__', '__Gundo_Preview__',
-            \ 'NERD_tree',
             \]
       if expand('%:t') =~ join(filenames, '\|')
         return 1
@@ -2166,6 +2170,10 @@ if neobundle#tap('vim-prettyprint') " {{{
   call neobundle#config({
         \ 'autoload': {
         \   'commands': [
+        \     'PP',
+        \     'PrettyPrint',
+        \   ],
+        \   'functions': [
         \     'PP',
         \     'PrettyPrint',
         \   ],

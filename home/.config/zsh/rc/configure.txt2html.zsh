@@ -2,8 +2,6 @@
 #
 # txt2html via pandoc
 #
-#
-#
 txt2html_root="${ZDOTDIR}/tools/txt2html"
 
 txt2html() {

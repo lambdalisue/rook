@@ -127,6 +127,7 @@ __prompt_dust_configure_prompt() {
             "$(__prompt_dust_get_pwd)"
             "$(__prompt_dust_get_vcs)"
             "$(__prompt_dust_get_datetime)"
+            "$(__prompt_dust_get_pyenv_virtualenv)"
         )
         __prompt_dust_prompt_2nd_bits=(
             "$(__prompt_dust_get_userinfo)"
@@ -218,6 +219,23 @@ __prompt_dust_get_vcs() {
     [[ ! "$vcs_info_msg_1_" =~ "^[ ]*$" ]] && __prompt_dust_get_segment " %{%B%}$vcs_info_msg_1_%{%b%}"
     [[ ! "$vcs_info_msg_2_" =~ "^[ ]*$" ]] && __prompt_dust_get_segment " $vcs_info_msg_2_" $fcolor_error   $kcolor_error
 }
+__prompt_dust_get_pyenv_virtualenv() {
+    local fcolor='magenta'
+    local kcolor=''
+    local snake="$(__prompt_dust_get_config 'character' 'snake')"
+
+    if type pyenv > /dev/null; then
+        local versions="$(
+            pyenv versions |
+            grep -E '^\*' |
+            awk '{ print $2 }' |
+            tr '\n' ' '
+        )"
+        if [[ -n "$versions" ]]; then
+            __prompt_dust_get_segment "$snake $versions" $fcolor $kcolor
+        fi
+    fi
+}
 
 function() {
     # load required modules
@@ -232,10 +250,12 @@ function() {
         __prompt_dust_set_config 'character' 'bullet' '*'
         __prompt_dust_set_config 'character' 'indicator' '*'
         __prompt_dust_set_config 'character' 'lock' '!'
+        __prompt_dust_set_config 'character' 'snake' '#'
     else
         __prompt_dust_set_config 'character' 'bullet' '•'
         __prompt_dust_set_config 'character' 'indicator' '•'
         __prompt_dust_set_config 'character' 'lock' '⭤'
+        __prompt_dust_set_config 'character' 'snake' '#'
     fi
     # configure VCS
     __prompt_dust_configure_vcsstyles
