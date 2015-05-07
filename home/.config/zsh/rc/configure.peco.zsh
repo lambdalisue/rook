@@ -284,7 +284,7 @@ if type pyenv > /dev/null; then
         local selected="$(
             pyenv versions |
             sed 's/^..//g' |
-            sed '1i --unset' |
+            sed '1i\--unset' |
             peco --query "$1"
         )"
         if [[ -n "$selected" ]]; then
@@ -303,7 +303,7 @@ if type pyenv > /dev/null; then
         local selected="$(
             pyenv versions |
             sed 's/^..//g' |
-            sed '1i --unset' |
+            sed '1i\--unset' |
             peco --query "$1"
         )"
         if [[ -n "$selected" ]]; then
@@ -321,7 +321,7 @@ if type pyenv > /dev/null; then
         global selected="$(
             pyenv versions |
             sed 's/^..//g' |
-            sed '1i --unset' |
+            sed '1i\--unset' |
             peco --query "$1"
         )"
         if [[ -n "$selected" ]]; then
