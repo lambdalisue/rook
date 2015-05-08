@@ -2,6 +2,7 @@
 autocmd BufNewFile,BufRead mm*.in     setf fortran
 autocmd BufNewFile,BufRead md*.in     setf fortran
 
+autocmd BufNewFile,BufRead *.txt      setf markdown
 autocmd BufNewFile,BufRead *.md       setf markdown
 autocmd BufNewFile,BufRead *.mkd      setf markdown
 autocmd BufNewFile,BufRead *.markdown setf markdown
