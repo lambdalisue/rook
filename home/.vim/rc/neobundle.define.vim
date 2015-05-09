@@ -4,6 +4,7 @@ NeoBundle 'vim-jp/vimdoc-ja'
 
 " fundementals
 NeoBundle 'cohama/vim-hier'
+NeoBundle 'thinca/vim-template'
 NeoBundle 'lambdalisue/vim-unified-diff'
 NeoBundleLazy 'kana/vim-repeat'
 NeoBundleLazy 't9md/vim-quickhl'

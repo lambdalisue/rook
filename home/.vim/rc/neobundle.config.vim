@@ -35,6 +35,22 @@ if neobundle#tap('vim-hier') " {{{
   call neobundle#untap()
 endif " }}}
 
+if neobundle#tap('vim-template') " {{{
+  function! neobundle#tapped.hooks.on_source(bundle)
+    function! s:template_eval_vimscript() abort
+      silent %s/<%=\(.\{-}\)%>/\=eval(submatch(1))/ge
+    endfunction
+    function! s:template_move_cursor() abort
+      if search('<+CURSOR+>', 'cw')
+        silent execute 'normal! "_da>'
+      endif
+    endfunction
+    autocmd User plugin-template-loaded call s:template_eval_vimscript()
+    autocmd User plugin-template-loaded call s:template_move_cursor()
+  endfunction
+  call neobundle#untap()
+endif " }}}
+
 if neobundle#tap('vim-unified-diff') " {{{
   call neobundle#config({
         \ 'external_commands': 'git',

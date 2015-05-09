@@ -175,7 +175,7 @@ set hidden              " hide the buffer instead of close
 set switchbuf=useopen   " use an existing buffer instaed of creating a new one
 
 " store cursor, folds, slash, unix on view
-set viewoptions=cursor,slash,unix
+set viewoptions=cursor,folds,slash,unix
 " change default view directory
 let &viewdir=$MY_VIMRUNTIME.'/.view'
 " save and restore the cursor position and folding level
