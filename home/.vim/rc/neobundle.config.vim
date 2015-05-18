@@ -892,6 +892,18 @@ if neobundle#tap('vim-operator-surround') " {{{
   call neobundle#untap()
 endif " }}}
 
+if neobundle#tap('vim-operator-breakline') " {{{
+  call neobundle#config({
+        \ 'depends': 'kana/vim-operator-user',
+        \ 'autoload': {
+        \   'mappings': '<Plug>(operator-breakline',
+        \ }})
+
+  map <silent> Gq <Plug>(operator-breakline-manual)
+  map <silent> GQ <Plug>(operator-breakline-textwidth)
+  call neobundle#untap()
+endif " }}}
+
 " }}}
 
 " interfaces {{{

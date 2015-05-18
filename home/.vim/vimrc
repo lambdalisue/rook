@@ -492,7 +492,7 @@ function! s:highlight_zenkaku_spaces()
 endfunction
 call s:highlight_zenkaku_spaces()
 " }}}
-"
+
 " }}}
 
 " plugins {{{

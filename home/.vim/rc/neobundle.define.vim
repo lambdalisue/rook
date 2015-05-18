@@ -60,6 +60,7 @@ NeoBundleLazy 'kana/vim-operator-replace'
 NeoBundleLazy 'sgur/vim-operator-openbrowser'
 NeoBundleLazy 'rhysd/vim-operator-trailingspace-killer'
 NeoBundleLazy 'rhysd/vim-operator-surround'
+NeoBundleLazy 'lambdalisue/vim-operator-breakline'
 
 " interfaces
 NeoBundleLazy 'Shougo/unite.vim'
