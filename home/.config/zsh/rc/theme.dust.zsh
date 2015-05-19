@@ -194,7 +194,7 @@ __prompt_dust_get_pwd() {
     if [[ ! -w $PWD && ! -r $PWD ]]; then
         pwd_state="%{%F{red}%}$lock "
     fi
-    local pwd_path="%69<...<%~"
+    local pwd_path="%50<...<${PWD/#$HOME/~}"
     __prompt_dust_get_segment "%{%B%}$pwd_state$pwd_path%{%f%b%}" $fcolor $kcolor
 }
 __prompt_dust_get_symbol() {

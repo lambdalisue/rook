@@ -2,8 +2,8 @@ __enterls() {
     if [[ -z "$BUFFER" ]]; then
         echo
         ls -C
-        echo
         zle reset-prompt
+        zle -R
     else
         # there are some input so ignore enterls
         zle accept-line

@@ -147,38 +147,6 @@ key[PageDown]=${terminfo[knp]}
 [[ -n "${key[Left]}"    ]]  && bindkey  "${key[Left]}"    backward-char
 [[ -n "${key[Right]}"   ]]  && bindkey  "${key[Right]}"   forward-char
 
-# Finally, make sure the terminal is in application mode, when zle is
-# active. Only then are the values from $terminfo valid.
-function zle-line-init () {
-    echoti smkx > /dev/null 2>&1
-}
-function zle-line-finish () {
-    echoti rmkx > /dev/null 2>&1
-}
-zle -N zle-line-init
-zle -N zle-line-finish
-
-# cycle history with C-p/C-n
-autoload history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^p" history-beginning-search-backward-end
-bindkey "^n" history-beginning-search-forward-end
-
-# select completion menu with hjkl
-zmodload zsh/complist
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'j' vi-down-line-or-history
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-
-# I want to delete char with Backspace key in command mode as well
-bindkey -M vicmd "^?" vi-backward-delete-char
-
-# Don't use vi mode in backward delete word/char
-# because it cannot delete charcters before the position entering insert mode
-zle -A .backward-kill-word vi-backward-kill-word
-zle -A .backward-delete-char vi-backward-delete-char
 # }}}
 
 # add extra path

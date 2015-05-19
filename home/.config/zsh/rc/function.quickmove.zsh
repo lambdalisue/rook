@@ -4,6 +4,7 @@ __function_call_cdup() {
         echo
         cd ../
         zle reset-prompt
+        zle -R
     else
         zle self-insert '^^'
     fi
@@ -17,6 +18,7 @@ function __function_call_popd() {
         echo
         popd
         zle reset-prompt
+        zle -R
     else
         zle self-insert '[['
     fi
