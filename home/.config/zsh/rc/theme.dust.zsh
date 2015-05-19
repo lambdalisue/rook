@@ -1,6 +1,12 @@
 #
 # ZSH theme "dust"
 #
+if ! type timeout > /dev/null 2>&1; then
+    timeout() {
+        $@
+    }
+fi
+
 __prompt_dust_set_config() {
     zstyle ":prompt:dust:$1" $2 $3
 }
@@ -54,7 +60,7 @@ __prompt_dust_configure_vcsstyles() {
             git-pull-status
 
         function +vi-git-hook-begin() {
-            if [[ $(command git rev-parse --is-inside-work-tree 2> /dev/null) != 'true' ]]; then
+            if [[ $(timeout 1 git rev-parse --is-inside-work-tree 2> /dev/null) != 'true' ]]; then
                 # stop further hook functions
                 return 1
             fi
@@ -65,7 +71,7 @@ __prompt_dust_configure_vcsstyles() {
             if [[ "$1" != "1" ]]; then
                 return 0
             fi
-            local gitstatus="$(command git status --ignore-submodules=all --porcelain 2> /dev/null)"
+            local gitstatus="$(timeout 1 git status --ignore-submodules=all --porcelain 2> /dev/null)"
             if [[ $? == 0 ]]; then
                 local staged="$(command echo $gitstatus | command grep -E '^([MARC][ MD]|D[ M])' | wc -l | tr -d ' ')"
                 local unstaged="$(command echo $gitstatus | command grep -E '^([ MARC][MD]|DM)' | wc -l | tr -d ' ')"
@@ -86,7 +92,7 @@ __prompt_dust_configure_vcsstyles() {
 
             # get the number of commits ahead of remote
             local ahead
-            ahead=$(command git log --oneline @{upstream}.. 2>/dev/null \
+            ahead=$(timeout 1 git log --oneline @{upstream}.. 2>/dev/null \
                 | wc -l \
                 | tr -d ' ')
 
@@ -105,7 +111,7 @@ __prompt_dust_configure_vcsstyles() {
 
             # get the number of commits behind remote
             local behind
-            behind=$(command git log --oneline ..@{upstream} 2>/dev/null \
+            behind=$(timeout 1 git log --oneline ..@{upstream} 2>/dev/null \
                 | wc -l \
                 | tr -d ' ')
 
@@ -226,7 +232,7 @@ __prompt_dust_get_pyenv_virtualenv() {
 
     if type pyenv > /dev/null; then
         local versions="$(
-            pyenv versions |
+            timeout 1 pyenv versions |
             grep -E '^\*' |
             awk '{ print $2 }' |
             tr '\n' ' '

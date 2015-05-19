@@ -46,6 +46,10 @@ fi
 if type gsed > /dev/null 2>&1; then
     alias sed=gsed
 fi
+# use GNU timeout if possible
+if type gtimeout > /dev/null 2>&1; then
+    alias timeout=gtimeout
+fi
 # trash command
 if type rmtrash > /dev/null 2>&1; then
     # brew install rmtrash
