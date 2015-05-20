@@ -205,7 +205,7 @@ __prompt_dust_get_symbol() {
     local kcolor_error=''
     local bullet=$(__prompt_dust_get_config 'character' 'bullet')
     if [[ $1 > 0 ]]; then
-        __prompt_dust_get_segment "%{%B%}$bullet%?$bullet>%{%b%}" $fcolor_error $kcolor_error
+        __prompt_dust_get_segment "%{%B%}$bullet$1$bullet>%{%b%}" $fcolor_error $kcolor_error
     else
         __prompt_dust_get_segment "%{%B%}$bullet>%{%b%}" $fcolor_normal $kcolor_normal
     fi

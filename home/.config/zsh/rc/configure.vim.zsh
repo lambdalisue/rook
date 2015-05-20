@@ -11,10 +11,12 @@ function zle-line-init zle-line-finish {
   zle reset-prompt
   zle -R
 }
+
 # Ensure that the prompt is redrawn when the terminal size changes.
 TRAPWINCH() {
   zle && { zle reset-prompt; zle -R }
 }
+
 zle -N zle-line-init
 zle -N zle-line-finish
 zle -N edit-command-line
@@ -29,7 +31,6 @@ zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^p" history-beginning-search-backward-end
 bindkey "^n" history-beginning-search-forward-end
-
 
 # allow ctrl-h, ctrl-w, ctrl-? for char and word deletion (standard behaviour)
 bindkey '^?' backward-delete-char
