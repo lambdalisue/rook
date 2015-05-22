@@ -1,8 +1,9 @@
 # cd up with ^^
-__function_call_cdup() {
+function __function_call_cdup() {
     if [ -z "$BUFFER" ]; then
         echo
-        cd ../
+        pushd ../ > /dev/null
+        ls -C
         zle reset-prompt
         zle -R
     else
@@ -16,7 +17,8 @@ bindkey '\^\^' __function_call_cdup
 function __function_call_popd() {
     if [ -z "$BUFFER" ]; then
         echo
-        popd
+        popd > /dev/null
+        ls -C
         zle reset-prompt
         zle -R
     else
