@@ -678,11 +678,7 @@ if neobundle#tap('lightline.vim') " {{{
     endfunction " }}}
     if neobundle#is_installed('vim-pyenv') && executable('pyenv') " {{{
       function! g:lightline.my.pyenv()
-        if &filetype =~# 'python'
-          return pyenv#statusline#component()
-        else
-          return ""
-        endif
+        return pyenv#info#preset('long')
       endfunction
     else
       function! g:lightline.my.pyenv()
@@ -2051,24 +2047,18 @@ if neobundle#tap('vim-pyenv') " {{{
         \   'commands': [
         \     'PyenvActivate',
         \     'PyenvDeactivate',
-        \     'PyenvList',
-        \     'PyenvName',
-        \     'PyenvVersion',
-        \     'PyenvExternalVersion',
-        \     'PyenvPython',
         \   ],
         \   'filetypes': ['python', 'python3', 'djangohtml'],
         \ },
         \ 'external_commands': 'pyenv',
         \})
-
   function! neobundle#tapped.hooks.on_source(bundle)
-    let g:pyenv#auto_activate = 0
-    let g:pyenv#statusline#component#long_pattern = 'Pyenv %e (%v)'
-    let g:pyenv#statusline#component#short_pattern = 'Pyenv %e'
-  endfunction
-  function! neobundle#tapped.hooks.on_post_source(bundle)
-    call pyenv#activate("", 0)
+    function! s:jedi_auto_force_py_version() abort
+      let major_version = pyenv#python#get_internal_major_version()
+      call jedi#force_py_version(major_version)
+    endfunction
+    autocmd MyAutoCmd User vim-pyenv-activate-post call s:jedi_auto_force_py_version()
+    autocmd MyAutoCmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
   endfunction
   call neobundle#untap()
 endif " }}}
