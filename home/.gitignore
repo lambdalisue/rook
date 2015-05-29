@@ -25,6 +25,7 @@ bin
 develop-eggs
 .installed.cfg
 pip-log.txt
+.python-version
 # Java
 *.class
 # C/C++
