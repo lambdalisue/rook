@@ -63,4 +63,8 @@ if has('gui_macvim')
   set antialias
   set imdisable
   set transparency=2
+else
+  " GVim display corrupt in Ubuntu and the following is a workaround
+  " Ref: https://bugs.launchpad.net/ubuntu/+source/vim/+bug/572863
+  set ttyscroll=0
 endif
