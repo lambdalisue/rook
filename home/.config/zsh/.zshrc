@@ -171,6 +171,12 @@ __add_path "/usr/local/texlive/2014/bin/x86_64-linux"
 __add_path "/usr/local/texlive/2014/bin/x86_64-darwin"
 __add_manpath "/usr/local/texlive/texmf-dist/doc/man"
 
+if [ $(uname) = "Darwin" ]; then
+    __add_path "${ZDOTDIR}/tools/pt/pt_darwin_amd64"
+else
+    __add_path "${ZDOTDIR}/tools/pt/pt_linux_amd64"
+fi
+
 # source external settings
 for filename in ${ZDOTDIR}/rc/*.zsh; do
     if [ ! -f ${filename}.zwc -o ${filename} -nt ${filename}.zwc ]; then
