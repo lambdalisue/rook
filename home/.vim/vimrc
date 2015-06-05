@@ -56,6 +56,10 @@ set shell=/bin/bash
 
 call s:add_path("/usr/local/texlive/2013/bin/x86_64-linux")
 call s:add_path("/usr/local/texlive/2013/bin/x86_64-darwin")
+call s:add_path(expand("~/.anyenv/envs/pyenv/bin"))
+call s:add_path(expand("~/.anyenv/envs/plenv/bin"))
+call s:add_path(expand("~/.anyenv/envs/rbenv/bin"))
+call s:add_path(expand("~/.anyenv/envs/ndenv/bin"))
 call s:add_path(expand("~/.anyenv/envs/pyenv/shims"))
 call s:add_path(expand("~/.anyenv/envs/plenv/shims"))
 call s:add_path(expand("~/.anyenv/envs/rbenv/shims"))

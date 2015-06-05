@@ -59,7 +59,7 @@ if ! install_repository "https://github.com/erikw/tmux-powerline" "${bundle}/tmu
 fi
 if [[ "$(uname)" == "Darwin" ]]; then
     brew install tmux-mem-cpu-load
-    brew install reattach-to-user-namespace --wrap-launchctl --wrap-pbcopy-and-pbpaste
+    brew install reattach-to-user-namespace --with-wrap-launchctl --with-wrap-pbcopy-and-pbpaste
     # GNU grep is required for weather.sh
     brew install grep
 else
