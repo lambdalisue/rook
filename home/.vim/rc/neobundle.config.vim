@@ -939,6 +939,7 @@ if neobundle#tap('unite.vim') " {{{
 
     " Configuration per buffer
     function! s:my_unite_configure()
+      setlocal winfixheight
       let unite = unite#get_current_unite()
       if unite.profile_name ==# 'search'
         nnoremap <silent><buffer><expr> r
@@ -1400,6 +1401,8 @@ if neobundle#tap('vimfiler.vim') " {{{
       " <Space>k to open bookmark
       nmap <buffer><silent> <Space>k :<C-u>Unite bookmark
             \ -buffer-name=vimfiler_opened<CR>
+      " Monkey-patch of Issue 290
+      nmap <buffer> E <Plug>(vimfiler_split_edit_file):set nowinfixwidth<CR>
     endfunction
     autocmd MyAutoCmd FileType vimfiler call s:vimfiler_settings()
 
