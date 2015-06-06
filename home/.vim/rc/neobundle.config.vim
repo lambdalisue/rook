@@ -435,6 +435,7 @@ if neobundle#tap('vim-quickrun') " {{{
           \ 'runner' : 'vimproc',
           \ 'outputter/buffer/split': ':botright 8sp',
           \ 'outputter/buffer/close_on_empty': 1,
+          \ 'hook/time/enable': 1,
           \}
 
     " Terminate the quickrun with <C-c>
@@ -2053,12 +2054,14 @@ if neobundle#tap('vim-pyenv') " {{{
         \ 'external_commands': 'pyenv',
         \})
   function! neobundle#tapped.hooks.on_source(bundle)
-    function! s:jedi_auto_force_py_version() abort
-      let major_version = pyenv#python#get_internal_major_version()
-      call jedi#force_py_version(major_version)
-    endfunction
-    autocmd MyAutoCmd User vim-pyenv-activate-post call s:jedi_auto_force_py_version()
-    autocmd MyAutoCmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
+    if neobundle#is_installed('jedi') && jedi#init_python()
+      function! s:jedi_auto_force_py_version() abort
+        let major_version = pyenv#python#get_internal_major_version()
+        call jedi#force_py_version(major_version)
+      endfunction
+      autocmd MyAutoCmd User vim-pyenv-activate-post call s:jedi_auto_force_py_version()
+      autocmd MyAutoCmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
+    endif
   endfunction
   call neobundle#untap()
 endif " }}}
