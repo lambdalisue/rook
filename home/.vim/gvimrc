@@ -56,8 +56,7 @@ colorscheme hybrid
 
 " disable ancient features
 set noerrorbells
-set novisualbell
-set t_vb=
+set visualbell t_vb=
 
 if has('gui_macvim')
   set antialias
