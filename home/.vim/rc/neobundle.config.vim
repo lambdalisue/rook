@@ -1401,8 +1401,6 @@ if neobundle#tap('vimfiler.vim') " {{{
       " <Space>k to open bookmark
       nmap <buffer><silent> <Space>k :<C-u>Unite bookmark
             \ -buffer-name=vimfiler_opened<CR>
-      " Monkey-patch of Issue 290
-      nmap <buffer> E <Plug>(vimfiler_split_edit_file):set nowinfixwidth<CR>
     endfunction
     autocmd MyAutoCmd FileType vimfiler call s:vimfiler_settings()
 
