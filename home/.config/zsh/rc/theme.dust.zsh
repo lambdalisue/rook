@@ -180,19 +180,19 @@ __prompt_dust_get_pwd() {
     local fcolor='blue'
     local kcolor=''
     local lock=$(__prompt_dust_get_config 'character' 'lock')
-    local PWD=$(pwd)
+    local PWD="$(pwd)"
     # current path state
     local pwd_state
-    if [[ ! -O $PWD ]]; then
-        if [[ -w $PWD ]]; then
+    if [[ ! -O "$PWD" ]]; then
+        if [[ -w "$PWD" ]]; then
             pwd_state="%{%F{blue}%}$lock "
-        elif [[ -x $PWD ]]; then
+        elif [[ -x "$PWD" ]]; then
             pwd_state="%{%F{yellow}%}$lock "
-        elif [[ -r $PWD ]]; then
+        elif [[ -r "$PWD" ]]; then
             pwd_state="%{%F{red}%}$lock "
         fi
     fi
-    if [[ ! -w $PWD && ! -r $PWD ]]; then
+    if [[ ! -w "$PWD" && ! -r "$PWD" ]]; then
         pwd_state="%{%F{red}%}$lock "
     fi
     local pwd_path="%50<...<%~"
