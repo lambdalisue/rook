@@ -13,6 +13,7 @@ Install
 ```sh
 # clone homeshick, rook and install them
 curl -L http://goo.gl/IrTY7b | bash
+curl -L http://goo.gl/IrTY7b | USE_GUEST=1 bash
 ```
 
 Programs configured

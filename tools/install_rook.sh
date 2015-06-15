@@ -7,7 +7,11 @@ fi
 source $HOME/.homesick/repos/homeshick/homeshick.sh
 
 if [[ ! -d "$HOME/.homesick/repos/rook" ]]; then
-    homeshick clone git@github.com:lambdalisue/rook -f
+    if [[ "$USER" != "alisue" -o $USE_GUEST eq 1 ]]
+        homeshick clone https://github.com/lambdalisue/rook -f
+    else
+        homeshick clone git@github.com:lambdalisue/rook -f
+    fi
 fi
 homeshick cd rook
 bash ./tools/install_requirements.sh
