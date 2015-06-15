@@ -7,7 +7,7 @@ fi
 source $HOME/.homesick/repos/homeshick/homeshick.sh
 
 if [[ ! -d "$HOME/.homesick/repos/rook" ]]; then
-    if [ "$USER" != "alisue" -o $USE_GUEST eq 1 ]
+    if [[ "$USER" != "alisue" -o $USE_GUEST eq 1 ]]; then
         homeshick clone https://github.com/lambdalisue/rook -f
     else
         homeshick clone git@github.com:lambdalisue/rook -f
