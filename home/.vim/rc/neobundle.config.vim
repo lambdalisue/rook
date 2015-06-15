@@ -1756,8 +1756,9 @@ if neobundle#tap('vim-gita') " {{{
 
   nnoremap [gita] <Nop>
   nmap <Leader>a [gita]
-  nnoremap <silent> [gita]a :<C-u>Gita status<CR>
-  nnoremap <silent> [gita]c :<C-u>Gita commit<CR>
+  nnoremap <silent> [gita]a :<C-u>Gita status --ignore-submodules=all<CR>
+  nnoremap <silent> [gita]c :<C-u>Gita commit --ignore-submodules=all<CR>
+  nnoremap <silent> [gita]l :<C-u>Gita diff --list<CR>
 
   call neobundle#untap()
 endif " }}}
