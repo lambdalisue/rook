@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 if [[ ! -d "$HOME/.homesick/repos/homeshick" ]]; then
     git clone https://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
     printf '\nsource "$HOME/.homesick/repos/homeshick/homeshick.sh"' >> $HOME/.bashrc
@@ -7,10 +6,10 @@ fi
 source $HOME/.homesick/repos/homeshick/homeshick.sh
 
 if [[ ! -d "$HOME/.homesick/repos/rook" ]]; then
-    if [[ "$USER" != "alisue" -o $USE_GUEST eq 1 ]]
-        homeshick clone https://github.com/lambdalisue/rook -f
+    if [ "$USER" != "alisue" -o "$USE_GUEST" == "1" ]; then
+        homeshick clone https://github.com/lambdalisue/rook -f --batch
     else
-        homeshick clone git@github.com:lambdalisue/rook -f
+        homeshick clone git@github.com:lambdalisue/rook -f --batch
     fi
 fi
 homeshick cd rook
