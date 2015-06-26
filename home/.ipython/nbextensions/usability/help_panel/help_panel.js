@@ -54,11 +54,23 @@ var help_panel_extension = (function() {
         var a= $("#helpPanel").html();
         if ( a == undefined ) {
             /* reduce notebook width */
-            $("#notebook_panel").css({"float": "left","overflow-x": "hidden","height": "100%","width": "70%","font-size": "9pt"});
+            $("#notebook_panel").css({
+              "float": "left",
+              "overflow-x": "hidden",
+              "height": "100%",
+              "width": "60%",
+              "font-size": "9pt"
+            });
             /* add panel to the right of notebook */
             var helppanel = '<div id="helpPanel"></div>';
             $("#ipython-main-app").append(helppanel);
-            $('#helpPanel').css({"font-size":"9pt"});
+            $('#helpPanel').css({
+              "font-size":"8pt",
+              "width": "40%",
+              "height": "100%",
+              "padding": "0 1em 1em 1em",
+              "float": "right"
+            });
             var data = IPython.quick_help.build_edit_help(cm_shortcuts);
             $('#helpPanel').append(data);
             var data = IPython.quick_help.build_command_help();
