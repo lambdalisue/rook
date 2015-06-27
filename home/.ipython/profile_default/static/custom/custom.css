@@ -5,3 +5,8 @@ mainly to be overridden in profile/static/custom/custom.css
 
 This will always be an empty file in IPython
 */
+table,
+.rendered_html table {
+  margin-left: 0;
+  margin-right: 0;
+}
