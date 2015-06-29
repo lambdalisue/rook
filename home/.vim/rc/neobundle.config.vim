@@ -1748,6 +1748,9 @@ if neobundle#tap('vim-gita') " {{{
           \ ['\vgit\@(ghe\.admin\.h):([^/]+)/([^.]+)%(\.git|)',
           \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le',
           \  'http://\1/\2/\3/blob/%rh/%pt%{#L|}ls%{-}le'],
+          \ ['\vssh://git\@(ghe\.admin\.h)/([^/]+)/([^.]+)%(\.git|)',
+          \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le',
+          \  'http://\1/\2/\3/blob/%rh/%pt%{#L|}ls%{-}le'],
           \ ['\vhttps?://(ghe\.admin\.h):([^/]+)/([^.]+)',
           \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le',
           \  'http://\1/\2/\3/blob/%rh/%pt%{#L|}ls%{-}le'],
@@ -1756,6 +1759,7 @@ if neobundle#tap('vim-gita') " {{{
 
   nnoremap [gita] <Nop>
   nmap <Leader>a [gita]
+  nnoremap <silent> [gita]a :<C-u>Gita status --ignore-submodules=all<CR>
   nnoremap <silent> [gita]s :<C-u>Gita status --ignore-submodules=all<CR>
   nnoremap <silent> [gita]c :<C-u>Gita commit<CR>
   nnoremap <silent> [gita]d :<C-u>Gita diff -- %<CR>
