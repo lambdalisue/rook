@@ -2,7 +2,9 @@ function! s:is_git_available() "{{{
   if !executable('git')
     return 0
   endif
-  " TODO: use vim-gita or vital-VCS-Git
+  if neobundle#is_sourced('vim-gita')
+    return gita#core#is_enabled()
+  endif
   call vimproc#system('git rev-parse')
   return (vimproc#get_last_status() == 0) ? 1 : 0
 endfunction "}}}
@@ -32,6 +34,9 @@ endif " }}}
 " fundementals {{{
 
 if neobundle#tap('vim-hier') " {{{
+  call neobundle#config({
+        \ 'disabled': 1,
+        \ })
   call neobundle#untap()
 endif " }}}
 
@@ -132,6 +137,10 @@ if neobundle#tap('vim-choosewin') " {{{
       let g:choosewin_overlay_clear_multibyte = 1
     endif
   endfunction
+
+  nnoremap [choosewin] <Nop>
+  nmap ! <Plug>(choosewin)
+
   call neobundle#untap()
 endif " }}}
 
@@ -595,25 +604,24 @@ if neobundle#tap('lightline.vim') " {{{
     endif
     let g:lightline.my.symbols.modified = '+'
     let g:lightline.my.symbols.nomodifiable = '!'
+    let g:lightline.my.featured_filetype_pattern = printf('^\%%(%s\)', join([
+          \ 'help', 'qf',
+          \ 'unite', 'vimfiler', 'vimshell',
+          \ 'gundo', 'tagbar',
+          \ 'gita-.\+', 'gista-.\+',
+          \], '\|'))
+    let g:lightline.my.featured_bufname_pattern = printf('^\%%(%s\)', join([
+          \ '__Tagbar__', '__Gundo__', '__Gundo_Preview__',
+          \], '\|'))
     function! g:lightline.my.is_featured() " {{{
       " check filetype
-      let filetypes = [
-            \ 'help',
-            \ 'unite', 'vimfiler', 'vimshell',
-            \ 'gundo',
-            \]
-      if &filetype =~ join(filetypes, '\|')
+      if &filetype =~# self.featured_filetype_pattern
         return 1
       endif
       " check filename
-      let filenames = [
-            \ '__Tagbar__',
-            \ '__Gundo__', '__Gundo_Preview__',
-            \]
-      if expand('%:t') =~ join(filenames, '\|')
+      if expand('%:t') =~# self.featured_bufname_pattern
         return 1
       endif
-
       return 0
     endfunction " }}}
     function! g:lightline.my.mode() " {{{
@@ -633,11 +641,11 @@ if neobundle#tap('lightline.vim') " {{{
     endfunction " }}}
     function! g:lightline.my.filename() " {{{
       if self.is_featured()
-        if &filetype == 'unite'
+        if &filetype ==# 'unite'
           return unite#get_status_string()
-        elseif &filetype == 'vimfiler'
+        elseif &filetype ==# 'vimfiler'
           return vimfiler#get_status_string()
-        elseif &filetype == 'vimshell'
+        elseif &filetype ==# 'vimshell'
           return vimshell#get_status_string()
         else
           return ''
@@ -659,33 +667,34 @@ if neobundle#tap('lightline.vim') " {{{
     function! g:lightline.my.fileencoding() "{{{
       return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
     endfunction " }}}
-    function! g:lightline.my.git_enable()
-      return &filetype !~# '\v%(unite|gundo|vimshell)'
-    endfunction
     function! g:lightline.my.git_branch() " {{{
-      return winwidth(0) > 70 && g:lightline.my.git_enable()
-            \ ? gita#statusline#preset('branch_fancy')
-            \ : ''
+      if neobundle#is_sourced('vim-gita')
+        return gita#statusline#preset('branch_fancy')
+      else
+        return ''
+      endif
     endfunction " }}}
     function! g:lightline.my.git_traffic() " {{{
-      return winwidth(0) > 70 && g:lightline.my.git_enable()
-            \ ? gita#statusline#preset('traffic_fancy')
-            \ : ''
+      if neobundle#is_sourced('vim-gita')
+        return gita#statusline#preset('traffic_fancy')
+      else
+        return ''
+      endif
     endfunction " }}}
     function! g:lightline.my.git_status() " {{{
-      return winwidth(0) > 70 && g:lightline.my.git_enable()
-            \ ? gita#statusline#preset('status')
-            \ : ''
+      if neobundle#is_sourced('vim-gita')
+        return gita#statusline#preset('status')
+      else
+        return ''
+      endif
     endfunction " }}}
-    if neobundle#is_installed('vim-pyenv') && executable('pyenv') " {{{
-      function! g:lightline.my.pyenv()
+    function! g:lightline.my.pyenv() " {{{
+      if neobundle#is_sourced('vim-pyenv')
         return pyenv#info#preset('long')
-      endfunction
-    else
-      function! g:lightline.my.pyenv()
-        return ""
-      endfunction
-    endif " }}}
+      else
+        return ''
+      endif
+    endfunction " }}}
 
     " do not use ordinal showmode
     set noshowmode
@@ -1589,6 +1598,9 @@ if neobundle#tap('vim-rengbang') " {{{
 endif " }}}
 
 if neobundle#tap('colorizer') " {{{
+  " Note:
+  "   This plugin is quite heavy and it add BufEnter autocmd to visualize
+  "   color thus should not be autoloaded with filetype or so on.
   call neobundle#config({
         \ 'autoload': {
         \   'mappings': '<Plug>Colorizer',
@@ -1596,12 +1608,6 @@ if neobundle#tap('colorizer') " {{{
         \     'ColorHighlight',
         \     'ColorClear',
         \     'ColorToggle',
-        \   ],
-        \   'filetypes': [
-        \     'html', 'djangohtml',
-        \     'rst', 'markdown',
-        \     'css', 'sass', 'scss', 'less',
-        \     'javascript', 'coffeescript',
         \   ],
         \ }})
 
@@ -1654,6 +1660,62 @@ endif " }}}
 " }}}
 
 " version controller system {{{
+
+if neobundle#tap('vim-gita') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'commands': 'Gita',
+        \   'mappings': '<Plug>(gita-',
+        \ }})
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:gita#features#browse#extra_translation_patterns = [
+          \ ['\vgit\@(ghe\.admin\.h):([^/]+)/([^.]+)%(\.git|)',
+          \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le',
+          \  'http://\1/\2/\3/blob/%rh/%pt%{#L|}ls%{-}le'],
+          \ ['\vssh://git\@(ghe\.admin\.h)/([^/]+)/([^.]+)%(\.git|)',
+          \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le',
+          \  'http://\1/\2/\3/blob/%rh/%pt%{#L|}ls%{-}le'],
+          \ ['\vhttps?://(ghe\.admin\.h):([^/]+)/([^.]+)',
+          \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le',
+          \  'http://\1/\2/\3/blob/%rh/%pt%{#L|}ls%{-}le'],
+          \]
+  endfunction
+
+  nnoremap [gita] <Nop>
+  nmap <Leader>a [gita]
+  nnoremap <silent> [gita]a :<C-u>Gita status --ignore-submodules<CR>
+  nnoremap <silent> [gita]s :<C-u>Gita status<CR>
+  nnoremap <silent> [gita]c :<C-u>Gita commit<CR>
+  nnoremap <silent> [gita]d :<C-u>Gita diff --ignore-submodules -- %<CR>
+  nnoremap <silent> [gita]l :<C-u>Gita diff-ls --ignore-submodules<CR>
+
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('vim-gitgutter') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'commands': [
+        \     'GitGutterPrevHunk',
+        \     'GitGutterNextHunk',
+        \     'GitGutterToggle',
+        \   ],
+        \ }})
+
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:gitgutter_enabled = 0
+    let g:gitgutter_sign_added = '+'
+    let g:gitgutter_sign_modified = '~'
+    let g:gitgutter_sign_removed = '-'
+    let g:gitgutter_map_keys = 0
+  endfunction
+
+  nmap [g <Plug>GitGutterPrevHunk
+  nmap ]g <Plug>GitGutterNextHunk
+  nmap [switch]g :<C-u>GitGutterToggle<CR>
+
+  call neobundle#untap()
+endif " }}}
 
 if neobundle#tap('agit.vim') " {{{
   call neobundle#config({
@@ -1733,62 +1795,6 @@ if neobundle#tap('vim-gista') " {{{
         \   'mappings': '<Plug>(gista-',
         \   'unite_sources': 'gista',
         \ }})
-  call neobundle#untap()
-endif " }}}
-
-if neobundle#tap('vim-gita') " {{{
-  call neobundle#config({
-        \ 'focus': 1,
-        \ 'autoload': {
-        \   'commands': 'Gita',
-        \   'mappings': '<Plug>(gita-',
-        \ }})
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let g:gita#features#browse#extra_translation_patterns = [
-          \ ['\vgit\@(ghe\.admin\.h):([^/]+)/([^.]+)%(\.git|)',
-          \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le',
-          \  'http://\1/\2/\3/blob/%rh/%pt%{#L|}ls%{-}le'],
-          \ ['\vssh://git\@(ghe\.admin\.h)/([^/]+)/([^.]+)%(\.git|)',
-          \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le',
-          \  'http://\1/\2/\3/blob/%rh/%pt%{#L|}ls%{-}le'],
-          \ ['\vhttps?://(ghe\.admin\.h):([^/]+)/([^.]+)',
-          \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le',
-          \  'http://\1/\2/\3/blob/%rh/%pt%{#L|}ls%{-}le'],
-          \]
-  endfunction
-
-  nnoremap [gita] <Nop>
-  nmap <Leader>a [gita]
-  nnoremap <silent> [gita]a :<C-u>Gita status --ignore-submodules=all<CR>
-  nnoremap <silent> [gita]s :<C-u>Gita status --ignore-submodules=all<CR>
-  nnoremap <silent> [gita]c :<C-u>Gita commit<CR>
-  nnoremap <silent> [gita]d :<C-u>Gita diff -- %<CR>
-  nnoremap <silent> [gita]l :<C-u>Gita diff-ls --ignore-submodules=all<CR>
-
-  call neobundle#untap()
-endif " }}}
-
-if neobundle#tap('vim-gitgutter') " {{{
-  call neobundle#config({
-        \ 'autoload': {
-        \   'commands': [
-        \     'GitGutterPrevHunk',
-        \     'GitGutterNextHunk',
-        \     'GitGutterToggle',
-        \   ],
-        \ }})
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let g:gitgutter_sign_added = '+'
-    let g:gitgutter_sign_modified = '~'
-    let g:gitgutter_sign_removed = '-'
-    let g:gitgutter_map_keys = 0
-  endfunction
-
-  nmap [g <Plug>GitGutterPrevHunk
-  nmap ]g <Plug>GitGutterNextHunk
-  nmap [switch]g :<C-u>GitGutterToggle<CR>
-
   call neobundle#untap()
 endif " }}}
 
@@ -2113,7 +2119,10 @@ if neobundle#tap('typescript-tools') " {{{
 endif " }}}
 
 if neobundle#tap('vim-pandoc') " {{{
+  " Note:
+  "   it seems vim-pandoc does not support has('python3')
   call neobundle#config({
+        \ 'disabled': !has('python'),
         \ 'autoload': {
         \   'filetypes': [
         \     'text',

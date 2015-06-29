@@ -92,12 +92,12 @@ NeoBundleLazy 'lambdalisue/unite-grep-vcs'
 NeoBundleLazy 'dameninngenn/unite-perldoc'
 
 " version controller system
+NeoBundle 'lambdalisue/vim-gita'
+NeoBundleLazy 'airblade/vim-gitgutter'
+NeoBundleLazy 'lambdalisue/vim-gista'
 NeoBundleLazy 'tpope/vim-fugitive'
-NeoBundleLazy 'lambdalisue/vim-gita'
 NeoBundleLazy 'cohama/agit.vim'
 NeoBundleLazy 'lambdalisue/vim-unite-giti'
-NeoBundleLazy 'lambdalisue/vim-gista'
-NeoBundleLazy 'airblade/vim-gitgutter'
 NeoBundleLazy 'rhysd/committia.vim'
 
 " syntax

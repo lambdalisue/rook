@@ -187,30 +187,22 @@ let &viewdir=$MY_VIMRUNTIME.'/.view'
 function! s:is_view_available() " {{{
   if !&buflisted || &buftype !=# ''
     return 0
-  elseif !filewritable(glob(expand('%:p')))
+  elseif !filewritable(expand('%:p'))
     return 0
   endif
   return 1
 endfunction " }}}
 function! s:mkview() " {{{
   if s:is_view_available()
-    try
-      silent mkview
-    catch
-      " fail silently
-    endtry
+    silent! mkview
   endif
 endfunction " }}}
 function! s:loadview() " {{{
   if s:is_view_available()
-    try
-      silent loadview
-    catch
-      " fail silently
-    endtry
+    silent! loadview
   endif
 endfunction " }}}
-autocmd MyAutoCmd BufWritePost,BufLeave,WinLeave ?* call s:mkview()
+autocmd MyAutoCmd BufWritePost,BufWinLeave ?* call s:mkview()
 autocmd MyAutoCmd BufWinEnter ?* call s:loadview()
 
 " use clipboard register
