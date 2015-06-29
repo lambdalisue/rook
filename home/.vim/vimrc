@@ -133,8 +133,9 @@ let &spellfile=expand("~/Copy/Apps/Vim/system/spellfile.utf-8.add")
 " prefer UTF-8
 if has('multi_byte')
   set encoding=utf-8
+  set termencoding=utf-8
   set fileencoding=utf-8
-  set fileencodings=utf-8,cp932,sjis,iso-2022-jp,euc-jp
+  set fileencodings=ucs-bom,utf-8,euc-jp,iso-2022-jp,cp932,utf-16,utf-16le
   set fileformats=unix,dos,mac
   scriptencoding utf-8
 endif
