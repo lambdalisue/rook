@@ -3,7 +3,7 @@ function! s:is_git_available() "{{{
     return 0
   endif
   if neobundle#is_sourced('vim-gita')
-    return gita#core#is_enabled()
+    return gita#is_enabled()
   endif
   call vimproc#system('git rev-parse')
   return (vimproc#get_last_status() == 0) ? 1 : 0
