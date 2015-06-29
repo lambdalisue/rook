@@ -1744,7 +1744,7 @@ if neobundle#tap('vim-gita') " {{{
         \   'mappings': '<Plug>(gita-',
         \ }})
   function! neobundle#tapped.hooks.on_source(bundle)
-    let g:gita#interface#browse#extra_translation_patterns = [
+    let g:gita#features#browse#extra_translation_patterns = [
           \ ['\vgit\@(ghe\.admin\.h):([^/]+)/([^.]+)%(\.git|)',
           \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le',
           \  'http://\1/\2/\3/blob/%rh/%pt%{#L|}ls%{-}le'],
@@ -1756,9 +1756,10 @@ if neobundle#tap('vim-gita') " {{{
 
   nnoremap [gita] <Nop>
   nmap <Leader>a [gita]
-  nnoremap <silent> [gita]a :<C-u>Gita status --ignore-submodules=all<CR>
-  nnoremap <silent> [gita]c :<C-u>Gita commit --ignore-submodules=all<CR>
-  nnoremap <silent> [gita]l :<C-u>Gita diff --list<CR>
+  nnoremap <silent> [gita]s :<C-u>Gita status --ignore-submodules=all<CR>
+  nnoremap <silent> [gita]c :<C-u>Gita commit<CR>
+  nnoremap <silent> [gita]d :<C-u>Gita diff -- %<CR>
+  nnoremap <silent> [gita]l :<C-u>Gita diff-ls --ignore-submodules=all<CR>
 
   call neobundle#untap()
 endif " }}}
