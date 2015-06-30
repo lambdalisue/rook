@@ -178,6 +178,7 @@ endif
 
 set hidden              " hide the buffer instead of close
 set switchbuf=useopen   " use an existing buffer instaed of creating a new one
+set autoread            " automatically read the changed contents
 
 " store cursor, folds, slash, unix on view
 set viewoptions=cursor,folds,slash,unix
