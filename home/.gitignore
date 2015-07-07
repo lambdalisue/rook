@@ -12,6 +12,9 @@
 # SASS
 .sass-cache
 
+# Perl
+.prove
+
 # Python
 __pycache__
 *.py[co]
