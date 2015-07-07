@@ -1669,25 +1669,22 @@ if neobundle#tap('vim-gita') " {{{
         \ }})
   function! neobundle#tapped.hooks.on_source(bundle)
     let g:gita#features#browse#extra_translation_patterns = [
-          \ ['\vgit\@(ghe\.admin\.h):([^/]+)/([^.]+)%(\.git|)',
-          \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le',
-          \  'http://\1/\2/\3/blob/%rh/%pt%{#L|}ls%{-}le'],
-          \ ['\vssh://git\@(ghe\.admin\.h)/([^/]+)/([^.]+)%(\.git|)',
-          \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le',
-          \  'http://\1/\2/\3/blob/%rh/%pt%{#L|}ls%{-}le'],
-          \ ['\vhttps?://(ghe\.admin\.h):([^/]+)/([^.]+)',
-          \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le',
-          \  'http://\1/\2/\3/blob/%rh/%pt%{#L|}ls%{-}le'],
+          \ ['\vgit\@(ghe\.admin\.h):([^/]+)/(.{-})%(\.git|)',
+          \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le'],
+          \ ['\vssh://git\@(ghe\.admin\.h)/([^/]+)/(.{-})%(\.git|)',
+          \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le'],
+          \ ['\vhttps?://(ghe\.admin\.h):([^/]+)/(.{-})%(\.git|)',
+          \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le'],
           \]
   endfunction
 
   nnoremap [gita] <Nop>
   nmap <Leader>a [gita]
-  nnoremap <silent> [gita]a :<C-u>Gita status --ignore-submodules<CR>
-  nnoremap <silent> [gita]s :<C-u>Gita status<CR>
-  nnoremap <silent> [gita]c :<C-u>Gita commit<CR>
-  nnoremap <silent> [gita]d :<C-u>Gita diff --ignore-submodules -- %<CR>
-  nnoremap <silent> [gita]l :<C-u>Gita diff-ls --ignore-submodules<CR>
+  nnoremap [gita]a :<C-u>Gita status  --ignore-submodules<CR>
+  nnoremap [gita]s :<C-u>Gita status<CR>
+  nnoremap [gita]c :<C-u>Gita commit<CR>
+  nnoremap [gita]d :<C-u>Gita diff    --ignore-submodules -- %<CR>
+  nnoremap [gita]l :<C-u>Gita diff-ls --ignore-submodules<CR>
 
   call neobundle#untap()
 endif " }}}
