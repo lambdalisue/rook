@@ -2225,17 +2225,17 @@ if neobundle#tap('vim-prettyprint') " {{{
 endif " }}}
 
 if neobundle#tap('vim-vimlint') " {{{
-  call neobundle#config({
-        \ 'depends' : 'ynkdir/vim-vimlparser',
-        \ 'autoload': {
-        \   'commands': [
-        \     'VimLint',
-        \   ],
-        \   'filetypes': [
-        \     'vim', 'vimspec',
-        \   ],
-        \ }})
-
+  "call neobundle#config({
+  "      \ 'depends' : 'ynkdir/vim-vimlparser',
+  "      \ })
+  function! neobundle#tapped.hooks.on_source(bundle)
+    function! s:vimlint_settings()
+      nnoremap <buffer> [vimlint] <Nop>
+      nmap     <buffer> <LocalLeader>l [vimlint]
+      nnoremap <buffer> [vimlint] :<C-u>call vimlint#vimlint(expand('%'))<CR>
+    endfunction
+    autocmd MyAutoCmd FileType vim call s:vimlint_settings()
+  endfunction
   call neobundle#untap()
 endif " }}}
 " }}}
