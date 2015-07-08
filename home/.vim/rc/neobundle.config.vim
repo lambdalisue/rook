@@ -1798,6 +1798,15 @@ if neobundle#tap('vim-gista') " {{{
   call neobundle#untap()
 endif " }}}
 
+if neobundle#tap('vim-fugitive') " {{{
+  call neobundle#config({
+        \ 'augroup': ['fugitive'],
+        \ })
+  function! neobundle#tapped.hooks.on_post_source(bundle)
+    doautocmd fugitive BufNewFile
+  endfunction
+  call neobundle#untap()
+endif " }}}
 if neobundle#tap('committia.vim') " {{{
   call neobundle#config({
         \ 'depends': [
