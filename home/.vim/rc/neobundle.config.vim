@@ -23,10 +23,11 @@ if neobundle#tap('vimproc.vim') " {{{
   call neobundle#config({
         \ 'build_commands': 'make',
         \ 'build': {
-        \   'windows' : 'make -f make_mingw32.mak',
+        \   'windows' : 'tools\\update-dll-mingw',
         \   'cygwin'  : 'make -f make_cygwin.mak',
         \   'mac'     : 'make -f make_mac.mak',
-        \   'unix'    : 'make -f make_unix.mak',
+        \   'linux'   : 'make',
+        \   'unix'    : 'gmake',
         \ }})
   call neobundle#untap()
 endif " }}}
@@ -714,8 +715,9 @@ if neobundle#tap('vim-watchdogs') " {{{
         \ })
 
   function! neobundle#tapped.hooks.on_source(bundle)
-    let g:watchdogs_check_BufWritePost_enable = 1
-    let g:watchdogs_check_CursorHold_enable = 1
+    let g:watchdogs_check_BufWritePost_enable = 0
+    let g:watchdogs_check_BufWritePost_enable_on_wq = 0
+    let g:watchdogs_check_CursorHold_enable = 0
 
     let g:quickrun_config = get(g:, 'quickrun_config', {})
     let g:quickrun_config = extend(g:quickrun_config, {
@@ -2225,9 +2227,11 @@ if neobundle#tap('vim-prettyprint') " {{{
 endif " }}}
 
 if neobundle#tap('vim-vimlint') " {{{
-  "call neobundle#config({
-  "      \ 'depends' : 'ynkdir/vim-vimlparser',
-  "      \ })
+  call neobundle#config({
+        \ 'depends' : 'ynkdir/vim-vimlparser',
+        \ 'autoload': {
+        \   'filetypes': ['vim'],
+        \ }})
   function! neobundle#tapped.hooks.on_source(bundle)
     function! s:vimlint_settings()
       nnoremap <buffer> [vimlint] <Nop>
@@ -2236,6 +2240,7 @@ if neobundle#tap('vim-vimlint') " {{{
     endfunction
     autocmd MyAutoCmd FileType vim call s:vimlint_settings()
   endfunction
+
   call neobundle#untap()
 endif " }}}
 " }}}

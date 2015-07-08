@@ -137,7 +137,7 @@ NeoBundle 'osyo-manga/vital-unlocker'
 NeoBundle 'lambdalisue/vital-System-Cache-Unified'
 NeoBundle 'lambdalisue/vital-ArgumentParser'
 NeoBundle 'lambdalisue/vital-VCS-Git'
-NeoBundle 'syngan/vim-vimlint', { 'depends': 'ynkdir/vim-vimlparser' }
+NeoBundleLazy 'syngan/vim-vimlint'
 NeoBundleLazy 'thinca/vim-themis'
 NeoBundleLazy 'thinca/vim-prettyprint'
 NeoBundleLazy 'LeafCage/laptime.vim'
