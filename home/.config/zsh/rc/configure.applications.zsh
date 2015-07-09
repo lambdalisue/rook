@@ -81,6 +81,10 @@ fi
 # anyenv
 if type anyenv > /dev/null 2>&1; then
     eval "$(anyenv init - zsh)"
+elif type pyenv > /dev/null 2>&1; then
+    # pyenv
+    eval "$(pyenv init - zsh)"
+    eval "$(pyenv virtualenv-init - zsh)"
 fi
 
 # xclip

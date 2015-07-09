@@ -19,9 +19,9 @@ savefig.edgecolor : white
 # hybrid color scheme
 axes.color_cycle  : 282a2e, a54242, 8c9440, de935f, 5f819d, 85678f, 5e8d87, 707880, 373b41, cc6666, b5bd68, f0c674, 81a2be, b294bb, 8abeb7, c5c8c6
 
-figure.figsize    : 9,4
+figure.figsize    : 16,9
 axes.linewidth    : 0.5
-legend.fontsize   : 6
+legend.fontsize   : 12
 legend.frameon    : False
 
 mathtext.default  : regular
@@ -33,7 +33,6 @@ savefig.dpi : 300
 svg.fonttype  : none
 #svg.fonttype  : path
 
-#font.size       : 6
 font.size       : 12
 font.family     : sans-serif
 font.sans-serif : Arial, Droid Sans
