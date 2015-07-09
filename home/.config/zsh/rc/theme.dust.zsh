@@ -3,6 +3,7 @@
 #
 if ! type timeout > /dev/null 2>&1; then
     timeout() {
+        shift
         $@
     }
 fi
