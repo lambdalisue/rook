@@ -5,6 +5,7 @@ c.InteractiveShellApp.exec_lines = [
     'import scipy as sp',
     'import pandas as pd',
     'import matplotlib.pyplot as pl',
+    'from IPython.display import display, HTML',
 ]
 c.InteractiveShell.autoindent = True
 c.InteractiveShell.editor = 'vim'
