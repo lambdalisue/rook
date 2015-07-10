@@ -87,11 +87,6 @@ elif type pyenv > /dev/null 2>&1; then
     eval "$(pyenv virtualenv-init - zsh)"
 fi
 
-# xclip
-if type xclip > /dev/null 2>&1; then
-    alias xclip="xclip -selection clipboard"
-fi
-
 # go
 export GOPATH="$HOME/.go"
 
