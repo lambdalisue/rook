@@ -177,7 +177,6 @@ if [ $(uname) = "Darwin" ]; then
 else
     __add_path "${ZDOTDIR}/tools/pt/pt_linux_amd64"
 fi
-__add_path "${ZDOTDIR}/tools/clip"
 
 # source external settings
 for filename in ${ZDOTDIR}/rc/*.zsh; do
