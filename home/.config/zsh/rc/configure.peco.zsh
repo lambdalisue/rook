@@ -56,7 +56,7 @@ function peco-select-directory() {
         sed 's/^[0-9]*\s*//' |
         peco --query "$1"
     )"
-    [[ -n "$selected" ]] && __peco_print "cd \"$selected\""
+    [[ -n "$selected" ]] && __peco_print "cd $selected"
 }
 function __peco-select-directory() {
     __peco_zle "$(peco-select-directory "$LBUFFER")" 1
