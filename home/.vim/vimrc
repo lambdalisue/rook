@@ -527,8 +527,6 @@ else
   call s:load_source($MY_VIMRUNTIME . '/rc/neobundle.config.vim')
 
   call neobundle#end()
-
-  NeoBundleCheck
 endif
 " }}}
 
