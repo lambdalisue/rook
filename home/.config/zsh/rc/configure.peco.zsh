@@ -53,10 +53,10 @@ bindkey '^X^R' __peco-select-history
 function peco-select-directory() {
     local selected="$(
         cdr -l |
-        awk '{ print $2 }' |
+        sed 's/^[0-9]*\s*//' |
         peco --query "$1"
     )"
-    [[ -n "$selected" ]] && __peco_print "cd $selected"
+    [[ -n "$selected" ]] && __peco_print "cd \"$selected\""
 }
 function __peco-select-directory() {
     __peco_zle "$(peco-select-directory "$LBUFFER")" 1
