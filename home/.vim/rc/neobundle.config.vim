@@ -1669,12 +1669,14 @@ if neobundle#tap('vim-gita') " {{{
         \ }})
   function! neobundle#tapped.hooks.on_source(bundle)
     let g:gita#features#browse#extra_translation_patterns = [
-          \ ['\vgit\@(ghe\.admin\.h):([^/]+)/(.{-})%(\.git|)',
-          \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le'],
-          \ ['\vssh://git\@(ghe\.admin\.h)/([^/]+)/(.{-})%(\.git|)',
-          \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le'],
-          \ ['\vhttps?://(ghe\.admin\.h):([^/]+)/(.{-})%(\.git|)',
-          \  'http://\1/\2/\3/blob/%rb/%pt%{#L|}ls%{-}le'],
+          \ ['\vhttps?://(ghe\.admin\.h)/(.{-})/(.{-})%(\.git)?$',
+          \  'https://\1/\2/\3/blob/%br/%pt%{#L|}ls%{-L|}le'],
+          \ ['\vgit://(ghe\.admin\.h)/(.{-})/(.{-})%(\.git)?$',
+          \  'https://\1/\2/\3/blob/%br/%pt%{#L|}ls%{-L|}le'],
+          \ ['\vgit\@(ghe\.admin\.h):(.{-})/(.{-})%(\.git)?$',
+          \  'https://\1/\2/\3/blob/%br/%pt%{#L|}ls%{-L|}le'],
+          \ ['\vssh://git\@(ghe\.admin\.h)/(.{-})/(.{-})%(\.git)?$',
+          \  'https://\1/\2/\3/blob/%br/%pt%{#L|}ls%{-L|}le'],
           \]
   endfunction
 
