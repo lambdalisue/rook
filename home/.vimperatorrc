@@ -4,3 +4,5 @@ nmap m f
 "   gvim is aliased in my zshrc in Mac OS X
 set editor='zsh -lc "gvim -f \$*" gvim '
 
+ignorekeys clear
+ignorekeys add localhost:9999

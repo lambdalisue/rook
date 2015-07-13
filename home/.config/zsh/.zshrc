@@ -162,6 +162,7 @@ __add_manpath() {
 }
 __add_path "$HOME/.go/bin"
 __add_path "$HOME/.cabal/bin"
+__add_path "$HOME/.pyenv/bin"
 __add_path "$HOME/.anyenv/bin"
 __add_path "$HOME/.phantomjs/bin"
 __add_path "$HOME/.vim/bundle/vim-themis/bin"

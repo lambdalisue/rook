@@ -6,6 +6,7 @@ typeset -U path
 #  -: follow the symbol links
 #  /: ignore files
 path=(
+    $ZDOTDIR/tools/clip(N-/)
     $HOME/.local/bin(N-/)
     /opt/local/bin(N-/)
     /usr/local/bin(N-/)

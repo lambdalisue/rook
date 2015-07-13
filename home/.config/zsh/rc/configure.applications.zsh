@@ -81,11 +81,10 @@ fi
 # anyenv
 if type anyenv > /dev/null 2>&1; then
     eval "$(anyenv init - zsh)"
-fi
-
-# xclip
-if type xclip > /dev/null 2>&1; then
-    alias xclip="xclip -selection clipboard"
+elif type pyenv > /dev/null 2>&1; then
+    # pyenv
+    eval "$(pyenv init - zsh)"
+    eval "$(pyenv virtualenv-init - zsh)"
 fi
 
 # go
