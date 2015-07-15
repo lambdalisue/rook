@@ -111,6 +111,7 @@ NeoBundleLazy 'jelera/vim-javascript-syntax'
 NeoBundleLazy 'jason0x43/vim-js-indent'
 NeoBundleLazy 'leafgarland/typescript-vim'
 NeoBundleLazy 'thinca/vim-ft-help_fold'
+NeoBundleLazy 'vim-scripts/applescript.vim'
 
 " filetype specific
 NeoBundleLazy 'LaTeX-Box-Team/LaTeX-Box'

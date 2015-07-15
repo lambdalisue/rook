@@ -23,3 +23,4 @@ autocmd BufNewFile,BufRead *.coffee   set filetype=coffeescript
 autocmd BufNewFile,BufRead Cakefile   set filetype=coffeescript
 
 autocmd BufNewFile,BufRead *.tex      set filetype=tex
+autocmd BufNewFile,BufRead *.applescript *.scpt set filetype=applescript

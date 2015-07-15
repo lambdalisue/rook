@@ -1910,6 +1910,16 @@ if neobundle#tap('vim-ft-help_fold') " {{{
   call neobundle#untap()
 endif " }}}
 
+if neobundle#tap('applescript.vim') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'filetypes': [
+        \     'applescript',
+        \   ],
+        \ }})
+  call neobundle#untap()
+endif " }}}
+
 " }}}
 
 " filetype specific {{{
