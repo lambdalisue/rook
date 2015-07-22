@@ -171,13 +171,13 @@ __prompt_dust_get_userinfo() {
     fi
     if [[ $(id -u) -eq 0 ]]; then
         if [ -n "$host" -a -n "$user" ]; then
-            __prompt_dust_get_segment "$user" $fcolor_root $kcolor_root
+            __prompt_dust_get_segment "%{%B%}$user%{%b%}" $fcolor_root $kcolor_root
             echo -en "@"
             __prompt_dust_get_segment "$host" $fcolor_host $kcolor_host
         elif [ -n "$host" ]; then
             __prompt_dust_get_segment "$host" $fcolor_host $kcolor_host
         elif [ -n "$user" ]; then
-            __prompt_dust_get_segment "$user" $fcolor_root $kcolor_root
+            __prompt_dust_get_segment "%{%B%}$user%{%b%}" $fcolor_root $kcolor_root
         fi
     else
         if [ -n "$host" -a -n "$user" ]; then
