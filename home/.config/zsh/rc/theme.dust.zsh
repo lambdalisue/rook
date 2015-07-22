@@ -154,41 +154,30 @@ __prompt_dust_configure_prompt() {
 }
 
 __prompt_dust_get_userinfo() {
-    local fcolor_root='red'
-    local bcolor_root=''
     local fcolor_user=245
-    local bcolor_user=''
+    local kcolor_user=''
     local fcolor_host='green'
-    local bcolor_host=''
+    local kcolor_host=''
     # show hostname only when user connect to a remote machine
     local host=""
     if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
         host="%m"
     fi
-    local user=""
-    if [[ "$USER" != "alisue" ]]; then
-        user="%n"
+    local user="%n"
+    # emphasize if the user is root
+    if [ $(id -u) -eq 0 ]; then
+        fcolor_user='white'
+        kcolor_user='red'
+        user="%{%B%} $user %{%b%}"
     fi
-    if [[ $(id -u) -eq 0 ]]; then
-        if [ -n "$host" -a -n "$user" ]; then
-            __prompt_dust_get_segment "%{%B%}$user%{%b%}" $fcolor_root $kcolor_root
-            echo -en "@"
-            __prompt_dust_get_segment "$host" $fcolor_host $kcolor_host
-        elif [ -n "$host" ]; then
-            __prompt_dust_get_segment "$host" $fcolor_host $kcolor_host
-        elif [ -n "$user" ]; then
-            __prompt_dust_get_segment "%{%B%}$user%{%b%}" $fcolor_root $kcolor_root
-        fi
-    else
-        if [ -n "$host" -a -n "$user" ]; then
-            __prompt_dust_get_segment "$user" $fcolor_user $kcolor_user
-            echo -en "@"
-            __prompt_dust_get_segment "$host" $fcolor_host $kcolor_host
-        elif [ -n "$host" ]; then
-            __prompt_dust_get_segment "$host" $fcolor_host $kcolor_host
-        elif [ -n "$user" ]; then
-            __prompt_dust_get_segment "$user" $fcolor_user $kcolor_user
-        fi
+    if [ -n "$host" -a -n "$user" ]; then
+        __prompt_dust_get_segment "$user" $fcolor_user $kcolor_user
+        echo -en "@"
+        __prompt_dust_get_segment "$host" $fcolor_host $kcolor_host
+    elif [ -n "$host" ]; then
+        __prompt_dust_get_segment "$host" $fcolor_host $kcolor_host
+    elif [ -n "$user" ]; then
+        __prompt_dust_get_segment "$user" $fcolor_user $kcolor_user
     fi
 }
 __prompt_dust_get_pwd() {
