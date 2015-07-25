@@ -73,7 +73,7 @@ setopt no_flow_control       # do not use C-s/C-q
 #}}}
 
 # Completion {{{
-autoload -Uz compinit && compinit -uC
+autoload -Uz compinit && compinit -C
 
 setopt complete_in_word      # complete at carret position
 setopt glob_complete         # complete without expanding glob
