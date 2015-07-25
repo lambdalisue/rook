@@ -1,0 +1,25 @@
+# http://www-cryst.bioc.cam.ac.uk/members/zbyszek/figures_pymol
+
+# better antialias (ray will be longer)
+set antialias, 2
+
+# background transparent
+set ray_opaque_background, off
+
+# better cartoon
+set cartoon_fancy_helices, 1
+set cartoon_side_chain_helper, on
+
+# better RNA/DNA
+set cartoon_ring_mode, 3
+set cartoon_ring_finder, 1
+set cartoon_ladder_mode, 1
+set cartoon_nucleic_acid_mode, 4
+set cartoon_ring_transparency, 0.5
+
+# black/white figure
+#bg_color white
+#set ray_trance_mode, 1
+#set ambient, 1
+#set reflect, 0
+#set two_sided_lighting, on

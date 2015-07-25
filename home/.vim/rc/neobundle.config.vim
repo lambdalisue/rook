@@ -317,6 +317,15 @@ if neobundle#tap('neocomplete.vim') " {{{
   call neobundle#untap()
 endif " }}}
 
+if neobundle#tap('neoinclude.vim') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'on_source': 'neocomplete.vim',
+        \ }})
+
+  call neobundle#untap()
+endif " }}}
+
 if neobundle#tap('echodoc.vim') " {{{
   call neobundle#config({
         \ 'autoload': {
@@ -1805,6 +1814,7 @@ if neobundle#tap('vim-fugitive') " {{{
   endfunction
   call neobundle#untap()
 endif " }}}
+
 if neobundle#tap('committia.vim') " {{{
   call neobundle#config({
         \ 'depends': [

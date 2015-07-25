@@ -117,8 +117,14 @@ zstyle ':completion:*' verbose yes
 # - _ignored:       complete from ignored
 # - _approximate:   complete from approximate suggestions
 # - _prefix:        complete without caring the characters after carret
-zstyle ':completion:*' completer _oldlist _complete \
-    _match _history _ignored _approximate _prefix
+zstyle ':completion:*' completer \
+    _complete \
+    _match \
+    _approximate \
+    _oldlist \
+    _history \
+    _ignored \
+    _prefix
 #}}}
 
 # Key mappings {{{

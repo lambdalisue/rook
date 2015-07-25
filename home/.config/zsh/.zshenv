@@ -35,6 +35,7 @@ sudo_path=(
 # Add completion path
 version=$(zsh --version | awk '{print $2}')
 fpath=(
+    $ZDOTDIR/completions(N-/)
     $HOME/.homesick/repos/homeshick/completions(N-/)
     /usr/local/share/zsh/$version/functions(N-/)
     $fpath
