@@ -608,11 +608,11 @@ if neobundle#tap('lightline.vim') " {{{
     let g:lightline.my.featured_filetype_pattern = printf('^\%%(%s\)', join([
           \ 'help', 'qf',
           \ 'unite', 'vimfiler', 'vimshell',
-          \ 'gundo', 'tagbar',
+          \ 'tagbar',
           \ 'gita-.\+', 'gista-.\+',
           \], '\|'))
     let g:lightline.my.featured_bufname_pattern = printf('^\%%(%s\)', join([
-          \ '__Tagbar__', '__Gundo__', '__Gundo_Preview__',
+          \ '__Tagbar__',
           \], '\|'))
     function! g:lightline.my.is_featured() " {{{
       " check filetype
@@ -1437,22 +1437,19 @@ if neobundle#tap('vimfiler.vim') " {{{
   call neobundle#untap()
 endif " }}}
 
-if neobundle#tap('gundo.vim') " {{{
+if neobundle#tap('undotree.vim') " {{{
   call neobundle#config({
         \ 'autoload': {
         \   'commands': [
-        \     'Gundo',
-        \     'GundoToggle',
+        \     'UndotreeToggle',
         \   ],
         \ }})
 
-  nnoremap [gundo] <Nop>
-  nmap <Leader>g [gundo]
-  nnoremap <silent> [gundo] :<C-u>GundoToggle<CR>
+  nnoremap [undotree] <Nop>
+  nmap <Leader>u [undotree]
+  nnoremap <silent> [undotree] :<C-u>UndotreeToggle<CR>
 
   function! neobundle#tapped.hooks.on_source(bundle)
-    " disable auto preview, press 'p' to force preview
-    let g:gundo_auto_preview = 0
   endfunction
   call neobundle#untap()
 endif " }}}
