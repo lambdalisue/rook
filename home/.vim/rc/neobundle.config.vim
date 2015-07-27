@@ -300,8 +300,26 @@ if neobundle#tap('incsearch.vim') " {{{
   call neobundle#untap()
 endif " }}}
 
+if neobundle#tap('deoplete.nvim') " {{{
+  call neobundle#config({
+        \ 'disabled': !has('nvim'),
+        \ 'autoload': {
+        \   'insert': 1,
+        \ }})
+
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:deoplete#enable_at_startup = 1
+    let g:deoplete#enable_smart_case = 1
+    let g:deoplete#enable_underbar_completion = 1
+    let g:deoplete#enable_auto_close_preview = 0
+  endfunction
+
+  call neobundle#untap()
+endif " }}}
+
 if neobundle#tap('neocomplete.vim') " {{{
   call neobundle#config({
+        \ 'disabled': has('nvim'),
         \ 'autoload': {
         \   'insert': 1,
         \ }})
@@ -311,7 +329,6 @@ if neobundle#tap('neocomplete.vim') " {{{
     let g:neocomplete#enable_smart_case = 1
     let g:neocomplete#enable_underbar_completion = 1
     let g:neocomplete#enable_auto_close_preview = 0
-    let g:neocomplete#disable_auto_complete = 1
   endfunction
 
   call neobundle#untap()
@@ -321,6 +338,15 @@ if neobundle#tap('neoinclude.vim') " {{{
   call neobundle#config({
         \ 'autoload': {
         \   'on_source': 'neocomplete.vim',
+        \ }})
+
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('neco-vim') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'filetype': ['vim', 'vimspec'],
         \ }})
 
   call neobundle#untap()
@@ -1807,10 +1833,9 @@ endif " }}}
 
 if neobundle#tap('vim-fugitive') " {{{
   call neobundle#config({
-        \ 'augroup': ['fugitive'],
+        \ 'disabled': 1,
         \ })
   function! neobundle#tapped.hooks.on_post_source(bundle)
-    doautocmd fugitive BufNewFile
   endfunction
   call neobundle#untap()
 endif " }}}
