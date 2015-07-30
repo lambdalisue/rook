@@ -14,8 +14,14 @@ if exists('&colorcolumn')
 endif
 
 function! s:Jq(...)
+  if !executable('jq')
+    echohl WarningMsg
+    echo 'No executable "jq" is found. Install via npm install -g jq'
+    echohl None
+    return
+  endif
   let fname = get(a:000, 0, '.')
   silent vnew
-  silent execute printf('%%!jq "%s", fname)
+  silent execute printf('%%!jq "%s"', fname)
 endfunction
 command! -nargs=? Jq call s:Jq(<f-args>)
