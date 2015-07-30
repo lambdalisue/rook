@@ -2155,8 +2155,39 @@ if neobundle#tap('perldoc-vim') " {{{
   call neobundle#untap()
 endif " }}}
 
-if neobundle#tap('typescript-tools') " {{{
+if neobundle#tap('vim-js-indent') " {{{
   call neobundle#config({
+        \ 'autoload': {
+        \   'filetypes': [
+        \     'javascript',
+        \     'typescript',
+        \     'html',
+        \     'djangohtml',
+        \   ],
+        \ }})
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('typescript-vim') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'filetypes': [
+        \     'typescript',
+        \     'html',
+        \     'djangohtml',
+        \   ],
+        \ }})
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:typescript_indent_disable = 1
+    let g:typescript_compiler_options = '-sourcemap'
+  endfunction
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('tsuquyomi') " {{{
+  call neobundle#config({
+        \ 'disabled': v:version < 704,
+        \ 'depends': ['Shougo/vimproc.vim'],
         \ 'autoload': {
         \   'filetypes': [
         \     'typescript',
@@ -2164,9 +2195,52 @@ if neobundle#tap('typescript-tools') " {{{
         \ },
         \ 'build_commands': 'npm',
         \ 'build': {
-        \   'mac'     : 'npm install -g typescript-tools',
-        \   'unix'    : 'npm install -g typescript-tools',
+        \   'mac'     : 'npm install -g typescript',
+        \   'unix'    : 'npm install -g typescript',
         \ }})
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:typescript_indent_disable = 1
+    let g:typescript_compiler_options = '-sourcemap'
+
+    function! s:tsuquyomi_configure()
+      nmap <buffer> <LocalLeader>R <Plug>(TsuquyomiRenameSymbolC)
+      if exists('&ballooneval')
+        setl ballooneval
+        setl balloonexpr=tsuquyomi#balloonexpr()
+      endif
+    endfunction
+    autocmd MyAutoCmd FileType typescript call s:tsuquyomi_configure()
+  endfunction
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('vim-json') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'filetypes': [
+        \     'json',
+        \   ],
+        \ },
+        \ 'external_commands': 'git',
+        \ })
+  function! neobundle#tapped.hooks.on_post_source(bundle)
+    autocmd MyAutoCmd FileType json Vison
+  endfunction
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('vison') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'filetypes': [
+        \     'json',
+        \   ],
+        \ },
+        \ 'external_commands': 'git',
+        \ })
+  function! neobundle#tapped.hooks.on_post_source(bundle)
+    autocmd MyAutoCmd FileType json Vison
+  endfunction
   call neobundle#untap()
 endif " }}}
 
