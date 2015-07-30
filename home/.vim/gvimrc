@@ -62,4 +62,9 @@ if has('gui_macvim')
   set antialias
   set imdisable
   set transparency=2
+  set guifont=RictyForPowerline:h10
+else
+  set antialias
+  set imdisable
+  set guifont=RictyForPowerline\ 10
 endif
