@@ -6,4 +6,4 @@ if [[ ! -d $NOTEBOOK_HOME ]]; then
 fi
 cd $NOTEBOOK_HOME
 
-ipython3 notebook &
+ipython3 notebook

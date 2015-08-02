@@ -550,3 +550,9 @@ c = get_config()
 c.NotebookApp.ip = '*'
 c.NotebookApp.open_browser = False
 c.NotebookApp.port = 9999
+
+try:
+    import ipymd
+    c.NotebookApp.contents_manager_class = 'ipymd.IPymdContentsManager'
+except ImportError:
+    pass
