@@ -2307,6 +2307,21 @@ if neobundle#tap('colorswatch.vim') " {{{
         \ }})
   call neobundle#untap()
 endif " }}}
+
+if neobundle#tap('vinarise.vim') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'commands': [
+        \     'Vinarise',
+        \     'VinarisePluginDump',
+        \     'VinarisePluginViewBitmapView',
+        \   ],
+        \ }})
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:vinarise_enable_auto_detect = 1
+  endfunction
+  call neobundle#untap()
+endif " }}}
 " }}}
 
 " Vim plugin development " {{{

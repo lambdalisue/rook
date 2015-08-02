@@ -137,6 +137,7 @@ NeoBundleLazy 'lambdalisue/shareboard.vim'
 
 " misc
 NeoBundleLazy 'cocopon/colorswatch.vim'
+NeoBundle     'Shougo/vinarise.vim'
 
 " Vim plugin development
 NeoBundle 'vim-jp/vital.vim'

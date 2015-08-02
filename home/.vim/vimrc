@@ -207,7 +207,7 @@ autocmd MyAutoCmd BufWritePost,BufWinLeave ?* call s:mkview()
 autocmd MyAutoCmd BufWinEnter ?* call s:loadview()
 
 " use clipboard register
-if has('unnamedplus')
+if has('unnamedplus') || has('nvim')
   set clipboard=unnamedplus,unnamed
 else
   set clipboard=unnamed
