@@ -1,5 +1,11 @@
-# Execute IPython Notebook if it is available
-RUN_SERVER="$HOME/.ipython/profile_default/run_notebook_server.sh"
-if [[ -x "ipython" ]] && [[ -x "$RUN_SERVER" ]]; then
-    $RUN_SERVER
+#!/usr/bin/env bash
+IPYTHON="$HOME/.anyenv/env/pyenv/shims/ipython"
+NOTEBOOK_HOME="$HOME/Notebook"
+
+if [[ -x "$IPYTHON" ]]; then
+    if [[ ! -d $NOTEBOOK_HOME ]]; then
+        mkdir -p "$NOTEBOOK_HOME"
+    fi
+    cd $NOTEBOOK_HOME
+    $IPYTHON notebook &
 fi
