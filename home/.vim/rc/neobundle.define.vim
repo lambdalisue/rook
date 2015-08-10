@@ -78,6 +78,7 @@ NeoBundleLazy 'glidenote/memolist.vim'
 NeoBundleLazy 'godlygeek/tabular'
 NeoBundleLazy 'deris/vim-rengbang'
 NeoBundleLazy 'lilydjwg/colorizer'
+NeoBundleLazy 'itchyny/calendar.vim'
 
 " unite sources
 NeoBundleLazy 'Shougo/neomru.vim'

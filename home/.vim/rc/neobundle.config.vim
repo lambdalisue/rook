@@ -1651,6 +1651,28 @@ if neobundle#tap('colorizer') " {{{
 
   call neobundle#untap()
 endif " }}}
+
+if neobundle#tap('calendar.vim') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'commands': [
+        \     'Calendar',
+        \   ],
+        \ }})
+
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:calendar_frame = 'default'
+    let g:calendar_google_calendar = 1
+    let g:calendar_google_task = 1
+  endfunction
+
+  nnoremap [calendar] <Nop>
+  nmap <Leader>c [calendar]
+  nnoremap [calendar]c :<C-u>Calendar<CR>
+  nnoremap [calendar]t :<C-u>Calendar -view=clock<CR>
+
+  call neobundle#untap()
+endif " }}}
 " }}}
 
 " unite sources {{{
