@@ -1668,8 +1668,8 @@ if neobundle#tap('calendar.vim') " {{{
 
   nnoremap [calendar] <Nop>
   nmap <Leader>c [calendar]
-  nnoremap [calendar]c :<C-u>Calendar<CR>
-  nnoremap [calendar]t :<C-u>Calendar -view=clock<CR>
+  nnoremap <silent> [calendar]c :<C-u>Calendar<CR>
+  nnoremap <silent> [calendar]t :<C-u>Calendar -view=clock<CR>
 
   call neobundle#untap()
 endif " }}}
