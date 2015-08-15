@@ -46,6 +46,7 @@ if [[ -n "$pdftk_arguments" ]]; then
         --save \
         --confirm-overwrite \
         )
+    out=$(printf %q "$out")
     if [[ $? -eq 0 ]]; then
         eval $PDFTK $pdftk_arguments cat output "$out"
         if [[ $? -ne 0 ]]; then
