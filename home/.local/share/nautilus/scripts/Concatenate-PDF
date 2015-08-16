@@ -1,0 +1,62 @@
+#!/bin/bash
+#==============================================================================
+#
+# Nautlius plugin to concatenate pdfs into a single pdf
+#
+# Author:  Alisue <lambdalisue@hashhnote.net>
+# License: MIT license
+#
+#==============================================================================
+PDFTK='pdftk'
+
+#==============================================================================
+
+# Validate pdftk
+if ! type "$PDFTK" >/dev/null 2>&1; then
+    zenity --error \
+        --title "Requirements not found" \
+        --text "No executable 'pdftk' is found. Install it first."
+    exit 1
+fi
+
+#
+# Note:
+#
+# NAUTILUS_SCRIPT_SELECTED_FILE_PATHS
+#   newline delimited paths for selected files (only if local)
+# NAUTILUS_SCRIPT_SELECTED_URIS
+#   newline delimited URIs for selected files
+# NAUTLIUS_SCRIPT_CURRENT_URI
+#   current location
+#
+
+# Convert a newline separated string into an array
+IFS_saved=$IFS
+IFS=$'\n'
+pdftk_arguments=""
+for uri in $NAUTILUS_SCRIPT_SELECTED_URIS; do
+    pdftk_arguments="$pdftk_arguments \"$uri\""
+done
+IFS=$IFS_saved
+
+if [[ -n "$pdftk_arguments" ]]; then
+    out=$(zenity --file-selection \
+        --title "Select an output PDF file" \
+        --filename "output.pdf" \
+        --save \
+        --confirm-overwrite \
+        )
+    out=$(printf %q "$out")
+    if [[ $? -eq 0 ]]; then
+        eval $PDFTK $pdftk_arguments cat output "$out"
+        if [[ $? -ne 0 ]]; then
+            zenity --error \
+                --title "Failed to execute the command" \
+                --text "$PDFTK $pdftk_arguments cat output \"$out\""
+        fi
+    fi
+else
+    zenity --warning \
+        --title "No input files" \
+        --text  "No PDF files has been selected."
+fi

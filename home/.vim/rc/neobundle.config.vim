@@ -604,7 +604,7 @@ if neobundle#tap('lightline.vim') " {{{
           \   ],
           \   'right': [
           \     [ 'close' ],
-          \     [ 'pyenv', 'git_branch', 'git_traffic', 'git_status', 'cwd' ],
+          \     [ 'pyenv', 'git_debug', 'git_branch', 'git_traffic', 'git_status', 'cwd' ],
           \   ],
           \ },
           \ 'component_visible_condition': {
@@ -623,6 +623,7 @@ if neobundle#tap('lightline.vim') " {{{
           \   'fileformat': 'g:lightline.my.fileformat',
           \   'fileencoding': 'g:lightline.my.fileencoding',
           \   'filetype': 'g:lightline.my.filetype',
+          \   'git_debug': 'g:lightline.my.git_debug',
           \   'git_branch': 'g:lightline.my.git_branch',
           \   'git_traffic': 'g:lightline.my.git_traffic',
           \   'git_status': 'g:lightline.my.git_status',
@@ -702,6 +703,13 @@ if neobundle#tap('lightline.vim') " {{{
     endfunction " }}}
     function! g:lightline.my.fileencoding() "{{{
       return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+    endfunction " }}}
+    function! g:lightline.my.git_debug() " {{{
+      if neobundle#is_sourced('vim-gita')
+        return gita#statusline#debug()
+      else
+        return ''
+      endif
     endfunction " }}}
     function! g:lightline.my.git_branch() " {{{
       if neobundle#is_sourced('vim-gita')
@@ -1648,6 +1656,28 @@ if neobundle#tap('colorizer') " {{{
   function! neobundle#tapped.hooks.on_source(bundle)
     let g:colorizer_nomap = 1
   endfunction
+
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('calendar.vim') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'commands': [
+        \     'Calendar',
+        \   ],
+        \ }})
+
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:calendar_frame = 'default'
+    let g:calendar_google_calendar = 1
+    let g:calendar_google_task = 1
+  endfunction
+
+  nnoremap [calendar] <Nop>
+  nmap <Leader>c [calendar]
+  nnoremap <silent> [calendar]c :<C-u>Calendar<CR>
+  nnoremap <silent> [calendar]t :<C-u>Calendar -view=clock<CR>
 
   call neobundle#untap()
 endif " }}}

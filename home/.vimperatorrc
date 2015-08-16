@@ -6,3 +6,4 @@ set editor='zsh -lc "gvim -f \$*" gvim '
 
 ignorekeys clear
 ignorekeys add localhost:9999
+ignorekeys add lambdalisue.github.io/rehighlight
