@@ -2193,6 +2193,7 @@ if neobundle#tap('tsuquyomi') " {{{
         \     'typescript',
         \   ],
         \ },
+        \ 'external_commands': 'node',
         \ 'build_commands': 'npm',
         \ 'build': {
         \   'mac'     : 'npm install -g typescript',
@@ -2203,6 +2204,9 @@ if neobundle#tap('tsuquyomi') " {{{
     let g:typescript_compiler_options = '-sourcemap'
 
     function! s:tsuquyomi_configure()
+      nmap <buffer> <LocalLeader>d <Plug>(TsuquyomiDefinition)
+      nmap <buffer> <LocalLeader>b <Plug>(TsuquyomiGoBack)
+      nmap <buffer> <LocalLeader>r <Plug>(TsuquyomiReferences)
       nmap <buffer> <LocalLeader>R <Plug>(TsuquyomiRenameSymbolC)
       if exists('&ballooneval')
         setl ballooneval
