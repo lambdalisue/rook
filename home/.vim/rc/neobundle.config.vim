@@ -1861,14 +1861,14 @@ if neobundle#tap('vim-gista') " {{{
   call neobundle#untap()
 endif " }}}
 
-if neobundle#tap('vim-fugitive') " {{{
-  call neobundle#config({
-        \ 'disabled': 1,
-        \ })
-  function! neobundle#tapped.hooks.on_post_source(bundle)
-  endfunction
-  call neobundle#untap()
-endif " }}}
+"if neobundle#tap('vim-fugitive') " {{{
+"  call neobundle#config({
+"        \ 'disabled': 1,
+"        \ })
+"  function! neobundle#tapped.hooks.on_post_source(bundle)
+"  endfunction
+"  call neobundle#untap()
+"endif " }}}
 
 if neobundle#tap('committia.vim') " {{{
   call neobundle#config({
@@ -2216,24 +2216,23 @@ endif " }}}
 
 if neobundle#tap('tsuquyomi') " {{{
   call neobundle#config({
-        \ 'disabled': v:version < 704,
-        \ 'depends': ['Shougo/vimproc.vim'],
+        \ 'vim_version': '7.4',
+        \ 'depends': 'Shougo/vimproc.vim',
         \ 'autoload': {
-        \   'filetypes': [
-        \     'typescript',
-        \   ],
+        \   'filetypes': 'typescript',
         \ },
         \ 'external_commands': 'node',
         \ 'build_commands': 'npm',
         \ 'build': {
-        \   'mac'     : 'npm install -g typescript',
-        \   'unix'    : 'npm install -g typescript',
-        \ }})
-  function! neobundle#tapped.hooks.on_source(bundle)
+        \   'mac':  'npm install -g typescript',
+        \   'unix': 'npm install -g typescript',
+        \ },
+        \})
+  function! neobundle#tapped.hooks.on_post_source(bundle) abort
     let g:typescript_indent_disable = 1
     let g:typescript_compiler_options = '-sourcemap'
 
-    function! s:tsuquyomi_configure()
+    function! s:tsuquyomi_configure() abort
       nmap <buffer> <LocalLeader>d <Plug>(TsuquyomiDefinition)
       nmap <buffer> <LocalLeader>b <Plug>(TsuquyomiGoBack)
       nmap <buffer> <LocalLeader>r <Plug>(TsuquyomiReferences)
@@ -2244,21 +2243,6 @@ if neobundle#tap('tsuquyomi') " {{{
       endif
     endfunction
     autocmd MyAutoCmd FileType typescript call s:tsuquyomi_configure()
-  endfunction
-  call neobundle#untap()
-endif " }}}
-
-if neobundle#tap('vim-json') " {{{
-  call neobundle#config({
-        \ 'autoload': {
-        \   'filetypes': [
-        \     'json',
-        \   ],
-        \ },
-        \ 'external_commands': 'git',
-        \ })
-  function! neobundle#tapped.hooks.on_post_source(bundle)
-    autocmd MyAutoCmd FileType json Vison
   endfunction
   call neobundle#untap()
 endif " }}}
@@ -2325,6 +2309,24 @@ if neobundle#tap('shareboard.vim') " {{{
   endfunction
   autocmd MyAutoCmd FileType pandoc,rst,text,markdown
         \ call s:shareboard_settings()
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('previm') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'commands': [
+        \     'PrevimOpen',
+        \   ],
+        \ },
+        \})
+
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let txt2html = expand('~/.config/zsh/tools/txt2html/txt2html')
+    if filereadable(txt2html)
+      let g:shareboard_command = txt2html
+    endif
+  endfunction
   call neobundle#untap()
 endif " }}}
 
@@ -2398,9 +2400,10 @@ if neobundle#tap('vim-vimlint') " {{{
         \ 'depends' : 'ynkdir/vim-vimlparser',
         \ 'autoload': {
         \   'filetypes': ['vim'],
-        \ }})
-  function! neobundle#tapped.hooks.on_source(bundle)
-    function! s:vimlint_settings()
+        \ },
+        \})
+  function! neobundle#tapped.hooks.on_post_source(bundle) abort
+    function! s:vimlint_settings() abort
       nnoremap <buffer> [vimlint] <Nop>
       nmap     <buffer> <LocalLeader>l [vimlint]
       nnoremap <buffer> [vimlint] :<C-u>call vimlint#vimlint(expand('%'))<CR>

@@ -99,9 +99,9 @@ NeoBundleLazy 'dameninngenn/unite-perldoc'
 NeoBundle 'lambdalisue/vim-gita'
 NeoBundleLazy 'airblade/vim-gitgutter'
 NeoBundleLazy 'lambdalisue/vim-gista'
-NeoBundle     'tpope/vim-fugitive'
+"NeoBundle 'tpope/vim-fugitive'
 NeoBundleLazy 'cohama/agit.vim'
-NeoBundleLazy 'lambdalisue/vim-unite-giti'
+NeoBundleLazy 'kmnk/vim-unite-giti'
 NeoBundleLazy 'rhysd/committia.vim'
 
 " syntax
@@ -134,11 +134,12 @@ NeoBundleLazy 'Quramy/tsuquyomi'
 NeoBundleLazy 'elzr/vim-json'
 NeoBundleLazy 'Quramy/vison'
 NeoBundleLazy 'vim-pandoc/vim-pandoc'
-NeoBundleLazy 'lambdalisue/shareboard.vim'
+"NeoBundleLazy 'lambdalisue/shareboard.vim'
+NeoBundleLazy 'kannokanno/previm'
 
 " misc
 NeoBundleLazy 'cocopon/colorswatch.vim'
-NeoBundle     'Shougo/vinarise.vim'
+NeoBundle 'Shougo/vinarise.vim'
 
 " Vim plugin development
 NeoBundle 'vim-jp/vital.vim'

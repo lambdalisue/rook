@@ -498,19 +498,28 @@ let s:remote_bundle_root = $MY_VIMRUNTIME . "/bundle"
 let s:local_bundle_root = $MY_VIMRUNTIME . "/local_bundle"
 let s:neobundle_root = s:remote_bundle_root . "/neobundle.vim"
 
+function! s:call_neobundle() abort
+  call neobundle#begin(s:remote_bundle_root)
+  call neobundle#local(s:local_bundle_root)
+
+  call s:load_source($MY_VIMRUNTIME . '/rc/neobundle.define.vim')
+  call s:load_source($MY_VIMRUNTIME . '/rc/neobundle.config.vim')
+
+  call neobundle#end()
+  filetype plugin indent on
+
+  if !has('vim_starting')
+    " Call on_source hook when reloading .vimrc
+    call neobundle#call_hook('on_source')
+  endif
+endfunction
 if !filereadable(s:neobundle_root . '/plugin/neobundle.vim')
   function! s:install_neobundle()
     let url = "https://github.com/Shougo/neobundle.vim"
     redraw | echo 'Installing neobundle.vim ...'
     call system("git clone " . url . " " . s:neobundle_root)
     execute 'set runtimepath+=' . s:neobundle_root
-    call neobundle#begin(s:remote_bundle_root)
-    call neobundle#local(s:local_bundle_root)
-
-    call s:load_source($MY_VIMRUNTIME . '/rc/neobundle.define.vim')
-    call s:load_source($MY_VIMRUNTIME . '/rc/neobundle.config.vim')
-
-    call neobundle#end()
+    call s:call_neobundle()
     redraw
     echo "Done. Now run :NeoBundleInstall! to install missing plugins."
   endfunction
@@ -520,13 +529,7 @@ else
   if has('vim_starting')
     execute 'set runtimepath+=' . s:neobundle_root
   endif
-  call neobundle#begin(s:remote_bundle_root)
-  call neobundle#local(s:local_bundle_root)
-
-  call s:load_source($MY_VIMRUNTIME . '/rc/neobundle.define.vim')
-  call s:load_source($MY_VIMRUNTIME . '/rc/neobundle.config.vim')
-
-  call neobundle#end()
+  call s:call_neobundle()
 endif
 " }}}
 
