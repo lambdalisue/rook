@@ -2314,19 +2314,13 @@ endif " }}}
 
 if neobundle#tap('previm') " {{{
   call neobundle#config({
+        \ 'depends': 'tyru/open-browser.vim',
         \ 'autoload': {
         \   'commands': [
         \     'PrevimOpen',
         \   ],
         \ },
         \})
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let txt2html = expand('~/.config/zsh/tools/txt2html/txt2html')
-    if filereadable(txt2html)
-      let g:shareboard_command = txt2html
-    endif
-  endfunction
   call neobundle#untap()
 endif " }}}
 
