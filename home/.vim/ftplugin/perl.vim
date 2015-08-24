@@ -29,6 +29,10 @@ au! BufWritePost *.pm call s:check_package_name()
 
 
 if executable("perltidy")
-  nmap <buffer><silent> <LocalLeader>pt  :<C-u>%! perltidy -se<CR>
-  nmap <buffer><silent> <LocalLeader>ptv :<C-u>'<,'>! perltidy -se<CR>
+  nnoremap <buffer> [perltidy] <Nop>
+  nmap <buffer> <LocalLeader>pt [perltidy]t
+  vmap <buffer> <LocalLeader>pt [perltidy]t
+
+  nmap <buffer><silent> [perltidy]t :<C-u>%! perltidy -se<CR>
+  vmap <buffer><silent> [perltidy]t :<C-u>'<,'>! perltidy -se<CR>
 endif

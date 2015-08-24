@@ -7,10 +7,10 @@ noremap <buffer> <C-n> j<CR>zz<C-w>p
 noremap <buffer> <C-p> k<CR>zz<C-w>p
 
 " remove
-nnoremap <silent> <buffer> dd :call <SID>del_entry()<CR>
-nnoremap <silent> <buffer> x :call <SID>del_entry()<CR>
-vnoremap <silent> <buffer> d :call <SID>del_entry()<CR>
-vnoremap <silent> <buffer> x :call <SID>del_entry()<CR>
+nnoremap <silent> <buffer> dd :<C-u>call <SID>del_entry()<CR>
+nnoremap <silent> <buffer> x  :<C-u>call <SID>del_entry()<CR>
+vnoremap <silent> <buffer> d  :<C-u>'<,'>call <SID>del_entry()<CR>
+vnoremap <silent> <buffer> x  :<C-u>'<,'>call <SID>del_entry()<CR>
 
 " TODO: it does not work with location list
 "       `getloclist` might required to add.

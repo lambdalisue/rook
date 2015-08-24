@@ -300,97 +300,6 @@ if neobundle#tap('incsearch.vim') " {{{
   call neobundle#untap()
 endif " }}}
 
-if neobundle#tap('deoplete.nvim') " {{{
-  call neobundle#config({
-        \ 'disabled': !has('nvim'),
-        \ 'autoload': {
-        \   'insert': 1,
-        \ }})
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let g:deoplete#enable_at_startup = 1
-    let g:deoplete#enable_smart_case = 1
-    let g:deoplete#enable_underbar_completion = 1
-    let g:deoplete#enable_auto_close_preview = 0
-  endfunction
-
-  call neobundle#untap()
-endif " }}}
-
-if neobundle#tap('neocomplete.vim') " {{{
-  call neobundle#config({
-        \ 'disabled': has('nvim'),
-        \ 'autoload': {
-        \   'insert': 1,
-        \ }})
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let g:neocomplete#enable_at_startup = 1
-    let g:neocomplete#enable_smart_case = 1
-    let g:neocomplete#enable_underbar_completion = 1
-    let g:neocomplete#enable_auto_close_preview = 0
-  endfunction
-
-  call neobundle#untap()
-endif " }}}
-
-if neobundle#tap('neoinclude.vim') " {{{
-  call neobundle#config({
-        \ 'autoload': {
-        \   'on_source': 'neocomplete.vim',
-        \ }})
-
-  call neobundle#untap()
-endif " }}}
-
-if neobundle#tap('neco-vim') " {{{
-  call neobundle#config({
-        \ 'autoload': {
-        \   'filetype': ['vim', 'vimspec'],
-        \ }})
-
-  call neobundle#untap()
-endif " }}}
-
-if neobundle#tap('echodoc.vim') " {{{
-  call neobundle#config({
-        \ 'autoload': {
-        \   'insert': 1,
-        \ }})
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    set cmdheight=2
-    set completeopt+=menuone
-    "set completeopt-=preview
-    let g:echodoc_enable_at_startup=1
-  endfunction
-
-  call neobundle#untap()
-endif " }}}
-
-if neobundle#tap('neosnippet.vim') " {{{
-  call neobundle#config({
-        \ 'autoload': {
-        \   'mappings': '<Plug>(neosnippet_expand',
-        \ }})
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let g:neosnippet#snippets_directory = $MY_VIMRUNTIME. '/snippets'
-
-    " for snippet complete marker
-    if has('conceal')
-      set conceallevel=2 concealcursor=i
-    endif
-  endfunction
-
-  " Plugin key-mappings.
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
-
-  call neobundle#untap()
-endif " }}}
-
 if neobundle#tap('yankround.vim') " {{{
   call neobundle#config({
         \ 'autoload': {
@@ -567,6 +476,157 @@ if neobundle#tap('vim-swap') " {{{
   vmap [swap]-  <Plug>SwapSwapPivotOperands
   nmap [swap]~  <Plug>SwapSwapWithR_WORD
   nmap [swap]-  <Plug>SwapSwapWithL_WORD
+
+  call neobundle#untap()
+endif " }}}
+
+" }}}
+
+" completion " {{{
+
+if neobundle#tap('deoplete.nvim') " {{{
+  call neobundle#config({
+        \ 'disabled': !has('nvim'),
+        \ 'autoload': {
+        \   'insert': 1,
+        \ }})
+
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:deoplete#enable_at_startup = 1
+    let g:deoplete#enable_smart_case = 1
+    let g:deoplete#enable_fuzzy_completion = 0
+    let g:deoplete#force_omni_input_patterns = extend(
+          \ get(g:, 'deoplete#force_omni_input_patterns', {}), {
+          \   'python': '\v%([^. \t].|^\s*@|^\s*from\s.+import |^\s*from |^\s*import )\w*',
+          \})
+  endfunction
+
+  inoremap <expr><C-g> deoplete#undo_completion()
+  inoremap <expr><C-l> deoplete#complete_common_string()
+
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('neocomplete.vim') " {{{
+  call neobundle#config({
+        \ 'disabled': has('nvim'),
+        \ 'autoload': {
+        \   'insert': 1,
+        \ }})
+
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:neocomplete#enable_at_startup = 1
+    let g:neocomplete#enable_smart_case = 1
+    let g:neocomplete#enable_fuzzy_completion = 0
+    let g:neocomplete#force_omni_input_patterns = extend(
+          \ get(g:, 'neocomplete#force_omni_input_patterns', {}), {
+          \   'python': '\v%([^. \t].|^\s*@|^\s*from\s.+import |^\s*from |^\s*import )\w*',
+          \})
+  endfunction
+
+  inoremap <expr><C-g> neocomplete#undo_completion()
+  inoremap <expr><C-l> neocomplete#complete_common_string()
+
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('neco-syntax') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'on_source': has('nvim') ? 'deocomplete.vim' : 'neocomplete.vim',
+        \ }})
+
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('neco-vim') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'on_source': has('nvim') ? 'deocomplete.vim' : 'neocomplete.vim',
+        \ }})
+
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('neoinclude.vim') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'on_source': has('nvim') ? 'deocomplete.vim' : 'neocomplete.vim',
+        \ }})
+
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('neco-look') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'on_source': has('nvim') ? 'deocomplete.vim' : 'neocomplete.vim',
+        \ }})
+
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('neco-ghc') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'on_source': has('nvim') ? 'deocomplete.vim' : 'neocomplete.vim',
+        \ }})
+
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('vim-neco-calc') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'on_source': has('nvim') ? 'deocomplete.vim' : 'neocomplete.vim',
+        \ }})
+
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('neosnippet.vim') " {{{
+  call neobundle#config({
+        \ 'depends': 'Shougo/neosnippet-snippets',
+        \ 'autoload': {
+        \   'mappings': '<Plug>(neosnippet_expand',
+        \   'commands': [
+        \     'NeoSnippetMakeCache',
+        \     'NeoSnippetEdit',
+        \     'NeoSnippetSource',
+        \     'NeoSnippetClearMarkers',
+        \   ],
+        \ }})
+
+  function! neobundle#tapped.hooks.on_post_source(bundle)
+    let g:neosnippet#snippets_directory = $MY_VIMRUNTIME. '/snippets'
+    let g:neosnippet#enable_snipmate_compatibility = 1
+
+    " for snippet complete marker
+    if has('conceal')
+      set conceallevel=2 concealcursor=niv
+    endif
+  endfunction
+
+  " Plugin key-mappings.
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k> <Plug>(neosnippet_expand_target)
+
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('echodoc.vim') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'insert': 1,
+        \ }})
+
+  function! neobundle#tapped.hooks.on_source(bundle)
+    set cmdheight=2
+    set completeopt+=menuone
+    "set completeopt-=preview
+    let g:echodoc_enable_at_startup=1
+  endfunction
 
   call neobundle#untap()
 endif " }}}

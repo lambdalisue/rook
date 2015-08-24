@@ -285,6 +285,10 @@ set completeopt=menu,longest
 set complete=.            " don't complete from other buffer
 set pumheight=20          " height of popup menu
 set showfulltag           " show both the tag name and the search pattern
+if has("patch-7.4.314")
+  " don't give ins-completion-menu messages
+  set shortmess+=c
+endif
 
 if v:version >= 703
   set conceallevel=2
