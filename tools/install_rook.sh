@@ -11,7 +11,10 @@ if [[ ! -d "$HOME/.homesick/repos/rook" ]]; then
     else
         homeshick clone git@github.com:lambdalisue/rook -f --batch
     fi
+else
+    homeshick pull
 fi
+homeshick link
 homeshick cd rook
 bash ./tools/install_requirements.sh
 
