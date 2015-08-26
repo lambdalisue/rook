@@ -494,35 +494,6 @@ endfunction
 call s:highlight_zenkaku_spaces()
 " }}}
 
-" enable MANPAGER mode " {{{
-function! s:enable_manpager() abort " {{{
-  let saved_pos = getpos('.')
-  keepjumps silent :%s/.//g
-  call setpos('.', saved_pos)
-  setfiletype man
-  setlocal tabstop=8
-  setlocal nolist nospell
-  setlocal readonly nomodifiable
-  setlocal nomodified
-endfunction " }}}
-command! -nargs=0 MANPAGER call s:enable_manpager()
-" }}}
-
-" enable PAGER mode {{{
-function! s:enable_pager() abort " {{{
-  if exists(':AnsiEsc')
-    let saved_pos = getpos('.')
-    keepjumps :AnsiEsc
-    call setpos('.', saved_pos)
-  endif
-  setlocal tabstop=8
-  setlocal nolist nospell
-  setlocal readonly nomodifiable
-  setlocal nomodified
-endfunction " }}}
-command! -nargs=0 PAGER call s:enable_pager()
-" }}}
-
 " }}}
 
 " plugins {{{

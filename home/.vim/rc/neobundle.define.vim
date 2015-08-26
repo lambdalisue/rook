@@ -27,6 +27,8 @@ NeoBundleLazy 'thinca/vim-qfreplace'
 NeoBundleLazy 'AndrewRadev/switch.vim'
 NeoBundleLazy 'AndrewRadev/linediff.vim'
 NeoBundleLazy 'kurkale6ka/vim-swap'
+NeoBundleLazy 'lambdalisue/vim-pager'
+NeoBundleLazy 'lambdalisue/vim-manpager'
 
 " completion
 NeoBundleLazy 'Shougo/neocomplete.vim'

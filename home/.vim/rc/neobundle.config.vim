@@ -480,6 +480,22 @@ if neobundle#tap('vim-swap') " {{{
   call neobundle#untap()
 endif " }}}
 
+if neobundle#tap('vim-pager') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'commands': 'PAGER',
+        \ }})
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('vim-manpager') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'commands': 'MANPAGER',
+        \ }})
+  call neobundle#untap()
+endif " }}}
+
 " }}}
 
 " completion " {{{
