@@ -520,7 +520,7 @@ if neobundle#tap('neocomplete.vim') " {{{
     let g:neocomplete#enable_fuzzy_completion = 0
     let g:neocomplete#force_omni_input_patterns = extend(
           \ get(g:, 'neocomplete#force_omni_input_patterns', {}), {
-          \   'python': '\v%([^. \t].|^\s*@|^\s*from\s.+import |^\s*from |^\s*import )\w*',
+          \   'python': '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*',
           \})
   endfunction
 
