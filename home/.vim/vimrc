@@ -530,14 +530,16 @@ else
   endif
   call s:call_neobundle()
 endif
+filetype plugin indent on
+syntax on
 " }}}
 
 " misc {{{
-filetype plugin indent on
-syntax on
-
 let g:hybrid_use_Xresources = 1
 colorscheme hybrid
+
+" Enable 'Man' command even for other filetypes
+runtime ftplugin/man.vim
 
 call s:load_source(expand('~/.vimrc.local'))
 " }}}

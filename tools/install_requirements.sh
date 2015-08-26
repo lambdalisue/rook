@@ -14,14 +14,16 @@ install_package(){
     # try to install
     if type apt-get > /dev/null 2>&1; then
         sudo apt-get install ${NAME}
+        return $?
     elif type brew > /dev/null 2>&1; then
         brew install ${NAME}
+        return $?
     elif type yum > /dev/null 2>&1; then
         sudo yum install ${NAME}
+        return $?
     else
         return 1
     fi
-    return $?
 }
 install_repository() {
     url=$1
@@ -30,23 +32,27 @@ install_repository() {
         git clone $url "$dst"
     fi
 }
-
 # zsh
 if [[ "$(uname)" == "Darwin" ]]; then
     if ! install_package go; then
         echo "Failed to install 'go'. Please install it manually and retry." >&2
-        exit 1
+        # this is not critical
+        #exit 1
     fi
 else
     if ! install_package golang; then
         echo "Failed to install 'golang'. Please install it manually and retry." >&2
-        exit 1
+        # this is not critical
+        #exit 1
     fi
 fi
-GOPATH="$HOME/.go"
-if ! go get github.com/motemen/ghq; then
-    echo "Failed to install 'ghq'. Please install it manually (go get github.com/motemen/ghq) and retry." >&2
-    exit 1
+if type go > /dev/null 2>&1; then
+    GOPATH="$HOME/.go"
+    if ! go get github.com/motemen/ghq; then
+        echo "Failed to install 'ghq'. Please install it manually (go get github.com/motemen/ghq) and retry." >&2
+        # this is not critical
+        # exit 1
+    fi
 fi
 
 # tmux

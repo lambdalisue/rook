@@ -10,11 +10,32 @@ As long as you don't disturb me, you can refer or use this on your own responsib
 Install
 =======================
 
+After you install the requirements below manually, execute the following command.
+
 ```sh
 # clone homeshick, rook and install them
-curl -L http://goo.gl/IrTY7b | bash
-curl -L http://goo.gl/IrTY7b | USE_GUEST=1 bash
+curl -L http://goo.gl/IrTY7b | bash             # use SSH (with push permission)
+curl -L http://goo.gl/IrTY7b | USE_GUEST=1 bash # no SSH (without push permission)
 ```
+
+Requirements
+------------------------
+
+- [git](https://git-scm.com) (Ubuntu/Debian)
+- [homebrew](http://brew.sh/index.html) (Mac OS X)
+
+Automatically installed
+------------------------
+
+- [homeshick](https://github.com/andsens/homeshick)
+- [go](https://golang.org/)
+- [motemen/ghq](https://github.com/motemen/ghq)
+- [tmux-colors-solarized](https://github.com/seebi/tmux-colors-solarized)
+- [tmux-powerline](https://github.com/erikw/tmux-powerline)
+- [tmux-mem-cpu-load](https://github.com/thewtex/tmux-mem-cpu-load)
+- reattach-to-user-namespace (Mac OS X)
+- GNU grep (Mac OS X)
+
 
 Programs configured
 =======================

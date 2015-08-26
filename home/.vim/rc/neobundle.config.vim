@@ -480,6 +480,22 @@ if neobundle#tap('vim-swap') " {{{
   call neobundle#untap()
 endif " }}}
 
+if neobundle#tap('vim-pager') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'commands': 'PAGER',
+        \ }})
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('vim-manpager') " {{{
+  call neobundle#config({
+        \ 'autoload': {
+        \   'commands': 'MANPAGER',
+        \ }})
+  call neobundle#untap()
+endif " }}}
+
 " }}}
 
 " completion " {{{
@@ -520,7 +536,7 @@ if neobundle#tap('neocomplete.vim') " {{{
     let g:neocomplete#enable_fuzzy_completion = 0
     let g:neocomplete#force_omni_input_patterns = extend(
           \ get(g:, 'neocomplete#force_omni_input_patterns', {}), {
-          \   'python': '\v%([^. \t].|^\s*@|^\s*from\s.+import |^\s*from |^\s*import )\w*',
+          \   'python': '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*',
           \})
   endfunction
 

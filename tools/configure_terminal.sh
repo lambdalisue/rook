@@ -43,24 +43,30 @@ FOREGROUNDVALUE_PART3=${X_FOREGROUNDVALUE:5:2}
 FOREGROUNDVALUE="#$FOREGROUNDVALUE_PART1$FOREGROUNDVALUE_PART1$FOREGROUNDVALUE_PART2$FOREGROUNDVALUE_PART2$FOREGROUNDVALUE_PART3$FOREGROUNDVALUE_PART3"
 
 # gnome version >= 3.8
-PROFILE=$(dconf read /org/gnome/terminal/legacy/profiles:/default | sed "s/'//g")
-dconf write /org/gnome/terminal/legacy/profiles:/:$PROFILE/use-theme-colors "false"
-dconf write /org/gnome/terminal/legacy/profiles:/:$PROFILE/bold-color-same-as-fg "true"
-dconf write /org/gnome/terminal/legacy/profiles:/:$PROFILE/palette "[$DCONFVALUE]"
-dconf write /org/gnome/terminal/legacy/profiles:/:$PROFILE/foreground-color "'$FOREGROUNDVALUE'"
-dconf write /org/gnome/terminal/legacy/profiles:/:$PROFILE/background-color "'$BACKGROUNDVALUE'"
+if type dconf > /dev/null 2>&1; then
+    PROFILE=$(dconf read /org/gnome/terminal/legacy/profiles:/default | sed "s/'//g")
+    dconf write /org/gnome/terminal/legacy/profiles:/:$PROFILE/use-theme-colors "false"
+    dconf write /org/gnome/terminal/legacy/profiles:/:$PROFILE/bold-color-same-as-fg "true"
+    dconf write /org/gnome/terminal/legacy/profiles:/:$PROFILE/palette "[$DCONFVALUE]"
+    dconf write /org/gnome/terminal/legacy/profiles:/:$PROFILE/foreground-color "'$FOREGROUNDVALUE'"
+    dconf write /org/gnome/terminal/legacy/profiles:/:$PROFILE/background-color "'$BACKGROUNDVALUE'"
+fi
 
 # gnome version less than 3.8 use the following
-#gconftool-2 --set --type bool /apps/gnome-terminal/profiles/Default/use_theme_colors false
-#gconftool-2 --set --type bool /apps/gnome-terminal/profiles/Default/bold_color_same_as_fg false
-#gconftool-2 --set --type string /apps/gnome-terminal/profiles/Default/palette "$GCONFVALUE"
-#gconftool-2 --set --type string /apps/gnome-terminal/profiles/Default/foreground_color "$FOREGROUNDVALUE"
-#gconftool-2 --set --type string /apps/gnome-terminal/profiles/Default/background_color "$BACKGROUNDVALUE"
+if type gconftool-2 > /dev/null 2>&1; then
+    gconftool-2 --set --type bool /apps/gnome-terminal/profiles/Default/use_theme_colors false
+    gconftool-2 --set --type bool /apps/gnome-terminal/profiles/Default/bold_color_same_as_fg false
+    gconftool-2 --set --type string /apps/gnome-terminal/profiles/Default/palette "$GCONFVALUE"
+    gconftool-2 --set --type string /apps/gnome-terminal/profiles/Default/foreground_color "$FOREGROUNDVALUE"
+    gconftool-2 --set --type string /apps/gnome-terminal/profiles/Default/background_color "$BACKGROUNDVALUE"
+fi
 
 # guake
-gconftool-2 --set --type string /apps/guake/style/font/color "$FOREGROUNDVALUE"
-gconftool-2 --set --type string /apps/guake/style/background/color "$BACKGROUNDVALUE"
-gconftool-2 --set --type string /apps/guake/style/font/palette "$GCONFVALUE"
+if type gconftool-2 > /dev/null 2>&1; then
+    gconftool-2 --set --type string /apps/guake/style/font/color "$FOREGROUNDVALUE"
+    gconftool-2 --set --type string /apps/guake/style/background/color "$BACKGROUNDVALUE"
+    gconftool-2 --set --type string /apps/guake/style/font/palette "$GCONFVALUE"
+fi
 
 echo "Colors set to $GCONFVALUE"
 echo "Foreground set to $FOREGROUNDVALUE"
