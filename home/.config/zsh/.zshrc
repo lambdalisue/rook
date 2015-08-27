@@ -180,8 +180,10 @@ __add_manpath "/usr/local/texlive/texmf-dist/doc/man"
 
 if [ $(uname) = "Darwin" ]; then
     __add_path "${ZDOTDIR}/tools/pt/pt_darwin_amd64"
+    __add_path "${ZDOTDIR}/tools/ghq/ghq_darwin_amd64"
 else
     __add_path "${ZDOTDIR}/tools/pt/pt_linux_amd64"
+    __add_path "${ZDOTDIR}/tools/ghq/ghq_linux_amd64"
 fi
 
 # source external settings
