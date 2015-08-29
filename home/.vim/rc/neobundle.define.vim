@@ -3,6 +3,7 @@ NeoBundle 'Shougo/vimproc.vim'
 NeoBundle 'vim-jp/vimdoc-ja'
 
 " fundementals
+NeoBundle 'sudo.vim'
 NeoBundle 'cohama/vim-hier'
 NeoBundle 'thinca/vim-template'
 NeoBundle 'lambdalisue/vim-unified-diff'

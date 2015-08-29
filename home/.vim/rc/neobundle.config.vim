@@ -34,6 +34,11 @@ endif " }}}
 
 " fundementals {{{
 
+if neobundle#tap('sudo.vim') " {{{
+  cabbr w!! :w sudo:%
+  call neobundle#untap()
+endif " }}}
+
 if neobundle#tap('vim-hier') " {{{
   call neobundle#config({
         \ 'disabled': 1,
