@@ -67,7 +67,11 @@ export PAGER="vim -c PAGER -"
 export MANPAGER="vim -c MANPAGER -"
 alias view="vim -c PAGER"
 if [[ -d "/Applications/MacVim.app" ]]; then
-    alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
+    VIM="/Applications/MacVim.app/Contents/MacOS/Vim" 
+    alias vim=$VIM
+    alias view="$VIM -c PAGER"
+    export PAGER="$VIM -c PAGER -"
+    export MANPAGER="$VIM -c MANPAGER -"
 elif ! type vim > /dev/null 2>&1; then
     alias vim=vi
 fi

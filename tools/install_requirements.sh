@@ -46,14 +46,6 @@ else
         #exit 1
     fi
 fi
-if type go > /dev/null 2>&1; then
-    GOPATH="$HOME/.go"
-    if ! go get github.com/motemen/ghq; then
-        echo "Failed to install 'ghq'. Please install it manually (go get github.com/motemen/ghq) and retry." >&2
-        # this is not critical
-        # exit 1
-    fi
-fi
 
 # tmux
 bundle="${XDG_CONFIG_HOME}/tmux/bundle"

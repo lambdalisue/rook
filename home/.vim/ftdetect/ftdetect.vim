@@ -19,6 +19,7 @@ autocmd BufNewFile,BufRead *.sass     set filetype=sass
 autocmd BufNewFile,BufRead *.scss     set filetype=scss
 autocmd BufNewFile,BufRead *.ts       set filetype=typescript
 autocmd BufNewFile,BufRead *.json     set filetype=json
+autocmd BufNewFile,BufRead *.jsm      set filetype=javascript
 autocmd BufNewFile,BufRead *.coffee   set filetype=coffeescript
 autocmd BufNewFile,BufRead Cakefile   set filetype=coffeescript
 
