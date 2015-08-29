@@ -21,13 +21,13 @@ __prompt_dust_get_segment() {
     local fcolor="$2"
     local kcolor="$3"
     if [ -n "$fcolor" -a -n "$kcolor" ]; then
-        echo -en "%{%K{$kcolor}%F{$fcolor}%}$text%{%k%f%}"
+        echo -n "%{%K{$kcolor}%F{$fcolor}%}$text%{%k%f%}"
     elif [ -n "$fcolor" ]; then
-        echo -en "%{%F{$fcolor}%}$text%{%f%}"
+        echo -n "%{%F{$fcolor}%}$text%{%f%}"
     elif [ -n "$kcolor" ]; then
-        echo -en "%{%K{$kcolor}%}$text%{%k%}"
+        echo -n "%{%K{$kcolor}%}$text%{%k%}"
     else
-        echo -en "$text"
+        echo -n "$text"
     fi
 }
 __prompt_dust_eliminate_empty_elements() {
@@ -74,13 +74,13 @@ __prompt_dust_configure_vcsstyles() {
             fi
             local gitstatus="$(timeout 1 git status --ignore-submodules=all --porcelain 2> /dev/null)"
             if [[ $? == 0 ]]; then
-                local staged="$(command echo $gitstatus | command grep -E '^([MARC][ MD]|D[ M])' | wc -l | tr -d ' ')"
-                local unstaged="$(command echo $gitstatus | command grep -E '^([ MARC][MD]|DM)' | wc -l | tr -d ' ')"
-                local untracked="$(command echo $gitstatus | command grep -E '^\?\?' | wc -l | tr -d ' ')"
+                local staged="$(command echo $gitstatus | grep -E '^([MARC][ MD]|D[ M])' | wc -l | tr -d ' ')"
+                local unstaged="$(command echo $gitstatus | grep -E '^([ MARC][MD]|DM)' | wc -l | tr -d ' ')"
+                local untracked="$(command echo $gitstatus | grep -E '^\?\?' | wc -l | tr -d ' ')"
                 local indicator="$(__prompt_dust_get_config 'character' 'indicator')"
                 local -a messages
                 [[ $staged > 0    ]] && messages+=( "%{%F{blue}%}$indicator%{%f%}" )
-                [[ $unstaged > 0  ]] && messages+=( "%{%F{red}$indicator%{%f%}" )
+                [[ $unstaged > 0  ]] && messages+=( "%{%F{red}%}$indicator%{%f%}" )
                 [[ $untracked > 0 ]] && messages+=( "%{%F{yellow}%}$indicator%{%f%}" )
                 hook_com[misc]+="%{%B%}${(j::)messages}%{%b%}"
             fi
@@ -226,9 +226,12 @@ __prompt_dust_get_vcs() {
     local kcolor_normal=''
     local kcolor_error=''
     vcs_info 'dust'
-    [[ ! "$vcs_info_msg_0_" =~ "^[ ]*$" ]] && __prompt_dust_get_segment "$vcs_info_msg_0_" $fcolor_normal  $kcolor_normal
-    [[ ! "$vcs_info_msg_1_" =~ "^[ ]*$" ]] && __prompt_dust_get_segment " %{%B%}$vcs_info_msg_1_%{%b%}"
-    [[ ! "$vcs_info_msg_2_" =~ "^[ ]*$" ]] && __prompt_dust_get_segment " $vcs_info_msg_2_" $fcolor_error   $kcolor_error
+
+    local -a messages
+    [[ ! "$vcs_info_msg_0_" =~ "^[ ]*$" ]] && messages+=( $(__prompt_dust_get_segment "$vcs_info_msg_0_" $fcolor_normal  $kcolor_normal ) )
+    [[ ! "$vcs_info_msg_1_" =~ "^[ ]*$" ]] && messages+=( $(__prompt_dust_get_segment " %{%B%}$vcs_info_msg_1_%{%b%}" ) )
+    [[ ! "$vcs_info_msg_2_" =~ "^[ ]*$" ]] && messages+=( $(__prompt_dust_get_segment " $vcs_info_msg_2_" $fcolor_error   $kcolor_error ) )
+    echo -n "${(j: :)messages}"
 }
 __prompt_dust_get_pyenv_virtualenv() {
     local fcolor='magenta'
