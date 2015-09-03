@@ -1813,16 +1813,20 @@ if neobundle#tap('vim-gita') " {{{
         \   'mappings': '<Plug>(gita-',
         \ }})
   function! neobundle#tapped.hooks.on_source(bundle)
-    let g:gita#features#browse#extra_translation_patterns = [
-          \ ['\vhttps?://(ghe\.admin\.h)/(.{-})/(.{-})%(\.git)?$',
-          \  'https://\1/\2/\3/blob/%br/%pt%{#L|}ls%{-L|}le'],
-          \ ['\vgit://(ghe\.admin\.h)/(.{-})/(.{-})%(\.git)?$',
-          \  'https://\1/\2/\3/blob/%br/%pt%{#L|}ls%{-L|}le'],
-          \ ['\vgit\@(ghe\.admin\.h):(.{-})/(.{-})%(\.git)?$',
-          \  'https://\1/\2/\3/blob/%br/%pt%{#L|}ls%{-L|}le'],
-          \ ['\vssh://git\@(ghe\.admin\.h)/(.{-})/(.{-})%(\.git)?$',
-          \  'https://\1/\2/\3/blob/%br/%pt%{#L|}ls%{-L|}le'],
-          \]
+    let g:gita#features#browse#extra_translation_patterns = {
+          \ 'ghe.admin.h': [
+          \   [
+          \     '\vhttps?://(%domain)/(.{-})/(.{-})%(\.git)?$',
+          \     '\vgit://(%domain)/(.{-})/(.{-})%(\.git)?$',
+          \     '\vgit\@(%domain):(.{-})/(.{-})%(\.git)?$',
+          \     '\vssh://git\@(%domain)/(.{-})/(.{-})%(\.git)?$',
+          \   ], {
+          \     '_':     'https://\1/\2/\3/blob/%c1/%pt%{#L|}ls%{-L|}le',
+          \     'exact': 'https://\1/\2/\3/blob/%r1/%pt%{#L|}ls%{-L|}le',
+          \     'blame': 'https://\1/\2/\3/blame/%c1/%pt%{#L|}ls%{-L|}le',
+          \   },
+          \ ],
+          \}
   endfunction
 
   nnoremap [gita] <Nop>
