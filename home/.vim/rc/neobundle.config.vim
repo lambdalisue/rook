@@ -16,8 +16,8 @@ function! s:is_hg_available() "{{{
   return (vimproc#get_last_status() == 0) ? 1 : 0
 endfunction "}}}
 
-noremap [operator] <Nop>
-map - [operator]
+noremap <Plug>(my-operator) <Nop>
+map - <Plug>(my-operator)
 
 if neobundle#tap('vimproc.vim') " {{{
   call neobundle#config({
@@ -105,22 +105,22 @@ if neobundle#tap('vim-quickhl') " {{{
         \   ],
         \ }})
 
-  nnoremap [quickhl] <Nop>
-  xnoremap [quickhl] <Nop>
-  nmap H [quickhl]
-  xmap H [quickhl]
+  nnoremap <Plug>(my-quickhl) <Nop>
+  xnoremap <Plug>(my-quickhl) <Nop>
+  nmap H <Plug>(my-quickhl)
+  xmap H <Plug>(my-quickhl)
 
-  nmap [quickhl]h <Plug>(quickhl-manual-this)
-  xmap [quickhl]h <Plug>(quickhl-manual-this)
-  nmap [quickhl]r <Plug>(quickhl-manual-reset)
-  xmap [quickhl]r <Plug>(quickhl-manual-reset)
+  nmap <Plug>(my-quickhl)h <Plug>(quickhl-manual-this)
+  xmap <Plug>(my-quickhl)h <Plug>(quickhl-manual-this)
+  nmap <Plug>(my-quickhl)r <Plug>(quickhl-manual-reset)
+  xmap <Plug>(my-quickhl)r <Plug>(quickhl-manual-reset)
 
-  nmap [quickhl]H  <Plug>(quickhl-manual-toggle)
-  xmap [quickhl]H  <Plug>(quickhl-manual-toggle)
-  nmap [quickhl]c  <Plug>(quickhl-cword-toggle)
-  nmap [quickhl]t  <Plug>(quickhl-tag-toggle)
+  nmap <Plug>(my-quickhl)H  <Plug>(quickhl-manual-toggle)
+  xmap <Plug>(my-quickhl)H  <Plug>(quickhl-manual-toggle)
+  nmap <Plug>(my-quickhl)c  <Plug>(quickhl-cword-toggle)
+  nmap <Plug>(my-quickhl)t  <Plug>(quickhl-tag-toggle)
 
-  map  [operator]h <Plug>(operator-quickhl-manual-this-motion)
+  map  <Plug>(my-operator)h <Plug>(operator-quickhl-manual-this-motion)
 
   call neobundle#untap()
 endif " }}}
@@ -144,7 +144,7 @@ if neobundle#tap('vim-choosewin') " {{{
     endif
   endfunction
 
-  nnoremap [choosewin] <Nop>
+  nnoremap <Plug>(my-choosewin) <Nop>
   nmap ! <Plug>(choosewin)
 
   call neobundle#untap()
@@ -160,11 +160,11 @@ if neobundle#tap('open-browser.vim') " {{{
     let g:netrw_nogx = 1  " disable netrw's gx mapping
   endfunction
 
-  nnoremap [openbrowser] <Nop>
-  nmap gx [openbrowser]
-  vmap gx [openbrowser]
-  nmap [openbrowser] <Plug>(openbrowser-smart-search)
-  vmap [openbrowser] <Plug>(openbrowser-smart-search)
+  nnoremap <Plug>(my-openbrowser) <Nop>
+  nmap gx <Plug>(my-openbrowser)
+  vmap gx <Plug>(my-openbrowser)
+  nmap <Plug>(my-openbrowser) <Plug>(openbrowser-smart-search)
+  vmap <Plug>(my-openbrowser) <Plug>(openbrowser-smart-search)
 
   call neobundle#untap()
 endif " }}}
@@ -364,18 +364,18 @@ if neobundle#tap('vim-bookmarks') " {{{
           \ 'converter_vim_bookmarks_long')
   endfunction
 
-  nnoremap [bookmark] <Nop>
-  nmap M [bookmark]
-  vmap M [bookmark]
-  nmap [bookmark]m <Plug>BookmarkToggle
-  nmap [bookmark]i <Plug>BookmarkAnnotate
-  vmap [bookmark]m <Plug>BookmarkToggle
-  vmap [bookmark]i <Plug>BookmarkAnnotate
-  nmap [bookmark]n <Plug>BookmarkNext
-  nmap [bookmark]p <Plug>BookmarkPrev
-  nmap [bookmark]a <Plug>BookmarkShowAll
-  nmap [bookmark]c <Plug>BookmarkClear
-  nmap [bookmark]x <Plug>BookmarkClearAll
+  nnoremap <Plug>(my-bookmark) <Nop>
+  nmap M <Plug>(my-bookmark)
+  vmap M <Plug>(my-bookmark)
+  nmap <Plug>(my-bookmark)m <Plug>BookmarkToggle
+  nmap <Plug>(my-bookmark)i <Plug>BookmarkAnnotate
+  vmap <Plug>(my-bookmark)m <Plug>BookmarkToggle
+  vmap <Plug>(my-bookmark)i <Plug>BookmarkAnnotate
+  nmap <Plug>(my-bookmark)n <Plug>BookmarkNext
+  nmap <Plug>(my-bookmark)p <Plug>BookmarkPrev
+  nmap <Plug>(my-bookmark)a <Plug>BookmarkShowAll
+  nmap <Plug>(my-bookmark)c <Plug>BookmarkClear
+  nmap <Plug>(my-bookmark)x <Plug>BookmarkClearAll
 
   nmap ]m <Plug>BookmarkNext
   nmap [m <Plug>BookmarkPrev
@@ -403,9 +403,9 @@ if neobundle#tap('vim-quickrun') " {{{
 
   endfunction
 
-  nnoremap [quickrun] <Nop>
-  nmap <LocalLeader>r [quickrun]
-  nmap [quickrun] <Plug>(quickrun)
+  nnoremap <Plug>(my-quickrun) <Nop>
+  nmap <LocalLeader>r <Plug>(my-quickrun)
+  nmap <Plug>(my-quickrun) <Plug>(quickrun)
 
   call neobundle#untap()
 endif " }}}
@@ -451,14 +451,14 @@ if neobundle#tap('linediff.vim') " {{{
         \   ],
         \ }})
 
-  vnoremap [linediff] <Nop>
-  nnoremap [linediff] <Nop>
-  vmap <S-l> [linediff]
-  nmap <S-l> [linediff]
-  nmap [linediff]d v$:<C-u>Linediff<CR>
-  nmap [linediff]r :<C-u>LinediffReset<CR>
-  vmap [linediff]d :<C-u>'<,'>Linediff<CR>
-  vmap [linediff]r :<C-u>LinediffReset<CR>
+  vnoremap <Plug>(my-linediff) <Nop>
+  nnoremap <Plug>(my-linediff) <Nop>
+  vmap <S-l> <Plug>(my-linediff)
+  nmap <S-l> <Plug>(my-linediff)
+  nmap <Plug>(my-linediff)d v$:<C-u>Linediff<CR>
+  nmap <Plug>(my-linediff)r :<C-u>LinediffReset<CR>
+  vmap <Plug>(my-linediff)d :<C-u>'<,'>Linediff<CR>
+  vmap <Plug>(my-linediff)r :<C-u>LinediffReset<CR>
 
   call neobundle#untap()
 endif " }}}
@@ -473,14 +473,14 @@ if neobundle#tap('vim-swap') " {{{
     let g:swap_enable_default_keymaps = 0
   endfunction
 
-  nnoremap [swap] <Nop>
-  vnoremap [swap] <Nop>
-  nmap ~ [swap]
-  vmap ~ [swap]
-  vmap [swap]~  <Plug>SwapSwapOperands
-  vmap [swap]-  <Plug>SwapSwapPivotOperands
-  nmap [swap]~  <Plug>SwapSwapWithR_WORD
-  nmap [swap]-  <Plug>SwapSwapWithL_WORD
+  nnoremap <Plug>(my-swap) <Nop>
+  vnoremap <Plug>(my-swap) <Nop>
+  nmap ~ <Plug>(my-swap)
+  vmap ~ <Plug>(my-swap)
+  vmap <Plug>(my-swap)~  <Plug>SwapSwapOperands
+  vmap <Plug>(my-swap)-  <Plug>SwapSwapPivotOperands
+  nmap <Plug>(my-swap)~  <Plug>SwapSwapWithR_WORD
+  nmap <Plug>(my-swap)-  <Plug>SwapSwapWithL_WORD
 
   call neobundle#untap()
 endif " }}}
@@ -965,7 +965,7 @@ if neobundle#tap('vim-operator-replace') " {{{
         \   'mappings': '<Plug>(operator-replace',
         \ }})
 
-  map <silent> [operator]r <Plug>(operator-replace)
+  map <silent> <Plug>(my-operator)r <Plug>(operator-replace)
 
   call neobundle#untap()
 endif " }}}
@@ -976,7 +976,7 @@ if neobundle#tap('vim-operator-openbrowser') " {{{
         \ 'autoload': {
         \   'mappings': '<Plug>(operator-openbrowser',
         \ }})
-  map <silent> [operator]x <Plug>(operator-openbrowser)
+  map <silent> <Plug>(my-operator)x <Plug>(operator-openbrowser)
   call neobundle#untap()
 endif " }}}
 
@@ -986,7 +986,7 @@ if neobundle#tap('vim-operator-trailingspace-killer') " {{{
         \ 'autoload': {
         \   'mappings': '<Plug>(operator-trailingspace-killer',
         \ }})
-  map <silent> [operator]k <Plug>(operator-trailingspace-killer)
+  map <silent> <Plug>(my-operator)k <Plug>(operator-trailingspace-killer)
   call neobundle#untap()
 endif " }}}
 
@@ -1009,17 +1009,17 @@ if neobundle#tap('vim-operator-surround') " {{{
         \ ]}
   endfunction
 
-  map <silent> [operator]sa <Plug>(operator-surround-append)
-  map <silent> [operator]sd <Plug>(operator-surround-delete)
-  map <silent> [operator]sr <Plug>(operator-surround-replace)
+  map <silent> <Plug>(my-operator)sa <Plug>(operator-surround-append)
+  map <silent> <Plug>(my-operator)sd <Plug>(operator-surround-delete)
+  map <silent> <Plug>(my-operator)sr <Plug>(operator-surround-replace)
 
-  nmap <silent> [operator]sdd
+  nmap <silent> <Plug>(my-operator)sdd
         \ <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
-  nmap <silent> [operator]srr
+  nmap <silent> <Plug>(my-operator)srr
         \ <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
-  vmap <silent> [operator]sdd
+  vmap <silent> <Plug>(my-operator)sdd
         \ <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
-  vmap <silent> [operator]srr
+  vmap <silent> <Plug>(my-operator)srr
         \ <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
   call neobundle#untap()
 endif " }}}
@@ -1094,42 +1094,42 @@ if neobundle#tap('unite.vim') " {{{
     autocmd MyAutoCmd FileType unite call s:my_unite_configure()
   endfunction
 
-  nnoremap [unite] <Nop>
-  nmap <Space> [unite]
-  vmap <Space> [unite]
-  nnoremap <silent> [unite]<Space>
+  nnoremap <Plug>(my-unite) <Nop>
+  nmap <Space> <Plug>(my-unite)
+  vmap <Space> <Plug>(my-unite)
+  nnoremap <silent> <Plug>(my-unite)<Space>
         \ :<C-u>UniteResume<CR>
-  nnoremap <silent> [unite]w
+  nnoremap <silent> <Plug>(my-unite)w
         \ :<C-u>Unite buffer window tab<CR>
-  nnoremap <silent> [unite]k
+  nnoremap <silent> <Plug>(my-unite)k
         \ :<C-u>Unite bookmark
         \ -buffer-name=vimfiler_opened<CR>
-  nnoremap <silent> [unite]l :<C-u>Unite line
+  nnoremap <silent> <Plug>(my-unite)l :<C-u>Unite line
         \ -buffer-name=search<CR>
-  nnoremap <silent> [unite]h :<C-u>Unite help
+  nnoremap <silent> <Plug>(my-unite)h :<C-u>Unite help
         \ -buffer-name=search<CR>
-  nnoremap <silent> [unite]mp
+  nnoremap <silent> <Plug>(my-unite)mp
         \ :<C-u>Unite output:map<BAR>map!<BAR>lmap
         \ -buffer-name=search<CR>
-  vnoremap <silent> [unite]l
+  vnoremap <silent> <Plug>(my-unite)l
         \ :<C-u>UniteWithCursorWord line
         \ -buffer-name=search<CR>
-  vnoremap <silent> [unite]h
+  vnoremap <silent> <Plug>(my-unite)h
         \ :<C-u>UniteWithCursorWord help
         \ -buffer-name=search<CR>
 
   " unite-file
-  nnoremap [unite-file] <Nop>
-  nmap [unite]f [unite-file]
-  nnoremap <silent> [unite-file]f
+  nnoremap <Plug>(my-unite-file) <Nop>
+  nmap <Plug>(my-unite)f <Plug>(my-unite-file)
+  nnoremap <silent> <Plug>(my-unite-file)f
         \ :<C-u>call <SID>unite_smart_file()<CR>
-  nnoremap <silent> [unite-file]i
+  nnoremap <silent> <Plug>(my-unite-file)i
         \ :<C-u>Unite file<CR>
-  nnoremap <silent> [unite-file]m
+  nnoremap <silent> <Plug>(my-unite-file)m
         \ :<C-u>Unite file_mru<CR>
-  nnoremap <silent> [unite-file]r
+  nnoremap <silent> <Plug>(my-unite-file)r
         \ :<C-u>Unite file_rec/async<CR>
-  nnoremap <silent> [unite-file]g
+  nnoremap <silent> <Plug>(my-unite-file)g
         \ :<C-u>Unite file_rec/git<CR>
   function! s:unite_smart_file()
     if executable('git') && s:is_git_available()
@@ -1140,57 +1140,57 @@ if neobundle#tap('unite.vim') " {{{
   endfunction
 
   " unite-directory
-  nnoremap [unite-directory] <Nop>
-  nmap [unite]d [unite-directory]
-  nnoremap <silent> [unite-directory]d
+  nnoremap <Plug>(my-unite-directory) <Nop>
+  nmap <Plug>(my-unite)d <Plug>(my-unite-directory)
+  nnoremap <silent> <Plug>(my-unite-directory)d
         \ :<C-u>Unite directory_rec/async
         \ -default-action=lcd<CR>
-  nnoremap <silent> [unite-directory]i
+  nnoremap <silent> <Plug>(my-unite-directory)i
         \ :<C-u>Unite directory
         \ -default-action=lcd<CR>
-  nnoremap <silent> [unite-directory]m
+  nnoremap <silent> <Plug>(my-unite-directory)m
         \ :<C-u>Unite directory_mru
         \ -default-action=lcd<CR>
-  nnoremap <silent> [unite-directory]r
+  nnoremap <silent> <Plug>(my-unite-directory)r
         \ :<C-u>Unite directory_rec/async
         \ -default-action=lcd<CR>
 
   " unite-qf
   if neobundle#is_installed('unite-quickfix')
-    nnoremap [unite-qf] <Nop>
-    nmap [unite]q [unite-qf]
-    nnoremap <silent> [unite-qf]q
+    nnoremap <Plug>(my-unite-qf) <Nop>
+    nmap <Plug>(my-unite)q <Plug>(my-unite-qf)
+    nnoremap <silent> <Plug>(my-unite-qf)q
           \ :<C-u>Unite quickfix location_list
           \ -buffer-name=search<CR>
-    nnoremap <silent> [unite-qf]f
+    nnoremap <silent> <Plug>(my-unite-qf)f
           \ :<C-u>Unite quickfix
           \ -buffer-name=search<CR>
-    nnoremap <silent> [unite-qf]l
+    nnoremap <silent> <Plug>(my-unite-qf)l
           \ :<C-u>Unite location_list
           \ -buffer-name=search<CR>
   endif
 
   " unite-grep
-  nnoremap [unite-grep] <Nop>
-  nmap [unite]g [unite-grep]
-  vmap [unite]g [unite-grep]
-  nnoremap <silent> [unite-grep]*
+  nnoremap <Plug>(my-unite-grep) <Nop>
+  nmap <Plug>(my-unite)g <Plug>(my-unite-grep)
+  vmap <Plug>(my-unite)g <Plug>(my-unite-grep)
+  nnoremap <silent> <Plug>(my-unite-grep)*
         \ :<C-u>call <SID>unite_smart_grep_cursor()<CR>
-  vnoremap <silent> [unite-grep]*
+  vnoremap <silent> <Plug>(my-unite-grep)*
         \ :<C-u>call <SID>unite_smart_grep_cursor()<CR>
-  nnoremap <silent> [unite-grep]g
+  nnoremap <silent> <Plug>(my-unite-grep)g
         \ :<C-u>call <SID>unite_smart_grep()<CR>
-  vnoremap <silent> [unite-grep]g
+  vnoremap <silent> <Plug>(my-unite-grep)g
         \ :<C-u>call <SID>unite_smart_grep_cursor()<CR>
-  nnoremap <silent> [unite-grep]i
+  nnoremap <silent> <Plug>(my-unite-grep)i
         \ :<C-u>Unite grep/git:/
         \ -buffer-name=search
         \ -no-empty<CR>
-  nnoremap <silent> [unite-grep]h
+  nnoremap <silent> <Plug>(my-unite-grep)h
         \ :<C-u>Unite grep/hg:/
         \ -buffer-name=search
         \ -no-empty<CR>
-  nnoremap <silent> [unite-grep]r
+  nnoremap <silent> <Plug>(my-unite-grep)r
         \ :<C-u>Unite grep:.
         \ -buffer-name=search
         \ -no-empty<CR>
@@ -1214,49 +1214,49 @@ if neobundle#tap('unite.vim') " {{{
   endfunction
 
   " unite-git
-  nnoremap [unite-git] <Nop>
-  nmap [unite]i [unite-git]
+  nnoremap <Plug>(my-unite-git) <Nop>
+  vmap <Plug>(my-unite)i <Plug>(my-unite-git)
   if neobundle#is_installed('vim-unite-giti')
-    nnoremap <silent> [unite-git]i
+    nnoremap <silent> <Plug>(my-unite-git)i
           \ :<C-u>Unite giti<CR>
-    nnoremap <silent> [unite-git]b
+    nnoremap <silent> <Plug>(my-unite-git)b
           \ :<C-u>Unite giti/branch<CR>
-    nnoremap <silent> [unite-git]l
+    nnoremap <silent> <Plug>(my-unite-git)l
           \ :<C-u>Unite giti/log<CR>
-    nnoremap <silent> [unite-git]r
+    nnoremap <silent> <Plug>(my-unite-git)r
           \ :<C-u>Unite giti/remote<CR>
-    nnoremap <silent> [unite-git]s
+    nnoremap <silent> <Plug>(my-unite-git)s
           \ :<C-u>Unite giti/status<CR>
-    nnoremap <silent> [unite-git]pb
+    nnoremap <silent> <Plug>(my-unite-git)pb
           \ :<C-u>Unite giti/pull_request/base<CR>
-    nnoremap <silent> [unite-git]ph
+    nnoremap <silent> <Plug>(my-unite-git)ph
           \ :<C-u>Unite giti/pull_request/head<CR>
   endif
   if neobundle#is_installed('vim-gista')
-    nnoremap <silent> [unite-git]t
+    nnoremap <silent> <Plug>(my-unite-git)t
           \ :<C-u>Unite gista:lambdalisue<CR>
   endif
 
   " unite-ref
-  nnoremap [unite-ref] <Nop>
-  nmap [unite]r [unite-ref]
+  nnoremap <Plug>(my-unite-ref) <Nop>
+  vmap <Plug>(my-unite)r <Plug>(my-unite-ref)
   if neobundle#is_installed('vim-ref')
-    nnoremap <silent> [unite-ref]r
+    nnoremap <silent> <Plug>(my-unite-ref)r
                 \ :<C-u>call <SID>unite_smart_ref()<CR>
-    nnoremap <silent> [unite-ref]p
+    nnoremap <silent> <Plug>(my-unite-ref)p
                 \ :<C-u>Unite ref/pydoc<CR>
-    nnoremap <silent> [unite-ref]l
+    nnoremap <silent> <Plug>(my-unite-ref)l
                 \ :<C-u>Unite perldoc<CR>
-    nnoremap <silent> [unite-ref]m
+    nnoremap <silent> <Plug>(my-unite-ref)m
                 \ :<C-u>Unite ref/man<CR>
     if neobundle#is_installed('ref-sources.vim')
-      nnoremap <silent> [unite-ref]j
+      nnoremap <silent> <Plug>(my-unite-ref)j
                   \ :<C-u>Unite ref/javascript<CR>
-      nnoremap <silent> [unite-ref]q
+      nnoremap <silent> <Plug>(my-unite-ref)q
                   \ :<C-u>Unite ref/jquery<CR>
-      nnoremap <silent> [unite-ref]k
+      nnoremap <silent> <Plug>(my-unite-ref)k
                   \ :<C-u>Unite ref/kotobank<CR>
-      nnoremap <silent> [unite-ref]w
+      nnoremap <silent> <Plug>(my-unite-ref)w
                   \ :<C-u>Unite ref/wikipedia<CR>
     endif
     function! s:unite_smart_ref()
@@ -1278,7 +1278,7 @@ if neobundle#tap('unite.vim') " {{{
 
   " unite-linephrase
   if neobundle#is_installed('unite-linephrase')
-    nnoremap <silent> [unite]p :<C-u>Unite linephrase
+    nnoremap <silent> <Plug>(my-unite)p :<C-u>Unite linephrase
           \ -buffer-name=search<CR>
   endif
 
@@ -1292,7 +1292,7 @@ if neobundle#tap('unite.vim') " {{{
 
   " vim-bookmarks
   if neobundle#is_installed('vim-bookmarks')
-    nnoremap <silent> [unite]mm :<C-u>Unite vim_bookmarks<CR>
+    nnoremap <silent> <Plug>(my-unite)mm :<C-u>Unite vim_bookmarks<CR>
   endif
 
   " unite-menu
@@ -1395,7 +1395,7 @@ if neobundle#tap('unite.vim') " {{{
         \ ['tmux', 'lcd to tmux directory',
         \   printf('lcd %s', expand('~/.config/tmux'))],
         \])
-  nnoremap <silent> [unite]s :<C-u>Unite menu:shortcut<CR>
+  nnoremap <silent> <Plug>(my-unite)s :<C-u>Unite menu:shortcut<CR>
 
   call neobundle#untap()
 endif " }}}
@@ -1411,15 +1411,15 @@ if neobundle#tap('vimshell.vim') " {{{
         \   ],
         \ }})
 
-  nnoremap [vimshell] <Nop>
-  nmap <C-s> [vimshell]
-  vmap <C-s> [vimshell]
-  nnoremap <silent> [vimshell]s :<C-u>VimShellPop<CR>
-  nnoremap <silent> [vimshell]S :<C-u>VimShellTab<CR>
-  nnoremap <silent> [vimshell]i :<C-u>VimShellInteractive<CR>
-  nnoremap <silent> [vimshell]p :<C-u>VimShellInteractive ipython<CR>
-  nnoremap <silent> [vimshell]<Space> :<C-u>VimShellSendString<CR>
-  vnoremap <silent> [vimshell]<Space> :<C-u>VimShellSendString<CR>
+  nnoremap <Plug>(my-vimshell) <Nop>
+  nmap <C-s> <Plug>(my-vimshell)
+  vmap <C-s> <Plug>(my-vimshell)
+  nnoremap <silent> <Plug>(my-vimshell)s :<C-u>VimShellPop<CR>
+  nnoremap <silent> <Plug>(my-vimshell)S :<C-u>VimShellTab<CR>
+  nnoremap <silent> <Plug>(my-vimshell)i :<C-u>VimShellInteractive<CR>
+  nnoremap <silent> <Plug>(my-vimshell)p :<C-u>VimShellInteractive ipython<CR>
+  nnoremap <silent> <Plug>(my-vimshell)<Space> :<C-u>VimShellSendString<CR>
+  vnoremap <silent> <Plug>(my-vimshell)<Space> :<C-u>VimShellSendString<CR>
 
   function! neobundle#tapped.hooks.on_source(bundle)
     let g:vimshell_prompt = '$ '
@@ -1498,7 +1498,7 @@ if neobundle#tap('vimfiler.vim') " {{{
         \   'explorer': 1,
         \ }})
 
-  nnoremap [vimfiler] <Nop>
+  nnoremap <Plug>(my-vimfiler) <Nop>
   nmap <Leader>e [vimfiler]
   nnoremap <silent> [vimfiler]e :<C-u>VimFilerExplorer<CR>
   nnoremap <silent> [vimfiler]E :<C-u>VimFiler<CR>
