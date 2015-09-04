@@ -1499,9 +1499,9 @@ if neobundle#tap('vimfiler.vim') " {{{
         \ }})
 
   nnoremap <Plug>(my-vimfiler) <Nop>
-  nmap <Leader>e [vimfiler]
-  nnoremap <silent> [vimfiler]e :<C-u>VimFilerExplorer<CR>
-  nnoremap <silent> [vimfiler]E :<C-u>VimFiler<CR>
+  nmap <Leader>e <Plug>(my-vimfiler)
+  nnoremap <silent> <Plug>(my-vimfiler)e :<C-u>VimFilerExplorer<CR>
+  nnoremap <silent> <Plug>(my-vimfiler)E :<C-u>VimFiler<CR>
 
   function! neobundle#tapped.hooks.on_source(bundle)
     call vimfiler#custom#profile('default', 'context', {
@@ -1569,9 +1569,9 @@ if neobundle#tap('undotree.vim') " {{{
         \   ],
         \ }})
 
-  nnoremap [undotree] <Nop>
-  nmap <Leader>u [undotree]
-  nnoremap <silent> [undotree] :<C-u>UndotreeToggle<CR>
+  nnoremap <Plug>(my-undotree) <Nop>
+  nmap <Leader>u <Plug>(my-undotree)
+  nnoremap <silent> <Plug>(my-undotree) :<C-u>UndotreeToggle<CR>
 
   function! neobundle#tapped.hooks.on_source(bundle)
   endfunction
@@ -1623,9 +1623,9 @@ if neobundle#tap('tagbar') " {{{
         \   ],
         \ }})
 
-  nnoremap [tagbar] <Nop>
-  nmap <Leader>t [tagbar]
-  nnoremap <silent> [tagbar] :<C-u>TagbarToggle<CR>
+  nnoremap <Plug>(my-tagbar) <Nop>
+  nmap <Leader>t <Plug>(my-tagbar)
+  nnoremap <silent> <Plug>(my-tagbar) :<C-u>TagbarToggle<CR>
   call neobundle#untap()
 endif " }}}
 
@@ -1638,11 +1638,11 @@ if neobundle#tap('memolist.vim') " {{{
         \   ],
         \ }})
 
-  nnoremap [memolist] <Nop>
-  nmap <Leader>m [memolist]
-  nnoremap <silent> [memolist]m :<C-u>MemoList<CR>
-  nnoremap <silent> [memolist]n :<C-u>MemoNew<CR>
-  nnoremap <silent> [memolist]g :<C-u>MemoGrep<CR>
+  nnoremap <Plug>(my-memolist) <Nop>
+  nmap <Leader>m <Plug>(my-memolist)
+  nnoremap <silent> <Plug>(my-memolist)m :<C-u>MemoList<CR>
+  nnoremap <silent> <Plug>(my-memolist)n :<C-u>MemoNew<CR>
+  nnoremap <silent> <Plug>(my-memolist)g :<C-u>MemoGrep<CR>
 
   function! neobundle#tapped.hooks.on_source(bundle)
     let g:memolist_qfixgrep = 1
@@ -1662,26 +1662,26 @@ if neobundle#tap('tabular') " {{{
         \   ],
         \ }})
 
-  nnoremap [tabular] <Nop>
-  vnoremap [tabular] <Nop>
-  nmap <Leader>a [tabular]
-  vmap <Leader>a [tabular]
-  nnoremap [tabular]= :<C-u>Tabularize /=<CR>
-  vnoremap [tabular]= :<C-u>Tabularize /=<CR>
-  nnoremap [tabular]> :<C-u>Tabularize /=><CR>
-  vnoremap [tabular]> :<C-u>Tabularize /=><CR>
-  nnoremap [tabular]# :<C-u>Tabularize /#<CR>
-  vnoremap [tabular]# :<C-u>Tabularize /#<CR>
-  nnoremap [tabular]! :<C-u>Tabularize /!<CR>
-  vnoremap [tabular]! :<C-u>Tabularize /!<CR>
-  nnoremap [tabular]" :<C-u>Tabularize /"<CR>
-  vnoremap [tabular]" :<C-u>Tabularize /"<CR>
-  nnoremap [tabular]& :<C-u>Tabularize /&<CR>
-  vnoremap [tabular]& :<C-u>Tabularize /&<CR>
-  nnoremap [tabular]: :<C-u>Tabularize /:\zs<CR>
-  vnoremap [tabular]: :<C-u>Tabularize /:\zs<CR>
-  nnoremap [tabular]<BAR> :<C-u>Tabularize /<BAR><CR>
-  vnoremap [tabular]<BAR> :<C-u>Tabularize /<BAR><CR>
+  nnoremap <Plug>(my-tabular) <Nop>
+  vnoremap <Plug>(my-tabular) <Nop>
+  nmap <Leader>a <Plug>(my-tabular)
+  vmap <Leader>a <Plug>(my-tabular)
+  nnoremap <Plug>(my-tabular)= :<C-u>Tabularize /=<CR>
+  vnoremap <Plug>(my-tabular)= :<C-u>Tabularize /=<CR>
+  nnoremap <Plug>(my-tabular)> :<C-u>Tabularize /=><CR>
+  vnoremap <Plug>(my-tabular)> :<C-u>Tabularize /=><CR>
+  nnoremap <Plug>(my-tabular)# :<C-u>Tabularize /#<CR>
+  vnoremap <Plug>(my-tabular)# :<C-u>Tabularize /#<CR>
+  nnoremap <Plug>(my-tabular)! :<C-u>Tabularize /!<CR>
+  vnoremap <Plug>(my-tabular)! :<C-u>Tabularize /!<CR>
+  nnoremap <Plug>(my-tabular)" :<C-u>Tabularize /"<CR>
+  vnoremap <Plug>(my-tabular)" :<C-u>Tabularize /"<CR>
+  nnoremap <Plug>(my-tabular)& :<C-u>Tabularize /&<CR>
+  vnoremap <Plug>(my-tabular)& :<C-u>Tabularize /&<CR>
+  nnoremap <Plug>(my-tabular): :<C-u>Tabularize /:\zs<CR>
+  vnoremap <Plug>(my-tabular): :<C-u>Tabularize /:\zs<CR>
+  nnoremap <Plug>(my-tabular)<BAR> :<C-u>Tabularize /<BAR><CR>
+  vnoremap <Plug>(my-tabular)<BAR> :<C-u>Tabularize /<BAR><CR>
   call neobundle#untap()
 endif " }}}
 
@@ -1709,14 +1709,14 @@ if neobundle#tap('vim-rengbang') " {{{
           \]
   endfunction
 
-  nnoremap [rengbang] <Nop>
-  vmap <C-a> [rengbang]
-  vnoremap [rengbang]a :<C-u>'<,'>RengBang<CR>
-  vnoremap [rengbang]A :<C-u>'<,'>RengBangUsePrev<CR>
-  vnoremap [rengbang]c :<C-u>'<,'>RengBangConfirm<CR>
+  nnoremap <Plug>(my-rengbang) <Nop>
+  vmap <C-a> <Plug>(my-rengbang)
+  vnoremap <Plug>(my-rengbang)a :<C-u>'<,'>RengBang<CR>
+  vnoremap <Plug>(my-rengbang)A :<C-u>'<,'>RengBangUsePrev<CR>
+  vnoremap <Plug>(my-rengbang)c :<C-u>'<,'>RengBangConfirm<CR>
 
-  map [operator]rr <Plug>(operator-rengbang)
-  map [operator]rR <Plug>(operator-rengbang-useprev)
+  map <Plug>(my-operator)rr <Plug>(operator-rengbang)
+  map <Plug>(my-operator)rR <Plug>(operator-rengbang-useprev)
   call neobundle#untap()
 endif " }}}
 
@@ -1755,10 +1755,10 @@ if neobundle#tap('calendar.vim') " {{{
     let g:calendar_google_task = 1
   endfunction
 
-  nnoremap [calendar] <Nop>
-  nmap <Leader>c [calendar]
-  nnoremap <silent> [calendar]c :<C-u>Calendar<CR>
-  nnoremap <silent> [calendar]t :<C-u>Calendar -view=clock<CR>
+  nnoremap <Plug>(my-calendar) <Nop>
+  nmap <Leader>c <Plug>(my-calendar)
+  nnoremap <silent> <Plug>(my-calendar)c :<C-u>Calendar<CR>
+  nnoremap <silent> <Plug>(my-calendar)t :<C-u>Calendar -view=clock<CR>
 
   call neobundle#untap()
 endif " }}}
@@ -1829,13 +1829,13 @@ if neobundle#tap('vim-gita') " {{{
           \}
   endfunction
 
-  nnoremap [gita] <Nop>
-  nmap <Leader>a [gita]
-  nnoremap [gita]a :<C-u>Gita status  --ignore-submodules<CR>
-  nnoremap [gita]s :<C-u>Gita status<CR>
-  nnoremap [gita]c :<C-u>Gita commit<CR>
-  nnoremap [gita]d :<C-u>Gita diff    --ignore-submodules -- %<CR>
-  nnoremap [gita]l :<C-u>Gita diff-ls --ignore-submodules<CR>
+  nnoremap <Plug>(my-gita) <Nop>
+  nmap <Leader>a <Plug>(my-gita)
+  nnoremap <Plug>(my-gita)a :<C-u>Gita status  --ignore-submodules<CR>
+  nnoremap <Plug>(my-gita)s :<C-u>Gita status<CR>
+  nnoremap <Plug>(my-gita)c :<C-u>Gita commit<CR>
+  nnoremap <Plug>(my-gita)d :<C-u>Gita diff    --ignore-submodules -- %<CR>
+  nnoremap <Plug>(my-gita)l :<C-u>Gita diff-ls --ignore-submodules<CR>
 
   call neobundle#untap()
 endif " }}}
@@ -1860,7 +1860,7 @@ if neobundle#tap('vim-gitgutter') " {{{
 
   nmap [g <Plug>GitGutterPrevHunk
   nmap ]g <Plug>GitGutterNextHunk
-  nmap [switch]g :<C-u>GitGutterToggle<CR>
+  nmap <Plug>(my-switch)g :<C-u>GitGutterToggle<CR>
 
   call neobundle#untap()
 endif " }}}
@@ -2387,10 +2387,10 @@ if neobundle#tap('shareboard.vim') " {{{
 
   " register the call rules
   function! s:shareboard_settings()
-    nnoremap <buffer> [shareboard] <Nop>
-    nmap     <buffer> <LocalLeader>S [shareboard]
-    nnoremap <buffer> [shareboard]v :<C-u>ShareboardPreview<CR>
-    nnoremap <buffer> [shareboard]c :<C-u>ShareboardCompile<CR>
+    nnoremap <buffer> <Plug>(my-shareboard) <Nop>
+    nmap     <buffer> <LocalLeader>S <Plug>(my-shareboard)
+    nnoremap <buffer> <Plug>(my-shareboard)v :<C-u>ShareboardPreview<CR>
+    nnoremap <buffer> <Plug>(my-shareboard)c :<C-u>ShareboardCompile<CR>
   endfunction
   autocmd MyAutoCmd FileType pandoc,rst,text,markdown
         \ call s:shareboard_settings()
@@ -2450,9 +2450,9 @@ if neobundle#tap('vim-themis') " {{{
 
   function! neobundle#tapped.hooks.on_source(bundle)
     function! s:themis_settings()
-      nnoremap <buffer> [test] <Nop>
-      nmap     <buffer> <LocalLeader>t [test]
-      nnoremap <buffer> [test] :<C-u>call themis#run([expand('%')])<CR>
+      nnoremap <buffer> <Plug>(my-test) <Nop>
+      nmap     <buffer> <LocalLeader>t <Plug>(my-test)
+      nnoremap <buffer> <Plug>(my-test] :<C-u>call themis#run([expand('%')))<CR>
     endfunction
     autocmd MyAutoCmd FileType vim,vimspec call s:themis_settings()
   endfunction
@@ -2483,9 +2483,9 @@ if neobundle#tap('vim-vimlint') " {{{
         \})
   function! neobundle#tapped.hooks.on_post_source(bundle) abort
     function! s:vimlint_settings() abort
-      nnoremap <buffer> [vimlint] <Nop>
-      nmap     <buffer> <LocalLeader>l [vimlint]
-      nnoremap <buffer> [vimlint] :<C-u>call vimlint#vimlint(expand('%'))<CR>
+      nnoremap <buffer> <Plug>(my-vimlint) <Nop>
+      nmap     <buffer> <LocalLeader>l <Plug>(my-vimlint)
+      nnoremap <buffer> <Plug>(my-vimlint) :<C-u>call vimlint#vimlint(expand('%'))<CR>
     endfunction
     autocmd MyAutoCmd FileType vim call s:vimlint_settings()
   endfunction
