@@ -685,7 +685,7 @@ if neobundle#tap('lightline.vim') " {{{
           \   ],
           \   'right': [
           \     [ 'close' ],
-          \     [ 'pyenv', 'git_debug', 'git_branch', 'git_traffic', 'git_status', 'cwd' ],
+          \     [ 'pyenv', 'git_debug', 'git_branch', 'git_traffic', 'git_status', 'cwd', 'time' ],
           \   ],
           \ },
           \ 'component_visible_condition': {
@@ -699,6 +699,7 @@ if neobundle#tap('lightline.vim') " {{{
           \ },
           \ 'component_function': {
           \   'mode': 'g:lightline.my.mode',
+          \   'time': 'g:lightline.my.time',
           \   'cwd': 'g:lightline.my.cwd',
           \   'filename': 'g:lightline.my.filename',
           \   'fileformat': 'g:lightline.my.fileformat',
@@ -741,6 +742,9 @@ if neobundle#tap('lightline.vim') " {{{
         return 1
       endif
       return 0
+    endfunction " }}}
+    function! g:lightline.my.time() " {{{
+      return strftime('%b/%d %H:%M')
     endfunction " }}}
     function! g:lightline.my.mode() " {{{
       return lightline#mode()
@@ -1215,7 +1219,7 @@ if neobundle#tap('unite.vim') " {{{
 
   " unite-git
   nnoremap <Plug>(my-unite-git) <Nop>
-  vmap <Plug>(my-unite)i <Plug>(my-unite-git)
+  nmap <Plug>(my-unite)i <Plug>(my-unite-git)
   if neobundle#is_installed('vim-unite-giti')
     nnoremap <silent> <Plug>(my-unite-git)i
           \ :<C-u>Unite giti<CR>
@@ -1239,7 +1243,7 @@ if neobundle#tap('unite.vim') " {{{
 
   " unite-ref
   nnoremap <Plug>(my-unite-ref) <Nop>
-  vmap <Plug>(my-unite)r <Plug>(my-unite-ref)
+  nmap <Plug>(my-unite)r <Plug>(my-unite-ref)
   if neobundle#is_installed('vim-ref')
     nnoremap <silent> <Plug>(my-unite-ref)r
                 \ :<C-u>call <SID>unite_smart_ref()<CR>
