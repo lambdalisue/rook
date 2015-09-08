@@ -9,7 +9,9 @@ setopt print_eight_bit
 
 # use ASCII in linux server
 if [[ "${TERM}" = "linux" ]]; then
-    LANG=C
+    export LANG=C
+else
+    export LANG=ja_JP.UTF-8
 fi
 
 # create ZDOTDIR if not exists
