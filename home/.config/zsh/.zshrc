@@ -11,7 +11,8 @@ setopt print_eight_bit
 if [[ "${TERM}" = "linux" ]]; then
     export LANG=C
 else
-    export LANG=ja_JP.UTF-8
+    export LANG="en_US.UTF-8"
+    export LANGUAGE="en_US:en"
 fi
 
 # create ZDOTDIR if not exists
