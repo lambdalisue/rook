@@ -1,5 +1,14 @@
 {
   "load_extensions": {
-    "vim_binding": true
+    "usability/execute_time/ExecuteTime": true,
+    "usability/runtools/main": true,
+    "usability/chrome-clipboard/main": true,
+    "config/config_menu/main": true,
+    "vim_binding": true,
+    "usability/python-markdown/main": true,
+    "usability/skip-traceback/main": true,
+    "usability/search-replace/main": true,
+    "usability/dragdrop/main": true,
+    "usability/codefolding/main": true
   }
 }
