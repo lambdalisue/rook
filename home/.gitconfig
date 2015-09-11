@@ -17,7 +17,7 @@
     user = lambdalisue
 
 [push]
-    default = simple
+    default = current
 
 [branch]
     autosetupmerge = always
