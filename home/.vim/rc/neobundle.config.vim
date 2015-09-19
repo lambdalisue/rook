@@ -106,19 +106,26 @@ if neobundle#tap('vim-quickhl') " {{{
         \ }})
 
   nnoremap <Plug>(my-quickhl) <Nop>
+  vnoremap <Plug>(my-quickhl) <Nop>
   xnoremap <Plug>(my-quickhl) <Nop>
   nmap H <Plug>(my-quickhl)
+  vmap H <Plug>(my-quickhl)
   xmap H <Plug>(my-quickhl)
 
   nmap <Plug>(my-quickhl)h <Plug>(quickhl-manual-this)
+  vmap <Plug>(my-quickhl)h <Plug>(quickhl-manual-this)
   xmap <Plug>(my-quickhl)h <Plug>(quickhl-manual-this)
   nmap <Plug>(my-quickhl)r <Plug>(quickhl-manual-reset)
+  vmap <Plug>(my-quickhl)r <Plug>(quickhl-manual-reset)
   xmap <Plug>(my-quickhl)r <Plug>(quickhl-manual-reset)
 
   nmap <Plug>(my-quickhl)H  <Plug>(quickhl-manual-toggle)
+  vmap <Plug>(my-quickhl)H  <Plug>(quickhl-manual-toggle)
   xmap <Plug>(my-quickhl)H  <Plug>(quickhl-manual-toggle)
   nmap <Plug>(my-quickhl)c  <Plug>(quickhl-cword-toggle)
+  vmap <Plug>(my-quickhl)c  <Plug>(quickhl-cword-toggle)
   nmap <Plug>(my-quickhl)t  <Plug>(quickhl-tag-toggle)
+  vmap <Plug>(my-quickhl)t  <Plug>(quickhl-tag-toggle)
 
   map  <Plug>(my-operator)h <Plug>(operator-quickhl-manual-this-motion)
 
