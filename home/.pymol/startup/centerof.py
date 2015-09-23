@@ -150,7 +150,7 @@ def verbose(fn, pattern="{}"):
 
 def find_coc_selection(selection, state=0):
     """
-    Find center of coordinates of the selection
+    Find center of coordinates of the selection and return the value
 
     USAGE
 
@@ -165,6 +165,7 @@ def find_coc_selection(selection, state=0):
     EXAMPLE
 
         find_coc_selection resn PHE, state=10
+        fcoc resn PHE, state=10
     """
     # find middle x, y, z coordinate of the selection
     minc, maxc = cmd.get_extent(selection, state=state)
@@ -174,7 +175,7 @@ def find_coc_selection(selection, state=0):
 
 def find_com_selection(selection, state=0):
     """
-    Find center of mass of the selection
+    Find center of mass of the selection and return the value
 
     USAGE
 
@@ -189,6 +190,7 @@ def find_com_selection(selection, state=0):
     EXAMPLE
 
         find_com_selection resn PHE, state=10
+        fcom resn PHE, state=10
     """
     model = cmd.get_model(selection, state=state)
     com = cpv.get_null()
@@ -199,22 +201,22 @@ def find_com_selection(selection, state=0):
     return com
 
 
-def draw_coc_selection(selection,
-                       state=0,
-                       name=None, prefix='coc',
-                       radius=1.0, color=(0.5, 0.5, 0.5), alpha=0.5):
+def draw_sphere_on_coc_selection(selection,
+                                 state=0,
+                                 name=None, prefix='coc',
+                                 radius=1.0, color=(0.5, 0.5, 0.5), alpha=0.5):
     """
     Draw a sphere which indicate a center of coordinate of the selection
 
     USAGE
 
-        draw_coc_selection selection,
-                           state=state,
-                           name=name,
-                           prefix=prefix,
-                           readius=radius,
-                           color=color,
-                           alpha=alpha
+        draw_sphere_on_coc_selection selection,
+                                     state=state,
+                                     name=name,
+                                     prefix=prefix,
+                                     readius=radius,
+                                     color=color,
+                                     alpha=alpha
 
     ARGUMENTS
 
@@ -230,29 +232,30 @@ def draw_coc_selection(selection,
 
     EXAMPLE
 
-        draw_coc_selection resn PHE, state=10, radius=3.2
+        draw_sphere_on_coc_selection resn PHE, state=10, radius=3.2
+        dcoc resn PHE, state=10, radius=3.2
     """
     coc = find_coc_selection(selection, state=state)
     sphere = Sphere(coc, radius, color)
     sphere.create(name, prefix, alpha)
 
 
-def draw_com_selection(selection,
-                       state=0,
-                       name=None, prefix='com',
-                       radius=1.0, color=(0.5, 0.5, 0.5), alpha=0.5):
+def draw_sphere_on_com_selection(selection,
+                                 state=0,
+                                 name=None, prefix='com',
+                                 radius=1.0, color=(0.5, 0.5, 0.5), alpha=0.5):
     """
     Draw a sphere which indicate a center of mass of the selection
 
     USAGE
 
-        draw_com_selection selection,
-                           state=state,
-                           name=name,
-                           prefix=prefix,
-                           readius=radius,
-                           color=color,
-                           alpha=alpha
+        draw_sphere_on_com_selection selection,
+                                     state=state,
+                                     name=name,
+                                     prefix=prefix,
+                                     readius=radius,
+                                     color=color,
+                                     alpha=alpha
 
     ARGUMENTS
 
@@ -268,17 +271,47 @@ def draw_com_selection(selection,
 
     EXAMPLE
 
-        draw_com_selection resn PHE, state=10, radius=3.2
+        draw_sphere_on_com_selection resn PHE, state=10, radius=3.2
+        dcom resn PHE, state=10, radius=3.2
     """
     com = find_coc_selection(selection, state=state)
     sphere = Sphere(com, radius, color)
     sphere.create(name, prefix, alpha)
 
 
-def center_of_coordinate(selection,
-                         state=None, append=True, name=None,
-                         prefix='', suffix='_coc',
-                         quiet=True, **kwargs):
+def create_pseudo_on_coc_selection(selection,
+                                   state=None, append=True, name=None,
+                                   prefix='', suffix='_coc', **kwargs):
+    """
+    Create a pseudoatom which indicate the center of coordinates of the
+    selection
+
+    USAGE
+
+        create_pseudo_on_coc_selection selection,
+                                       state=state,
+                                       append=True|False,
+                                       name=name,
+                                       prefix='',
+                                       suffix='_coc'
+
+    ARGUMENTS
+
+        selection   a selection-expression
+        state       a state-index if positive number or 0 to all, -1 to current
+        name        a name of the pseudoatom, it will
+                    automatically specified if None is specified (Default)
+        prefix      a prefix of the pseudoatom. it will used only when name is
+                    not specified
+        suffix      a suffix of the pseudoatom. it will used only when name is
+                    not specified
+        alpha       a alpha-value of the sphere
+
+    EXAMPLE
+
+        create_pseudo_on_coc_selection resn PHE, state=10
+        ccoc resn PHE, state=10
+    """
     if name is None:
         try:
             name = cmd.get_legal_name(selection)
@@ -291,18 +324,44 @@ def center_of_coordinate(selection,
     if state is not None:
         coc = find_coc_selection(selection, state=state)
         cmd.pseudoatom(name, pos=coc, **kwargs)
-        #coc.show('spheres', name)
     else:
         for state in range(1, cmd.count_states()+1):
             coc = find_coc_selection(selection, state=state)
             cmd.pseudoatom(name, pos=coc, state=state, **kwargs)
-            #cmd.show('spheres', 'last {}'.format(name))
 
 
-def center_of_mass(selection,
-                   state=None, name=None,
-                   prefix='', suffix='_com',
-                   quiet=True, **kwargs):
+def create_pseudo_on_com_selection(selection,
+                                   state=None, name=None,
+                                   prefix='', suffix='_com', **kwargs):
+    """
+    Create a pseudoatom which indicate the center of mass of the selection
+
+    USAGE
+
+        create_pseudo_on_coM_selection selection,
+                                       state=state,
+                                       append=True|False,
+                                       name=name,
+                                       prefix='',
+                                       suffix='_coc'
+
+    ARGUMENTS
+
+        selection   a selection-expression
+        state       a state-index if positive number or 0 to all, -1 to current
+        name        a name of the pseudoatom, it will
+                    automatically specified if None is specified (Default)
+        prefix      a prefix of the pseudoatom. it will used only when name is
+                    not specified
+        suffix      a suffix of the pseudoatom. it will used only when name is
+                    not specified
+        alpha       a alpha-value of the sphere
+
+    EXAMPLE
+
+        create_pseudo_on_com_selection resn PHE, state=10
+        ccom resn PHE, state=10
+    """
     if name is None:
         try:
             name = cmd.get_legal_name(selection)
@@ -315,20 +374,27 @@ def center_of_mass(selection,
     if state is not None:
         com = find_com_selection(selection, state=state)
         cmd.pseudoatom(name, pos=com, **kwargs)
-        #com.show('spheres', name)
     else:
         for state in range(1, cmd.count_states()+1):
             com = find_com_selection(selection, state=state)
             cmd.pseudoatom(name, pos=com, state=state, **kwargs)
-            #cmd.show('spheres', 'last {}'.format(name))
 
 
 cmd.extend('find_coc_selection',
            verbose(find_coc_selection, 'COC: {:.6f} {:.6f} {:.6f}'))
+cmd.extend('fcoc',
+           verbose(find_coc_selection, 'COC: {:.6f} {:.6f} {:.6f}'))
 cmd.extend('find_com_selection',
            verbose(find_com_selection, 'COM: {:.6f} {:.6f} {:.6f}'))
-cmd.extend('draw_coc_selection', draw_coc_selection)
-cmd.extend('draw_com_selection', draw_com_selection)
+cmd.extend('fcom',
+           verbose(find_com_selection, 'COM: {:.6f} {:.6f} {:.6f}'))
 
-cmd.extend('coc', center_of_coordinate)
-cmd.extend('com', center_of_mass)
+cmd.extend('draw_sphere_on_coc_selection', draw_sphere_on_coc_selection)
+cmd.extend('dcoc', draw_sphere_on_coc_selection)
+cmd.extend('draw_sphere_on_com_selection', draw_sphere_on_com_selection)
+cmd.extend('dcom', draw_sphere_on_com_selection)
+
+cmd.extend('create_pseudo_on_coc_selection', create_pseudo_on_coc_selection)
+cmd.extend('ccoc', create_pseudo_on_coc_selection)
+cmd.extend('create_pseudo_on_com_selection', create_pseudo_on_com_selection)
+cmd.extend('ccom', create_pseudo_on_coc_selection)
