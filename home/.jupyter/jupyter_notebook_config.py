@@ -6,7 +6,9 @@ import sys
 sys.path.append(os.path.join(jupyter_data_dir(), 'extensions'))
 
 c = get_config()
-c.NotebookApp.extra_template_paths = [os.path.join(jupyter_data_dir(),'templates') ]
+c.NotebookApp.extra_template_paths = [
+    os.path.join(jupyter_data_dir(), 'templates')
+]
 
 
 #--- nbextensions configuration ---
@@ -114,7 +116,6 @@ c.NotebookApp.ip = '*'
 
 # The port the notebook server will listen on.
 # c.NotebookApp.port = 8888
-c.NotebookApp.port = 9999
 
 # Whether to trust or not X-Scheme/X-Forwarded-Proto and X-Real-Ip/X-Forwarded-
 # For headerssent by the upstream reverse proxy. Necessary if the proxy handles
@@ -130,7 +131,6 @@ c.NotebookApp.port = 9999
 
 # The number of additional ports to try if the specified port is not available.
 # c.NotebookApp.port_retries = 50
-c.NotebookApp.port_retries = 0
 
 # Extra paths to search for serving jinja templates.
 # 
@@ -170,8 +170,6 @@ c.NotebookApp.port_retries = 0
 
 # The directory to use for notebooks and kernels.
 # c.NotebookApp.notebook_dir = ''
-import os
-c.NotebookApp.notebook_dir = os.path.expanduser('~/Notebook')
 
 # The base URL for the notebook server.
 # 
