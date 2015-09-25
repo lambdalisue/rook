@@ -217,7 +217,8 @@ __prompt_dust_get_symbol() {
 __prompt_dust_get_datetime() {
     local fcolor=245
     local kcolor=''
-    local date="%D{%Y/%m/%d %H:%M:%S}"    # Datetime YYYY/mm/dd HH:MM
+    #local date="%D{%Y/%m/%d %H:%M:%S}"    # Datetime YYYY/mm/dd HH:MM
+    local date="%D{%m/%d %H:%M:%S}"    # Datetime mm/dd HH:MM
     __prompt_dust_get_segment "$date" $fcolor $kcolor
 }
 __prompt_dust_get_vcs() {
