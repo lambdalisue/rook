@@ -13,6 +13,9 @@
 [color]
     ui = auto
 
+[hub]
+    protocol = https
+
 [github]
     user = lambdalisue
 
