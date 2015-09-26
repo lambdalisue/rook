@@ -105,3 +105,11 @@ if [[ -d "$GOPATH/src/github.com/motemen/ghq" ]]; then
         $fpath
     )
 fi
+
+# pip
+if type pip >/dev/null 2>&1; then
+    eval "$(pip completion --zsh)"
+fi
+if type pip3 >/dev/null 2>&1; then
+    eval "$(pip3 completion --zsh)"
+fi

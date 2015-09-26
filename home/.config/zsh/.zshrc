@@ -76,7 +76,7 @@ setopt no_flow_control       # do not use C-s/C-q
 #}}}
 
 # Completion {{{
-autoload -Uz compinit && compinit -C
+autoload -Uz compinit && compinit -u
 
 setopt complete_in_word      # complete at carret position
 setopt glob_complete         # complete without expanding glob
@@ -130,6 +130,7 @@ zstyle ':completion:*' completer \
     _prefix
 #}}}
 
+
 # Key mappings {{{
 bindkey -v
 
@@ -164,6 +165,11 @@ __add_path() {
         export PATH="${PATH:+"$PATH":}$1"
     fi
 }
+__add_fpath() {
+    if [ -d "$1" ] && [[ ":$FPATH:" != *":$1:"* ]]; then
+        export FPATH="${FPATH:+"$FPATH":}$1"
+    fi
+}
 __add_manpath() {
     if [ -d "$1" ] && [[ ":$MANPATH:" != *":$1:"* ]]; then
         export MANPATH="${MANPATH:+"$MANPATH":}$1"
@@ -184,9 +190,15 @@ __add_manpath "/usr/local/texlive/texmf-dist/doc/man"
 if [ $(uname) = "Darwin" ]; then
     __add_path "${ZDOTDIR}/tools/pt/pt_darwin_amd64"
     __add_path "${ZDOTDIR}/tools/ghq/ghq_darwin_amd64"
+    __add_path "${ZDOTDIR}/tools/hub/hub-mac-amd64-2.2.1"
+    __add_fpath "${ZDOTDIR}/tools/hub/hub-mac-amd64-2.2.1/etc"
+    __add_manpath "${ZDOTDIR}/tools/hub/hub-mac-amd64-2.2.1/man"
 else
     __add_path "${ZDOTDIR}/tools/pt/pt_linux_amd64"
     __add_path "${ZDOTDIR}/tools/ghq/ghq_linux_amd64"
+    __add_path "${ZDOTDIR}/tools/hub/hub-linux-amd64-2.2.1"
+    __add_fpath "${ZDOTDIR}/tools/hub/hub-linux-amd64-2.2.1/etc"
+    __add_manpath "${ZDOTDIR}/tools/hub/hub-linux-amd64-2.2.1/man"
 fi
 
 # source external settings
@@ -208,6 +220,7 @@ zsh_reload_rc() {
 
 # Load local configures
 [[ -f "$HOME/.profile" ]] && source "$HOME/.profile"
+[[ -f "$HOME/.zprofile" ]] && source "$HOME/.zprofile"
 
 # compile zshenv/zshrc
 if [ ! -f ${ZDOTDIR}/.zshenv.zwc -o ${ZDOTDIR}/.zshenv -nt ${ZDOTDIR}/.zshenv.zwc ]; then
