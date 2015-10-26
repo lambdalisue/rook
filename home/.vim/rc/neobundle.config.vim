@@ -1501,6 +1501,7 @@ endif " }}}
 
 if neobundle#tap('vimfiler.vim') " {{{
   call neobundle#config({
+        \ 'depends': 'Shougo/unite.vim',
         \ 'autoload': {
         \   'commands': [
         \     'VimFiler',
@@ -1520,6 +1521,7 @@ if neobundle#tap('vimfiler.vim') " {{{
           \ 'parent': 1,
           \ 'safe': 0,
           \ })
+    let g:loaded_netrwPlugin = 1
     let g:vimfiler_as_default_explorer = 1
     " ignore swap, backup, temporary files
     let g:vimfiler_ignore_pattern = printf('\%%(%s\)', join([
