@@ -38,6 +38,12 @@ esac
 #   S - do not wrap long lines
 export LESS="-iMRS"
 
+# lv
+export LV="-C"
+if type lv > /dev/null 2>&1; then
+    alias lv=less
+fi
+
 # use GNU grep if possible
 if type ggrep > /dev/null 2>&1; then
     alias grep=ggrep
