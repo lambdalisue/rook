@@ -1204,19 +1204,11 @@ if neobundle#tap('unite.vim') " {{{
   nmap <Plug>(my-unite)i <Plug>(my-unite-git)
   if neobundle#is_installed('vim-unite-giti')
     nnoremap <silent> <Plug>(my-unite-git)i
-          \ :<C-u>Unite giti<CR>
+          \ :<C-u>Unite giti/branch_recent<CR>
     nnoremap <silent> <Plug>(my-unite-git)b
-          \ :<C-u>Unite giti/branch<CR>
-    nnoremap <silent> <Plug>(my-unite-git)l
-          \ :<C-u>Unite giti/log<CR>
+          \ :<C-u>Unite giti/branch_recent giti/branch_all<CR>
     nnoremap <silent> <Plug>(my-unite-git)r
           \ :<C-u>Unite giti/remote<CR>
-    nnoremap <silent> <Plug>(my-unite-git)s
-          \ :<C-u>Unite giti/status<CR>
-    nnoremap <silent> <Plug>(my-unite-git)pb
-          \ :<C-u>Unite giti/pull_request/base<CR>
-    nnoremap <silent> <Plug>(my-unite-git)ph
-          \ :<C-u>Unite giti/pull_request/head<CR>
   endif
   if neobundle#is_installed('vim-gista')
     nnoremap <silent> <Plug>(my-unite-git)t
