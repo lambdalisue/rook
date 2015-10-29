@@ -1506,6 +1506,10 @@ if neobundle#tap('vimfiler.vim') " {{{
           \ '\.egg-info$',
           \], "\\|"))
 
+    function! s:vimfiler_new_file_and_open() "{{{
+      let directory = vimfiler#get_file_directory()
+      call vimfiler#mappings#do_dir_action('vimfiler__newfile', directory)
+    endfunction"}}}
     function! s:vimfiler_settings()
       setl nonumber
       " Use 'J' to select candidate while <Space> is for Unite
@@ -1524,6 +1528,9 @@ if neobundle#tap('vimfiler.vim') " {{{
       " <Space>k to open bookmark
       nmap <buffer><silent> <Space>k :<C-u>Unite bookmark
             \ -buffer-name=vimfiler_opened<CR>
+      nmap <buffer><silent> <Plug>(vimfiler_new_file_and_open)
+            \ :<C-u>call <SID>vimfiler_new_file_and_open()<CR>
+      nmap <buffer><nowait> N <Plug>(vimfiler_new_file_and_open)
     endfunction
     autocmd MyAutoCmd FileType vimfiler call s:vimfiler_settings()
 
