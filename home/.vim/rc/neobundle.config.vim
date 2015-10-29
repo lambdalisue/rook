@@ -132,31 +132,6 @@ if neobundle#tap('vim-quickhl') " {{{
   call neobundle#untap()
 endif " }}}
 
-if neobundle#tap('vim-choosewin') " {{{
-  call neobundle#config({
-        \ 'autoload': {
-        \   'mappings': '<Plug>(choosewin)',
-        \   'commands': [
-        \     'ChooseWin',
-        \     'ChooseWinSwap',
-        \     'ChooseWinSwapStay',
-        \   ],
-        \ }})
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    " overlay is slow in termianl
-    if has('gui_running')
-      let g:choosewin_overlay_enable = 1
-      let g:choosewin_overlay_clear_multibyte = 1
-    endif
-  endfunction
-
-  nnoremap <Plug>(my-choosewin) <Nop>
-  nmap ! <Plug>(choosewin)
-
-  call neobundle#untap()
-endif " }}}
-
 if neobundle#tap('open-browser.vim') " {{{
   call neobundle#config({
         \ 'autoload': {
