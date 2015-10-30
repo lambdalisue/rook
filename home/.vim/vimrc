@@ -512,13 +512,14 @@ call s:highlight_zenkaku_spaces()
 
 " plugins {{{
 let s:remote_bundle_root = $MY_VIMRUNTIME . "/bundle"
-let s:local_bundle_root = $MY_VIMRUNTIME . "/local_bundle"
 let s:neobundle_root = s:remote_bundle_root . "/neobundle.vim"
 
 function! s:call_neobundle() abort
   call neobundle#begin(s:remote_bundle_root)
-  call neobundle#local(s:local_bundle_root)
-  call s:load_source($MY_VIMRUNTIME . "/rc/neobundle.define.vim")
+  if neobundle#load_cache()
+    call s:load_source($MY_VIMRUNTIME . "/rc/neobundle.define.vim")
+    NeoBundleSaveCache
+  endif
   call s:load_source($MY_VIMRUNTIME . "/rc/neobundle.config.vim")
   call neobundle#end()
   if !has("vim_starting")
@@ -558,4 +559,4 @@ runtime ftplugin/man.vim
 call s:load_source(expand("~/.vimrc.local"))
 " }}}
 
-" vim:set et ts=2 sts=2 sw=2 tw=0 fdm=marker:
+" vim:set et ts=2 sts=2 sw=2 tw=0 fdm=marker ft=vim:
