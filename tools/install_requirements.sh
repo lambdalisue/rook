@@ -13,13 +13,13 @@ install_package(){
     fi
     # try to install
     if type apt-get > /dev/null 2>&1; then
-        sudo apt-get install ${NAME}
+        sudo apt-get -y install ${NAME}
         return $?
     elif type brew > /dev/null 2>&1; then
         brew install ${NAME}
         return $?
     elif type yum > /dev/null 2>&1; then
-        sudo yum install ${NAME}
+        sudo yum -y install ${NAME}
         return $?
     else
         return 1
