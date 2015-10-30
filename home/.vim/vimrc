@@ -145,13 +145,14 @@ set spelllang=en_us,cjk
 let &spellfile=expand("~/Copy/Apps/Vim/system/spellfile.utf-8.add")
 
 " prefer UTF-8
+scriptencoding utf-8
 if has("multi_byte")
-  set encoding=utf-8
-  set termencoding=utf-8
-  set fileencoding=utf-8
+  if has("vim_starting") || !has('nvim')
+    set encoding=utf-8
+    set termencoding=utf-8
+  endif
   set fileencodings=ucs-bom,utf-8,euc-jp,iso-2022-jp,cp932,utf-16,utf-16le
   set fileformats=unix,dos,mac
-  scriptencoding utf-8
 endif
 
 " }}}
@@ -523,7 +524,6 @@ function! s:call_neobundle() abort
   call s:load_source($MY_VIMRUNTIME . "/rc/neobundle.config.vim")
   call neobundle#end()
   if !has("vim_starting")
-    " Call on_source hook when reloading .vimrc
     call neobundle#call_hook("on_source")
   endif
 endfunction

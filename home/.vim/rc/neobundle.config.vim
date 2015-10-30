@@ -1,3 +1,7 @@
+scriptencoding utf-8
+noremap <Plug>(my-operator) <Nop>
+map - <Plug>(my-operator)
+
 function! s:is_git_available() "{{{
   if !executable('git')
     return 0
@@ -8,16 +12,13 @@ function! s:is_git_available() "{{{
   call vimproc#system('git rev-parse')
   return (vimproc#get_last_status() == 0) ? 1 : 0
 endfunction "}}}
-function! s:is_hg_available() "{{{
-  if !executable('hg')
-    return 0
-  endif
-  call vimproc#system('hg root')
-  return (vimproc#get_last_status() == 0) ? 1 : 0
-endfunction "}}}
-
-noremap <Plug>(my-operator) <Nop>
-map - <Plug>(my-operator)
+"function! s:is_hg_available() "{{{
+"  if !executable('hg')
+"    return 0
+"  endif
+"  call vimproc#system('hg root')
+"  return (vimproc#get_last_status() == 0) ? 1 : 0
+"endfunction "}}}
 
 if neobundle#tap('vimproc.vim') " {{{
   call neobundle#config({
@@ -48,16 +49,12 @@ endif " }}}
 
 if neobundle#tap('vim-template') " {{{
   function! neobundle#tapped.hooks.on_source(bundle)
-    function! s:template_eval_vimscript() abort
-      silent %s/<%=\(.\{-}\)%>/\=eval(submatch(1))/ge
-    endfunction
     function! s:template_move_cursor() abort
       if search('<+CURSOR+>', 'cw')
         silent execute 'normal! "_da>'
       endif
     endfunction
-    autocmd User plugin-template-loaded call s:template_eval_vimscript()
-    autocmd User plugin-template-loaded call s:template_move_cursor()
+    autocmd MyAutoCmd User plugin-template-loaded call s:template_move_cursor()
   endfunction
   call neobundle#untap()
 endif " }}}
@@ -525,10 +522,16 @@ if neobundle#tap('neocomplete.vim') " {{{
           \ get(g:, 'neocomplete#force_omni_input_patterns', {}), {
           \   'python': '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*',
           \})
+    " Search from neocomplete, omni candidates, vim keywords
+    let g:neocomplete#fallback_mappings = [
+          \ "\<C-x>\<C-o>",
+          \ "\<C-x>\<C-n>",
+          \]
   endfunction
 
-  inoremap <expr><C-g> neocomplete#undo_completion()
-  inoremap <expr><C-l> neocomplete#complete_common_string()
+  inoremap <expr><silent><C-x> neocomplete#start_manual_complete()
+  inoremap <expr><silent><C-g> neocomplete#undo_completion()
+  inoremap <expr><silent><C-l> neocomplete#complete_common_string()
 
   call neobundle#untap()
 endif " }}}
@@ -696,7 +699,7 @@ if neobundle#tap('lightline.vim') " {{{
           \}
     let g:lightline.my = {}
     let g:lightline.my.symbols = {}
-    if $LANG == "C"
+    if $LANG ==# 'C'
       let g:lightline.my.symbols.branch = ''
       let g:lightline.my.symbols.readonly = '!!'
     else
@@ -757,9 +760,9 @@ if neobundle#tap('lightline.vim') " {{{
       else
         let fname = winwidth(0) > 70 ? expand('%') : pathshorten(expand('%'))
         return '' .
-              \ ('' != self.readonly() ? self.readonly() . ' ' : '') .
-              \ ('' != fname ? fname : '[No name]') .
-              \ ('' != self.modified() ? ' ' . self.modified() : '')
+              \ ('' !=# self.readonly() ? self.readonly() . ' ' : '') .
+              \ ('' !=# fname ? fname : '[No name]') .
+              \ ('' !=# self.modified() ? ' ' . self.modified() : '')
       endif
     endfunction " }}}
     function! g:lightline.my.fileformat() " {{{
@@ -769,7 +772,7 @@ if neobundle#tap('lightline.vim') " {{{
       return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
     endfunction " }}}
     function! g:lightline.my.fileencoding() "{{{
-      return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+      return winwidth(0) > 70 ? (strlen(&fileencoding) ? &fileencoding : &encoding) : ''
     endfunction " }}}
     function! g:lightline.my.git_debug() " {{{
       if neobundle#is_sourced('vim-gita')
@@ -1183,8 +1186,8 @@ if neobundle#tap('unite.vim') " {{{
   function! s:unite_smart_grep()
     if executable('git') && s:is_git_available()
       Unite grep/git:/ -buffer-name=search -no-empty
-    elseif executable('hg') && s:is_hg_available()
-      Unite grep/hg:/ -buffer-name=search -no-empty
+    "elseif executable('hg') && s:is_hg_available()
+    "  Unite grep/hg:/ -buffer-name=search -no-empty
     else
       Unite grep:. -buffer-name=search -no-empty
     endif
@@ -1192,8 +1195,8 @@ if neobundle#tap('unite.vim') " {{{
   function! s:unite_smart_grep_cursor()
     if executable('git') && s:is_git_available()
       UniteWithCursorWord grep/git:/ -buffer-name=search -no-empty
-    elseif executable('hg') && s:is_hg_available()
-      UniteWithCursorWord grep/hg:/ -buffer-name=search -no-empty
+    "elseif executable('hg') && s:is_hg_available()
+    "  UniteWithCursorWord grep/hg:/ -buffer-name=search -no-empty
     else
       UniteWithCursorWord grep:. -buffer-name=search -no-empty
     endif
@@ -1238,15 +1241,15 @@ if neobundle#tap('unite.vim') " {{{
                   \ :<C-u>Unite ref/wikipedia<CR>
     endif
     function! s:unite_smart_ref()
-      if &filetype =~ 'perl'
+      if &filetype =~# 'perl'
         Unite perldoc
-      elseif &filetype =~ 'python'
+      elseif &filetype =~# 'python'
         Unite ref/pydoc
-      elseif &filetype =~ 'ruby'
+      elseif &filetype =~# 'ruby'
         Unite ref/refe
-      elseif &filetype =~ 'javascript'
+      elseif &filetype =~# 'javascript'
         Unite ref/javascript
-      elseif &filetype =~ 'vim'
+      elseif &filetype =~# 'vim'
         Unite help
       else
         Unite ref/man
@@ -1293,7 +1296,7 @@ if neobundle#tap('unite.vim') " {{{
         " Acttion (short)
         call add(candidates, [
               \ printf(
-              \   printf("%%-%ds : %%s", max_length),
+              \   printf('%%-%ds : %%s', max_length),
               \   precursor[0], precursor[1]
               \ ),
               \ precursor[0],
@@ -1302,7 +1305,7 @@ if neobundle#tap('unite.vim') " {{{
         " Action
         call add(candidates, [
               \ printf(
-              \   printf("%%-%ds : %%s", max_length),
+              \   printf('%%-%ds : %%s', max_length),
               \   precursor[0], precursor[1]
               \ ),
               \ precursor[2],
@@ -1533,7 +1536,7 @@ if neobundle#tap('vimfiler.vim') " {{{
           \}
     function! smart_open.func(candidate)
       let context = unite#get_context()
-      if context.buffer_name == 'vimfiler_opened'
+      if context.buffer_name ==# 'vimfiler_opened'
         call unite#take_action(g:unite_kind_cdable_lcd_command, a:candidate)
       else
         call unite#take_action(self.default_action, a:candidate)
@@ -1635,7 +1638,7 @@ if neobundle#tap('memolist.vim') " {{{
     let g:memolist_qfixgrep = 1
     let g:memolist_path = expand('~/Dropbox/Apps/Byword/')
     let g:memolist_unite = 1
-    let g:memolist_unite_option = "-no-start-insert"
+    let g:memolist_unite_option = '-no-start-insert'
   endfunction
 
   call neobundle#untap()
@@ -1784,7 +1787,7 @@ call s:configure_neobundle_sources([
 
 if neobundle#tap('unite-linephrase') " {{{
   function! neobundle#tapped.hooks.on_source(bundle)
-    let g:linephrase#directory = expand("~/Copy/Apps/Vim/linephrase")
+    let g:linephrase#directory = expand('~/Copy/Apps/Vim/linephrase')
   endfunction
 
   call neobundle#untap()
@@ -1862,7 +1865,7 @@ if neobundle#tap('agit.vim') " {{{
         \   ],
         \ }})
 
-  function neobundle#hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle)
     " add extra key-mappings
     function! s:my_agit_setting()
       nmap <buffer> ch <Plug>(agit-git-cherry-pick)
@@ -1871,7 +1874,7 @@ if neobundle#tap('agit.vim') " {{{
     autocmd MyAutoCmd FileType agit call s:my_agit_setting()
   endfunction
 
-  function neobundle#hooks.on_post_source(bundle)
+  function! neobundle#hooks.on_post_source(bundle)
     " add unite interface
     let agit = {
           \ 'description': 'open the directory (or parent directory) in agit',
