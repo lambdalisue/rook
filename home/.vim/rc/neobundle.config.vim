@@ -484,9 +484,8 @@ endif " }}}
 
 " completion " {{{
 
-if neobundle#tap('deoplete.nvim') " {{{
+if neobundle#tap('deoplete.nvim') && has('nvim') " {{{
   call neobundle#config({
-        \ 'disabled': !has('nvim'),
         \ 'autoload': {
         \   'insert': 1,
         \ }})
@@ -499,17 +498,18 @@ if neobundle#tap('deoplete.nvim') " {{{
           \ get(g:, 'deoplete#force_omni_input_patterns', {}), {
           \   'python': '\v%([^. \t].|^\s*@|^\s*from\s.+import |^\s*from |^\s*import )\w*',
           \})
+    let g:deoplete#disable_auto_complete = 1
   endfunction
 
+  "inoremap <expr><C-x><C-x> deoplete#start_manual_complete()
   inoremap <expr><C-g> deoplete#undo_completion()
   inoremap <expr><C-l> deoplete#complete_common_string()
 
   call neobundle#untap()
 endif " }}}
 
-if neobundle#tap('neocomplete.vim') " {{{
+if neobundle#tap('neocomplete.vim') && !has('nvim') " {{{
   call neobundle#config({
-        \ 'disabled': has('nvim'),
         \ 'autoload': {
         \   'insert': 1,
         \ }})
@@ -522,16 +522,12 @@ if neobundle#tap('neocomplete.vim') " {{{
           \ get(g:, 'neocomplete#force_omni_input_patterns', {}), {
           \   'python': '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*',
           \})
-    " Search from neocomplete, omni candidates, vim keywords
-    let g:neocomplete#fallback_mappings = [
-          \ "\<C-x>\<C-o>",
-          \ "\<C-x>\<C-n>",
-          \]
+    let g:neocomplete#disable_auto_complete = 1
   endfunction
 
-  inoremap <expr><silent><C-x> neocomplete#start_manual_complete()
-  inoremap <expr><silent><C-g> neocomplete#undo_completion()
-  inoremap <expr><silent><C-l> neocomplete#complete_common_string()
+  inoremap <expr><C-x><C-x> neocomplete#start_manual_complete()
+  inoremap <expr><C-g> neocomplete#undo_completion()
+  inoremap <expr><C-l> neocomplete#complete_common_string()
 
   call neobundle#untap()
 endif " }}}
