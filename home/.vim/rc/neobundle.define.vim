@@ -101,7 +101,7 @@ NeoBundleLazy 'rhysd/unite-codic.vim'
 NeoBundleLazy 'pasela/unite-webcolorname'
 NeoBundleLazy 'lambdalisue/unite-linephrase'
 NeoBundleLazy 'joker1007/unite-pull-request'
-NeoBundleLazy 'lambdalisue/unite-grep-vcs'
+"NeoBundleLazy 'lambdalisue/unite-grep-vcs'
 NeoBundleLazy 'dameninngenn/unite-perldoc'
 
 " version controller system
