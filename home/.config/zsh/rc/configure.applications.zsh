@@ -39,7 +39,7 @@ esac
 export LESS="-iMRS"
 
 # lv
-export LV="-C"
+export LV="-c"
 if type lv > /dev/null 2>&1; then
     alias lv=less
 fi
