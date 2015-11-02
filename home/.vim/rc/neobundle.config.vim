@@ -1075,6 +1075,8 @@ if neobundle#tap('unite.vim') " {{{
       vunmap <buffer> <Space>
       nmap <buffer> J <Plug>(unite_toggle_mark_current_candidate)
       vmap <buffer> J <Plug>(unite_toggle_mark_selected_candidates)
+      " Use E to open right
+      nnoremap <silent><buffer> E :<C-u>call unite#do_action('right')<CR>
     endfunction
     autocmd MyAutoCmd FileType unite call s:my_unite_configure()
   endfunction
