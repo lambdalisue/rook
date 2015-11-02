@@ -15,9 +15,6 @@ install_package(){
     if type apt-get > /dev/null 2>&1; then
         sudo apt-get -y install ${NAME}
         return $?
-    elif type brew > /dev/null 2>&1; then
-        brew install ${NAME}
-        return $?
     elif type yum > /dev/null 2>&1; then
         sudo yum -y install ${NAME}
         return $?
@@ -48,13 +45,6 @@ else
 fi
 
 # tmux
-bundle="${XDG_CONFIG_HOME}/tmux/bundle"
-if ! install_repository "https://github.com/seebi/tmux-colors-solarized" "${bundle}/tmux-colors-solarized"; then
-    echo "Faield to install 'tmux-colors-solarized'. Please install it manually." >&2
-fi
-if ! install_repository "https://github.com/erikw/tmux-powerline" "${bundle}/tmux-powerline"; then
-    echo "Faield to install 'tmux-powerline'. Please install it manually." >&2
-fi
 if [[ "$(uname)" == "Darwin" ]]; then
     brew install tmux-mem-cpu-load
     brew install reattach-to-user-namespace --with-wrap-launchctl --with-wrap-pbcopy-and-pbpaste
