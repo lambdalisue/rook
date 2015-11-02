@@ -1,4 +1,4 @@
-package URI::Hatena::Normalizer::<+CURSOR+>;
+package URI::Hatena::Normalizer::<%=expand('%:t:r')%>;
 use strict;
 use warnings;
 use utf8;
@@ -8,6 +8,7 @@ sub normalize {
 
     my $path = $url->path;
     $url->path($path) if $path =~ s!^/s/!/!;
+    <+CURSOR+>
 
     return $url;
 }

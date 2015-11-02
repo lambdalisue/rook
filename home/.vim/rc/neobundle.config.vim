@@ -49,12 +49,15 @@ endif " }}}
 
 if neobundle#tap('vim-template') " {{{
   function! neobundle#tapped.hooks.on_source(bundle)
-    function! s:template_move_cursor() abort
+    function! s:template_call() abort
+      " evaluate {CODE} in <%={CODE}=> and replace
+      silent %s/<%=\(.\{-}\)%>/\=eval(submatch(1))/ge
+      " move the cursor into <+CURSOR+>
       if search('<+CURSOR+>', 'cw')
         silent execute 'normal! "_da>'
       endif
     endfunction
-    autocmd MyAutoCmd User plugin-template-loaded call s:template_move_cursor()
+    autocmd MyAutoCmd User plugin-template-loaded call s:template_call()
   endfunction
   call neobundle#untap()
 endif " }}}

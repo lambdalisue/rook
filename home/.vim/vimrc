@@ -219,7 +219,7 @@ function! s:loadview() " {{{
   endif
 endfunction " }}}
 autocmd MyAutoCmd BufWritePost,BufWinLeave ?* call s:mkview()
-autocmd MyAutoCmd BufWinEnter ?* call s:loadview()
+autocmd MyAutoCmd BufReadPost ?* call s:loadview()
 
 " use clipboard register
 if has('unnamedplus') || has('nvim')
