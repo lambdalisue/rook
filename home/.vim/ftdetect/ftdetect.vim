@@ -30,6 +30,7 @@ autocmd BufNewFile,BufRead *.mdu2        set filetype=sh
 autocmd BufNewFile,BufRead *.mdu2script  set filetype=sh
 autocmd BufNewFile,BufRead skeleton.in   set filetype=fortran
 autocmd BufNewFile,BufRead mm*.in        set filetype=fortran
+autocmd BufNewFile,BufRead me*.in        set filetype=fortran
 autocmd BufNewFile,BufRead md*.in        set filetype=fortran
 autocmd BufNewFile,BufRead mdin          set filetype=fortran
 autocmd BufNewFile,BufRead mdin.*        set filetype=fortran
