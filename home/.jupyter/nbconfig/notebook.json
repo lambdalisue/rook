@@ -4,7 +4,7 @@
     "usability/runtools/main": true,
     "usability/chrome-clipboard/main": true,
     "config/config_menu/main": true,
-    "vim_binding": true,
+    "usability/vim_binding": true,
     "usability/python-markdown/main": true,
     "usability/skip-traceback/main": true,
     "usability/search-replace/main": true,
