@@ -1,14 +1,24 @@
 {
   "load_extensions": {
-    "usability/execute_time/ExecuteTime": true,
-    "usability/runtools/main": true,
-    "usability/chrome-clipboard/main": true,
-    "config/config_menu/main": true,
-    "usability/vim_binding": true,
-    "usability/python-markdown/main": true,
-    "usability/skip-traceback/main": true,
-    "usability/search-replace/main": true,
-    "usability/dragdrop/main": true,
-    "usability/codefolding/main": true
-  }
+    "usability/vim_binding": true, 
+    "usability/init_cell/main": true, 
+    "usability/toc/main": true, 
+    "usability/runtools/main": true, 
+    "usability/chrome-clipboard/main": true, 
+    "usability/vim_binding/vim_binding": true, 
+    "usability/execute_time/ExecuteTime": true, 
+    "usability/toggle_all_line_numbers/main": true, 
+    "usability/codefolding/main": true, 
+    "usability/search-replace/main": true, 
+    "publishing/printview/main": true, 
+    "config/config_menu/main": true, 
+    "usability/dragdrop/main": true, 
+    "usability/comment-uncomment/main": true, 
+    "usability/skip-traceback/main": true, 
+    "usability/latex_envs/latex_envs": true, 
+    "usability/python-markdown/main": true, 
+    "styling/zenmode/main": true, 
+    "usability/ruler/main": true
+  }, 
+  "nbext_hide_incompat": true
 }

@@ -51,6 +51,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     # GNU grep is required for weather.sh
     brew install grep
 else
+    bundle="${XDG_CONFIG_HOME}/tmux/bundle"
     if ! install_package cmake; then
         echo "Failed to install 'cmake'. Please install it manually and retry."
         exit 1
