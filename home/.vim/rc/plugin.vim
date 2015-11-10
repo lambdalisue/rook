@@ -3,7 +3,7 @@ let s:neobundle_root     = s:remote_bundle_root . '/neobundle.vim'
 let s:neobundle_url      = 'https://github.com/Shougo/neobundle.vim'
 
 function! s:install_neobundle() abort " {{{
-  if executable('git')
+  if !executable('git')
     echohl Error
     echo 'git is required to be installed.'
     echohl None

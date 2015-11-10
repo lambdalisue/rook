@@ -443,7 +443,7 @@ endif " }}}
 if neobundle#tap('vim-manpager') " {{{
   call neobundle#config({
         \ 'autoload': {
-        \   'commands': 'MANPAGER',
+        \   'commands': ['MANPAGER', 'Man'],
         \ }})
   call neobundle#untap()
 endif " }}}
