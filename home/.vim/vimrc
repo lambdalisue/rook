@@ -10,45 +10,32 @@ if !1 | finish | endif
 
 " platform recognition
 let s:is_windows = has('win16') || has('win32') || has('win64')
-let s:is_darwin = has('mac') || has('macunix') || has('gui_macvim')
-let s:is_linux = !s:is_windows && !s:is_darwin
-if s:is_windows
-  let s:delimiter = ';'
-else
-  let s:delimiter = ':'
-endif
+let s:is_darwin  = has('mac') || has('macunix') || has('gui_macvim')
+let s:is_linux   = !s:is_windows && !s:is_darwin
+let s:delimiter  = s:is_windows ? ';' : ':'
 
 " reset settings for reloading vimrc
 augroup MyAutoCmd
   autocmd!
 augroup END
 
-" script functions {{{
-function! s:add_path(path)
-  let delimiter = s:delimiter
-  let pathlist = split($PATH, delimiter)
-  if isdirectory(a:path) && index(pathlist, a:path) == -1
-    let $PATH = a:path . delimiter . $PATH
-  endif
-endfunction
-
-function! s:add_pythonpath(path)
-  let delimiter = s:delimiter
-  let pathlist = split($PYTHONPATH, delimiter)
-  if isdirectory(a:path) && index(pathlist, a:path) == -1
-    let $PYTHONPATH = a:path . delimiter . $PYTHONPATH
-  endif
-endfunction
-
-function! s:load_source(path)
-  let path = fnamemodify(expand(a:path), ':p')
+function! s:add_path(pathlist) abort " {{{
+  let pathlist = split($PATH, s:delimiter)
+  for path in map(filter(a:pathlist, 'v:val'), 'expand(v:val)') 
+    if isdirectory(path) && index(pathlist, path) == -1
+      call insert(pathlist, path, 0)
+    endif
+  endfor
+  let $PATH = join(pathlist, s:delimiter)
+endfunction " }}}
+function! s:load_source(path) abort " {{{
+  let path = expand(a:path)
   if filereadable(path)
-    execute 'source' path
+    silent execute printf('source "%s"', path)
     return 1
   endif
   return 0
-endfunction
-" }}}
+endfunction " }}}
 
 " environmental variables {{{
 if has('nvim')
@@ -57,36 +44,40 @@ else
   set shell=/bin/bash
 endif
 
-call s:add_path('/usr/local/texlive/2013/bin/x86_64-linux')
-call s:add_path('/usr/local/texlive/2013/bin/x86_64-darwin')
-call s:add_path(expand('~/.pyenv/bin'))
-call s:add_path(expand('~/.plenv/bin'))
-call s:add_path(expand('~/.rbenv/bin'))
-call s:add_path(expand('~/.ndenv/bin'))
-call s:add_path(expand('~/.pyenv/shims'))
-call s:add_path(expand('~/.plenv/shims'))
-call s:add_path(expand('~/.rbenv/shims'))
-call s:add_path(expand('~/.ndenv/shims'))
-call s:add_path(expand('~/.anyenv/envs/pyenv/bin'))
-call s:add_path(expand('~/.anyenv/envs/plenv/bin'))
-call s:add_path(expand('~/.anyenv/envs/rbenv/bin'))
-call s:add_path(expand('~/.anyenv/envs/ndenv/bin'))
-call s:add_path(expand('~/.anyenv/envs/pyenv/shims'))
-call s:add_path(expand('~/.anyenv/envs/plenv/shims'))
-call s:add_path(expand('~/.anyenv/envs/rbenv/shims'))
-call s:add_path(expand('~/.anyenv/envs/ndenv/shims'))
-call s:add_path(expand('~/.cabal/bin'))
-call s:add_path(expand('~/.vim/bundle/vim-themis/bin'))
+" Add several required path to $PATH
+call s:add_path([
+      \ '/usr/local/texlive/2013/bin/x86_64-linux',
+      \ '/usr/local/texlive/2013/bin/x86_64-darwin',
+      \ '~/.pyenv/bin',
+      \ '~/.plenv/bin',
+      \ '~/.rbenv/bin',
+      \ '~/.ndenv/bin',
+      \ '~/.pyenv/shims',
+      \ '~/.plenv/shims',
+      \ '~/.rbenv/shims',
+      \ '~/.ndenv/shims',
+      \ '~/.anyenv/envs/pyenv/bin',
+      \ '~/.anyenv/envs/plenv/bin',
+      \ '~/.anyenv/envs/rbenv/bin',
+      \ '~/.anyenv/envs/ndenv/bin',
+      \ '~/.anyenv/envs/pyenv/shims',
+      \ '~/.anyenv/envs/plenv/shims',
+      \ '~/.anyenv/envs/rbenv/shims',
+      \ '~/.anyenv/envs/ndenv/shims',
+      \ '~/.cabal/bin',
+      \ '~/.vim/bundle/vim-themis/bin',
+      \])
 
 let $MY_VIMRUNTIME = expand('~/.vim')
-let $MYVIMRC = resolve($MY_VIMRUNTIME.'/vimrc')
-let $MYGVIMRC = resolve($MY_VIMRUNTIME.'/gvimrc')
+let $MYVIMRC       = resolve($MY_VIMRUNTIME . '/vimrc')
+let $MYGVIMRC      = resolve($MY_VIMRUNTIME . '/gvimrc')
 
-if isdirectory(expand('~/.anyenv/envs/pyenv'))
-  let $PYENV_ROOT = expand('~/.anyenv/envs/pyenv')
-elseif isdirectory(expand('~/.pyenv'))
-  let $PYENV_ROOT = expand('~/.pyenv')
-endif
+let $PYENV_ROOT =
+    \ isdirectory(expand('~/.anyenv/envs/pyenv'))
+    \   ? expand('~/.anyenv/envs/pyenv')
+    \   : isdirectory(expand('~/.pyenv'))
+    \     ? expand('~/.pyenv')
+    \     : ''
 " }}}
 
 " fundemental config {{{
@@ -97,6 +88,7 @@ set history=10000
 " define <Leader> and <LocalLeader>
 let g:mapleader = ';'
 let g:maplocalleader = ','
+
 " remove any existing keymap for leader and localleader
 nnoremap ; <Nop>
 xnoremap ; <Nop>
@@ -104,15 +96,13 @@ nnoremap , <Nop>
 xnoremap , <Nop>
 
 if !has('gui_running')
-  set ttyfast         " enable fast terminal connection
-  if exists('&ttyscroll')
-    " neovim does not have 'ttyscroll"
+  if !has('nvim') " neovim does not have the following features
+    set ttyfast         " enable fast terminal connection
     set ttyscroll=3     " the maximum number of lines for scrolling.
                         " use small value here to prefer redraw the screen
                         " instead of scrolling
   endif
   set t_Co=256        " use 256 colors
-
   " to enable cursor keys in terminal
   set notimeout ttimeout ttimeoutlen=100
 else
@@ -142,7 +132,7 @@ set helplang=en,ja
 " cjk - ignore spell check on Asian characters (China, Japan, Korea)
 set nospell
 set spelllang=en_us,cjk
-let &spellfile=expand('~/Copy/Apps/Vim/system/spellfile.utf-8.add')
+let &spellfile = expand('~/Copy/Apps/Vim/system/spellfile.utf-8.add')
 
 " prefer UTF-8
 if has('multi_byte')
@@ -187,8 +177,10 @@ set shiftround    " round indent to multiple of shiftwidth with > and <
 set autoindent    " copy indent from current line when starting a new line
 set copyindent    " copy the structure of the existing lines indent when
                   " autoindenting a new line
-if v:version >= 704 && has('patch338')
-  set breakindent " every wrapped line will continue visually indented
+
+" every wrapped line will continue visually indented
+if has('&breakindent')
+  set breakindent 
 endif
 
 set hidden              " hide the buffer instead of close
@@ -198,7 +190,11 @@ set autoread            " automatically read the changed contents
 " store cursor, folds, slash, unix on view
 set viewoptions=cursor,folds,slash,unix
 " change default view directory
-let &viewdir=$MY_VIMRUNTIME.'/.view'
+let &viewdir = $MY_VIMRUNTIME . '/.view'
+if !isdirectory(&viewdir)
+  call mkdir(&viewdir, 'p', 0700)
+endif
+
 " save and restore the cursor position and folding level
 function! s:is_view_available() " {{{
   if !&buflisted || &buftype !=# ''
@@ -230,7 +226,7 @@ endif
 
 " keep undo history on undofile
 if has('persistent_undo')
-  let &undodir=$MY_VIMRUNTIME.'/.undo'
+  let &undodir=$MY_VIMRUNTIME . '/.undo'
   if !isdirectory(&undodir)
     call mkdir(&undodir, 'p', 0700)
   endif
@@ -426,12 +422,9 @@ cabbr w!! w !sudo tee > /dev/null %
 " reload vimrc with <Leader><Leader>r {{{
 if has('vim_starting')
   function s:reload_vimrc()
-    execute 'source' $MYVIMRC
+    execute printf('source %s', $MYVIMRC)
     if has('gui_running')
-      execute 'source' $MYGVIMRC
-    endif
-    if &filetype ==# 'vim'
-      doautocmd FileType
+      execute printf('source %s', $MYGVIMRC)
     endif
     redraw | echo 'vimrc has reloaded.'
   endfunction
@@ -455,12 +448,7 @@ autocmd MyAutoCmd BufWritePre * call s:makedirs(expand('<afile>:p:h'), v:cmdbang
 function! s:makedirs(dir, force)
   if !isdirectory(a:dir)
     if a:force || input(printf('"%s" does not exist. Create? [y/N]', a:dir)) =~? '^y\%[es]$'
-      if v:version < 703 || (v:version == 703 && !has('patch177'))
-        " ref: http://ftp.vim.org/vim/patches/7.3/7.3.177
-        call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
-      else
-        call mkdir(a:dir, 'p')
-      endif
+      call mkdir(a:dir, 'p')
     endif
   endif
 endfunction
@@ -478,7 +466,7 @@ function! s:workon(dir, bang)
   endif
   " change directory to specified directory
   if isdirectory(dir)
-    execute 'cd ' . fnameescape(dir)
+    silent execute 'cd ' . fnameescape(dir)
     if a:bang ==# ''
         redraw | echo 'Working on: '.dir
     endif
@@ -499,64 +487,18 @@ nnoremap <silent> <Leader>q :call <SID>toggle_qf()<CR>
 " }}}
 
 " highlight zenkaku spaces {{{
-autocmd MyAutoCmd ColorScheme * call s:highlight_zenkaku_spaces()
 autocmd MyAutoCmd VimEnter,WinEnter * match MyZenkakuSpace /　/
-function! s:highlight_zenkaku_spaces()
-  highlight MyZenkakuSpace
-        \ cterm=reverse ctermfg=DarkMagenta
-        \ gui=reverse guifg=DarkMagenta
-endfunction
-call s:highlight_zenkaku_spaces()
+highlight MyZenkakuSpace
+      \ cterm=reverse ctermfg=DarkMagenta
+      \ gui=reverse guifg=DarkMagenta
 " }}}
 
 " }}}
 
-" plugins {{{
-let s:remote_bundle_root = $MY_VIMRUNTIME . '/bundle'
-let s:neobundle_root = s:remote_bundle_root . '/neobundle.vim'
-
-function! s:call_neobundle() abort
-  call neobundle#begin(s:remote_bundle_root)
-  if neobundle#load_cache()
-    call s:load_source($MY_VIMRUNTIME . '/rc/neobundle.define.vim')
-    NeoBundleSaveCache
-  endif
-  call s:load_source($MY_VIMRUNTIME . '/rc/neobundle.config.vim')
-  call neobundle#end()
-  if !has('vim_starting')
-    call neobundle#call_hook('on_source')
-  endif
-endfunction
-if !filereadable(s:neobundle_root . '/plugin/neobundle.vim')
-  function! s:install_neobundle() abort
-    let url = 'https://github.com/Shougo/neobundle.vim'
-    redraw | echo 'Installing neobundle.vim ...'
-    call system('git clone ' . url . ' ' . s:neobundle_root)
-    execute 'set runtimepath+=' . s:neobundle_root
-    call s:call_neobundle()
-    redraw
-    echo 'Done. Now run :NeoBundleInstall! to install missing plugins.'
-  endfunction
-  command! InstallNeoBundle call s:install_neobundle()
-  redraw | echo 'Need plugins? Use :InstallNeoBundle'
-else
-  if has('vim_starting')
-    execute 'set runtimepath+=' . s:neobundle_root
-  endif
-  call s:call_neobundle()
-endif
-filetype plugin indent on
-syntax on
-" }}}
-
-" misc {{{
 let g:hybrid_use_Xresources = 1
 colorscheme hybrid
 
-" Enable 'Man' command even for other filetypes
-runtime ftplugin/man.vim
-
+call s:load_source($MY_VIMRUNTIME . '/rc/plugin.vim')
 call s:load_source(expand('~/.vimrc.local'))
-" }}}
 
 " vim:set et ts=2 sts=2 sw=2 tw=0 fdm=marker ft=vim:
