@@ -2,7 +2,7 @@ scriptencoding utf-8
 noremap <Plug>(my-operator) <Nop>
 map - <Plug>(my-operator)
 
-function! s:is_git_available() "{{{
+function! s:is_git_available() abort "{{{
   if !executable('git')
     return 0
   endif
@@ -12,13 +12,6 @@ function! s:is_git_available() "{{{
   call vimproc#system('git rev-parse')
   return (vimproc#get_last_status() == 0) ? 1 : 0
 endfunction "}}}
-"function! s:is_hg_available() "{{{
-"  if !executable('hg')
-"    return 0
-"  endif
-"  call vimproc#system('hg root')
-"  return (vimproc#get_last_status() == 0) ? 1 : 0
-"endfunction "}}}
 
 if neobundle#tap('vimproc.vim') " {{{
   call neobundle#config({
@@ -41,14 +34,11 @@ if neobundle#tap('sudo.vim') " {{{
 endif " }}}
 
 if neobundle#tap('vim-hier') " {{{
-  call neobundle#config({
-        \ 'disabled': 1,
-        \ })
   call neobundle#untap()
 endif " }}}
 
 if neobundle#tap('vim-template') " {{{
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     function! s:template_call() abort
       " evaluate {CODE} in <%={CODE}=> and replace
       silent %s/<%=\(.\{-}\)%>/\=eval(submatch(1))/ge
@@ -66,9 +56,13 @@ if neobundle#tap('vim-unified-diff') " {{{
   call neobundle#config({
         \ 'external_commands': 'git',
         \ })
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let unified_diff#arguments = [
-          \   'diff', '--no-index', '--no-color', '--no-ext-diff', '--unified=0',
+          \   'diff',
+          \   '--no-index',
+          \   '--no-color',
+          \   '--no-ext-diff',
+          \   '--unified=0',
           \   '--histogram',
           \ ]
     if executable('git')
@@ -138,7 +132,7 @@ if neobundle#tap('open-browser.vim') " {{{
         \   'mappings': '<Plug>(openbrowser-',
         \ }})
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:netrw_nogx = 1  " disable netrw's gx mapping
   endfunction
 
@@ -170,7 +164,7 @@ if neobundle#tap('vim-over') " {{{
         \ }})
 
   " Automatically source it when the command window is opened.
-  function! s:source_vim_over()
+  function! s:source_vim_over() abort
     call neobundle#source('vim-over')
     " do plugin-over autocmd
     doautoall plugin-over CmdwinEnter
@@ -189,7 +183,7 @@ if neobundle#tap('vim-over') " {{{
   cnoreabb <silent><expr>s getcmdtype()==':' && getcmdline()=~'^s' ?
         \ 'OverCommandLine<CR><C-u>%s/<C-r>=get([], getchar(0), '')<CR>' : 's'
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:over_enable_auto_nohlsearch = 1
     let g:over_enable_cmd_window = 1
     let g:over#command_line#search#enable_incsearch = 1
@@ -202,7 +196,7 @@ if neobundle#tap('clever-f.vim') " {{{
         \ 'autoload': {
         \   'mappings': '<Plug>(clever-f-',
         \ }})
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:clever_f_smart_case = 1
     let g:clever_f_not_overwrite_standard_mappings = 1
   endfunction
@@ -215,50 +209,12 @@ if neobundle#tap('clever-f.vim') " {{{
   call neobundle#untap()
 endif " }}}
 
-if neobundle#tap('vim-smalls') " {{{
-  call neobundle#config({
-        \ 'autoload': {
-        \   'mappings': '<Plug>(smalls)',
-        \ }})
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let excursion_table_custom = {
-          \ ';': 'do_jump',
-          \ "\<CR>": 'do_set',
-          \ "\<C-n>": 'do_next',
-          \ "\<C-p>": 'do_prev',
-          \ }
-    call smalls#keyboard#excursion#extend_table(excursion_table_custom)
-  endfunction
-
-  map m <Plug>(smalls)
-  omap m <Plug>(smalls)
-  xmap m <Plug>(smalls)
-
-  call neobundle#untap()
-endif " }}}
-
 if neobundle#tap('vim-asterisk') " {{{
   call neobundle#config({
         \ 'autoload': {
         \   'mappings': '<Plug>(asterisk-',
+        \   'on_source': [ 'incsearch.vim' ],
         \ }})
-
-  map / <Plug>(incsearch-forward)
-  map ? <Plug>(incsearch-backward)
-  map g/ <Plug>(incsearch-stay)
-  map n <Plug>(incsearch-nohl-n)
-  map N <Plug>(incsearch-nohl-N)
-
-  map *   <Plug>(asterisk-*)
-  map #   <Plug>(asterisk-#)
-  map g*  <Plug>(asterisk-g*)
-  map g#  <Plug>(asterisk-g#)
-  map z*  <Plug>(asterisk-z*)
-  map gz* <Plug>(asterisk-gz*)
-  map z#  <Plug>(asterisk-z#)
-  map gz# <Plug>(asterisk-gz#)
-
   call neobundle#untap()
 endif " }}}
 
@@ -268,7 +224,7 @@ if neobundle#tap('incsearch.vim') " {{{
         \   'mappings': '<Plug>(incsearch-',
         \ }})
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:incsearch#auto_nohlsearch = 1
     let g:incsearch#magic = '\v'
   endfunction
@@ -279,10 +235,21 @@ if neobundle#tap('incsearch.vim') " {{{
   map n <Plug>(incsearch-nohl-n)
   map N <Plug>(incsearch-nohl-N)
 
-  map * <Plug>(incsearch-nohl-*)
-  map # <Plug>(incsearch-nohl-#)
-  map g* <Plug>(incsearch-nohl-g*)
-  map g# <Plug>(incsearch-nohl-g#)
+  if neobundle#is_installed('asterisk.vim')
+    map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)
+    map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
+    map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
+    map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
+    map z*  <Plug>(incsearch-nohl)<Plug>(asterisk-z*)
+    map gz* <Plug>(incsearch-nohl)<Plug>(asterisk-gz*)
+    map z#  <Plug>(incsearch-nohl)<Plug>(asterisk-z#)
+    map gz# <Plug>(incsearch-nohl)<Plug>(asterisk-gz#)
+  else
+    map *  <Plug>(incsearch-nohl-*)
+    map #  <Plug>(incsearch-nohl-#)
+    map g* <Plug>(incsearch-nohl-g*)
+    map g# <Plug>(incsearch-nohl-g#)
+  endif
 
   call neobundle#untap()
 endif " }}}
@@ -292,9 +259,8 @@ if neobundle#tap('yankround.vim') " {{{
         \ 'autoload': {
         \   'mappings': '<Plug>(yankround-',
         \ }})
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let g:yankround_use_region_hl = 1
+  function! neobundle#hooks.on_source(bundle) abort
+    let g:yankround_use_region_hl = 0
   endfunction
 
   nmap p     <Plug>(yankround-p)
@@ -330,12 +296,13 @@ endif " }}}
 
 if neobundle#tap('vim-bookmarks') " {{{
   call neobundle#config({
+        \ 'depends': ['Shougo/unite.vim'],
         \ 'augroup': 'bm_vim_enter',
         \ 'autoload': {
         \   'mappings': '<Plug>Bookmark',
         \   'unite_sources': 'vim_bookmarks',
         \ }})
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:bookmark_auto_save = 1
     let g:bookmark_save_per_working_dir = 1
     let g:bookmark_highlight_lines = 0
@@ -370,7 +337,7 @@ if neobundle#tap('vim-quickrun') " {{{
         \   'mappings': '<Plug>(quickrun',
         \ }})
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:quickrun_config = get(g:, 'quickrun_config', {})
     let g:quickrun_config['_'] = {
           \ 'runner' : 'vimproc',
@@ -378,11 +345,9 @@ if neobundle#tap('vim-quickrun') " {{{
           \ 'outputter/buffer/close_on_empty': 1,
           \ 'hook/time/enable': 1,
           \}
-
     " Terminate the quickrun with <C-c>
-    nnoremap <expr><silent> <C-c>
-          \ quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
-
+    nnoremap <expr><silent> <C-c> quickrun#is_running()
+          \ ? quickrun#sweep_sessions() : "\<C-c>"
   endfunction
 
   nnoremap <Plug>(my-quickrun) <Nop>
@@ -451,7 +416,7 @@ if neobundle#tap('vim-swap') " {{{
         \   'mappings': '<Plug>SwapSwap',
         \ }})
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:swap_enable_default_keymaps = 0
   endfunction
 
@@ -492,8 +457,7 @@ if neobundle#tap('deoplete.nvim') && has('nvim') " {{{
         \ 'autoload': {
         \   'insert': 1,
         \ }})
-
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:deoplete#enable_at_startup = 1
     let g:deoplete#enable_smart_case = 1
     let g:deoplete#enable_fuzzy_completion = 0
@@ -513,11 +477,11 @@ endif " }}}
 
 if neobundle#tap('neocomplete.vim') && !has('nvim') " {{{
   call neobundle#config({
+        \ 'disabled': !has('lua'),
         \ 'autoload': {
         \   'insert': 1,
         \ }})
-
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:neocomplete#enable_at_startup = 1
     let g:neocomplete#enable_smart_case = 1
     let g:neocomplete#enable_fuzzy_completion = 0
@@ -602,8 +566,8 @@ if neobundle#tap('neosnippet.vim') " {{{
         \   ],
         \ }})
 
-  function! neobundle#tapped.hooks.on_post_source(bundle)
-    let g:neosnippet#snippets_directory = $MY_VIMRUNTIME. '/snippets'
+  function! neobundle#hooks.on_post_source(bundle) abort
+    let g:neosnippet#snippets_directory = $MYVIMRUNTIME. '/snippets'
     let g:neosnippet#enable_snipmate_compatibility = 1
 
     " for snippet complete marker
@@ -626,7 +590,7 @@ if neobundle#tap('echodoc.vim') " {{{
         \   'insert': 1,
         \ }})
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     set cmdheight=2
     set completeopt+=menuone
     "set completeopt-=preview
@@ -641,180 +605,16 @@ endif " }}}
 " statusline {{{
 
 if neobundle#tap('lightline.vim') " {{{
-  function! neobundle#tapped.hooks.on_source(bundle) " {{{
-    let g:lightline = {
-          \ 'colorscheme': 'hybrid',
-          \ 'active': {
-          \   'left': [
-          \     [ 'mode', 'paste' ],
-          \     [ 'filename' ],
-          \   ],
-          \   'right': [
-          \     [ 'qfstatusline' ],
-          \     [ 'lineinfo' ],
-          \     [ 'fileformat', 'fileencoding', 'filetype' ],
-          \   ],
-          \ },
-          \ 'inactive': {
-          \   'left': [
-          \     [ 'filename' ],
-          \   ],
-          \   'right': [
-          \     [ 'fileformat', 'fileencoding', 'filetype' ],
-          \   ],
-          \ },
-          \ 'tabline': {
-          \   'left': [
-          \     [ 'tabs' ],
-          \   ],
-          \   'right': [
-          \     [ 'close' ],
-          \     [ 'pyenv', 'git_debug', 'git_branch', 'git_traffic', 'git_status', 'cwd', 'time' ],
-          \   ],
-          \ },
-          \ 'component_visible_condition': {
-          \   'lineinfo': '(winwidth(0) >= 70)',
-          \ },
-          \ 'component_expand': {
-          \   'qfstatusline': 'qfstatusline#Update',
-          \ },
-          \ 'component_type': {
-          \   'qfstatusline': 'error',
-          \ },
-          \ 'component_function': {
-          \   'mode': 'g:lightline.my.mode',
-          \   'time': 'g:lightline.my.time',
-          \   'cwd': 'g:lightline.my.cwd',
-          \   'filename': 'g:lightline.my.filename',
-          \   'fileformat': 'g:lightline.my.fileformat',
-          \   'fileencoding': 'g:lightline.my.fileencoding',
-          \   'filetype': 'g:lightline.my.filetype',
-          \   'git_debug': 'g:lightline.my.git_debug',
-          \   'git_branch': 'g:lightline.my.git_branch',
-          \   'git_traffic': 'g:lightline.my.git_traffic',
-          \   'git_status': 'g:lightline.my.git_status',
-          \   'pyenv': 'g:lightline.my.pyenv',
-          \ },
-          \}
-    let g:lightline.my = {}
-    let g:lightline.my.symbols = {}
-    if $LANG ==# 'C'
-      let g:lightline.my.symbols.branch = ''
-      let g:lightline.my.symbols.readonly = '!!'
-    else
-      let g:lightline.my.symbols.branch = '⭠'
-      let g:lightline.my.symbols.readonly = '⭤'
-    endif
-    let g:lightline.my.symbols.modified = '+'
-    let g:lightline.my.symbols.nomodifiable = '!'
-    let g:lightline.my.featured_filetype_pattern = printf('^\%%(%s\)', join([
-          \ 'help', 'qf',
-          \ 'unite', 'vimfiler', 'vimshell',
-          \ 'tagbar',
-          \ 'gita-.\+', 'gista-.\+',
-          \], '\|'))
-    let g:lightline.my.featured_bufname_pattern = printf('^\%%(%s\)', join([
-          \ '__Tagbar__',
-          \], '\|'))
-    function! g:lightline.my.is_featured() " {{{
-      " check filetype
-      if &filetype =~# self.featured_filetype_pattern
-        return 1
-      endif
-      " check filename
-      if expand('%:t') =~# self.featured_bufname_pattern
-        return 1
-      endif
-      return 0
-    endfunction " }}}
-    function! g:lightline.my.time() " {{{
-      return strftime('%b/%d %H:%M')
-    endfunction " }}}
-    function! g:lightline.my.mode() " {{{
-      return lightline#mode()
-    endfunction " }}}
-    function! g:lightline.my.modified() " {{{
-      return self.is_featured() ? '' :
-            \ &modified ? self.symbols.modified :
-            \ &modifiable ? '' : self.symbols.nomodifiable
-    endfunction " }}}
-    function! g:lightline.my.readonly() " {{{
-      return self.is_featured() ? '' :
-            \ &readonly ? self.symbols.readonly : ''
-    endfunction " }}}
-    function! g:lightline.my.cwd() " {{{
-      return fnamemodify(getcwd(), ':~')
-    endfunction " }}}
-    function! g:lightline.my.filename() " {{{
-      if self.is_featured()
-        if &filetype ==# 'unite'
-          return unite#get_status_string()
-        elseif &filetype ==# 'vimfiler'
-          return vimfiler#get_status_string()
-        elseif &filetype ==# 'vimshell'
-          return vimshell#get_status_string()
-        else
-          return ''
-        endif
-      else
-        let fname = winwidth(0) > 70 ? expand('%') : pathshorten(expand('%'))
-        return '' .
-              \ ('' !=# self.readonly() ? self.readonly() . ' ' : '') .
-              \ ('' !=# fname ? fname : '[No name]') .
-              \ ('' !=# self.modified() ? ' ' . self.modified() : '')
-      endif
-    endfunction " }}}
-    function! g:lightline.my.fileformat() " {{{
-      return winwidth(0) > 70 ? &fileformat : ''
-    endfunction " }}}
-    function! g:lightline.my.filetype() " {{{
-      return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-    endfunction " }}}
-    function! g:lightline.my.fileencoding() "{{{
-      return winwidth(0) > 70 ? (strlen(&fileencoding) ? &fileencoding : &encoding) : ''
-    endfunction " }}}
-    function! g:lightline.my.git_debug() " {{{
-      if neobundle#is_sourced('vim-gita')
-        return gita#statusline#debug()
-      else
-        return ''
-      endif
-    endfunction " }}}
-    function! g:lightline.my.git_branch() " {{{
-      if neobundle#is_sourced('vim-gita')
-        return gita#statusline#preset('branch_fancy')
-      else
-        return ''
-      endif
-    endfunction " }}}
-    function! g:lightline.my.git_traffic() " {{{
-      if neobundle#is_sourced('vim-gita')
-        return gita#statusline#preset('traffic_fancy')
-      else
-        return ''
-      endif
-    endfunction " }}}
-    function! g:lightline.my.git_status() " {{{
-      if neobundle#is_sourced('vim-gita')
-        return gita#statusline#preset('status')
-      else
-        return ''
-      endif
-    endfunction " }}}
-    function! g:lightline.my.pyenv() " {{{
-      if neobundle#is_sourced('vim-pyenv')
-        return pyenv#info#preset('long')
-      else
-        return ''
-      endif
-    endfunction " }}}
+  call MyLoadSource($MYVIMRUNTIME . '/rc/plugin/lightline.vim')
 
-    " do not use ordinal showmode
+  function! neobundle#hooks.on_source(bundle) " {{{
     set noshowmode
   endfunction " }}}
-  function! neobundle#tapped.hooks.on_post_source(bundle)
+
+  function! neobundle#hooks.on_post_source(bundle) abort
     call lightline#update()
   endfunction
+
   call neobundle#untap()
 endif " }}}
 
@@ -823,13 +623,18 @@ if neobundle#tap('lightline-hybrid.vim') " {{{
 endif " }}}
 
 if neobundle#tap('vim-watchdogs') " {{{
-  call neobundle#config({
-        \ })
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let g:watchdogs_check_BufWritePost_enable = 0
-    let g:watchdogs_check_BufWritePost_enable_on_wq = 0
+  function! neobundle#hooks.on_source(bundle) abort
     let g:watchdogs_check_CursorHold_enable = 0
+    let g:watchdogs_check_BufWritePost_enable = 0
+    let g:watchdogs_check_BufWritePost_enables = {
+          \ 'vim': 1,
+          \ 'zsh': 1,
+          \ 'python': 1,
+          \ 'perl': 1,
+          \ 'javascript': 1,
+          \ 'coffeescript': 1,
+          \}
+    let g:watchdogs_check_BufWritePost_enable_on_wq = 0
 
     let g:quickrun_config = get(g:, 'quickrun_config', {})
     let g:quickrun_config = extend(g:quickrun_config, {
@@ -846,13 +651,31 @@ if neobundle#tap('vim-watchdogs') " {{{
           \ 'command': 'flake8',
           \}
     endif
-    " configure quickrun
+    " use vint as a vimlint
+    if executable('vint')
+      let g:quickrun_config['watchdogs_checker/vint'] = {
+            \ 'command': 'vint',
+            \ 'exec'   : '%c %o %s:p',
+            \}
+      let g:quickrun_config['vim/watchdogs_checker'] = {
+            \ 'type': 'watchdogs_checker/vint',
+            \}
+    endif
     call watchdogs#setup(g:quickrun_config)
   endfunction
+
   call neobundle#untap()
 endif " }}}
 
 if neobundle#tap('vim-qfstatusline') " {{{
+  " Note:
+  " https://github.com/Shougo/neobundle.vim/issues/446
+  "call neobundle#config({
+  "      \ 'depends': 'osyo-manga/shabadou.vim',
+  "      \})
+  function! neobundle#hooks.on_source(bundle) abort
+    let g:Qfstatusline#UpdateCmd = function('lightline#update')
+  endfunction
   call neobundle#untap()
 endif " }}}
 
@@ -927,8 +750,8 @@ if neobundle#tap('vim-textobj-word-column') " {{{
 endif " }}}
 
 if neobundle#tap('vim-textobj-python') " {{{
-  function! neobundle#tapped.hooks.on_source(bundle)
-    function! s:textobj_python_settings()
+  function! neobundle#hooks.on_source(bundle) abort
+    function! s:textobj_python_settings() abort
       xmap <buffer> aF <Plug>(textobj-python-function-a)
       omap <buffer> iF <Plug>(textobj-python-function-i)
       xmap <buffer> aC <Plug>(textobj-python-class-a)
@@ -985,7 +808,7 @@ if neobundle#tap('vim-operator-surround') " {{{
         \   'mappings': '<Plug>(operator-surround',
         \ }})
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     " add ```...``` surround when filetype is markdown
     let g:operator#surround#blocks = {
         \ 'markdown' : [
@@ -1035,350 +858,7 @@ if neobundle#tap('unite.vim') " {{{
         \     'Unite',
         \   ],
         \ }})
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    call unite#custom#profile('default', 'context', {
-          \ 'prompt': '» ',
-          \ 'start_insert': 1,
-          \})
-    call unite#custom#profile('action', 'context', {
-          \ 'start_insert': 1,
-          \})
-
-    let g:unite_kind_jump_list_after_jump_scroll = 0
-    let g:unite_source_grep_max_candidates = 500
-    if executable('pt')
-      " use pt (The Platinum Searcher) for grep (prefer)
-      let g:unite_source_grep_command = 'pt'
-      let g:unite_source_grep_default_opts = join([
-            \ '--smart-case',
-            \ '--nogroup',
-            \ '--nocolor',
-            \ '--follow',
-            \ '-e',
-            \], ' ')
-      let g:unite_source_grep_recursive_opt = ''
-    endif
-
-    " Configuration per buffer
-    function! s:my_unite_configure()
-      setlocal winfixheight
-      let unite = unite#get_current_unite()
-      if unite.profile_name ==# 'search'
-        nnoremap <silent><buffer><expr> r
-              \ unite#smart_map('r', unite#do_action('replace'))
-      else
-        nnoremap <silent><buffer><expr> r
-              \ unite#smart_map('r', unite#do_action('rename'))
-      endif
-      imap <buffer> jj      <Plug>(unite_insert_leave)
-      " Use 'J' instead of <Space>
-      nunmap <buffer> <Space>
-      nunmap <buffer> <S-Space>
-      vunmap <buffer> <Space>
-      nmap <buffer> J <Plug>(unite_toggle_mark_current_candidate)
-      vmap <buffer> J <Plug>(unite_toggle_mark_selected_candidates)
-      " Use E to open right
-      nnoremap <silent><buffer> E :<C-u>call unite#do_action('right')<CR>
-    endfunction
-    autocmd MyAutoCmd FileType unite call s:my_unite_configure()
-  endfunction
-
-  nnoremap <Plug>(my-unite) <Nop>
-  nmap <Space> <Plug>(my-unite)
-  vmap <Space> <Plug>(my-unite)
-  nnoremap <silent> <Plug>(my-unite)<Space>
-        \ :<C-u>UniteResume<CR>
-  nnoremap <silent> <Plug>(my-unite)w
-        \ :<C-u>Unite buffer window tab<CR>
-  nnoremap <silent> <Plug>(my-unite)k
-        \ :<C-u>Unite bookmark
-        \ -buffer-name=vimfiler_opened<CR>
-  nnoremap <silent> <Plug>(my-unite)l :<C-u>Unite line
-        \ -buffer-name=search<CR>
-  nnoremap <silent> <Plug>(my-unite)h :<C-u>Unite help
-        \ -buffer-name=search<CR>
-  nnoremap <silent> <Plug>(my-unite)mp
-        \ :<C-u>Unite output:map<BAR>map!<BAR>lmap
-        \ -buffer-name=search<CR>
-  vnoremap <silent> <Plug>(my-unite)l
-        \ :<C-u>UniteWithCursorWord line
-        \ -buffer-name=search<CR>
-  vnoremap <silent> <Plug>(my-unite)h
-        \ :<C-u>UniteWithCursorWord help
-        \ -buffer-name=search<CR>
-
-  " unite-file
-  nnoremap <Plug>(my-unite-file) <Nop>
-  nmap <Plug>(my-unite)f <Plug>(my-unite-file)
-  nnoremap <silent> <Plug>(my-unite-file)f
-        \ :<C-u>call <SID>unite_smart_file()<CR>
-  nnoremap <silent> <Plug>(my-unite-file)i
-        \ :<C-u>Unite file<CR>
-  nnoremap <silent> <Plug>(my-unite-file)m
-        \ :<C-u>Unite file_mru<CR>
-  nnoremap <silent> <Plug>(my-unite-file)r
-        \ :<C-u>Unite file_rec/async<CR>
-  nnoremap <silent> <Plug>(my-unite-file)g
-        \ :<C-u>Unite file_rec/git<CR>
-  function! s:unite_smart_file()
-    if executable('git') && s:is_git_available()
-      Unite file_rec/git -buffer-name=search
-    else
-      Unite file_rec/async -buffer-name=search
-    endif
-  endfunction
-
-  " unite-directory
-  nnoremap <Plug>(my-unite-directory) <Nop>
-  nmap <Plug>(my-unite)d <Plug>(my-unite-directory)
-  nnoremap <silent> <Plug>(my-unite-directory)d
-        \ :<C-u>Unite directory_rec/async
-        \ -default-action=lcd<CR>
-  nnoremap <silent> <Plug>(my-unite-directory)i
-        \ :<C-u>Unite directory
-        \ -default-action=lcd<CR>
-  nnoremap <silent> <Plug>(my-unite-directory)m
-        \ :<C-u>Unite directory_mru
-        \ -default-action=lcd<CR>
-  nnoremap <silent> <Plug>(my-unite-directory)r
-        \ :<C-u>Unite directory_rec/async
-        \ -default-action=lcd<CR>
-
-  " unite-qf
-  if neobundle#is_installed('unite-quickfix')
-    nnoremap <Plug>(my-unite-qf) <Nop>
-    nmap <Plug>(my-unite)q <Plug>(my-unite-qf)
-    nnoremap <silent> <Plug>(my-unite-qf)q
-          \ :<C-u>Unite quickfix location_list
-          \ -buffer-name=search<CR>
-    nnoremap <silent> <Plug>(my-unite-qf)f
-          \ :<C-u>Unite quickfix
-          \ -buffer-name=search<CR>
-    nnoremap <silent> <Plug>(my-unite-qf)l
-          \ :<C-u>Unite location_list
-          \ -buffer-name=search<CR>
-  endif
-
-  " unite-grep
-  nnoremap <Plug>(my-unite-grep) <Nop>
-  nmap <Plug>(my-unite)g <Plug>(my-unite-grep)
-  vmap <Plug>(my-unite)g <Plug>(my-unite-grep)
-  nnoremap <silent> <Plug>(my-unite-grep)*
-        \ :<C-u>call <SID>unite_smart_grep_cursor()<CR>
-  vnoremap <silent> <Plug>(my-unite-grep)*
-        \ :<C-u>call <SID>unite_smart_grep_cursor()<CR>
-  nnoremap <silent> <Plug>(my-unite-grep)g
-        \ :<C-u>call <SID>unite_smart_grep()<CR>
-  vnoremap <silent> <Plug>(my-unite-grep)g
-        \ :<C-u>call <SID>unite_smart_grep_cursor()<CR>
-  nnoremap <silent> <Plug>(my-unite-grep)i
-        \ :<C-u>Unite grep/git:/
-        \ -buffer-name=search
-        \ -no-empty<CR>
-  nnoremap <silent> <Plug>(my-unite-grep)h
-        \ :<C-u>Unite grep/hg:/
-        \ -buffer-name=search
-        \ -no-empty<CR>
-  nnoremap <silent> <Plug>(my-unite-grep)r
-        \ :<C-u>Unite grep:.
-        \ -buffer-name=search
-        \ -no-empty<CR>
-  function! s:unite_smart_grep()
-    if executable('git') && s:is_git_available()
-      Unite grep/git:/ -buffer-name=search -no-empty
-    "elseif executable('hg') && s:is_hg_available()
-    "  Unite grep/hg:/ -buffer-name=search -no-empty
-    else
-      Unite grep:. -buffer-name=search -no-empty
-    endif
-  endfunction
-  function! s:unite_smart_grep_cursor()
-    if executable('git') && s:is_git_available()
-      UniteWithCursorWord grep/git:/ -buffer-name=search -no-empty
-    "elseif executable('hg') && s:is_hg_available()
-    "  UniteWithCursorWord grep/hg:/ -buffer-name=search -no-empty
-    else
-      UniteWithCursorWord grep:. -buffer-name=search -no-empty
-    endif
-  endfunction
-
-  " unite-git
-  nnoremap <Plug>(my-unite-git) <Nop>
-  nmap <Plug>(my-unite)i <Plug>(my-unite-git)
-  if neobundle#is_installed('vim-unite-giti')
-    nnoremap <silent> <Plug>(my-unite-git)i
-          \ :<C-u>Unite giti/branch_recent<CR>
-    nnoremap <silent> <Plug>(my-unite-git)b
-          \ :<C-u>Unite giti/branch_recent giti/branch_all<CR>
-    nnoremap <silent> <Plug>(my-unite-git)r
-          \ :<C-u>Unite giti/remote<CR>
-  endif
-  if neobundle#is_installed('vim-gista')
-    nnoremap <silent> <Plug>(my-unite-git)t
-          \ :<C-u>Unite gista:lambdalisue<CR>
-  endif
-
-  " unite-ref
-  nnoremap <Plug>(my-unite-ref) <Nop>
-  nmap <Plug>(my-unite)r <Plug>(my-unite-ref)
-  if neobundle#is_installed('vim-ref')
-    nnoremap <silent> <Plug>(my-unite-ref)r
-                \ :<C-u>call <SID>unite_smart_ref()<CR>
-    nnoremap <silent> <Plug>(my-unite-ref)p
-                \ :<C-u>Unite ref/pydoc<CR>
-    nnoremap <silent> <Plug>(my-unite-ref)l
-                \ :<C-u>Unite perldoc<CR>
-    nnoremap <silent> <Plug>(my-unite-ref)m
-                \ :<C-u>Unite ref/man<CR>
-    if neobundle#is_installed('ref-sources.vim')
-      nnoremap <silent> <Plug>(my-unite-ref)j
-                  \ :<C-u>Unite ref/javascript<CR>
-      nnoremap <silent> <Plug>(my-unite-ref)q
-                  \ :<C-u>Unite ref/jquery<CR>
-      nnoremap <silent> <Plug>(my-unite-ref)k
-                  \ :<C-u>Unite ref/kotobank<CR>
-      nnoremap <silent> <Plug>(my-unite-ref)w
-                  \ :<C-u>Unite ref/wikipedia<CR>
-    endif
-    function! s:unite_smart_ref()
-      if &filetype =~# 'perl'
-        Unite perldoc
-      elseif &filetype =~# 'python'
-        Unite ref/pydoc
-      elseif &filetype =~# 'ruby'
-        Unite ref/refe
-      elseif &filetype =~# 'javascript'
-        Unite ref/javascript
-      elseif &filetype =~# 'vim'
-        Unite help
-      else
-        Unite ref/man
-      endif
-    endfunction
-  endif
-
-  " unite-linephrase
-  if neobundle#is_installed('unite-linephrase')
-    nnoremap <silent> <Plug>(my-unite)p :<C-u>Unite linephrase
-          \ -buffer-name=search<CR>
-  endif
-
-  " unite-outline
-  if neobundle#is_installed('unite-outline')
-    " Use outline like explorer
-    nnoremap <silent> <Leader>o :<C-u>Unite
-          \ -no-quit -keep-focus -no-start-insert
-          \ -vertical -direction=botright -winwidth=30 outline<CR>
-  endif
-
-  " vim-bookmarks
-  if neobundle#is_installed('vim-bookmarks')
-    nnoremap <silent> <Plug>(my-unite)mm :<C-u>Unite vim_bookmarks<CR>
-  endif
-
-  " unite-menu
-  function! s:register_quickmenu(name, description, candidate_precursors) " {{{
-    " find the length of longest name
-    let max_length = max(map(filter(
-          \ deepcopy(a:candidate_precursors),
-          \ printf('v:val[0] != "%s"', '-'),
-          \), 'len(v:val[0])'))
-    " create candidates
-    let candidates = []
-    for precursor in a:candidate_precursors
-      if len(precursor) == 1
-        " Separator
-        call add(candidates, [
-              \ precursor[0],
-              \ '',
-              \])
-      elseif len(precursor) == 2
-        " Acttion (short)
-        call add(candidates, [
-              \ printf(
-              \   printf('%%-%ds : %%s', max_length),
-              \   precursor[0], precursor[1]
-              \ ),
-              \ precursor[0],
-              \])
-      elseif len(precursor) == 3
-        " Action
-        call add(candidates, [
-              \ printf(
-              \   printf('%%-%ds : %%s', max_length),
-              \   precursor[0], precursor[1]
-              \ ),
-              \ precursor[2],
-              \])
-      endif
-    endfor
-    let separator_length = max(map(
-          \ deepcopy(candidates),
-          \ 'len(v:val[0])',
-          \))
-    if separator_length % 2 != 0
-      let separator_length += 1
-    endif
-    " register to 'g:unite_source_menu_menus'
-    let g:unite_source_menu_menus = get(g:, 'unite_source_menu_menus', {})
-    let g:unite_source_menu_menus[a:name] = {}
-    let g:unite_source_menu_menus[a:name].description = a:description
-    let g:unite_source_menu_menus[a:name].candidates = deepcopy(candidates)
-    let g:unite_source_menu_menus[a:name].separator_length = max(map(
-          \ deepcopy(candidates),
-          \ 'len(v:val[0])',
-          \))
-
-    function! g:unite_source_menu_menus[a:name].map(key, value) abort " {{{
-      if empty(a:value[1])
-        if empty(a:value[0])
-          let word = repeat('-', self.separator_length)
-        else
-          let length = self.separator_length - (len(a:value[0]) + 3)
-          let word = printf('- %s %s', a:value[0], repeat('-', length))
-        endif
-        return {
-              \ 'word': '',
-              \ 'abbr': word,
-              \ 'kind': 'common', 'is_dummy': 1,
-              \}
-      else
-        return {
-              \ 'word': a:value[0],
-              \ 'kind': 'command',
-              \ 'action__command': a:value[1],
-              \}
-      endif
-    endfunction " }}}
-  endfunction " }}}
-
-  call s:register_quickmenu('shortcut', 'Shortcut menu', [
-        \ ['Application'],
-        \ ['Calendar', 'Open Calendar'],
-        \ ['Configuration'],
-        \ ['vimrc', 'Open vimrc', printf('edit %s', $MYVIMRC)],
-        \ ['gvimrc', 'Open gvimrc', printf('edit %s', $MYGVIMRC)],
-        \ ['vimrc.local', 'Open local vimrc',
-        \   printf('edit %s', expand('~/.vimrc.local'))],
-        \ ['neobundle-define.vim', 'Open neobundle definitions',
-        \   printf('edit %s', resolve($MY_VIMRUNTIME . '/rc/neobundle.define.vim'))],
-        \ ['neobundle-config.vim', 'Open neobundle configuration',
-        \   printf('edit %s', resolve($MY_VIMRUNTIME . '/rc/neobundle.config.vim'))],
-        \ ['gitconfig', 'Open global git configuration',
-        \   printf('edit %s', expand('~/.gitconfig'))],
-        \ ['gitignore', 'Open global gitignore configuration',
-        \   printf('edit %s', expand('~/.gitignore'))],
-        \ ['Directory'],
-        \ ['vim', 'lcd to vim directory',
-        \   printf('lcd %s', $MY_VIMRUNTIME)],
-        \ ['zsh', 'lcd to zsh directory',
-        \   printf('lcd %s', expand('~/.config/zsh'))],
-        \ ['tmux', 'lcd to tmux directory',
-        \   printf('lcd %s', expand('~/.config/tmux'))],
-        \])
-  nnoremap <silent> <Plug>(my-unite)s :<C-u>Unite menu:shortcut<CR>
-
+  call MyLoadSource($MYVIMRUNTIME . '/rc/plugin/unite.vim')
   call neobundle#untap()
 endif " }}}
 
@@ -1392,81 +872,7 @@ if neobundle#tap('vimshell.vim') " {{{
         \     'VimShellSendString',
         \   ],
         \ }})
-
-  nnoremap <Plug>(my-vimshell) <Nop>
-  nmap <C-s> <Plug>(my-vimshell)
-  vmap <C-s> <Plug>(my-vimshell)
-  nnoremap <silent> <Plug>(my-vimshell)s :<C-u>VimShellPop<CR>
-  nnoremap <silent> <Plug>(my-vimshell)S :<C-u>VimShellTab<CR>
-  nnoremap <silent> <Plug>(my-vimshell)i :<C-u>VimShellInteractive<CR>
-  nnoremap <silent> <Plug>(my-vimshell)p :<C-u>VimShellInteractive ipython<CR>
-  nnoremap <silent> <Plug>(my-vimshell)<Space> :<C-u>VimShellSendString<CR>
-  vnoremap <silent> <Plug>(my-vimshell)<Space> :<C-u>VimShellSendString<CR>
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let g:vimshell_prompt = '$ '
-    let g:vimshell_secondary_prompt = '| '
-    let g:vimshell_vimshrc_path = $MY_VIMRUNTIME .  '/vimshrc'
-    " use zsh history
-    if exists(expand('~/.config/zsh/.zsh_history'))
-      let g:vimshell_external_history_path =
-            \ expand('~/.config/zsh/.zsh_history')
-    endif
-
-    autocmd MyAutoCmd FileType vimshell call s:my_vimshell_settings()
-    function! s:my_vimshell_settings()
-      " Initialize execute file list.
-      call vimshell#set_execute_file('rb', 'ruby')
-      call vimshell#set_execute_file('pl', 'perl')
-      call vimshell#set_execute_file('py', 'python')
-      call vimshell#set_execute_file('js', 'node')
-      call vimshell#set_execute_file('coffee', 'coffee')
-      call vimshell#set_execute_file('jpg,jpeg,gif,png,tiff,tif', 'evince open')
-      call vimshell#set_execute_file('html,xhtml', 'chrome gexe firefox')
-
-      xmap <buffer> y <Plug>(operator-concealedyank)
-      imap <buffer> ^^ cd ..<CR>
-      imap <buffer> [[ popd<CR>
-
-      inoremap <buffer><silent><C-r> <Esc>:<C-u>Unite
-            \ -buffer-name=history
-            \ -default-action=execute
-            \ -no-split
-            \ vimshell/history vimshell/external_history<CR>
-      inoremap <buffer><silent><C-x><C-j> <Esc>:<C-u>Unite
-            \ -buffer-name=files
-            \ -default-action=lcd
-            \ -no-split
-            \ directory_mru<CR>
-
-      call vimshell#hook#add('chpwd', 'my_chpwd', s:vimshell_hooks.chpwd)
-      call vimshell#hook#add('emptycmd', 'my_emptycmd', s:vimshell_hooks.emptycmd)
-      call vimshell#hook#add('preexec', 'my_preexec', s:vimshell_hooks.preexec)
-    endfunction
-
-    let s:vimshell_hooks = {}
-    function! s:vimshell_hooks.chpwd(args, context)
-      if len(split(glob('*'), '\n')) < 100
-        call vimshell#execute('ls')
-      else
-        call vimshell#execute('echo "Many files."')
-      endif
-    endfunction
-    function! s:vimshell_hooks.emptycmd(cmdline, context)
-      call vimshell#execute('ls')
-    endfunction
-    function! s:vimshell_hooks.preexec(cmdline, context)
-      let args = vimproc#parser#split_args(a:cmdline)
-      if len(args) > 0 && args[0] ==# 'diff'
-        call vimshell#set_syntax('diff')
-      endif
-      return a:cmdline
-    endfunction
-  endfunction
-
-  function! neobundle#tapped.hooks.on_post_source(bundle)
-    highlight! vimshellError gui=NONE cterm=NONE guifg='#cc6666' ctermfg=9
-  endfunction
+  call MyLoadSource($MYVIMRUNTIME . '/rc/plugin/vimshell.vim')
   call neobundle#untap()
 endif " }}}
 
@@ -1480,83 +886,7 @@ if neobundle#tap('vimfiler.vim') " {{{
         \   ],
         \   'explorer': 1,
         \ }})
-
-  nnoremap <Plug>(my-vimfiler) <Nop>
-  nmap <Leader>e <Plug>(my-vimfiler)
-  nnoremap <silent> <Plug>(my-vimfiler)e :<C-u>VimFilerExplorer<CR>
-  nnoremap <silent> <Plug>(my-vimfiler)E :<C-u>VimFiler<CR>
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    call vimfiler#custom#profile('default', 'context', {
-          \ 'auto_cd': 1,
-          \ 'parent': 1,
-          \ 'safe': 0,
-          \ })
-    let g:loaded_netrwPlugin = 1
-    let g:vimfiler_as_default_explorer = 1
-    " ignore swap, backup, temporary files
-    let g:vimfiler_ignore_pattern = printf('\%%(%s\)', join([
-          \ '^\..*',
-          \ '\.pyc$',
-          \ '^__pycache__$',
-          \ '\.egg-info$',
-          \], "\\|"))
-
-    function! s:vimfiler_new_file_and_open() "{{{
-      let directory = vimfiler#get_file_directory()
-      call vimfiler#mappings#do_dir_action('vimfiler__newfile', directory)
-    endfunction"}}}
-    function! s:vimfiler_settings() abort
-      setl nonumber
-      " Use 'J' to select candidate while <Space> is for Unite
-      nunmap <buffer> <Space>
-      nunmap <buffer> <S-Space>
-      vunmap <buffer> <Space>
-      nmap <buffer> J <Plug>(vimfiler_toggle_mark_current_line)
-      vmap <buffer> J <Plug>(vimfiler_toggle_mark_selected_lines)
-      " ^^ to go parent directory
-      nmap <buffer> ^^ <Plug>(vimfiler_switch_to_parent_directory)
-      " X to execute on the directory
-      nmap <buffer> X
-            \ <Plug>(vimfiler_switch_to_parent_directory)
-            \ <Plug>(vimfiler_execute_system_associated)
-            \ <Plug>(vimfiler_execute)
-      " <Space>k to open bookmark
-      nmap <buffer><silent> <Space>k :<C-u>Unite bookmark
-            \ -buffer-name=vimfiler_opened<CR>
-      nmap <buffer><silent> <Plug>(vimfiler_new_file_and_open)
-            \ :<C-u>call <SID>vimfiler_new_file_and_open()<CR>
-      nmap <buffer><nowait> N <Plug>(vimfiler_new_file_and_open)
-    endfunction
-    autocmd MyAutoCmd FileType vimfiler call s:vimfiler_settings()
-
-    " Use 'lcd' on directory kind if the Unite is opend from vimfiler
-    " It is quite useful to lcd to bookmarked directory
-    let smart_open = {
-          \ 'is_selectable': 0,
-          \}
-    function! smart_open.func(candidate) abort
-      let context = unite#get_context()
-      if context.buffer_name ==# 'vimfiler_opened'
-        call unite#take_action(g:unite_kind_cdable_lcd_command, a:candidate)
-      else
-        call unite#take_action(self.default_action, a:candidate)
-      endif
-    endfunction
-    " store default_action of 'directory'
-    let smart_open.default_action =
-          \ unite#get_kinds('directory').default_action
-    call unite#custom#action('directory', 'smart_open', smart_open)
-    call unite#custom#default_action('directory', 'smart_open')
-
-    " somehow winfixwidth is applied to a buffer opened from VimFilerExplorer
-    function! s:force_nofixwidth() abort
-      if empty(&l:buftype)
-        setl nowinfixwidth
-      endif
-    endfunction
-    autocmd MyAutoCmd BufWinEnter * call s:force_nofixwidth()
-  endfunction
+  call MyLoadSource($MYVIMRUNTIME . '/rc/plugin/vimfiler.vim')
   call neobundle#untap()
 endif " }}}
 
@@ -1572,8 +902,6 @@ if neobundle#tap('undotree.vim') " {{{
   nmap <Leader>u <Plug>(my-undotree)
   nnoremap <silent> <Plug>(my-undotree) :<C-u>UndotreeToggle<CR>
 
-  function! neobundle#tapped.hooks.on_source(bundle)
-  endfunction
   call neobundle#untap()
 endif " }}}
 
@@ -1585,9 +913,9 @@ if neobundle#tap('vim-ref') " {{{
         \   ],
         \ }})
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:ref_open = 'vsplit'
-    function! s:ref_configure()
+    function! s:ref_configure() abort
       nmap <buffer><silent> <C-p> <Plug>(ref-back)
       nmap <buffer><silent> <C-n> <Plug>(ref-forward)
     endfunction
@@ -1602,9 +930,9 @@ if neobundle#tap('ref-sources.vim') " {{{
         \   'on_source': 'vim-ref',
         \ }})
 
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let g:ref_jquery_doc_path = $MY_VIMRUNTIME. '/bundle/jqapi'
-    let g:ref_javascript_doc_path = $MY_VIMRUNTIME. '/bundle/jsref/htdocs'
+  function! neobundle#hooks.on_source(bundle) abort
+    let g:ref_jquery_doc_path     = $MYVIMRUNTIME . '/bundle/jqapi'
+    let g:ref_javascript_doc_path = $MYVIMRUNTIME . '/bundle/jsref/htdocs'
     let g:ref_auto_resize = 1
     let g:ref_wikipedia_lang = ['ja', 'en']
   endfunction
@@ -1643,7 +971,7 @@ if neobundle#tap('memolist.vim') " {{{
   nnoremap <silent> <Plug>(my-memolist)n :<C-u>MemoNew<CR>
   nnoremap <silent> <Plug>(my-memolist)g :<C-u>MemoGrep<CR>
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:memolist_qfixgrep = 1
     let g:memolist_path = expand('~/Dropbox/Apps/Byword/')
     let g:memolist_unite = 1
@@ -1694,7 +1022,7 @@ if neobundle#tap('vim-rengbang') " {{{
         \   ],
         \ }})
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:rengbang_default_pattern  = '\(\d\+\)'
     let g:rengbang_default_start    = 0
     let g:rengbang_default_step     = 1
@@ -1733,7 +1061,7 @@ if neobundle#tap('colorizer') " {{{
         \   ],
         \ }})
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:colorizer_nomap = 1
   endfunction
 
@@ -1748,7 +1076,7 @@ if neobundle#tap('calendar.vim') " {{{
         \   ],
         \ }})
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:calendar_frame = 'default'
     let g:calendar_google_calendar = 1
     let g:calendar_google_task = 1
@@ -1764,7 +1092,7 @@ endif " }}}
 " }}}
 
 " unite sources {{{
-function! s:configure_neobundle_sources(sources)
+function! s:configure_neobundle_sources(sources) abort
   for src in a:sources
     if neobundle#tap(src[0])
       call neobundle#config({
@@ -1795,7 +1123,7 @@ call s:configure_neobundle_sources([
       \])
 
 if neobundle#tap('unite-linephrase') " {{{
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:linephrase#directory = expand('~/Copy/Apps/Vim/linephrase')
   endfunction
 
@@ -1811,7 +1139,7 @@ if neobundle#tap('vim-gita') " {{{
         \   'commands': 'Gita',
         \   'mappings': '<Plug>(gita-',
         \ }})
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:gita#features#browse#extra_translation_patterns = {
           \ 'ghe.admin.h': [
           \   [
@@ -1834,38 +1162,14 @@ if neobundle#tap('vim-gita') " {{{
   nnoremap <Plug>(my-gita)s :<C-u>Gita status<CR>
   nnoremap <Plug>(my-gita)c :<C-u>Gita commit<CR>
   nnoremap <Plug>(my-gita)d :<C-u>Gita diff    --ignore-submodules -- %<CR>
-  nnoremap <Plug>(my-gita)l :<C-u>Gita diff-ls --ignore-submodules<CR>
-
-  call neobundle#untap()
-endif " }}}
-
-if neobundle#tap('vim-gitgutter') " {{{
-  call neobundle#config({
-        \ 'autoload': {
-        \   'commands': [
-        \     'GitGutterPrevHunk',
-        \     'GitGutterNextHunk',
-        \     'GitGutterToggle',
-        \   ],
-        \ }})
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let g:gitgutter_enabled = 0
-    let g:gitgutter_sign_added = '+'
-    let g:gitgutter_sign_modified = '~'
-    let g:gitgutter_sign_removed = '-'
-    let g:gitgutter_map_keys = 0
-  endfunction
-
-  nmap [g <Plug>GitGutterPrevHunk
-  nmap ]g <Plug>GitGutterNextHunk
-  nmap <Plug>(my-switch)g :<C-u>GitGutterToggle<CR>
+  nnoremap <Plug>(my-gita)l :<C-u>Gita diff-ls --ignore-submodules origin/HEAD...<CR>
 
   call neobundle#untap()
 endif " }}}
 
 if neobundle#tap('agit.vim') " {{{
   call neobundle#config({
+        \ 'focus': 1,
         \ 'autoload': {
         \   'on_source': 'unite.vim',
         \   'commands': [
@@ -1874,38 +1178,13 @@ if neobundle#tap('agit.vim') " {{{
         \   ],
         \ }})
 
-  function! neobundle#hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     " add extra key-mappings
-    function! s:my_agit_setting()
+    function! s:my_agit_setting() abort
       nmap <buffer> ch <Plug>(agit-git-cherry-pick)
       nmap <buffer> Rv <Plug>(agit-git-revert)
     endfunction
     autocmd MyAutoCmd FileType agit call s:my_agit_setting()
-  endfunction
-
-  function! neobundle#hooks.on_post_source(bundle)
-    " add unite interface
-    let agit = {
-          \ 'description': 'open the directory (or parent directory) in agit',
-          \ }
-    function! agit.func(candidate)
-      if isdirectory(a:candidate.action__path)
-        let path = a:candidate.action__path
-      else
-        let path = fnamemodify(a:candidate.action__path, ':h')
-      endif
-      execute 'Agit' '--dir=' . path
-    endfunction
-
-    let agit_file = {
-          \ 'description': "open the file's history in agit.vim",
-          \ }
-    function! agit_file.func(candidate)
-      execute 'AgitFile' '--file=' . a:candidate.action__path
-    endfunction
-
-    call unite#custom#action('file,cdable', 'agit', agit)
-    call unite#custom#action('file', 'agit_file', agit_file)
   endfunction
 
   call neobundle#untap()
@@ -1945,24 +1224,6 @@ if neobundle#tap('vim-gista') " {{{
   call neobundle#untap()
 endif " }}}
 
-"if neobundle#tap('vim-fugitive') " {{{
-"  call neobundle#config({
-"        \ 'disabled': 1,
-"        \ })
-"  function! neobundle#tapped.hooks.on_post_source(bundle)
-"  endfunction
-"  call neobundle#untap()
-"endif " }}}
-
-if neobundle#tap('committia.vim') " {{{
-  call neobundle#config({
-        \ 'depends': [
-        \ ],
-        \ 'autoload': {
-        \   'mappings': '<Plug>(committia-',
-        \ }})
-  call neobundle#untap()
-endif " }}}
 " }}}
 
 " syntax {{{
@@ -2088,7 +1349,7 @@ if neobundle#tap('LaTeX-Box') " {{{
         \   'filetypes': ['tex', 'plaintex',]
         \ }})
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:LatexBox_latexmk_async = 1
     let g:LatexBox_latexmk_preview_continuously = 1
     let g:LatexBox_latexmk_options = '-pdfdvi'
@@ -2113,7 +1374,7 @@ if neobundle#tap('LaTeX-Box') " {{{
     let g:neocomplete#force_omni_input_patterns.tex =
           \ '\v(\\\a*(subref|ref|textcite|autocite|cite)\a*\{([^}]*,)?|\$)'
 
-    function! s:latexbox_configure()
+    function! s:latexbox_configure() abort
       imap <buffer> [[     \begin{
       imap <buffer> ]]     <Plug>LatexCloseCurEnv
       nmap <buffer> <F5>   <Plug>LatexChangeEnv
@@ -2138,7 +1399,7 @@ if neobundle#tap('vim-autopep8') " {{{
         \   'unix'    : 'pip install autopep8',
         \ }
         \})
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:autopep8_disable_show_diff = 1
   endfunction
   call neobundle#untap()
@@ -2179,7 +1440,7 @@ if neobundle#tap('jedi-vim') " {{{
         \ },
         \})
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:jedi#auto_initialization = 0
     let g:jedi#auto_vim_configuration = 0
     let g:jedi#popup_on_dot = 0
@@ -2189,7 +1450,7 @@ if neobundle#tap('jedi-vim') " {{{
     let g:jedi#squelch_py_warning = 1
     let g:jedi#completions_enabled = 0
 
-    function! s:jedi_vim_configure()
+    function! s:jedi_vim_configure() abort
       setl omnifunc=jedi#completions
       setl completeopt=menu,longest
 
@@ -2222,7 +1483,6 @@ endif " }}}
 
 if neobundle#tap('vim-pyenv') " {{{
   call neobundle#config({
-        \ 'focus': 1,
         \ 'autoload': {
         \   'commands': [
         \     'PyenvActivate',
@@ -2232,7 +1492,7 @@ if neobundle#tap('vim-pyenv') " {{{
         \ },
         \ 'external_commands': 'pyenv',
         \})
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     if neobundle#is_installed('jedi') && jedi#init_python()
       function! s:jedi_auto_force_py_version() abort
         let major_version = pyenv#python#get_internal_major_version()
@@ -2291,7 +1551,7 @@ if neobundle#tap('typescript-vim') " {{{
         \     'djangohtml',
         \   ],
         \ }})
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle) abort
     let g:typescript_indent_disable = 1
     let g:typescript_compiler_options = '-sourcemap'
   endfunction
@@ -2312,7 +1572,7 @@ if neobundle#tap('tsuquyomi') " {{{
         \   'unix': 'npm install -g typescript',
         \ },
         \})
-  function! neobundle#tapped.hooks.on_post_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:typescript_indent_disable = 1
     let g:typescript_compiler_options = '-sourcemap'
 
@@ -2331,21 +1591,6 @@ if neobundle#tap('tsuquyomi') " {{{
   call neobundle#untap()
 endif " }}}
 
-if neobundle#tap('vison') " {{{
-  call neobundle#config({
-        \ 'autoload': {
-        \   'filetypes': [
-        \     'json',
-        \   ],
-        \ },
-        \ 'external_commands': 'git',
-        \ })
-  function! neobundle#tapped.hooks.on_post_source(bundle)
-    autocmd MyAutoCmd FileType json Vison
-  endfunction
-  call neobundle#untap()
-endif " }}}
-
 if neobundle#tap('vim-pandoc') " {{{
   " Note:
   "   it seems vim-pandoc does not support has('python3')
@@ -2359,40 +1604,6 @@ if neobundle#tap('vim-pandoc') " {{{
         \     'rst',
         \   ],
         \ }})
-  call neobundle#untap()
-endif " }}}
-
-if neobundle#tap('shareboard.vim') " {{{
-  call neobundle#config({
-        \ 'autoload': {
-        \   'commands': [
-        \     'ShareboardPreview',
-        \     'ShareboardCompile',
-        \   ],
-        \ },
-        \ 'external_commands': 'shareboard',
-        \ 'build_commands': 'pip',
-        \ 'build': {
-        \   'mac'     : 'pip install shareboard',
-        \   'unix'    : 'pip install shareboard',
-        \ }})
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let txt2html = expand('~/.config/zsh/tools/txt2html/txt2html')
-    if filereadable(txt2html)
-      let g:shareboard_command = txt2html
-    endif
-  endfunction
-
-  " register the call rules
-  function! s:shareboard_settings()
-    nnoremap <buffer> <Plug>(my-shareboard) <Nop>
-    nmap     <buffer> <LocalLeader>S <Plug>(my-shareboard)
-    nnoremap <buffer> <Plug>(my-shareboard)v :<C-u>ShareboardPreview<CR>
-    nnoremap <buffer> <Plug>(my-shareboard)c :<C-u>ShareboardCompile<CR>
-  endfunction
-  autocmd MyAutoCmd FileType pandoc,rst,text,markdown
-        \ call s:shareboard_settings()
   call neobundle#untap()
 endif " }}}
 
@@ -2422,20 +1633,6 @@ if neobundle#tap('colorswatch.vim') " {{{
   call neobundle#untap()
 endif " }}}
 
-if neobundle#tap('vinarise.vim') " {{{
-  call neobundle#config({
-        \ 'autoload': {
-        \   'commands': [
-        \     'Vinarise',
-        \     'VinarisePluginDump',
-        \     'VinarisePluginViewBitmapView',
-        \   ],
-        \ }})
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let g:vinarise_enable_auto_detect = 1
-  endfunction
-  call neobundle#untap()
-endif " }}}
 " }}}
 
 " Vim plugin development " {{{
@@ -2447,11 +1644,11 @@ if neobundle#tap('vim-themis') " {{{
         \   ],
         \ }})
 
-  function! neobundle#tapped.hooks.on_source(bundle)
-    function! s:themis_settings()
+  function! neobundle#hooks.on_source(bundle) abort
+    function! s:themis_settings() abort
       nnoremap <buffer> <Plug>(my-test) <Nop>
       nmap     <buffer> <LocalLeader>t <Plug>(my-test)
-      nnoremap <buffer> <Plug>(my-test] :<C-u>call themis#run([expand('%')))<CR>
+      nnoremap <buffer> <Plug>(my-test) :<C-u>call themis#run([expand('%')])<CR>
     endfunction
     autocmd MyAutoCmd FileType vim,vimspec call s:themis_settings()
   endfunction
@@ -2480,7 +1677,7 @@ if neobundle#tap('vim-vimlint') " {{{
         \   'filetypes': ['vim'],
         \ },
         \})
-  function! neobundle#tapped.hooks.on_post_source(bundle) abort
+  function! neobundle#hooks.on_post_source(bundle) abort
     function! s:vimlint_settings() abort
       nnoremap <buffer> <Plug>(my-vimlint) <Nop>
       nmap     <buffer> <LocalLeader>l <Plug>(my-vimlint)

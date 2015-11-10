@@ -19,7 +19,7 @@ augroup MyAutoCmd
   autocmd!
 augroup END
 
-function! s:add_path(pathlist) abort " {{{
+function! MyAddPath(pathlist) abort " {{{
   let pathlist = split($PATH, s:delimiter)
   for path in map(filter(a:pathlist, 'v:val'), 'expand(v:val)') 
     if isdirectory(path) && index(pathlist, path) == -1
@@ -28,10 +28,10 @@ function! s:add_path(pathlist) abort " {{{
   endfor
   let $PATH = join(pathlist, s:delimiter)
 endfunction " }}}
-function! s:load_source(path) abort " {{{
+function! MyLoadSource(path) abort " {{{
   let path = expand(a:path)
   if filereadable(path)
-    silent execute printf('source "%s"', path)
+    execute printf('source %s', path)
     return 1
   endif
   return 0
@@ -45,7 +45,7 @@ else
 endif
 
 " Add several required path to $PATH
-call s:add_path([
+call MyAddPath([
       \ '/usr/local/texlive/2013/bin/x86_64-linux',
       \ '/usr/local/texlive/2013/bin/x86_64-darwin',
       \ '~/.pyenv/bin',
@@ -68,9 +68,9 @@ call s:add_path([
       \ '~/.vim/bundle/vim-themis/bin',
       \])
 
-let $MY_VIMRUNTIME = expand('~/.vim')
-let $MYVIMRC       = resolve($MY_VIMRUNTIME . '/vimrc')
-let $MYGVIMRC      = resolve($MY_VIMRUNTIME . '/gvimrc')
+let $MYVIMRUNTIME = expand('~/.vim')
+let $MYVIMRC       = resolve($MYVIMRUNTIME . '/vimrc')
+let $MYGVIMRC      = resolve($MYVIMRUNTIME . '/gvimrc')
 
 let $PYENV_ROOT =
     \ isdirectory(expand('~/.anyenv/envs/pyenv'))
@@ -190,7 +190,7 @@ set autoread            " automatically read the changed contents
 " store cursor, folds, slash, unix on view
 set viewoptions=cursor,folds,slash,unix
 " change default view directory
-let &viewdir = $MY_VIMRUNTIME . '/.view'
+let &viewdir = $MYVIMRUNTIME . '/.view'
 if !isdirectory(&viewdir)
   call mkdir(&viewdir, 'p', 0700)
 endif
@@ -226,7 +226,7 @@ endif
 
 " keep undo history on undofile
 if has('persistent_undo')
-  let &undodir=$MY_VIMRUNTIME . '/.undo'
+  let &undodir=$MYVIMRUNTIME . '/.undo'
   if !isdirectory(&undodir)
     call mkdir(&undodir, 'p', 0700)
   endif
@@ -437,10 +437,11 @@ function! s:source_current_vimscript()
   if &filetype !=# 'vim'
     return
   endif
-  if s:load_source(expand('%:p'))
+  if MyLoadSource(expand('%:p'))
     redraw | echo expand('%:t') . 'has sourced.'
   endif
 endfunction
+nnoremap <silent> <Leader><Leader>s :<C-u>call <SID>source_current_vimsscript()
 " }}}
 
 " automatically create missing directories {{{
@@ -498,7 +499,7 @@ highlight MyZenkakuSpace
 let g:hybrid_use_Xresources = 1
 colorscheme hybrid
 
-call s:load_source($MY_VIMRUNTIME . '/rc/plugin.vim')
-call s:load_source(expand('~/.vimrc.local'))
+call MyLoadSource($MYVIMRUNTIME . '/rc/plugin.vim')
+call MyLoadSource(expand('~/.vimrc.local'))
 
 " vim:set et ts=2 sts=2 sw=2 tw=0 fdm=marker ft=vim:

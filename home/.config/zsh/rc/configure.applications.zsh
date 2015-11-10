@@ -81,6 +81,7 @@ if [[ -d "/Applications/MacVim.app" ]]; then
 elif ! type vim > /dev/null 2>&1; then
     alias vim=vi
 fi
+alias minvim="vim -N -U NONE -i NONE --noplugin"
 
 
 # hub
