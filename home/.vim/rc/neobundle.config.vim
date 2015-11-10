@@ -1506,7 +1506,7 @@ if neobundle#tap('vimfiler.vim') " {{{
       let directory = vimfiler#get_file_directory()
       call vimfiler#mappings#do_dir_action('vimfiler__newfile', directory)
     endfunction"}}}
-    function! s:vimfiler_settings()
+    function! s:vimfiler_settings() abort
       setl nonumber
       " Use 'J' to select candidate while <Space> is for Unite
       nunmap <buffer> <Space>
@@ -1535,7 +1535,7 @@ if neobundle#tap('vimfiler.vim') " {{{
     let smart_open = {
           \ 'is_selectable': 0,
           \}
-    function! smart_open.func(candidate)
+    function! smart_open.func(candidate) abort
       let context = unite#get_context()
       if context.buffer_name ==# 'vimfiler_opened'
         call unite#take_action(g:unite_kind_cdable_lcd_command, a:candidate)
@@ -1548,6 +1548,14 @@ if neobundle#tap('vimfiler.vim') " {{{
           \ unite#get_kinds('directory').default_action
     call unite#custom#action('directory', 'smart_open', smart_open)
     call unite#custom#default_action('directory', 'smart_open')
+
+    " somehow winfixwidth is applied to a buffer opened from VimFilerExplorer
+    function! s:force_nofixwidth() abort
+      if empty(&l:buftype)
+        setl nowinfixwidth
+      endif
+    endfunction
+    autocmd MyAutoCmd BufWinEnter * call s:force_nofixwidth()
   endfunction
   call neobundle#untap()
 endif " }}}
