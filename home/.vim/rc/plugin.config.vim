@@ -155,29 +155,6 @@ if neobundle#tap('vim-fullscreen') " {{{
 endif " }}}
 
 if neobundle#tap('vim-over') " {{{
-  call neobundle#config({
-        \ 'autoload': {
-        \   'commands': [
-        \     'OverCommandLine',
-        \     'OverCommandLineNoremap',
-        \   ],
-        \ }})
-
-  " Automatically source it when the command window is opened.
-  function! s:source_vim_over() abort
-    call neobundle#source('vim-over')
-    " do plugin-over autocmd
-    doautoall plugin-over CmdwinEnter
-    " remove autocmd
-    augroup MyAutoCmdSourceVimOver
-      autocmd!
-    augroup END
-  endfunction
-  augroup MyAutoCmdSourceVimOver
-    autocmd!
-    autocmd CmdwinEnter * call s:source_vim_over()
-  augroup END
-
   " Use vim-over instead of builtin substitution
   " http://leafcage.hateblo.jp/entry/2013/11/23/212838
   cnoreabb <silent><expr>s getcmdtype()==':' && getcmdline()=~'^s' ?
