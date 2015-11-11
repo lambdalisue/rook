@@ -69,7 +69,6 @@ fi
 
 # vim
 export EDITOR=vim
-export PAGER="vim -c PAGER -"
 export MANPAGER="vim -c MANPAGER -"
 alias view="vim -c PAGER"
 if [[ -d "/Applications/MacVim.app" ]]; then
@@ -81,8 +80,6 @@ if [[ -d "/Applications/MacVim.app" ]]; then
 elif ! type vim > /dev/null 2>&1; then
     alias vim=vi
 fi
-alias minvim="vim -N -U NONE -i NONE --noplugin"
-
 
 # hub
 if type hub > /dev/null 2>&1; then

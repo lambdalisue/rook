@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 function! s:is_git_available() "{{{
   if !executable('git')
     return 0
@@ -427,6 +429,14 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \ [
       \   'rc/plugin/unite.vim',
       \   fnamemodify($MYVIMRUNTIME . '/rc/plugin/unite.vim', ':~'),
+      \ ],
+      \ [
+      \   'rc/plugin/vimfiler.vim',
+      \   fnamemodify($MYVIMRUNTIME . '/rc/plugin/vimfiler.vim', ':~'),
+      \ ],
+      \ [
+      \   'rc/plugin/vimshell.vim',
+      \   fnamemodify($MYVIMRUNTIME . '/rc/plugin/vimshell.vim', ':~'),
       \ ],
       \ [
       \   'vim',

@@ -2,17 +2,6 @@ scriptencoding utf-8
 noremap <Plug>(my-operator) <Nop>
 map - <Plug>(my-operator)
 
-function! s:is_git_available() abort "{{{
-  if !executable('git')
-    return 0
-  endif
-  if neobundle#is_sourced('vim-gita')
-    return gita#is_enabled()
-  endif
-  call vimproc#system('git rev-parse')
-  return (vimproc#get_last_status() == 0) ? 1 : 0
-endfunction "}}}
-
 if neobundle#tap('vimproc.vim') " {{{
   call neobundle#config({
         \ 'build_commands': 'make',

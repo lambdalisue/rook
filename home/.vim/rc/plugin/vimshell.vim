@@ -1,3 +1,4 @@
+scriptencoding utf-8
 let s:zsh_history_path = expand('~/.config/zsh/.zsh_history')
 
 function! neobundle#hooks.on_source(bundle)
