@@ -634,11 +634,9 @@ if neobundle#tap('vim-watchdogs') " {{{
 endif " }}}
 
 if neobundle#tap('vim-qfstatusline') " {{{
-  " Note:
-  " https://github.com/Shougo/neobundle.vim/issues/446
-  "call neobundle#config({
-  "      \ 'depends': 'osyo-manga/shabadou.vim',
-  "      \})
+  call neobundle#config({
+        \ 'depends': 'osyo-manga/shabadou.vim',
+        \})
   function! neobundle#hooks.on_source(bundle) abort
     let g:Qfstatusline#UpdateCmd = function('lightline#update')
   endfunction
@@ -1102,6 +1100,7 @@ endif " }}}
 if neobundle#tap('vim-gita') " {{{
   call neobundle#config({
         \ 'autoload': {
+        \   'functions': 'gita#',
         \   'commands': 'Gita',
         \   'mappings': '<Plug>(gita-',
         \ }})

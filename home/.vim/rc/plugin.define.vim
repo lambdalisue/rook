@@ -45,7 +45,6 @@ NeoBundleLazy 'Shougo/echodoc.vim'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'cocopon/lightline-hybrid.vim'
 NeoBundle 'osyo-manga/vim-watchdogs'
-NeoBundle 'osyo-manga/shabadou.vim'
 NeoBundle 'dannyob/quickfixstatus'
 NeoBundle 'KazuakiM/vim-qfstatusline'
 
