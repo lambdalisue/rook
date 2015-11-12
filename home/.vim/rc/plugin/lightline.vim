@@ -58,7 +58,7 @@ let g:lightline = {
 "   component_function cannot be a script local function so use
 "   g:lightline.my namespace instead of s:
 let g:lightline.my = {}
-if $LANG ==# 'C'
+if !has('multi_byte') || $LANG ==# 'C'
   let g:lightline.my.symbol_branch = ''
   let g:lightline.my.symbol_readonly = '!'
   let g:lightline.my.symbol_modified = '*'

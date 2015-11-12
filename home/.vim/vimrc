@@ -283,7 +283,8 @@ if v:version >= 703
   set colorcolumn=80
 endif
 
-if has('multi_byte')
+if has('multi_byte') && $LANG !=# 'C'
+  set fillchars=vert:│,fold:─
   set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:$
 else
   set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%,eol:$

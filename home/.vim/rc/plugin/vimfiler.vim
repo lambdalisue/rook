@@ -7,6 +7,15 @@ let g:vimfiler_ignore_pattern = printf('\%%(%s\)', join([
       \ '^__pycache__$',
       \ '\.egg-info$',
       \], "\\|"))
+if has('multi_byte') && $LANG !=# 'C'
+  let g:vimfiler_tree_leaf_icon = "⋮"
+  let g:vimfiler_tree_opened_icon = '▾'
+  let g:vimfiler_tree_closed_icon = '▹'
+  let g:vimfiler_file_icon = ' '
+  let g:vimfiler_readonly_file_icon = '⭤'
+  let g:vimfiler_marked_file_icon = '✓'
+endif
+
 call vimfiler#custom#profile('default', 'context', {
       \ 'auto_cd': 1,
       \ 'parent': 1,
