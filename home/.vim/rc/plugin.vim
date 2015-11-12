@@ -27,7 +27,7 @@ function! s:configure_neobundle() abort
   call MyLoadSource($MYVIMRUNTIME . '/rc/plugin.config.vim')
   call neobundle#end()
   if !has('vim_starting')
-    "call neobundle#call_hook('on_source')
+    call neobundle#call_hook('on_source')
   endif
 endfunction
 
