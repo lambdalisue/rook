@@ -8,12 +8,6 @@
 " skip if the live Vim is vim-tiny or vim-small
 if !1 | finish | endif
 
-" platform recognition
-let s:is_windows = has('win16') || has('win32') || has('win64')
-let s:is_darwin  = has('mac') || has('macunix') || has('gui_macvim')
-let s:is_linux   = !s:is_windows && !s:is_darwin
-let s:delimiter  = s:is_windows ? ';' : ':'
-
 " reset settings for reloading vimrc
 augroup MyAutoCmd
   autocmd!
@@ -45,7 +39,7 @@ else
 endif
 
 " Add several required path to $PATH
-call MyAddPath([
+call rook#add_path([
       \ '/usr/local/texlive/2013/bin/x86_64-linux',
       \ '/usr/local/texlive/2013/bin/x86_64-darwin',
       \ '~/.pyenv/bin',
@@ -69,8 +63,8 @@ call MyAddPath([
       \])
 
 let $MYVIMRUNTIME = expand('~/.vim')
-let $MYVIMRC       = resolve($MYVIMRUNTIME . '/vimrc')
-let $MYGVIMRC      = resolve($MYVIMRUNTIME . '/gvimrc')
+let $MYVIMRC  = resolve(rook#normpath('vimrc'))
+let $MYGVIMRC = resolve(rook#normpath('gvimrc'))
 
 let $PYENV_ROOT =
     \ isdirectory(expand('~/.anyenv/envs/pyenv'))
@@ -190,7 +184,7 @@ set autoread            " automatically read the changed contents
 " store cursor, folds, slash, unix on view
 set viewoptions=cursor,folds,slash,unix
 " change default view directory
-let &viewdir = $MYVIMRUNTIME . '/.view'
+let &viewdir = rook#normpath('.view')
 if !isdirectory(&viewdir)
   call mkdir(&viewdir, 'p', 0700)
 endif
@@ -226,7 +220,7 @@ endif
 
 " keep undo history on undofile
 if has('persistent_undo')
-  let &undodir=$MYVIMRUNTIME . '/.undo'
+  let &undodir = rook#normpath('.undo')
   if !isdirectory(&undodir)
     call mkdir(&undodir, 'p', 0700)
   endif
@@ -437,7 +431,7 @@ function! s:source_current_vimscript()
   if &filetype !=# 'vim'
     return
   endif
-  if MyLoadSource(expand('%:p'))
+  if rook#source(expand('%:p'))
     redraw | echo expand('%:t') . 'has sourced.'
   endif
 endfunction
@@ -499,7 +493,7 @@ highlight MyZenkakuSpace
 let g:hybrid_use_Xresources = 1
 colorscheme hybrid
 
-call MyLoadSource($MYVIMRUNTIME . '/rc/plugin.vim')
-call MyLoadSource(expand('~/.vimrc.local'))
+call rook#source(rook#normpath('rc/plugin.vim'))
+call rook#source(expand('~/.vimrc.local'))
 
 " vim:set et ts=2 sts=2 sw=2 tw=0 fdm=marker ft=vim:

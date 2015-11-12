@@ -6,14 +6,27 @@ let s:delimiter  = s:is_windows ? ';' : ':'
 let s:pathsep    = s:is_windows ? '\\' : '/'
 let s:sfile      = expand('<sfile>')
 
-function! rook#expand(expr) abort " {{{
-  let path = expand(a:expr)
-  let path = printf('%s%s%s',
-        \ fnamemodify(s:sfile, ':h'),
-        \ s:pathsep,
-        \ path,
-        \)
-  return path
+" function! rook#is_abspath(path) abort " {{{
+if s:is_windows
+  function! rook#is_abspath(path) abort
+    return a:path =~# '\v^[A-Z]:\\'
+  endfunction
+else
+  function! rook#is_abspath(path) abort
+    return a:path =~# '\v^/'
+  endfunction
+endif
+" }}}
+function! rook#is_relpath(path) abort " {{{
+  return !rook#is_abspath(a:path)
+endfunction " }}}
+
+function! rook#normpath(path) abort " {{{
+  let dirpath = expand('~/.vim')
+  let relpath = rook#is_relpath(a:path)
+        \ ? a:path
+        \ : fnamemodify(a:path, ':~:.')
+  return dirpath . s:pathsep . relpath
 endfunction " }}}
 
 function! rook#add_path(pathlist) abort " {{{

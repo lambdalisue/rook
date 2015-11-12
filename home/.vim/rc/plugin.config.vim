@@ -2,6 +2,18 @@ scriptencoding utf-8
 noremap <Plug>(my-operator) <Nop>
 map - <Plug>(my-operator)
 
+function! s:is_git_available() "{{{
+  if !executable('git')
+    return 0
+  endif
+  if neobundle#is_sourced('vim-gita')
+    return gita#is_enabled()
+  else
+    call vimproc#system('git rev-parse')
+    return (vimproc#get_last_status() == 0) ? 1 : 0
+  endif
+endfunction "}}}
+
 " fundementals {{{
 
 if neobundle#tap('sudo.vim') " {{{
@@ -324,7 +336,7 @@ endif " }}}
 
 if neobundle#tap('neosnippet.vim') " {{{
   function! neobundle#hooks.on_post_source(bundle) abort
-    let g:neosnippet#snippets_directory = $MYVIMRUNTIME. '/snippets'
+    let g:neosnippet#snippets_directory = rook#normpath('snippets')
     let g:neosnippet#enable_snipmate_compatibility = 1
 
     " for snippet complete marker
@@ -501,17 +513,221 @@ endif " }}}
 " interfaces {{{
 "
 if neobundle#tap('unite.vim') " {{{
-  call MyLoadSource($MYVIMRUNTIME . '/rc/plugin/unite.vim')
+  " unite
+  nnoremap <Plug>(my-unite) <Nop>
+  nmap <Space> <Plug>(my-unite)
+  vmap <Space> <Plug>(my-unite)
+
+  nnoremap <silent> <Plug>(my-unite)<Space>
+        \ :<C-u>UniteResume<CR>
+  nnoremap <silent> <Plug>(my-unite)w
+        \ :<C-u>Unite buffer window tab<CR>
+  nnoremap <silent> <Plug>(my-unite)k
+        \ :<C-u>Unite bookmark
+        \ -buffer-name=vimfiler_opened<CR>
+  nnoremap <silent> <Plug>(my-unite)l :<C-u>Unite line
+        \ -buffer-name=search<CR>
+  nnoremap <silent> <Plug>(my-unite)h :<C-u>Unite help
+        \ -buffer-name=search<CR>
+  nnoremap <silent> <Plug>(my-unite)mp
+        \ :<C-u>Unite output:map<BAR>map!<BAR>lmap
+        \ -buffer-name=search<CR>
+  vnoremap <silent> <Plug>(my-unite)l
+        \ :<C-u>UniteWithCursorWord line
+        \ -buffer-name=search<CR>
+  vnoremap <silent> <Plug>(my-unite)h
+        \ :<C-u>UniteWithCursorWord help
+        \ -buffer-name=search<CR>
+
+  " unite-menu
+  nnoremap <silent> <Plug>(my-unite)s
+        \ :<C-u>Unite menu:shortcut
+        \ -no-quit
+        \ -no-start-insert<CR>
+
+  " unite-file
+  nnoremap <Plug>(my-unite-file) <Nop>
+  nmap <Plug>(my-unite)f <Plug>(my-unite-file)
+  nnoremap <silent> <Plug>(my-unite-file)f
+        \ :<C-u>call <SID>unite_smart_file()<CR>
+  nnoremap <silent> <Plug>(my-unite-file)i
+        \ :<C-u>Unite file<CR>
+  nnoremap <silent> <Plug>(my-unite-file)m
+        \ :<C-u>Unite file_mru<CR>
+  nnoremap <silent> <Plug>(my-unite-file)r
+        \ :<C-u>Unite file_rec/async<CR>
+  nnoremap <silent> <Plug>(my-unite-file)g
+        \ :<C-u>Unite file_rec/git<CR>
+  function! s:unite_smart_file()
+    if s:is_git_available()
+      Unite file_rec/git
+    else
+      Unite file_rec/async
+    endif
+  endfunction
+
+  " unite-directory
+  nnoremap <Plug>(my-unite-directory) <Nop>
+  nmap <Plug>(my-unite)d <Plug>(my-unite-directory)
+  nnoremap <silent> <Plug>(my-unite-directory)d
+        \ :<C-u>Unite directory_rec/async
+        \ -default-action=lcd<CR>
+  nnoremap <silent> <Plug>(my-unite-directory)i
+        \ :<C-u>Unite directory
+        \ -default-action=lcd<CR>
+  nnoremap <silent> <Plug>(my-unite-directory)m
+        \ :<C-u>Unite directory_mru
+        \ -default-action=lcd<CR>
+  nnoremap <silent> <Plug>(my-unite-directory)r
+        \ :<C-u>Unite directory_rec/async
+        \ -default-action=lcd<CR>
+
+  " unite-qf
+  if neobundle#is_installed('unite-quickfix')
+    nnoremap <Plug>(my-unite-qf) <Nop>
+    nmap <Plug>(my-unite)q <Plug>(my-unite-qf)
+    nnoremap <silent> <Plug>(my-unite-qf)q
+          \ :<C-u>Unite quickfix location_list
+          \ -buffer-name=search<CR>
+    nnoremap <silent> <Plug>(my-unite-qf)f
+          \ :<C-u>Unite quickfix
+          \ -buffer-name=search<CR>
+    nnoremap <silent> <Plug>(my-unite-qf)l
+          \ :<C-u>Unite location_list
+          \ -buffer-name=search<CR>
+  endif
+
+  " unite-grep
+  nnoremap <Plug>(my-unite-grep) <Nop>
+  nmap <Plug>(my-unite)g <Plug>(my-unite-grep)
+  vmap <Plug>(my-unite)g <Plug>(my-unite-grep)
+  nnoremap <silent> <Plug>(my-unite-grep)*
+        \ :<C-u>call <SID>unite_smart_grep_cursor()<CR>
+  vnoremap <silent> <Plug>(my-unite-grep)*
+        \ :<C-u>call <SID>unite_smart_grep_cursor()<CR>
+  nnoremap <silent> <Plug>(my-unite-grep)g
+        \ :<C-u>call <SID>unite_smart_grep()<CR>
+  vnoremap <silent> <Plug>(my-unite-grep)g
+        \ :<C-u>call <SID>unite_smart_grep_cursor()<CR>
+  nnoremap <silent> <Plug>(my-unite-grep)i
+        \ :<C-u>Unite grep/git:/
+        \ -buffer-name=search
+        \ -no-empty<CR>
+  nnoremap <silent> <Plug>(my-unite-grep)r
+        \ :<C-u>Unite grep:.
+        \ -buffer-name=search
+        \ -no-empty<CR>
+  function! s:unite_smart_grep()
+    if s:is_git_available()
+      Unite grep/git:/ -buffer-name=search
+    else
+      Unite grep:.     -buffer-name=search
+    endif
+  endfunction
+  function! s:unite_smart_grep_cursor()
+    if executable('git') && s:is_git_available()
+      UniteWithCursorWord grep/git:/ -buffer-name=search
+    else
+      UniteWithCursorWord grep:.     -buffer-name=search
+    endif
+  endfunction
+
+  " unite-git
+  nnoremap <Plug>(my-unite-git) <Nop>
+  nmap <Plug>(my-unite)i <Plug>(my-unite-git)
+  if neobundle#is_installed('vim-unite-giti')
+    nnoremap <silent> <Plug>(my-unite-git)i
+          \ :<C-u>Unite giti/branch_recent<CR>
+    nnoremap <silent> <Plug>(my-unite-git)b
+          \ :<C-u>Unite giti/branch_recent giti/branch_all<CR>
+    nnoremap <silent> <Plug>(my-unite-git)r
+          \ :<C-u>Unite giti/remote<CR>
+  endif
+  if neobundle#is_installed('vim-gista')
+    nnoremap <silent> <Plug>(my-unite-git)t
+          \ :<C-u>Unite gista:lambdalisue<CR>
+  endif
+
+  " unite-ref
+  nnoremap <Plug>(my-unite-ref) <Nop>
+  nmap <Plug>(my-unite)r <Plug>(my-unite-ref)
+  if neobundle#is_installed('vim-ref')
+    nnoremap <silent> <Plug>(my-unite-ref)r
+                \ :<C-u>call <SID>unite_smart_ref()<CR>
+    nnoremap <silent> <Plug>(my-unite-ref)p
+                \ :<C-u>Unite ref/pydoc<CR>
+    nnoremap <silent> <Plug>(my-unite-ref)l
+                \ :<C-u>Unite perldoc<CR>
+    nnoremap <silent> <Plug>(my-unite-ref)m
+                \ :<C-u>Unite ref/man<CR>
+    if neobundle#is_installed('ref-sources.vim')
+      nnoremap <silent> <Plug>(my-unite-ref)j
+                  \ :<C-u>Unite ref/javascript<CR>
+      nnoremap <silent> <Plug>(my-unite-ref)q
+                  \ :<C-u>Unite ref/jquery<CR>
+      nnoremap <silent> <Plug>(my-unite-ref)k
+                  \ :<C-u>Unite ref/kotobank<CR>
+      nnoremap <silent> <Plug>(my-unite-ref)w
+                  \ :<C-u>Unite ref/wikipedia<CR>
+    endif
+    function! s:unite_smart_ref()
+      if &filetype =~# 'perl'
+        Unite perldoc
+      elseif &filetype =~# 'python'
+        Unite ref/pydoc
+      elseif &filetype =~# 'ruby'
+        Unite ref/refe
+      elseif &filetype =~# 'javascript'
+        Unite ref/javascript
+      elseif &filetype =~# 'vim'
+        Unite help
+      else
+        Unite ref/man
+      endif
+    endfunction
+  endif
+
+  " unite-linephrase
+  if neobundle#is_installed('unite-linephrase')
+    nnoremap <silent> <Plug>(my-unite)p
+          \ :<C-u>Unite linephrase
+          \ -buffer-name=search<CR>
+  endif
+
+  " unite-outline
+  if neobundle#is_installed('unite-outline')
+    " Use outline like explorer
+    nnoremap <silent> <Leader>o
+          \ :<C-u>Unite outline
+          \ -no-quit -keep-focus -no-start-insert
+          \ -vertical -direction=botright -winwidth=30<CR>
+  endif
+
+  " vim-bookmarks
+  if neobundle#is_installed('vim-bookmarks')
+    nnoremap <silent> <Plug>(my-unite)mm
+          \ :<C-u>Unite vim_bookmarks
+          \ -buffer-name=search<CR>
+  endif
+
+  let neobundle#hooks.on_source = rook#normpath('rc/plugin/unite.vim')
   call neobundle#untap()
 endif " }}}
 
 if neobundle#tap('vimshell.vim') " {{{
-  call MyLoadSource($MYVIMRUNTIME . '/rc/plugin/vimshell.vim')
+  let neobundle#hooks.on_source = rook#normpath('rc/plugin/vimshell.vim')
+  function! neobundle#hooks.on_post_source(bundle)
+    highlight! vimshellError gui=NONE cterm=NONE guifg='#cc6666' ctermfg=9
+  endfunction
   call neobundle#untap()
 endif " }}}
 
 if neobundle#tap('vimfiler.vim') " {{{
-  call MyLoadSource($MYVIMRUNTIME . '/rc/plugin/vimfiler.vim')
+  nnoremap <Plug>(my-vimfiler) <Nop>
+  nmap <Leader>e <Plug>(my-vimfiler)
+  nnoremap <silent> <Plug>(my-vimfiler)e :<C-u>VimFilerExplorer<CR>
+  nnoremap <silent> <Plug>(my-vimfiler)E :<C-u>VimFiler<CR>
+  let neobundle#hooks.on_source = rook#normpath('rc/plugin/vimfiler.vim')
   call neobundle#untap()
 endif " }}}
 
@@ -537,8 +753,8 @@ endif " }}}
 
 if neobundle#tap('ref-sources.vim') " {{{
   function! neobundle#hooks.on_source(bundle) abort
-    let g:ref_jquery_doc_path     = $MYVIMRUNTIME . '/bundle/jqapi'
-    let g:ref_javascript_doc_path = $MYVIMRUNTIME . '/bundle/jsref/htdocs'
+    let g:ref_jquery_doc_path     = rook#normpath('bundle/jqapi')
+    let g:ref_javascript_doc_path = rook#normpath('bundle/jsref/htdocs')
     let g:ref_auto_resize = 1
     let g:ref_wikipedia_lang = ['ja', 'en']
   endfunction

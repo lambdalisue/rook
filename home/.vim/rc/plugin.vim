@@ -1,4 +1,4 @@
-let s:remote_bundle_root = $MYVIMRUNTIME . '/bundle'
+let s:remote_bundle_root = rook#normpath('bundle')
 let s:neobundle_root     = s:remote_bundle_root . '/neobundle.vim'
 let s:neobundle_url      = 'https://github.com/Shougo/neobundle.vim'
 
@@ -21,10 +21,10 @@ endfunction
 function! s:configure_neobundle() abort
   call neobundle#begin(s:remote_bundle_root)
   if neobundle#load_cache()
-    call neobundle#load_toml($MYVIMRUNTIME . '/rc/plugin.define.toml')
+    call neobundle#load_toml(rook#normpath('rc/plugin.define.toml'))
     NeoBundleSaveCache
   endif
-  call MyLoadSource($MYVIMRUNTIME . '/rc/plugin.config.vim')
+  call rook#source(rook#normpath('rc/plugin.config.vim'))
   call neobundle#end()
   if !has('vim_starting')
     call neobundle#call_hook('on_source')

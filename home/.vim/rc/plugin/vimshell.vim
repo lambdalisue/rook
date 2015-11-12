@@ -1,18 +1,12 @@
 scriptencoding utf-8
 let s:zsh_history_path = expand('~/.config/zsh/.zsh_history')
 
-function! neobundle#hooks.on_source(bundle)
-  let g:vimshell_prompt = '$ '
-  let g:vimshell_secondary_prompt = '| '
-  let g:vimshell_vimshrc_path = $MY_VIMRUNTIME .  '/vimshrc'
-  if filereadable(s:zsh_history_path)
-    let g:vimshell_external_history_path = s:zsh_history_path
-  endif
-endfunction
-
-function! neobundle#hooks.on_post_source(bundle)
-  highlight! vimshellError gui=NONE cterm=NONE guifg='#cc6666' ctermfg=9
-endfunction
+let g:vimshell_prompt = '$ '
+let g:vimshell_secondary_prompt = '| '
+let g:vimshell_vimshrc_path = $MY_VIMRUNTIME .  '/vimshrc'
+if filereadable(s:zsh_history_path)
+  let g:vimshell_external_history_path = s:zsh_history_path
+endif
 
 let s:vimshell_hooks = {}
 function! s:vimshell_hooks.chpwd(args, context) abort

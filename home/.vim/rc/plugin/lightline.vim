@@ -103,25 +103,29 @@ endfunction
 function! g:lightline.my.fileformat() abort
     return winwidth(0) > 70 ? &fileformat : ''
 endfunction
-function! g:lightline.my.filetype() " {{{
+function! g:lightline.my.filetype() abort " {{{
   return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
 endfunction " }}}
-function! g:lightline.my.fileencoding() "{{{
+function! g:lightline.my.fileencoding() abort "{{{
   return winwidth(0) > 70 ? (strlen(&fileencoding) ? &fileencoding : &encoding) : ''
 endfunction " }}}
 
 if neobundle#is_installed('vim-gita')
   function! g:lightline.my.gita_debug() abort
-    return gita#statusline#debug()
+    return neobundle#is_sourced('vim-gita')
+          \ ? gita#statusline#debug() : ''
   endfunction
   function! g:lightline.my.gita_branch() abort
-    return gita#statusline#preset('branch_short_fancy')
+    return neobundle#is_sourced('vim-gita')
+          \ ? gita#statusline#preset('branch_short_fancy') : ''
   endfunction
   function! g:lightline.my.gita_traffic() abort
-    return gita#statusline#preset('traffic_fancy')
+    return neobundle#is_sourced('vim-gita')
+          \ ? gita#statusline#preset('traffic_fancy') : ''
   endfunction
   function! g:lightline.my.gita_status() abort
-    return gita#statusline#preset('status')
+    return neobundle#is_sourced('vim-gita')
+          \ ? gita#statusline#preset('status') : ''
   endfunction
 else
   function! g:lightline.my.gita_debug() abort

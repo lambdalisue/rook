@@ -1,20 +1,17 @@
 scriptencoding utf-8
 let g:loaded_netrwPlugin = 1
-
-function! neobundle#hooks.on_source(bundle)
-  let g:vimfiler_as_default_explorer = 1
-  let g:vimfiler_ignore_pattern = printf('\%%(%s\)', join([
-        \ '^\..*',
-        \ '\.pyc$',
-        \ '^__pycache__$',
-        \ '\.egg-info$',
-        \], "\\|"))
-  call vimfiler#custom#profile('default', 'context', {
-        \ 'auto_cd': 1,
-        \ 'parent': 1,
-        \ 'safe': 0,
-        \ })
-endfunction
+let g:vimfiler_as_default_explorer = 1
+let g:vimfiler_ignore_pattern = printf('\%%(%s\)', join([
+      \ '^\..*',
+      \ '\.pyc$',
+      \ '^__pycache__$',
+      \ '\.egg-info$',
+      \], "\\|"))
+call vimfiler#custom#profile('default', 'context', {
+      \ 'auto_cd': 1,
+      \ 'parent': 1,
+      \ 'safe': 0,
+      \ })
 
 function! s:configure_vimfiler() abort
   " use 'J' to select candidates instead of <Space> / <S-Space>
@@ -46,8 +43,3 @@ function! s:force_nofixwidth() abort
   endif
 endfunction
 autocmd MyAutoCmd BufWinEnter * call s:force_nofixwidth()
-
-nnoremap <Plug>(my-vimfiler) <Nop>
-nmap <Leader>e <Plug>(my-vimfiler)
-nnoremap <silent> <Plug>(my-vimfiler)e :<C-u>VimFilerExplorer<CR>
-nnoremap <silent> <Plug>(my-vimfiler)E :<C-u>VimFiler<CR>
