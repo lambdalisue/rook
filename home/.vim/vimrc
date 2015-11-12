@@ -13,24 +13,6 @@ augroup MyAutoCmd
   autocmd!
 augroup END
 
-function! MyAddPath(pathlist) abort " {{{
-  let pathlist = split($PATH, s:delimiter)
-  for path in map(filter(a:pathlist, 'v:val'), 'expand(v:val)') 
-    if isdirectory(path) && index(pathlist, path) == -1
-      call insert(pathlist, path, 0)
-    endif
-  endfor
-  let $PATH = join(pathlist, s:delimiter)
-endfunction " }}}
-function! MyLoadSource(path) abort " {{{
-  let path = expand(a:path)
-  if filereadable(path)
-    execute printf('source %s', path)
-    return 1
-  endif
-  return 0
-endfunction " }}}
-
 " environmental variables {{{
 if has('nvim')
   set shell=/bin/zsh
