@@ -36,11 +36,24 @@ elseif executable('jvgrep')
         \ '-i --exclude ''\.(git|svn|hg|bzr)'''
   let g:unite_source_grep_recursive_opt = '-R'
 endif
-call unite#custom#profile('default', 'context', {
-      \ 'prompt': '» ',
-      \ 'start_insert': 1,
+if has('multi_byte') && $LANG !=# 'C'
+  let config = {
+        \ 'prompt': '» ',
+        \ 'candidate_icon': '⋮',
+        \ 'marked_icon': '✓',
+        \ 'no_hide_icon': 1,
+        \}
+else
+  let config = {
+        \ 'prompt': '> ',
+        \ 'candidate_icon': ' ',
+        \ 'marked_icon': '*',
+        \}
+endif
+call unite#custom#profile('default', 'context', extend(config, {
+      \ 'start_insert': 0,
       \ 'no_empty': 1,
-      \})
+      \}))
 call unite#custom#profile('action', 'context', {
       \ 'start_insert': 1,
       \ 'no_empty': 1,
