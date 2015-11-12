@@ -121,6 +121,10 @@ commands = ['MANPAGER', 'Man']
 repository = 'cohama/lexima.vim'
 insert = 1
 
+[[plugins]]
+repository = 't9md/vim-choosewin'
+mappings = '<Plug>(choosewin)'
+
 # Completion ------------------------------------------------------------------
 [[plugins]]
 repository = 'Shougo/neocomplete.vim'

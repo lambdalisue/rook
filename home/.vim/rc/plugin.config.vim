@@ -292,6 +292,11 @@ if neobundle#tap('vim-swap') " {{{
   call neobundle#untap()
 endif " }}}
 
+if neobundle#tap('vim-choosewin') " {{{
+  nmap <C-w><C-w> <Plug>(choosewin)
+  call neobundle#untap()
+endif " }}}
+
 " }}}
 
 " completion " {{{

@@ -335,6 +335,12 @@ nnoremap <C-p> "0p
 " vv to select the line, like yy, dd
 nnoremap vv 0v$
 
+" move cursor in insert mode
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
+inoremap <C-l> <C-o>l
+inoremap <C-h> <C-o>h
+
 " simple window navigation
 nnoremap <C-w><C-j>  <C-w>j
 nnoremap <C-w><C-k>  <C-w>k
