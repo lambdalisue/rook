@@ -117,6 +117,10 @@ commands = 'PAGER'
 repository = 'lambdalisue/vim-manpager'
 commands = ['MANPAGER', 'Man']
 
+[[plugins]]
+repository = 'cohama/lexima.vim'
+insert = 1
+
 # Completion ------------------------------------------------------------------
 [[plugins]]
 repository = 'Shougo/neocomplete.vim'
@@ -630,7 +634,7 @@ functions = ['PP', 'PrettyPrint']
 
 [[plugins]]
 repository = 'syngan/vim-vimlint'
-depends = 'ynkdir/vim-vimparser'
+depends = 'ynkdir/vim-vimlparser'
 filetypes = 'vim'
 
 [[plugins]]
