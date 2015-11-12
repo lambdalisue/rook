@@ -19,7 +19,8 @@ autocmd BufNewFile,BufRead *.jsm      set filetype=javascript
 autocmd BufNewFile,BufRead *.coffee   set filetype=coffeescript
 autocmd BufNewFile,BufRead Cakefile   set filetype=coffeescript
 
-autocmd BufNewFile,BufRead *.tex         set filetype=tex
+autocmd BufNewFile,BufRead *.tex      set filetype=tex
+autocmd BufNewFile,BufRead *.toml     set filetype=toml
 
 " Apple Script
 autocmd BufNewFile,BufRead *.scpt        set filetype=applescript

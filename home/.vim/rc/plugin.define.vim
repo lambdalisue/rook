@@ -140,6 +140,7 @@ NeoBundleLazy 'Quramy/tsuquyomi'
 NeoBundleLazy 'elzr/vim-json'
 NeoBundleLazy 'vim-pandoc/vim-pandoc'
 NeoBundleLazy 'kannokanno/previm'
+NeoBundleLazy 'cespare/vim-toml'
 
 " misc
 NeoBundleLazy 'cocopon/colorswatch.vim'

@@ -1,4 +1,5 @@
 scriptencoding utf-8
+set noshowmode
 
 let g:lightline = {
       \ 'colorscheme': 'hybrid',
@@ -150,4 +151,3 @@ else
     return ''
   endfunction
 endif
-

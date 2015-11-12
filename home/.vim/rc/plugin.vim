@@ -21,7 +21,7 @@ endfunction
 function! s:configure_neobundle() abort
   call neobundle#begin(s:remote_bundle_root)
   if neobundle#load_cache()
-    call MyLoadSource($MYVIMRUNTIME . '/rc/plugin.define.vim')
+    call neobundle#load_toml($MYVIMRUNTIME . '/rc/plugin.define.toml')
     NeoBundleSaveCache
   endif
   call MyLoadSource($MYVIMRUNTIME . '/rc/plugin.config.vim')

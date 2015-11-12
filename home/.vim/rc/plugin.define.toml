@@ -1,0 +1,637 @@
+[[plugins]]
+repository = 'Shougo/neobundle.vim'
+fetch = 1
+
+[[plugins]]
+repository = 'Shougo/vimproc.vim'
+build_commands = 'make'
+build = 'make'
+
+[[plugins]]
+repository = 'vim-jp/vimdoc-ja'
+
+# Fundemental -----------------------------------------------------------------
+[[plugins]]
+repository = 'sudo.vim'
+
+[[plugins]]
+repository = 'cohama/vim-hier'
+
+[[plugins]]
+repository = 'thinca/vim-template'
+
+[[plugins]]
+repository = 'lambdalisue/vim-unified-diff'
+external_commands = 'git'
+
+[[plugins]]
+repository = 'lambdalisue/vim-improve-diff'
+
+[[plugins]]
+repository = 'powerman/vim-plugin-AnsiEsc'
+
+[[plugins]]
+repository = 'osyo-manga/vim-over'
+
+[[plugins]]
+repository = 'kana/vim-repeat'
+mappings = '<Plug>(repeat-'
+
+[[plugins]]
+repository = 't9md/vim-quickhl'
+depends = 'kana/vim-operator-user'
+mappings = [
+    '<Plug>(quick-manual',
+    '<Plug>(operator-quickhl-manual'
+]
+
+[[plugins]]
+repository = 'tyru/open-browser.vim'
+mappings = '<Plug>(openbrowser-'
+
+[[plugins]]
+repository = 'lambdalisue/vim-fullscreen'
+mappings = '<Plug>(fullscreen-'
+
+[[plugins]]
+repository = 'osyo-manga/vim-over'
+
+[[plugins]]
+repository = 'rhysd/clever-f.vim'
+mappings = '<Plug>(clever-f-'
+
+[[plugins]]
+repository = 'haya14busa/vim-asterisk'
+mappings = '<Plug>(asterisk-'
+on_source = 'incsearch.vim'
+
+[[plugins]]
+repository = 'haya14busa/incsearch.vim'
+mappings = '<Plug>(incsearch-'
+
+[[plugins]]
+repository = 'LeafCage/yankround.vim'
+mappings = '<Plug>(yankround-'
+
+[[plugins]]
+repository = 'chikatoike/concealedyank.vim'
+mappings = '<Plug>(operator-concealedyank'
+
+[[plugins]]
+repository = 'tyru/capture.vim'
+commands = 'Capture'
+
+[[plugins]]
+repository = 'MattesGroeger/vim-bookmarks'
+depends = 'Shougo/unite.vim'
+augroup = 'bm_vim_enter'
+mappings = '<Plug>Bookmark'
+unite_sources = 'vim_bookmarks'
+
+[[plugins]]
+repository = 'thinca/vim-quickrun'
+mappings = '<Plug>(quickrun'
+
+[[plugins]]
+repository = 'thinca/vim-qfreplace'
+on_source = ['unite.vim', 'vimfiler.vim']
+commands = 'Qfreplace'
+
+[[plugins]]
+repository = 'AndrewRadev/switch.vim'
+commands = 'Switch'
+
+[[plugins]]
+repository = 'AndrewRadev/linediff.vim'
+commands = ['Linediff', 'LinediffReset']
+
+[[plugins]]
+repository = 'kurkale6ka/vim-swap'
+mappings = '<Plug>SwapSwap'
+
+[[plugins]]
+repository = 'lambdalisue/vim-pager'
+commands = 'PAGER'
+
+[[plugins]]
+repository = 'lambdalisue/vim-manpager'
+commands = ['MANPAGER', 'Man']
+
+# Completion ------------------------------------------------------------------
+[[plugins]]
+repository = 'Shougo/neocomplete.vim'
+depends = 'Shougo/context_filetype.vim'
+insert = 1
+
+[[plugins]]
+repository = 'Shougo/deoplete.nvim'
+depends = 'Shougo/context_filetype.vim'
+insert = 1
+neovim = 1
+
+[[plugins]]
+repository = 'Shougo/neco-syntax'
+on_source = ['neocomplete.vim', 'deoplete.nvim']
+
+[[plugins]]
+repository = 'Shougo/neco-vim'
+on_source = ['neocomplete.vim', 'deoplete.nvim']
+
+[[plugins]]
+repository = 'Shougo/neoinclude.vim'
+on_source = ['neocomplete.vim', 'deoplete.nvim']
+
+[[plugins]]
+repository = 'ujihisa/neco-look'
+on_source = ['neocomplete.vim', 'deoplete.nvim']
+
+[[plugins]]
+repository = 'eagletmt/neco-ghc'
+on_source = ['neocomplete.vim', 'deoplete.nvim']
+
+[[plugins]]
+repository = 'hrsh7th/vim-neco-calc'
+on_source = ['neocomplete.vim', 'deoplete.nvim']
+
+[[plugins]]
+repository = 'Shougo/neosnippet.vim'
+depends = [
+    'Shougo/neosnippet-snippets',
+    'Shougo/context_filetype.vim',
+]
+commands = [
+    'NeoSnippetMakeCache',
+    'NeoSnippetEdit',
+    'NeoSnippetSource',
+    'NeoSnippetClearMarkers',
+]
+unite_sources = [
+    'neosnippet',
+    'neosnippet/user',
+    'neosnippet/runtime'
+]
+mappings = '<Plug>(neosnippet_expand'
+filetype = 'snippet'
+
+[[plugins]]
+repository = 'Shougo/echodoc.vim'
+insert = 1
+
+
+# Statusline ------------------------------------------------------------------
+[[plugins]]
+repository = 'itchyny/lightline.vim'
+
+[[plugins]]
+repository = 'cocopon/lightline-hybrid.vim'
+on_source = 'itchyny/lightline.vim'
+
+[[plugins]]
+repository = 'osyo-manga/vim-watchdogs'
+
+[[plugins]]
+repository = 'dannyob/quickfixstatus'
+
+[[plugins]]
+repository = 'KazuakiM/vim-qfstatusline'
+depends = 'osyo-manga/shabadou.vim'
+
+
+# Textobj ---------------------------------------------------------------------
+[[plugins]]
+repository = 'kana/vim-textobj-user'
+
+[[plugins]]
+repository = 'kana/vim-textobj-entire'
+depends = 'kana/vim-textobj-user'
+
+[[plugins]]
+repository = 'kana/vim-textobj-line'
+depends = 'kana/vim-textobj-user'
+
+[[plugins]]
+repository = 'kana/vim-textobj-syntax'
+depends = 'kana/vim-textobj-user'
+
+[[plugins]]
+repository = 'kana/vim-textobj-indent'
+depends = 'kana/vim-textobj-user'
+
+[[plugins]]
+repository = 'kana/vim-textobj-datetime'
+depends = 'kana/vim-textobj-user'
+
+[[plugins]]
+repository = 'thinca/vim-textobj-comment'
+depends = 'kana/vim-textobj-user'
+
+[[plugins]]
+repository = 'saihoooooooo/vim-textobj-space'
+depends = 'kana/vim-textobj-user'
+
+[[plugins]]
+repository = 'kana/vim-textobj-fold'
+depends = 'kana/vim-textobj-user'
+
+[[plugins]]
+repository = 'kana/vim-textobj-underscore'
+depends = 'kana/vim-textobj-user'
+
+[[plugins]]
+repository = 'RyanMcG/vim-textobj-dash'
+depends = 'kana/vim-textobj-user'
+
+[[plugins]]
+repository = 'mattn/vim-textobj-url'
+depends = 'kana/vim-textobj-user'
+
+[[plugins]]
+repository = 'sgur/vim-textobj-parameter'
+depends = 'kana/vim-textobj-user'
+
+[[plugins]]
+repository = 'osyo-manga/vim-textobj-multiblock'
+depends = 'kana/vim-textobj-user'
+
+[[plugins]]
+repository = 'rhysd/vim-textobj-word-column'
+depends = 'kana/vim-textobj-user'
+
+[[plugins]]
+repository = 'bps/vim-textobj-python'
+depends = 'kana/vim-textobj-user'
+external_commands = 'python'
+filetype = ['python', 'python3']
+
+
+# Operator --------------------------------------------------------------------
+[[plugins]]
+repository = 'kana/vim-operator-user'
+
+[[plugins]]
+repository = 'kana/vim-operator-replace'
+depends = 'kana/vim-operator-user'
+mappings = '<Plug>(operator-replace'
+
+[[plugins]]
+repository = 'sgur/vim-operator-openbrowser'
+depends = 'kana/vim-operator-user'
+mappings = '<Plug>(operator-openbrowser'
+
+[[plugins]]
+repository = 'rhysd/vim-operator-trailingspace-killer'
+depends = 'kana/vim-operator-user'
+mappings = '<Plug>(operator-trailingspace-killer'
+
+[[plugins]]
+repository = 'rhysd/vim-operator-surround'
+depends = 'kana/vim-operator-user'
+mappings = '<Plug>(operator-surround'
+
+[[plugins]]
+repository = 'lambdalisue/vim-operator-breakline'
+depends = 'kana/vim-operator-user'
+mappings = '<Plug>(operator-breakline'
+
+
+# Interface -------------------------------------------------------------------
+[[plugins]]
+repository = 'Shougo/unite.vim'
+    [[plugins.commands]]
+    name = 'Unite'
+    complete = 'customlist,unite#complete_source'
+
+[[plugins]]
+repository = 'Shougo/vimshell.vim'
+    [[plugins.commands]]
+    name = ['VimShell', 'VimShellPop']
+    complete = 'customlist,vimshell#complete'
+
+[[plugins]]
+repository = 'Shougo/vimfiler.vim'
+depends = 'Shougo/unite.vim'
+explorer = '\h\w*:'
+    [[plugins.commands]]
+    name = ['VimFiler', 'VimFilerExplorer']
+    complete = 'customlist,vimfiler#complete'
+
+[[plugins]]
+repository = 'mbbill/undotree'
+commands = 'UndotreeToggle'
+
+[[plugins]]
+repository = 'thinca/vim-ref'
+commands = 'Ref'
+
+[[plugins]]
+repository = 'mojako/ref-sources.vim'
+on_source = 'vim-ref'
+
+[[plugins]]
+repository = 'majutsushi/tagbar'
+augroup = 'TagbarAutoCmds'
+commands = ['Tagbar', 'TagbarToggle']
+
+[[plugins]]
+repository = 'glidenote/memolist.vim'
+depends = [
+    'Shougo/unite.vim',
+    'fuenor/qfixgrep',
+]
+commands = [
+    'MemoNew',
+    'MemoList',
+    'MemoGrep',
+]
+
+[[plugins]]
+repository = 'godlygeek/tabular'
+commands = 'Tabularize'
+
+[[plugins]]
+repository = 'deris/vim-rengbang'
+commands = [
+    'RengBang',
+    'RengBangUsePrev',
+    'RengBangConfirm',
+]
+
+[[plugins]]
+repository = 'lilydjwg/colorizer'
+mappings = '<Plug>Colorizer'
+commands = [
+    'ColorHighlight',
+    'ColorClear',
+    'ColorToggle',
+]
+
+[[plugins]]
+repository = 'itchyny/calendar.vim'
+commands = 'Calendar'
+
+# Unite sources ---------------------------------------------------------------
+
+[[plugins]]
+repository = 'Shougo/neomru.vim'
+depends = 'Shougo/unite.vim'
+unite_sources = ['file_mru', 'directory_mru', 'neomru/file', 'neomru/directory']
+
+[[plugins]]
+repository = 'Shougo/neossh.vim'
+depends = 'Shougo/unite.vim'
+unite_sources = 'ssh'
+
+[[plugins]]
+repository = 'Shougo/unite-help'
+depends = 'Shougo/unite.vim'
+unite_sources = 'help'
+
+[[plugins]]
+repository = 'Shougo/unite-outline'
+depends = 'Shougo/unite.vim'
+unite_sources = 'outline'
+
+[[plugins]]
+repository = 'osyo-manga/unite-quickfix'
+depends = 'Shougo/unite.vim'
+unite_sources = ['quickfix', 'location_list']
+
+[[plugins]]
+repository = 'ujihisa/unite-font'
+depends = 'Shougo/unite.vim'
+unite_sources = 'font'
+
+[[plugins]]
+repository = 'ujihisa/unite-colorscheme'
+depends = 'Shougo/unite.vim'
+unite_sources = 'colorscheme'
+
+[[plugins]]
+repository = 'rhysd/unite-codic.vim'
+depends = 'Shougo/unite.vim'
+unite_sources = 'codic'
+
+[[plugins]]
+repository = 'pasela/unite-webcolorname'
+depends = 'Shougo/unite.vim'
+unite_sources = 'webcolorname'
+
+[[plugins]]
+repository = 'lambdalisue/unite-linephrase'
+depends = 'Shougo/unite.vim'
+unite_sources = 'linephase'
+
+[[plugins]]
+repository = 'joker1007/unite-pull-request'
+depends = 'Shougo/unite.vim'
+unite_sources = 'pull_request'
+
+[[plugins]]
+repository = 'dameninngenn/unite-perldoc'
+depends = 'Shougo/unite.vim'
+unite_sources = 'perldoc'
+
+
+# Version controller system ---------------------------------------------------
+[[plugins]]
+repository = 'lambdalisue/vim-gita'
+external_commands = 'git'
+mappings = '<Plug>(gita-'
+functions = 'gita#'
+    [[plugins.commands]]
+    name = 'Gita'
+    complete = 'customlist,gita#complete'
+
+[[plugins]]
+repository = 'lambdalisue/vim-gista'
+depends = ['Shougo/unite.vim', 'tyru/open-browser.vim']
+commands = 'Gista'
+mappings = '<Plug>(gista-'
+unite_sources = 'gista'
+
+[[plugins]]
+repository = 'cohama/agit.vim'
+external_commands = 'git'
+commands = ['Agit', 'AgitFile']
+on_source = 'unite.vim'
+
+[[plugins]]
+repository = 'kmnk/vim-unite-giti'
+depends = 'Shougo/unite.vim'
+unite_sources = [
+    'giti', 'giti/branch', 'giti/config', 'giti/log',
+    'giti/remote', 'giti/status',
+    'giti/pull_request/base',
+    'giti/pull_request/head',
+]
+
+
+# Syntax ----------------------------------------------------------------------
+[[plugins]]
+repository = 'hail2u/vim-css3-syntax'
+filetypes = [
+    'css', 'sass', 'scss', 'less', 'html',
+]
+
+[[plugins]]
+repository = 'othree/html5.vim'
+filetypes = 'html'
+
+[[plugins]]
+repository = 'groenewege/vim-less'
+filetypes = 'less'
+
+[[plugins]]
+repository = 'cakebaker/scss-syntax.vim'
+filetypes = ['sass', 'scss']
+
+[[plugins]]
+repository = 'kchmck/vim-coffee-script'
+filetypes = 'coffeescript'
+
+[[plugins]]
+repository = 'elzr/vim-json'
+filetypes = 'json'
+
+[[plugins]]
+repository = 'jQuery'
+filetypes = ['javascript', 'coffeescript', 'typescript']
+
+[[plugins]]
+repository = 'jelera/vim-javascript-syntax'
+filetypes = ['javascript', 'typescript']
+
+[[plugins]]
+repository = 'jason0x43/vim-js-indent'
+filetypes = ['javascript', 'typescript']
+
+[[plugins]]
+repository = 'leafgarland/typescript-vim'
+filetypes = 'typescript'
+
+[[plugins]]
+repository = 'thinca/vim-ft-help_fold'
+filetypes = 'help'
+
+[[plugins]]
+repository = 'vim-scripts/applescript.vim'
+filetypes = 'applescript'
+
+[[plugins]]
+repository = 'cespare/vim-toml'
+filetypes = 'toml'
+
+[[plugins]]
+repository = 'vim-scripts/indentpython.vim'
+filetypes = ['python', 'python3']
+
+[[plugins]]
+repository = 'vim-scripts/python_match.vim'
+filetypes = ['python', 'python3']
+
+[[plugins]]
+repository = 'tmhedberg/SimpylFold'
+filetypes = ['python', 'python3']
+
+[[plugins]]
+repository = 'vim-perl/vim-perl'
+filetypes = 'perl'
+
+
+
+# Specific --------------------------------------------------------------------
+[[plugins]]
+repository = 'LaTeX-Box-Team/LaTeX-Box'
+external_commands = 'latexmk'
+commands = [
+    'Latexmk',
+    'LatexmkClean',
+    'LatexmkStatus',
+    'LatexmkStop',
+    'LatexmkErrors',
+    'LatexView',
+    'LatexTOC',
+    'LatexTOCToggle',
+    'LatexLabels',
+]
+filetypes = ['tex', 'plaintex']
+
+[[plugins]]
+repository = 'tell-k/vim-autopep8'
+build_commands = 'pip'
+build = 'pip install autopep8'
+filetypes = ['python', 'python3']
+
+[[plugins]]
+repository = 'davidhalter/jedi-vim'
+build_commands = 'git'
+build = 'git submodule update --init'
+on_source = 'vim-pyenv'
+filetypes = ['python', 'python3']
+
+[[plugins]]
+repository = 'lambdalisue/vim-pyenv'
+external_commands = 'pyenv'
+commands = ['PyenvActivate', 'PyenvDeactivate']
+filetypes = ['python', 'python3']
+
+[[plugins]]
+repository = 'hotchpotch/perldoc-vim'
+filetypes = 'perl'
+
+[[plugins]]
+repository = 'Quramy/tsuquyomi'
+vim_version = '7.4'
+depends = 'Shougo/vimproc.vim'
+build_commands = 'npm'
+build = 'npm install -g typescript'
+filetypes = 'typescript'
+
+[[plugins]]
+repository = 'vim-pandoc/vim-pandoc'
+filetypes = ['text', 'markdown', 'rst', 'pandoc']
+
+[[plugins]]
+repository = 'kannokanno/previm'
+depends = 'tyru/open-browser.vim'
+commands = 'PrevimOpen'
+
+
+# Misc ------------------------------------------------------------------------
+[[plugins]]
+repository = 'cocopon/colorswatch.vim'
+commands = 'ColorSwatchGenerate'
+
+
+# Vimscript development -------------------------------------------------------
+[[plugins]]
+repository = 'vim-jp/vital.vim'
+
+[[plugins]]
+repository = 'osyo-manga/vital-over'
+
+[[plugins]]
+repository = 'osyo-manga/vital-unlocker'
+
+[[plugins]]
+repository = 'lambdalisue/vital-ArgumentParser'
+
+[[plugins]]
+repository = 'lambdalisue/vital-VCS-Git'
+
+[[plugins]]
+repository = 'thinca/vim-themis'
+filetypes = ['vim', 'vimspec']
+
+[[plugins]]
+repository = 'thinca/vim-prettyprint'
+commands = ['PP', 'PrettyPrint']
+functions = ['PP', 'PrettyPrint']
+
+[[plugins]]
+repository = 'syngan/vim-vimlint'
+depends = 'ynkdir/vim-vimparser'
+filetypes = 'vim'
+
+[[plugins]]
+repository = 'LeafCage/laptime.vim'
