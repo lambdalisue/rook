@@ -6,32 +6,41 @@ fetch = 1
 repository = 'Shougo/vimproc.vim'
 build_commands = 'make'
 build = 'make'
+lazy = 0
 
 [[plugins]]
 repository = 'vim-jp/vimdoc-ja'
+lazy = 0
 
 # Fundemental -----------------------------------------------------------------
 [[plugins]]
 repository = 'sudo.vim'
+lazy = 0
 
 [[plugins]]
 repository = 'cohama/vim-hier'
+lazy = 0
 
 [[plugins]]
 repository = 'thinca/vim-template'
+lazy = 0
 
 [[plugins]]
 repository = 'lambdalisue/vim-unified-diff'
 external_commands = 'git'
+lazy = 0
 
 [[plugins]]
 repository = 'lambdalisue/vim-improve-diff'
+lazy = 0
 
 [[plugins]]
 repository = 'powerman/vim-plugin-AnsiEsc'
+lazy = 0
 
 [[plugins]]
 repository = 'osyo-manga/vim-over'
+lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-repeat'
@@ -55,6 +64,7 @@ mappings = '<Plug>(fullscreen-'
 
 [[plugins]]
 repository = 'osyo-manga/vim-over'
+lazy = 0
 
 [[plugins]]
 repository = 'rhysd/clever-f.vim'
@@ -64,10 +74,12 @@ mappings = '<Plug>(clever-f-'
 repository = 'haya14busa/vim-asterisk'
 mappings = '<Plug>(asterisk-'
 on_source = 'incsearch.vim'
+focus = 1
 
 [[plugins]]
 repository = 'haya14busa/incsearch.vim'
 mappings = '<Plug>(incsearch-'
+focus = 1
 
 [[plugins]]
 repository = 'LeafCage/yankround.vim'
@@ -189,81 +201,97 @@ insert = 1
 # Statusline ------------------------------------------------------------------
 [[plugins]]
 repository = 'itchyny/lightline.vim'
-
-[[plugins]]
-repository = 'cocopon/lightline-hybrid.vim'
-on_source = 'itchyny/lightline.vim'
+depends = 'cocopon/lightline-hybrid.vim'
+lazy = 0
 
 [[plugins]]
 repository = 'osyo-manga/vim-watchdogs'
+lazy = 0
 
 [[plugins]]
 repository = 'dannyob/quickfixstatus'
+lazy = 0
 
 [[plugins]]
 repository = 'KazuakiM/vim-qfstatusline'
 depends = 'osyo-manga/shabadou.vim'
+lazy = 0
 
 
 # Textobj ---------------------------------------------------------------------
 [[plugins]]
 repository = 'kana/vim-textobj-user'
+lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-textobj-entire'
 depends = 'kana/vim-textobj-user'
+lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-textobj-line'
 depends = 'kana/vim-textobj-user'
+lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-textobj-syntax'
 depends = 'kana/vim-textobj-user'
+lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-textobj-indent'
 depends = 'kana/vim-textobj-user'
+lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-textobj-datetime'
 depends = 'kana/vim-textobj-user'
+lazy = 0
 
 [[plugins]]
 repository = 'thinca/vim-textobj-comment'
 depends = 'kana/vim-textobj-user'
+lazy = 0
 
 [[plugins]]
 repository = 'saihoooooooo/vim-textobj-space'
 depends = 'kana/vim-textobj-user'
+lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-textobj-fold'
 depends = 'kana/vim-textobj-user'
+lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-textobj-underscore'
 depends = 'kana/vim-textobj-user'
+lazy = 0
 
 [[plugins]]
 repository = 'RyanMcG/vim-textobj-dash'
 depends = 'kana/vim-textobj-user'
+lazy = 0
 
 [[plugins]]
 repository = 'mattn/vim-textobj-url'
 depends = 'kana/vim-textobj-user'
+lazy = 0
 
 [[plugins]]
 repository = 'sgur/vim-textobj-parameter'
 depends = 'kana/vim-textobj-user'
+lazy = 0
 
 [[plugins]]
 repository = 'osyo-manga/vim-textobj-multiblock'
 depends = 'kana/vim-textobj-user'
+lazy = 0
 
 [[plugins]]
 repository = 'rhysd/vim-textobj-word-column'
 depends = 'kana/vim-textobj-user'
+lazy = 0
 
 [[plugins]]
 repository = 'bps/vim-textobj-python'
@@ -275,6 +303,7 @@ filetype = ['python', 'python3']
 # Operator --------------------------------------------------------------------
 [[plugins]]
 repository = 'kana/vim-operator-user'
+lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-operator-replace'
@@ -305,6 +334,7 @@ mappings = '<Plug>(operator-breakline'
 # Interface -------------------------------------------------------------------
 [[plugins]]
 repository = 'Shougo/unite.vim'
+focus = 1
     [[plugins.commands]]
     name = 'Unite'
     complete = 'customlist,unite#complete_source'
@@ -319,6 +349,7 @@ repository = 'Shougo/vimshell.vim'
 repository = 'Shougo/vimfiler.vim'
 depends = 'Shougo/unite.vim'
 explorer = '\h\w*:'
+focus = 1
     [[plugins.commands]]
     name = ['VimFiler', 'VimFilerExplorer']
     complete = 'customlist,vimfiler#complete'
@@ -446,6 +477,7 @@ repository = 'lambdalisue/vim-gita'
 external_commands = 'git'
 mappings = '<Plug>(gita-'
 functions = 'gita#'
+focus = 1
     [[plugins.commands]]
     name = 'Gita'
     complete = 'customlist,gita#complete'
@@ -462,10 +494,12 @@ repository = 'cohama/agit.vim'
 external_commands = 'git'
 commands = ['Agit', 'AgitFile']
 on_source = 'unite.vim'
+focus = 1
 
 [[plugins]]
 repository = 'kmnk/vim-unite-giti'
 depends = 'Shougo/unite.vim'
+focus = 1
 unite_sources = [
     'giti', 'giti/branch', 'giti/config', 'giti/log',
     'giti/remote', 'giti/status',
@@ -582,6 +616,7 @@ repository = 'lambdalisue/vim-pyenv'
 external_commands = 'pyenv'
 commands = ['PyenvActivate', 'PyenvDeactivate']
 filetypes = ['python', 'python3']
+focus = 1
 
 [[plugins]]
 repository = 'hotchpotch/perldoc-vim'
@@ -614,6 +649,7 @@ commands = 'ColorSwatchGenerate'
 # Vimscript development -------------------------------------------------------
 [[plugins]]
 repository = 'vim-jp/vital.vim'
+lazy = 0
 
 [[plugins]]
 repository = 'osyo-manga/vital-over'
@@ -623,9 +659,11 @@ repository = 'osyo-manga/vital-unlocker'
 
 [[plugins]]
 repository = 'lambdalisue/vital-ArgumentParser'
+lazy = 0
 
 [[plugins]]
 repository = 'lambdalisue/vital-VCS-Git'
+lazy = 0
 
 [[plugins]]
 repository = 'thinca/vim-themis'
@@ -643,3 +681,4 @@ filetypes = 'vim'
 
 [[plugins]]
 repository = 'LeafCage/laptime.vim'
+functions = 'laptime#'

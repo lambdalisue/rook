@@ -736,7 +736,7 @@ if neobundle#tap('vimfiler.vim') " {{{
   call neobundle#untap()
 endif " }}}
 
-if neobundle#tap('undotree.vim') " {{{
+if neobundle#tap('undotree') " {{{
   nnoremap <Plug>(my-undotree) <Nop>
   nmap <Leader>u <Plug>(my-undotree)
   nnoremap <silent> <Plug>(my-undotree) :<C-u>UndotreeToggle<CR>
