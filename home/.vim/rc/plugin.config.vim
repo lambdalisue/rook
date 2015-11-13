@@ -528,8 +528,7 @@ if neobundle#tap('unite.vim') " {{{
   nnoremap <silent> <Plug>(my-unite)w
         \ :<C-u>Unite buffer window tab<CR>
   nnoremap <silent> <Plug>(my-unite)k
-        \ :<C-u>Unite bookmark
-        \ -buffer-name=vimfiler_opened<CR>
+        \ :<C-u>Unite bookmark<CR>
   nnoremap <silent> <Plug>(my-unite)l :<C-u>Unite line
         \ -buffer-name=search<CR>
   nnoremap <silent> <Plug>(my-unite)h :<C-u>Unite help
@@ -546,9 +545,7 @@ if neobundle#tap('unite.vim') " {{{
 
   " unite-menu
   nnoremap <silent> <Plug>(my-unite)s
-        \ :<C-u>Unite menu:shortcut
-        \ -no-quit
-        \ -no-start-insert<CR>
+        \ :<C-u>Unite menu:shortcut<CR>
 
   " unite-file
   nnoremap <Plug>(my-unite-file) <Nop>
@@ -575,17 +572,13 @@ if neobundle#tap('unite.vim') " {{{
   nnoremap <Plug>(my-unite-directory) <Nop>
   nmap <Plug>(my-unite)d <Plug>(my-unite-directory)
   nnoremap <silent> <Plug>(my-unite-directory)d
-        \ :<C-u>Unite directory_rec/async
-        \ -default-action=lcd<CR>
+        \ :<C-u>Unite directory_rec/async<CR>
   nnoremap <silent> <Plug>(my-unite-directory)i
-        \ :<C-u>Unite directory
-        \ -default-action=lcd<CR>
+        \ :<C-u>Unite directory<CR>
   nnoremap <silent> <Plug>(my-unite-directory)m
-        \ :<C-u>Unite directory_mru
-        \ -default-action=lcd<CR>
+        \ :<C-u>Unite directory_mru<CR>
   nnoremap <silent> <Plug>(my-unite-directory)r
-        \ :<C-u>Unite directory_rec/async
-        \ -default-action=lcd<CR>
+        \ :<C-u>Unite directory_rec/async<CR>
 
   " unite-qf
   if neobundle#is_installed('unite-quickfix')

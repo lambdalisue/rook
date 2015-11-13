@@ -50,16 +50,23 @@ else
         \ 'marked_icon': '*',
         \}
 endif
+call unite#custom#profile('source/bookmark', 'context', {
+      \ 'no_start_insert': 1,
+      \})
+call unite#custom#profile('source/output', 'context', {
+      \ 'no_start_insert': 1,
+      \})
+call unite#custom#profile('source/giti', 'context', {
+      \ 'no_start_insert': 1,
+      \})
+call unite#custom#profile('source/menu', 'context', {
+      \ 'no_start_insert': 1,
+      \})
 call unite#custom#profile('default', 'context', extend(config, {
-      \ 'start_insert': 0,
-      \ 'no_empty': 1,
-      \}))
-call unite#custom#profile('action', 'context', {
       \ 'start_insert': 1,
       \ 'no_empty': 1,
-      \})
-call unite#custom#default_action('directory', 'lcd')
-call unite#custom#alias('directory', 'narrow', 'lcd')
+      \}))
+call unite#custom#default_action('directory', 'cd')
 call unite#custom#alias('file', 'edit', 'open')
 
 if neobundle#is_installed('agit.vim')
