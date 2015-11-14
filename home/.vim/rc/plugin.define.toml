@@ -507,6 +507,18 @@ unite_sources = [
     'giti/pull_request/head',
 ]
 
+[[plugins]]
+repository = 'tpope/vim-fugitive'
+external_commands = 'git'
+augroup = 'fugitive'
+commands = [
+    'Git', 'Gcd', 'Glcd', 'Gstatus', 'Gcommit', 'Gmerge',
+    'Gpull', 'Gpush', 'Gfetch', 'Ggrep', 'Glgrep', 'Glog',
+    'Gllog', 'Gedit', 'Gsplit', 'Gvsplit', 'Gtabedit', 'Gpedit',
+    'Gread', 'Gwrite', 'Gwq', 'Gdiff', 'Gsdiff', 'Gvdiff',
+    'Gmove', 'Gremove', 'Gblame', 'Gbrowse',
+]
+
 
 # Syntax ----------------------------------------------------------------------
 [[plugins]]
