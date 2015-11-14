@@ -106,9 +106,6 @@ function! s:configure_unite() abort
           \ unite#smart_map('r', unite#do_action('rename'))
   endif
 
-  " 'jj' to leave insert mode
-  imap <buffer><nowait> jj <Plug>(unite_insert_leave)
-
   " 'J' to select candidate instead of <Space> / <S-Space>
   nunmap <buffer> <Space>
   vunmap <buffer> <Space>
