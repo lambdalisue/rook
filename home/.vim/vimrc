@@ -403,22 +403,40 @@ if has('vim_starting')
     if has('gui_running')
       execute printf('source %s', $MYGVIMRC)
     endif
-    redraw | echo 'vimrc has reloaded.'
+    redraw
+    echo '.vimrc/.gvimrc has reloaded.'
   endfunction
 endif
-nnoremap <silent> <Leader><Leader>r :<C-u>call <SID>reload_vimrc()<CR>
+nmap <silent> <Plug>(my-reload-vimrc) :<C-u>call <SID>reload_vimrc()<CR>
+nmap <Leader><Leader>r <Plug>(my-reload-vimrc)
 " }}}
 
 " source/reload current vimscript file " {{{
 function! s:source_current_vimscript()
+  let abspath = resolve(expand('%:p'))
   if &filetype !=# 'vim'
+    redraw
+    echohl WarningMsg
+    echo printf(
+          \ 'The filetype of the current buffer is "%s" but it must be "vim" for source.',
+          \ &filetype,
+          \)
+    echohl None
+    return
+  elseif abspath ==# $MYVIMRC || abspath ==# $MYGVIMRC
+    redraw
+    echohl WarningMsg
+    echo 'The .vimrc/.gvimrc cannot be reloaded by this function. Use <Plug>(my-reload-vimrc) instead.'
+    echohl None
     return
   endif
-  if rook#source(expand('%:p'))
-    redraw | echo expand('%:t') . 'has sourced.'
+  if rook#source(abspath)
+    redraw
+    echo expand('%:t') . 'has sourced.'
   endif
 endfunction
-nnoremap <silent> <Leader><Leader>s :<C-u>call <SID>source_current_vimsscript()
+nmap <silent> <Plug>(my-source) :<C-u>call <SID>source_current_vimscript()<CR>
+nmap <LocalLeader><LocalLeader>s <Plug>(my-source)
 " }}}
 
 " automatically create missing directories {{{
@@ -471,6 +489,26 @@ highlight MyZenkakuSpace
       \ gui=reverse guifg=DarkMagenta
 " }}}
 
+" Open junk file."{{{
+let s:junk_dir = rook#normpath('.junk')
+if !isdirectory(s:junk_dir)
+  call mkdir(s:junk_dir, 'p')
+endif
+function! s:open_junk_file()
+  let filename = strftime('%Y-%m-%d-%H-%M-%S.')
+  let filename = input(
+        \ 'Name of the junk file: ',
+        \ filename,
+        \)
+  let path = s:junk_dir . '/' . filename
+  redraw!
+  if !empty(path)
+    execute printf('edit %s', fnameescape(path))
+  else
+    echo 'The operation has canceled by user.'
+  endif
+endfunction
+command! -nargs=0 JunkFile call s:open_junk_file()
 " }}}
 
 let g:hybrid_use_Xresources = 1
