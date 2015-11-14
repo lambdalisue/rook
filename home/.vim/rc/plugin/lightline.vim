@@ -49,6 +49,7 @@ let g:lightline = {
       \   'filetype': 'g:lightline.my.filetype',
       \   'gita_debug': 'g:lightline.my.gita_debug',
       \   'gita_branch': 'g:lightline.my.gita_branch',
+      \   'git_branch': 'g:lightline.my.git_branch',
       \   'gita_traffic': 'g:lightline.my.gita_traffic',
       \   'gita_status': 'g:lightline.my.gita_status',
       \   'pyenv': 'g:lightline.my.pyenv',
@@ -155,3 +156,29 @@ else
     return ''
   endfunction
 endif
+
+if neobundle#is_installed('fugitive.vim')
+  function! g:lightline.my.fugitive() abort
+    if neobundle#is_sourced('fugitive')
+      " fugitive return 'Git[branch]'
+      let branch = get(matchlist(fugitive#statusline(), 'Git[\(\w*\)]'), 1, '')
+      return branch
+    else
+      return ''
+    endif
+  endfunction
+else
+  function! g:lightline.my.fugitive() abort
+    return ''
+  endfunction
+endif
+
+function! g:lightline.my.git_branch() abort
+  let stdout = vimproc#system('git branch --no-color')
+  if !empty(stdout)
+    let branch = get(matchlist(stdout, '\* \(\w\+\)'), 1, '')
+    return branch
+  else
+    return ''
+  endif
+endfunction
