@@ -1,5 +1,6 @@
 setl spell
 setl autoindent
+setl textwidth=0
 setl colorcolumn=80
 setl expandtab
 setl softtabstop=4

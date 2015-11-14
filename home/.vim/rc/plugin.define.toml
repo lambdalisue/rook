@@ -644,7 +644,7 @@ filetypes = 'typescript'
 
 [[plugins]]
 repository = 'vim-pandoc/vim-pandoc'
-filetypes = ['text', 'markdown', 'rst', 'pandoc']
+filetypes = ['pandoc']
 
 [[plugins]]
 repository = 'kannokanno/previm'
