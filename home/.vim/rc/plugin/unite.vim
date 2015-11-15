@@ -221,8 +221,8 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \   fnamemodify(rook#normpath('autoload/rook.vim'), ':~'),
       \ ],
       \ [
-      \   'ftdetect/ftdetect.vim',
-      \   fnamemodify(rook#normpath('ftdetect/ftdetect.vim'), ':~'),
+      \   'filetype.vim',
+      \   fnamemodify(rook#normpath('filetype.vim'), ':~'),
       \ ],
       \ [
       \   'rc/plugin.vim',
