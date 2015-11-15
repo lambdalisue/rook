@@ -1,5 +1,4 @@
 scriptencoding utf-8
-let g:loaded_netrwPlugin = 1
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_ignore_pattern = printf('\%%(%s\)', join([
       \ '^\..*',

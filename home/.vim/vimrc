@@ -13,6 +13,15 @@ augroup MyAutoCmd
   autocmd!
 augroup END
 
+" disable unnecessary plugins
+let g:loaded_gzip        = 1
+let g:loaded_tar         = 1
+let g:loaded_tarPlugin   = 1
+let g:loaded_zip         = 1
+let g:loaded_zipPlugin   = 1
+let g:loaded_netrw       = 1
+let g:loaded_netrwPlugin = 1
+
 " environmental variables {{{
 if has('nvim')
   set shell=/bin/zsh
@@ -509,6 +518,13 @@ function! s:open_junk_file()
   endif
 endfunction
 command! -nargs=0 JunkFile call s:open_junk_file()
+" }}}
+
+function! s:screen_cast() abort
+  set columns=80
+  set lines=30
+endfunction
+command! -nargs=0 ScreenCast call s:screen_cast()
 " }}}
 
 let g:hybrid_use_Xresources = 1
