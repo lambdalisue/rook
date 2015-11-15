@@ -83,7 +83,7 @@ function! g:lightline.my.nomodifiable() abort
   return empty(&buftype) && !&modifiable ? g:lightline.my.symbol_nomodifiable : ''
 endfunction
 function! g:lightline.my.filename() abort
-  if empty(&buftype)
+  if empty(&buftype) || &filetype !~# '\v%(unite|vimfiler|vimshell)'
     let fname = winwidth(0) > 79 ? expand('%') : pathshorten(expand('%'))
     let readonly = g:lightline.my.readonly()
     let modified = g:lightline.my.modified()
@@ -94,10 +94,7 @@ function! g:lightline.my.filename() abort
           \ (empty(nomodifiable) ? '' : ' ' . nomodifiable) .
           \ (empty(modified) ? '' : ' ' . modified)
   else
-    let ft = &filetype
-    if ft =~# '\v%(unite|vimfiler|vimshell)'
-      return {ft}#get_status_string()
-    endif
+    return {&filetype}#get_status_string()
   endif
   return ''
 endfunction
@@ -111,7 +108,7 @@ function! g:lightline.my.fileencoding() abort "{{{
   return winwidth(0) > 70 ? (strlen(&fileencoding) ? &fileencoding : &encoding) : ''
 endfunction " }}}
 
-if neobundle#is_installed('vim-gita')
+if neobundle#is_installed('vim-gita') && executable('git')
   function! g:lightline.my.gita_debug() abort
     return neobundle#is_sourced('vim-gita')
           \ ? gita#statusline#debug() : ''
@@ -143,7 +140,7 @@ else
   endfunction
 endif
 
-if neobundle#is_installed('vim-pyenv')
+if neobundle#is_installed('vim-pyenv') && executable('pyenv')
   function! g:lightline.my.pyenv() abort
     if neobundle#is_sourced('vim-pyenv')
       return pyenv#info#preset('long')
@@ -157,7 +154,7 @@ else
   endfunction
 endif
 
-if neobundle#is_installed('fugitive.vim')
+if neobundle#is_installed('fugitive.vim') && executable('git')
   function! g:lightline.my.fugitive() abort
     if neobundle#is_sourced('fugitive')
       " fugitive return 'Git[branch]'
@@ -173,12 +170,22 @@ else
   endfunction
 endif
 
-function! g:lightline.my.git_branch() abort
-  let stdout = vimproc#system('git branch --no-color')
-  if !empty(stdout)
-    let branch = get(matchlist(stdout, '\* \(\w\+\)'), 1, '')
-    return branch
-  else
+if executable('git')
+  function! g:lightline.my.git_branch() abort
+    if neobundle#is_sourced('vimproc.vim')
+      let stdout = vimproc#system('git branch --no-color')
+    else
+      let stdout = system('git branch --no-color')
+    endif
+    if !empty(stdout)
+      let branch = get(matchlist(stdout, '\* \(\w\+\)'), 1, '')
+      return branch
+    else
+      return ''
+    endif
+  endfunction
+else
+  function! g:lightline.my.git_branch() abort
     return ''
-  endif
-endfunction
+  endfunction
+endif
