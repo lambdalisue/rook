@@ -19,4 +19,5 @@ if exists('&colorcolumn')
 endif
 
 " css use hyphen(-) often in id/class name
+setl iskeyword&
 setl iskeyword+=-

@@ -27,6 +27,6 @@ function! s:Jq(...)
   endif
   let fname = get(a:000, 0, '.')
   silent vnew
-  silent execute printf('%%!jq %s', shellescape(fnameescape(fname)))
+  execute printf('%%!jq %s', shellescape(fnameescape(fname)))
 endfunction
 command! -buffer -nargs=? Jq call s:Jq(<f-args>)

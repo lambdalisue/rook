@@ -12,11 +12,6 @@ noremap <buffer> <C-n> j<CR>zz<C-w>p
 noremap <buffer> <C-p> k<CR>zz<C-w>p
 
 " remove
-nnoremap <silent> <buffer> dd :<C-u>call <SID>del_entry()<CR>
-nnoremap <silent> <buffer> x  :<C-u>call <SID>del_entry()<CR>
-vnoremap <silent> <buffer> d  :<C-u>'<,'>call <SID>del_entry()<CR>
-vnoremap <silent> <buffer> x  :<C-u>'<,'>call <SID>del_entry()<CR>
-
 " TODO: it does not work with location list
 "       `getloclist` might required to add.
 function! s:del_entry() range
@@ -28,10 +23,12 @@ function! s:del_entry() range
   call setqflist(qf, 'r')
   execute a:firstline
 endfunction
+nnoremap <silent> <buffer> dd :<C-u>call <SID>del_entry()<CR>
+nnoremap <silent> <buffer> x  :<C-u>call <SID>del_entry()<CR>
+vnoremap <silent> <buffer> d  :<C-u>'<,'>call <SID>del_entry()<CR>
+vnoremap <silent> <buffer> x  :<C-u>'<,'>call <SID>del_entry()<CR>
 
 " undo
-nnoremap <silent> <buffer> u :<C-u>call <SID>undo_entry()<CR>
-
 " TODO: it does not work with location list
 "       `getloclist` might required to add.
 function! s:undo_entry()
@@ -40,3 +37,4 @@ function! s:undo_entry()
     call setqflist(remove(history, -1), 'r')
   endif
 endfunction
+nnoremap <silent> <buffer> u :<C-u>call <SID>undo_entry()<CR>

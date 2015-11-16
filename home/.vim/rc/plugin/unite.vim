@@ -98,7 +98,7 @@ function! s:configure_unite() abort
   let unite = unite#get_current_unite()
 
   " map 'r' to 'replace' or 'rename' action
-  if unite.profile_name ==# 'search'
+  if get(unite, 'profile_name', '') ==# 'search'
     nnoremap <silent><buffer><expr><nowait> r
           \ unite#smart_map('r', unite#do_action('replace'))
   else

@@ -18,4 +18,5 @@ if exists('&colorcolumn')
   setl colorcolumn=
 endif
 
-setl iskeyword& iskeyword+=-
+setl iskeyword&
+setl iskeyword+=-

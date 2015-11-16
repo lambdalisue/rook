@@ -5,9 +5,9 @@ let g:vimfiler_ignore_pattern = printf('\%%(%s\)', join([
       \ '\.pyc$',
       \ '^__pycache__$',
       \ '\.egg-info$',
-      \], "\\|"))
+      \], '\|'))
 if has('multi_byte') && $LANG !=# 'C'
-  let g:vimfiler_tree_leaf_icon = "⋮"
+  let g:vimfiler_tree_leaf_icon =  '⋮'
   let g:vimfiler_tree_opened_icon = '▾'
   let g:vimfiler_tree_closed_icon = '▹'
   let g:vimfiler_file_icon = ' '
