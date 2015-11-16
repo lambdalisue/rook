@@ -23,9 +23,9 @@ call vimfiler#custom#profile('default', 'context', {
 
 function! s:configure_vimfiler() abort
   " use 'J' to select candidates instead of <Space> / <S-Space>
-  nunmap <buffer> <Space>
-  nunmap <buffer> <S-Space>
-  vunmap <buffer> <Space>
+  silent! nunmap <buffer> <Space>
+  silent! nunmap <buffer> <S-Space>
+  silent! vunmap <buffer> <Space>
   nmap <buffer> J <Plug>(vimfiler_toggle_mark_current_line)
   vmap <buffer> J <Plug>(vimfiler_toggle_mark_selected_lines)
   " ^^ to go parent directory

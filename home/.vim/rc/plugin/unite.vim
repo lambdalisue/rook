@@ -107,9 +107,9 @@ function! s:configure_unite() abort
   endif
 
   " 'J' to select candidate instead of <Space> / <S-Space>
-  nunmap <buffer> <Space>
-  vunmap <buffer> <Space>
-  nunmap <buffer> <S-Space>
+  silent! nunmap <buffer> <Space>
+  silent! vunmap <buffer> <Space>
+  silent! nunmap <buffer> <S-Space>
   nmap <buffer><nowait> J <Plug>(unite_toggle_mark_current_candidate)
   vmap <buffer><nowait> J <Plug>(unite_toggle_mark_selected_candidate)
 
