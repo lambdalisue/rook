@@ -83,7 +83,12 @@ function! g:lightline.my.nomodifiable() abort
   return empty(&buftype) && !&modifiable ? g:lightline.my.symbol_nomodifiable : ''
 endfunction
 function! g:lightline.my.filename() abort
-  if empty(&buftype) || &filetype !~# '\v%(unite|vimfiler|vimshell)'
+  if &filetype =~# '\v%(unite|vimfiler|vimshell)'
+    return {&filetype}#get_status_string()
+  elseif &filetype =~# '\v%(gita-blame-navi)'
+    let fname = winwidth(0) > 79 ? expand('%') : get(split(expand('%'), ':'), 2, 'NAVI')
+    return fname
+  else
     let fname = winwidth(0) > 79 ? expand('%') : pathshorten(expand('%'))
     let readonly = g:lightline.my.readonly()
     let modified = g:lightline.my.modified()
@@ -93,8 +98,6 @@ function! g:lightline.my.filename() abort
           \ (empty(fname) ? '[No name]' : fname) .
           \ (empty(nomodifiable) ? '' : ' ' . nomodifiable) .
           \ (empty(modified) ? '' : ' ' . modified)
-  else
-    return {&filetype}#get_status_string()
   endif
   return ''
 endfunction

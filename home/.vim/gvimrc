@@ -61,7 +61,9 @@ set visualbell t_vb=
 if has('gui_macvim')
   set antialias
   set transparency=2
-  set guifont=RictyForPowerline:h10
+  if has('vim_starting')
+    set guifont=RictyForPowerline:h10
+  endif
 else
   set antialias
   set guifont=RictyForPowerline\ 10

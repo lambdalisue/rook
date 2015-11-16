@@ -6,6 +6,7 @@ set editor='zsh -lc "gvim -f \$*" gvim '
 
 ignorekeys clear
 ignorekeys add localhost:9999
+ignorekeys add localhost:8000
 ignorekeys add lambdalisue.github.io/rehighlight
 ignorekeys add nup-lpmns
 ignorekeys add karyo-lpmns
