@@ -180,28 +180,6 @@ if !isdirectory(&viewdir)
   call mkdir(&viewdir, 'p', 0700)
 endif
 
-" save and restore the cursor position and folding level
-function! s:is_view_available() " {{{
-  if !&buflisted || &buftype !=# ''
-    return 0
-  elseif !filewritable(expand('%:p'))
-    return 0
-  endif
-  return 1
-endfunction " }}}
-function! s:mkview() " {{{
-  if s:is_view_available()
-    silent! mkview
-  endif
-endfunction " }}}
-function! s:loadview() " {{{
-  if s:is_view_available()
-    silent! loadview
-  endif
-endfunction " }}}
-autocmd MyAutoCmd BufWritePost,BufWinLeave ?* call s:mkview()
-autocmd MyAutoCmd BufReadPost ?* call s:loadview()
-
 " use clipboard register
 if has('unnamedplus') || has('nvim')
   set clipboard=unnamedplus,unnamed
@@ -405,6 +383,28 @@ endfunction
 " save the file as root with 'sudo"
 cabbr w!! w !sudo tee > /dev/null %
 
+" save and restore the cursor position and folding level
+function! s:is_view_available() " {{{
+  if !&buflisted || &buftype !=# ''
+    return 0
+  elseif !filewritable(expand('%:p'))
+    return 0
+  endif
+  return 1
+endfunction " }}}
+function! s:mkview() " {{{
+  if s:is_view_available()
+    silent! mkview
+  endif
+endfunction " }}}
+function! s:loadview() " {{{
+  if s:is_view_available()
+    silent! loadview
+  endif
+endfunction " }}}
+autocmd MyAutoCmd BufWinLeave ?* call s:mkview()
+autocmd MyAutoCmd BufReadPost ?* call s:loadview()
+
 " reload vimrc with <Leader><Leader>r {{{
 if has('vim_starting')
   function s:reload_vimrc()
@@ -460,7 +460,7 @@ endfunction
 " }}}
 
 " automatically change working directory on vim enter {{{
-"autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
+autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
 function! s:workon(dir, bang)
   let dir = (a:dir ==# '' ? expand('%') : a:dir)
   " convert filename to directory if required
@@ -533,4 +533,4 @@ colorscheme hybrid
 call rook#source(rook#normpath('rc/plugin.vim'))
 call rook#source(expand('~/.vimrc.local'))
 
-" vim:set et ts=2 sts=2 sw=2 tw=0 fdm=marker ft=vim:
+" vim:set et ts=2 sts=2 sw=2 tw=0 fdm=marker:

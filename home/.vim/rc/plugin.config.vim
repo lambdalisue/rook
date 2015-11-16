@@ -1051,31 +1051,3 @@ if neobundle#tap('tsuquyomi') && executable('tsc') " {{{
 endif " }}}
 
 " }}}
-
-" Vim plugin development " {{{
-
-if neobundle#tap('vim-themis') " {{{
-  function! neobundle#hooks.on_source(bundle) abort
-    function! s:themis_settings() abort
-      nnoremap <buffer> <Plug>(my-test) <Nop>
-      nmap     <buffer> <LocalLeader>t <Plug>(my-test)
-      nnoremap <buffer> <Plug>(my-test) :<C-u>call themis#run([expand('%')])<CR>
-    endfunction
-    autocmd MyAutoCmd FileType vim,vimspec call s:themis_settings()
-  endfunction
-  call neobundle#untap()
-endif " }}}
-
-if neobundle#tap('vim-vimlint') " {{{
-  function! neobundle#hooks.on_post_source(bundle) abort
-    function! s:vimlint_settings() abort
-      nnoremap <buffer> <Plug>(my-vimlint) <Nop>
-      nmap     <buffer> <LocalLeader>l <Plug>(my-vimlint)
-      nnoremap <buffer> <Plug>(my-vimlint) :<C-u>call vimlint#vimlint(expand('%'))<CR>
-    endfunction
-    autocmd MyAutoCmd FileType vim call s:vimlint_settings()
-  endfunction
-  call neobundle#untap()
-endif " }}}
-
-" }}}

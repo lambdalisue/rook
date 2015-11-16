@@ -44,5 +44,3 @@ xterm*color12:      t_bright_blue
 xterm*color13:      t_bright_magenta
 xterm*color14:      t_bright_cyan
 xterm*color15:      t_bright_white
-
-! vim: ft=xdefaults

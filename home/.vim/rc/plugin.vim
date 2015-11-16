@@ -29,6 +29,12 @@ function! s:configure_neobundle() abort
   endif
   call rook#source(rook#normpath('rc/plugin.config.vim'))
   call neobundle#end()
+
+  " required
+  filetype plugin indent on
+
+  NeoBundleCheck
+
   if !has('vim_starting')
     call neobundle#call_hook('on_source')
   endif
@@ -37,13 +43,12 @@ endfunction
 if !filereadable(s:neobundle_root . '/plugin/neobundle.vim')
   command! InstallNeoBundle call s:install_neobundle()
   redraw | echo 'Need plugins? Use :InstallNeoBundle'
+  filetype plugin indent on
 else
   if has('vim_starting')
     execute printf('set runtimepath+=%s', s:neobundle_root)
   endif
   call s:configure_neobundle()
 endif
-filetype plugin indent on
 syntax on
-
 " vim:set et ts=2 sts=2 sw=2 tw=0 fdm=marker:
