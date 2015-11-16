@@ -998,10 +998,7 @@ if neobundle#tap('jedi-vim') && executable('python') " {{{
       nmap <buffer> <LocalLeader>n <Plug>(jedi-usage)
       nmap <buffer> K <Plug>(jedi-show-documentation)
     endfunction
-    " Note:
-    "   'FileType' could not be used while vim's default ftplugin/python.vim
-    "   forecely call 'setl omnifunc=pythoncomplete#Complete' :-(
-    autocmd MyAutoCmd BufEnter *.py call s:jedi_vim_configure()
+    autocmd MyAutoCmd FileType python call s:jedi_vim_configure()
   endfunction
 
   " jedi does not provide <Plug>(jedi-X) mappings
@@ -1026,7 +1023,7 @@ if neobundle#tap('vim-pyenv') && executable('pyenv') " {{{
         let major_version = pyenv#python#get_internal_major_version()
         call jedi#force_py_version(major_version)
       endfunction
-      autocmd MyAutoCmd User vim-pyenv-activate-post call s:jedi_auto_force_py_version()
+      autocmd MyAutoCmd User vim-pyenv-activate-post   call s:jedi_auto_force_py_version()
       autocmd MyAutoCmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
     endif
   endfunction

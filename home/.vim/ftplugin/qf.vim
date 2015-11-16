@@ -1,3 +1,8 @@
+if exists('b:did_ftplugin')
+  finish
+endif
+let b:did_ftplugin = 1
+
 " Ref:http://d.hatena.ne.jp/thinca/20130708/1373210009 
 " preview with p
 noremap <buffer> p <CR>zz<C-w>p
@@ -35,4 +40,3 @@ function! s:undo_entry()
     call setqflist(remove(history, -1), 'r')
   endif
 endfunction
-"vim: foldlevel=0 sts=2 sw=2 smarttab et ai textwidth=0 fdm=marker

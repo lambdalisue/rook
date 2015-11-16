@@ -1,3 +1,8 @@
+if exists('b:did_ftplugin')
+  finish
+endif
+let b:did_ftplugin = 1
+
 setl iskeyword& iskeyword+=:
 
 " check if the package name and file name are mismached {{{ 
@@ -15,7 +20,7 @@ function! s:check_package_name()
     let name = substitute(s:get_package_name(), '::', '/', 'g') . '.pm'
     if path[-len(name):] != name
         echohl WarningMsg
-        echomsg "It seems that the package name (" 
+        echomsg "It seems that the package name ("
               \ name
               \ ") and file path ("
               \ path[-len(name):]
@@ -24,9 +29,7 @@ function! s:check_package_name()
         echohl None
     endif
 endfunction
-au! BufWritePost *.pm call s:check_package_name()
-" }}} 
-
+autocmd! MyAutoCmd BufWritePost *.pm call s:check_package_name()
 
 if executable("perltidy")
   nnoremap <buffer> [perltidy] <Nop>

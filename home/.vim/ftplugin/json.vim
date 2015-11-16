@@ -1,3 +1,8 @@
+if exists('b:did_ftplugin')
+  finish
+endif
+let b:did_ftplugin = 1
+
 setl tabstop=8
 setl softtabstop=2
 setl shiftwidth=2
@@ -24,4 +29,4 @@ function! s:Jq(...)
   silent vnew
   silent execute printf('%%!jq %s', shellescape(fnameescape(fname)))
 endfunction
-command! -nargs=? Jq call s:Jq(<f-args>)
+command! -buffer -nargs=? Jq call s:Jq(<f-args>)
