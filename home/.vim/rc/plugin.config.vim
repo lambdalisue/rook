@@ -508,8 +508,8 @@ if neobundle#tap('vim-operator-surround') " {{{
 endif " }}}
 
 if neobundle#tap('vim-operator-breakline') " {{{
-  map Gq <Plug>(operator-breakline-manual)
-  map GQ <Plug>(operator-breakline-textwidth)
+  map <Plug>(my-operator)b <Plug>(operator-breakline-manual)
+  map <Plug>(my-operator)B <Plug>(operator-breakline-textwidth)
   call neobundle#untap()
 endif " }}}
 
@@ -524,7 +524,7 @@ if neobundle#tap('unite.vim') " {{{
   vmap <Space> <Plug>(my-unite)
 
   nnoremap <silent> <Plug>(my-unite)<Space>
-        \ :<C-u>UniteResume<CR>
+        \ :<C-u>UniteResume -no-start-insert<CR>
   nnoremap <silent> <Plug>(my-unite)w
         \ :<C-u>Unite buffer window tab<CR>
   nnoremap <silent> <Plug>(my-unite)k
