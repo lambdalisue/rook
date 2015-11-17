@@ -1,6 +1,6 @@
 # Default configuration file for tmux-powerline.
 # Modeline {
-#	 vi: foldmarker={,} foldmethod=marker foldlevel=0 tabstop=4
+#	 vi: foldmarker={,} foldmethod=marker foldlevel=0 tabstop=4 ft=zsh
 # }
 
 # General {
@@ -125,7 +125,7 @@
 	# How often to update the weather in seconds.
 	export TMUX_POWERLINE_SEG_WEATHER_UPDATE_PERIOD="600"
 	# Name of GNU grep binary if in PATH, or path to it.
-	if shell_is_bsd; then
+    if [[ "$(uname)" = "Darwin" ]]; then
 	    export TMUX_POWERLINE_SEG_WEATHER_GREP="ggrep"
 	else
         export TMUX_POWERLINE_SEG_WEATHER_GREP="grep"
