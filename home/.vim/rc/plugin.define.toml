@@ -129,9 +129,9 @@ commands = 'PAGER'
 repository = 'lambdalisue/vim-manpager'
 commands = ['MANPAGER', 'Man']
 
-[[plugins]]
-repository = 'cohama/lexima.vim'
-insert = 1
+#[[plugins]]
+#repository = 'cohama/lexima.vim'
+#insert = 1
 
 [[plugins]]
 repository = 't9md/vim-choosewin'
