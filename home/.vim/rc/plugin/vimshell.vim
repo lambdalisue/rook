@@ -48,7 +48,7 @@ function! s:configure_vimshell() abort
         \ vimshell/history vimshell/external_history<CR>
   inoremap <buffer><silent><C-x><C-j> <Esc>:<C-u>Unite
         \ -buffer-name=files
-        \ -default-action=lcd
+        \ -default-action=cd
         \ -no-split
         \ directory_mru<CR>
 

@@ -40,6 +40,20 @@ function! s:configure_vimfiler() abort
 endfunction
 autocmd MyAutoCmd FileType vimfiler call s:configure_vimfiler()
 
+function! s:cd_all_vimfiler(path) abort
+  let current_nr = winnr()
+  try
+    for winnr in filter(range(1, winnr('$')),
+          \ "getwinvar(v:val, '&filetype') ==# 'vimfiler'")
+      call vimfiler#util#winmove(winnr)
+      call vimfiler#mappings#cd(a:path)
+    endfor
+  finally
+    call vimfiler#util#winmove(current_nr)
+  endtry
+endfunction
+autocmd MyAutoCmd User my-workon-post call s:cd_all_vimfiler(getcwd())
+
 " XXX: This is a work around
 " Note:
 "   Somehow, &winfixwidth of a buffer opened from VimFilerExplorer is set to

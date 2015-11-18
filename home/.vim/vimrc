@@ -189,7 +189,7 @@ if !isdirectory(&viewdir)
 endif
 
 " use clipboard register
-if has('unnamedplus') || has('nvim')
+if has('unnamedplus')
   set clipboard=unnamedplus,unnamed
 else
   set clipboard=unnamed
@@ -272,11 +272,10 @@ if has('patch-7.4.314')
   set shortmess+=c
 endif
 
-if v:version >= 703
-  set conceallevel=2
-  set concealcursor=c
-  set colorcolumn=80
-endif
+" Conceal
+set conceallevel=2
+set concealcursor=c
+set colorcolumn=80
 
 if has('multi_byte') && $LANG !=# 'C'
   set fillchars=vert:│,fold:─
@@ -452,7 +451,7 @@ endfunction
 cabbr w!! w !sudo tee > /dev/null %
 
 " save and restore the cursor position and folding level
-function! s:is_view_available() " {{{
+function! s:is_view_available() abort " {{{
   if !&buflisted || &buftype !=# ''
     return 0
   elseif !filewritable(expand('%:p'))
@@ -460,12 +459,12 @@ function! s:is_view_available() " {{{
   endif
   return 1
 endfunction " }}}
-function! s:mkview() " {{{
+function! s:mkview() abort " {{{
   if s:is_view_available()
     silent! mkview
   endif
 endfunction " }}}
-function! s:loadview() " {{{
+function! s:loadview() abort " {{{
   if s:is_view_available()
     silent! loadview
   endif
@@ -475,7 +474,7 @@ autocmd MyAutoCmd BufReadPost ?* call s:loadview()
 
 " reload vimrc with <Leader><Leader>r {{{
 if has('vim_starting')
-  function s:reload_vimrc()
+  function s:reload_vimrc() abort
     execute printf('source %s', $MYVIMRC)
     if has('gui_running')
       execute printf('source %s', $MYGVIMRC)
@@ -489,7 +488,7 @@ nmap <Leader><Leader>r <Plug>(my-reload-vimrc)
 " }}}
 
 " source/reload current vimscript file " {{{
-function! s:source_current_vimscript()
+function! s:source_current_vimscript() abort
   let abspath = resolve(expand('%:p'))
   if &filetype !=# 'vim'
     redraw
@@ -518,7 +517,7 @@ nmap <LocalLeader><LocalLeader>s <Plug>(my-source)
 
 " automatically create missing directories {{{
 autocmd MyAutoCmd BufWritePre * call s:makedirs(expand('<afile>:p:h'), v:cmdbang)
-function! s:makedirs(dir, force)
+function! s:makedirs(dir, force) abort
   if !isdirectory(a:dir)
     if a:force || input(printf('"%s" does not exist. Create? [y/N]', a:dir)) =~? '^y\%[es]$'
       call mkdir(a:dir, 'p')
@@ -528,8 +527,7 @@ endfunction
 " }}}
 
 " automatically change working directory on vim enter {{{
-autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
-function! s:workon(dir, bang)
+function! s:workon(dir, bang) abort
   let dir = (a:dir ==# '' ? expand('%') : a:dir)
   " convert filename to directory if required
   if filereadable(dir)
@@ -541,15 +539,21 @@ function! s:workon(dir, bang)
   if isdirectory(dir)
     silent execute 'cd ' . fnameescape(dir)
     if a:bang ==# ''
-        redraw | echo 'Working on: '.dir
+      redraw | echo 'Working on: '.dir
+      if v:version > 703 || (v:version == 703 && has('patch438'))
+        doautocmd <nomodeline> MyAutoCmd User my-workon-post
+      else
+        doautocmd MyAutoCmd User my-workon-post
+      endif
     endif
   endif
 endfunction
+autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
 command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
 " }}}
 
 " toggle quickfix window {{{
-function! s:toggle_qf()
+function! s:toggle_qf() abort
   let nwin = winnr('$')
   cclose
   if nwin == winnr('$')
@@ -571,7 +575,7 @@ let s:junk_dir = rook#normpath('.junk')
 if !isdirectory(s:junk_dir)
   call mkdir(s:junk_dir, 'p')
 endif
-function! s:open_junk_file()
+function! s:open_junk_file() abort
   let filename = strftime('%Y-%m-%d-%H-%M-%S.')
   let filename = input(
         \ 'Name of the junk file: ',
