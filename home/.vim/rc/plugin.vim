@@ -33,7 +33,8 @@ function! s:configure_neobundle() abort
   " required
   filetype plugin indent on
 
-  NeoBundleCheck
+  " Don't check
+  " NeoBundleCheck
 
   if !has('vim_starting')
     call neobundle#call_hook('on_source')
