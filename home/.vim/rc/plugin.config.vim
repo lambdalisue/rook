@@ -526,7 +526,7 @@ if neobundle#tap('unite.vim') " {{{
   nnoremap <silent> <Plug>(my-unite)<Space>
         \ :<C-u>UniteResume -no-start-insert<CR>
   nnoremap <silent> <Plug>(my-unite)w
-        \ :<C-u>Unite buffer window tab<CR>
+        \ :<C-u>Unite buffer<CR>
   nnoremap <silent> <Plug>(my-unite)k
         \ :<C-u>Unite bookmark<CR>
   nnoremap <silent> <Plug>(my-unite)l :<C-u>Unite line
