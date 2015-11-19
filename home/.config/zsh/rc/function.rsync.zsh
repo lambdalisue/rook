@@ -1,7 +1,7 @@
 function rsync_push() {
     local PWD=$(pwd)
     local HOST=$1; shift
-    if [[ -z $host ]]; then
+    if [[ -z $HOST ]]; then
         echo "Usage: rsync_push {host} [{rsync options}]"
         echo "  Push contents in the current working directory to {host}"
         return 1
@@ -16,7 +16,7 @@ function rsync_push() {
 function rsync_pull() {
     local PWD=$(pwd)
     local HOST=$1; shift
-    if [[ -z $host ]]; then
+    if [[ -z $HOST ]]; then
         echo "Usage: rsync_pull {host} [{rsync options}]"
         echo "  Pull contents in the current working directory to {host}"
         return 1
