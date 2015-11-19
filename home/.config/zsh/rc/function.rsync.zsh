@@ -10,7 +10,7 @@ function rsync_push() {
     #   -e 'ssh -c arcfour' improve transfer speed but there is a security
     #   issue so it should not be used except in an intra network
     echo "rsync -e 'ssh -c arcfour' -az ${PWD}/ ${HOST}:${PWD}/ $@"
-    rsync -e 'ssh -c arcfour' -az ${PWD}/ ${HOST}:${PWD}/ $@
+    rsync -e 'ssh -c arcfour' --rsync-path="mkdir -p ${PWD} && rsync" -az ${PWD}/ ${HOST}:${PWD}/ $@
 }
 
 function rsync_pull() {
