@@ -9,8 +9,8 @@ function rsync_push() {
     # Note:
     #   -e 'ssh -c arcfour' improve transfer speed but there is a security
     #   issue so it should not be used except in an intra network
-    echo "rsync -e 'ssh -c arcfor' -az ${PWD}/ ${HOST}:${PWD}/ $@"
-    rsync -e 'ssh -c arcfor' -az ${PWD}/ ${HOST}:${PWD}/ $@
+    echo "rsync -e 'ssh -c arcfour' -az ${PWD}/ ${HOST}:${PWD}/ $@"
+    rsync -e 'ssh -c arcfour' -az ${PWD}/ ${HOST}:${PWD}/ $@
 }
 
 function rsync_pull() {
@@ -24,6 +24,6 @@ function rsync_pull() {
     # Note:
     #   -e 'ssh -c arcfour' improve transfer speed but there is a security
     #   issue so it should not be used except in an intra network
-    echo "rsync -e 'ssh -c arcfor' -az ${HOST}:${PWD}/ ${PWD}/ $@"
-    rsync -e 'ssh -c arcfor' -az ${HOST}:${PWD}/ ${PWD}/ $@
+    echo "rsync -e 'ssh -c arcfour' -az ${HOST}:${PWD}/ ${PWD}/ $@"
+    rsync -e 'ssh -c arcfour' -az ${HOST}:${PWD}/ ${PWD}/ $@
 }
