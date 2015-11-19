@@ -15,6 +15,8 @@ TMUX_POWERLINE_DEFAULT_FOREGROUND_COLOR=255
 if [ -z $TMUX_POWERLINE_LEFT_STATUS_SEGMENTS ]; then
 	TMUX_POWERLINE_LEFT_STATUS_SEGMENTS=(
 		"hostname 65 235" \
+		"now_playing 235 102" \
+		"np_itunes 235 102" \
 	)
 fi
 
@@ -22,8 +24,6 @@ if [ -z $TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS ]; then
 	TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS=(
 		"lan_ip 235 60" \
 		"wan_ip 235 66" \
-		"now_playing 235 102" \
-		"np_itunes 235 102" \
 		"ifstat_sys 235 64" \
 		"battery 235 127" \
 		"weather 235 72" \
