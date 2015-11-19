@@ -612,8 +612,9 @@ filetypes = ['tex', 'plaintex']
 
 [[plugins]]
 repository = 'tell-k/vim-autopep8'
-build_commands = 'pip'
-build = 'pip install autopep8'
+external_commands = 'autopep8'
+#build_commands = 'pip'
+#build = 'pip install autopep8'
 filetypes = ['python', 'python3']
 
 [[plugins]]
