@@ -278,7 +278,7 @@ set concealcursor=c
 set colorcolumn=80
 
 if has('multi_byte') && $LANG !=# 'C'
-  set fillchars=vert:│,fold:─
+  set fillchars=vert:│,fold:-
   set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:$
 else
   set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%,eol:$
