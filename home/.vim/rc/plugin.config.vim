@@ -313,9 +313,11 @@ if neobundle#tap('neocomplete.vim') && has('lua') " {{{
     let g:neocomplete#disable_auto_complete = 1
   endfunction
 
-  inoremap <expr><C-x><C-x> neocomplete#start_manual_complete()
+  inoremap <silent><expr><C-x><C-x> neocomplete#start_manual_complete()
   inoremap <expr><C-g> neocomplete#undo_completion()
-  inoremap <expr><C-l> neocomplete#complete_common_string()
+  inoremap <expr><C-h> neocomplete#smart_close_popup() . "\<C-h>"
+  inoremap <expr><BS>  neocomplete#smart_close_popup() . "\<BS>"
+  inoremap <expr><CR>  (pumvisible() ? "\<C-y>" : "") . "\<CR>"
 
   call neobundle#untap()
 endif " }}}
@@ -332,9 +334,10 @@ if neobundle#tap('deoplete.nvim') && has('nvim') " {{{
     let g:deoplete#disable_auto_complete = 1
   endfunction
 
-  "inoremap <expr><C-x><C-x> deoplete#start_manual_complete()
-  inoremap <expr><C-g> deoplete#undo_completion()
-  inoremap <expr><C-l> deoplete#complete_common_string()
+  inoremap <silent><expr><C-x><C-x> deoplete#mappings#manual_complete()
+  inoremap <expr><C-h> deoplete#mappings#smart_close_popup() . "\<C-h>"
+  inoremap <expr><BS>  deoplete#mappings#smart_close_popup() . "\<BS>"
+  inoremap <expr><CR>  (pumvisible() ? "\<C-y>" : "") . "\<CR>"
 
   call neobundle#untap()
 endif " }}}

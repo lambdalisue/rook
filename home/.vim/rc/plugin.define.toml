@@ -163,10 +163,12 @@ on_source = ['neocomplete.vim', 'deoplete.nvim']
 
 [[plugins]]
 repository = 'ujihisa/neco-look'
+external_commands = 'look'
 on_source = ['neocomplete.vim', 'deoplete.nvim']
 
 [[plugins]]
 repository = 'eagletmt/neco-ghc'
+external_commands = 'ghc-mod'
 on_source = ['neocomplete.vim', 'deoplete.nvim']
 
 [[plugins]]
