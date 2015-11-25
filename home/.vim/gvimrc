@@ -51,12 +51,12 @@ set winaltkeys=no
 " Visible tabline always
 set showtabline=2
 
-" Use hybrid colorscheme
-colorscheme hybrid
-
 " disable ancient features
 set noerrorbells
 set visualbell t_vb=
+
+" Disable cursor blinking in any mode
+set guicursor+=a:blinkon0
 
 if has('gui_macvim')
   set antialias

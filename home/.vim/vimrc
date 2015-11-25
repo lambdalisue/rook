@@ -30,6 +30,11 @@ let g:loaded_netrwPlugin       = 1
 let g:loaded_netrwSettings     = 1
 let g:loaded_netrwFileHandlers = 1
 
+if !has('gui_running')
+  " disable matchparen in non GUI Vim
+  let g:loaded_matchparen = 1
+endif
+
 " environmental variables {{{
 if has('nvim')
   set shell=/bin/zsh

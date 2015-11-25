@@ -253,6 +253,10 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \   fnamemodify(rook#normpath('rc/plugin/vimshell.vim'), ':~'),
       \ ],
       \ [
+      \   'vintrc.yaml',
+      \   '~/.vintrc.yaml',
+      \ ],
+      \ [
       \   'vim',
       \   expand('~/.vim'),
       \ ],
@@ -279,11 +283,36 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \   '~/.tmux.conf',
       \ ],
       \ [
-      \   'tmux.osx.conf',
-      \   '~/.tmux.osx.conf',
+      \   'tmux-powerlinerc',
+      \   '~/.tmux-powerlinerc',
+      \ ],
+      \ [
+      \   'tmux-powerline.conf',
+      \   '~/.config/tmux/tmux-powerline.conf',
       \ ],
       \ [
       \   'tmux',
       \   '~/.config/tmux',
+      \ ],
+      \ ['others'],
+      \ [
+      \   'gitconfig',
+      \   '~/.gitconfig',
+      \ ],
+      \ [
+      \   'gitignore',
+      \   '~/.gitignore',
+      \ ],
+      \ [
+      \   'pymolrc',
+      \   '~/.pymolrc',
+      \ ],
+      \ [
+      \   'vimperatorrc',
+      \   '~/.vimperatorrc',
+      \ ],
+      \ [
+      \   'latexmkrc',
+      \   '~/.latexmkrc',
       \ ],
       \])
