@@ -220,7 +220,6 @@ zsh_reload_rc() {
 
 # Load local configures
 [[ -f "$HOME/.profile" ]] && source "$HOME/.profile"
-[[ -f "$HOME/.zprofile" ]] && source "$HOME/.zprofile"
 
 # compile zshenv/zshrc
 if [ ! -f ${ZDOTDIR}/.zshenv.zwc -o ${ZDOTDIR}/.zshenv -nt ${ZDOTDIR}/.zshenv.zwc ]; then
