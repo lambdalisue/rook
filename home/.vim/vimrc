@@ -164,7 +164,7 @@ nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
 " }}}
 
 " edit {{{
-set modeline      " use modeline
+set nomodeline    " do not use modeline
 set smarttab      " insert blanks according to shiftwidth
 set expandtab     " use spaces instead of TAB
 set tabstop=8     " the number of spaces that a TAB counts for
