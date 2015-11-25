@@ -35,6 +35,10 @@ function! s:configure_vimfiler() abort
         \ <Plug>(vimfiler_switch_to_parent_directory)
         \ <Plug>(vimfiler_execute_system_associated)
         \ <Plug>(vimfiler_execute)
+  " t to open tab
+  nnoremap <buffer><silent> <Plug>(vimfiler_tab_edit_file)
+        \ :<C-u>call vimfiler#mappings#do_action(b:vimfiler, 'tabopen')<CR>
+  nmap <buffer> t <Plug>(vimfiler_tab_edit_file)
   " <Space>k to open bookmark
   nmap <buffer><silent> <Space>k :<C-u>Unite bookmark<CR>
 endfunction
@@ -60,7 +64,7 @@ autocmd MyAutoCmd User my-workon-post call s:cd_all_vimfiler(getcwd())
 "   1 and thus <C-w>= or those kind of command doesn't work.
 "   This work around stands for fixing that.
 function! s:force_nofixwidth() abort
-  if empty(&l:buftype)
+  if empty(&buftype) || &buftype ==# '\v^%(nowrite|acwrite)$'
     setl nowinfixwidth
   endif
 endfunction
