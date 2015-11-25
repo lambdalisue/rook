@@ -1,0 +1,13 @@
+set nocompatible
+
+if has('vim_starting')
+  execute printf('set runtimepath+=%s', expand('~/.vim/bundle/neobundle.vim'))
+endif
+call neobundle#begin(expand('~/.vim/bundle'))
+
+NeoBundle 'tyru/capture.vim'
+
+call neobundle#end()
+
+syntax on
+filetype plugin indent on
