@@ -137,6 +137,14 @@ commands = ['MANPAGER', 'Man']
 repository = 't9md/vim-choosewin'
 mappings = '<Plug>(choosewin)'
 
+[[plugins]]
+repository = 'lambdalisue/vim-findent'
+commands = [
+    'Findent',
+    'FindentActivate',
+    'FindentDeactivate',
+]
+
 # Completion ------------------------------------------------------------------
 [[plugins]]
 repository = 'Shougo/neocomplete.vim'
