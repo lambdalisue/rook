@@ -335,8 +335,8 @@ if neobundle#tap('deoplete.nvim') && has('nvim') " {{{
   endfunction
 
   inoremap <silent><expr><C-x><C-x> deoplete#mappings#manual_complete()
-  inoremap <expr><C-h> deoplete#mappings#smart_close_popup() . "\<C-h>"
-  inoremap <expr><BS>  deoplete#mappings#smart_close_popup() . "\<BS>"
+  "inoremap <expr><C-h> deoplete#mappings#smart_close_popup() . "\<C-h>"
+  "inoremap <expr><BS>  deoplete#mappings#smart_close_popup() . "\<BS>"
   inoremap <expr><CR>  (pumvisible() ? "\<C-y>" : "") . "\<CR>"
 
   call neobundle#untap()
