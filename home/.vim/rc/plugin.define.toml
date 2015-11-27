@@ -139,11 +139,12 @@ mappings = '<Plug>(choosewin)'
 
 [[plugins]]
 repository = 'lambdalisue/vim-findent'
-commands = [
-    'Findent',
-    'FindentActivate',
-    'FindentDeactivate',
-]
+    [[plugins.commands]]
+    name = 'Findent'
+    complete = 'customlist,findent#FindentComplete'
+    [[plugins.commands]]
+    name = 'FindentRestore'
+    complete = 'customlist,findent#FindentRestoreComplete'
 
 # Completion ------------------------------------------------------------------
 [[plugins]]

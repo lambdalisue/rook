@@ -300,11 +300,13 @@ endif " }}}
 if neobundle#tap('vim-findent') " {{{
   augroup findent
     autocmd!
-    autocmd FileType vim FindentActivate!
-    autocmd FileType html FindentActivate!
-    autocmd FileType css,less,sass,scss FindentActivate!
-    autocmd FileType javascript,typescript,coffeescript FindentActivate!
-    autocmd FileType c,cpp,csharp,python,perl,ruby,php FindentActivate!
+    autocmd BufRead *.js   Findent --no-warnings
+    autocmd BufRead *.ts   Findent --no-warnings
+    autocmd BufRead *.css  Findent --no-warnings
+    autocmd BufRead *.scss Findent --no-warnings
+    autocmd BufRead *.sass Findent --no-warnings
+    autocmd BufRead *.less Findent --no-warnings
+    autocmd BufRead *.html Findent --no-warnings
   augroup END
   call neobundle#untap()
 endif " }}}
