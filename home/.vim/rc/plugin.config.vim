@@ -301,6 +301,10 @@ if neobundle#tap('vim-findent') " {{{
   augroup findent
     autocmd!
     autocmd FileType vim FindentActivate
+    autocmd FileType html FindentActivate
+    autocmd FileType css,less,sass,scss FindentActivate
+    autocmd FileType javascript,typescript,coffeescript FindentActivate
+    autocmd FileType c,cpp,csharp,python,perl,ruby,php FindentActivate
   augroup END
   call neobundle#untap()
 endif " }}}
