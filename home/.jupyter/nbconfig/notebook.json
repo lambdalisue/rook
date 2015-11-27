@@ -1,6 +1,5 @@
 {
   "load_extensions": {
-    "usability/vim_binding": true, 
     "usability/init_cell/main": true, 
     "usability/toc/main": true, 
     "usability/runtools/main": true, 
