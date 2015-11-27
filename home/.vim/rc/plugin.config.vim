@@ -297,6 +297,14 @@ if neobundle#tap('vim-choosewin') " {{{
   call neobundle#untap()
 endif " }}}
 
+if neobundle#tap('vim-findent') " {{{
+  augroup findent
+    autocmd!
+    autocmd FileType vim FindentActivate
+  augroup END
+  call neobundle#untap()
+endif " }}}
+
 " }}}
 
 " completion " {{{
