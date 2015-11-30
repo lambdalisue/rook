@@ -3,8 +3,11 @@
 #
 if ! type timeout > /dev/null 2>&1; then
     timeout() {
-        shift
-        $@
+        local seconds=$1; shift
+        $@ &
+        local PROC=$!
+        (sleep $seconds; kill $PROC) &
+        fg $PROC > /dev/null 2>&1
     }
 fi
 
@@ -36,6 +39,7 @@ __prompt_dust_eliminate_empty_elements() {
     done
 }
 __prompt_dust_configure_vcsstyles() {
+    autoload -Uz vcs_info 
     local branchfmt="%b:%r"
     local actionfmt="%a%f"
 
@@ -254,7 +258,6 @@ __prompt_dust_get_pyenv_virtualenv() {
 
 function() {
     # load required modules
-    autoload -Uz vcs_info
     autoload -Uz is-at-least
     autoload -Uz add-zsh-hook
     autoload -Uz colors && colors
