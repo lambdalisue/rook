@@ -315,4 +315,12 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \   'latexmkrc',
       \   '~/.latexmkrc',
       \ ],
+      \ [
+      \   'jupyter custom.css',
+      \   '~/.jupyter/custom/custom.css',
+      \ ],
+      \ [
+      \   'jupyter custom.js',
+      \   '~/.jupyter/custom/custom.js',
+      \ ],
       \])
