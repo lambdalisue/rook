@@ -1,8 +1,0 @@
-/*  Jupyter cell is in normal mode when code mirror */
-.edit_mode .cm-s-ipython.CodeMirror-focused {
-  background-color: #DDEDEF;
-}
-/*  Jupyter cell is in insert mode when code mirror */
-.edit_mode .cm-s-ipython.CodeMirror-focused:not(.cm-fat-cursor) {
-  background-color: #EFEFAE;
-}
