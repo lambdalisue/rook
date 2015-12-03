@@ -75,7 +75,6 @@ if [[ -d "/Applications/MacVim.app" ]]; then
     VIM="/Applications/MacVim.app/Contents/MacOS/Vim" 
     alias vim=$VIM
     alias view="$VIM -c PAGER"
-    export PAGER="$VIM -c PAGER -"
     export MANPAGER="$VIM -c MANPAGER -"
 elif ! type vim > /dev/null 2>&1; then
     alias vim=vi
@@ -114,9 +113,11 @@ if [[ -d "$GOPATH/src/github.com/motemen/ghq" ]]; then
 fi
 
 # pip
-if type pip >/dev/null 2>&1; then
-    eval "$(pip completion --zsh)"
-fi
-if type pip3 >/dev/null 2>&1; then
-    eval "$(pip3 completion --zsh)"
-fi
+# Note:
+#   it seems the command below makes zsh starting really slow
+#if type pip >/dev/null 2>&1; then
+#    eval "$(pip completion --zsh)"
+#fi
+#if type pip3 >/dev/null 2>&1; then
+#    eval "$(pip3 completion --zsh)"
+#fi
