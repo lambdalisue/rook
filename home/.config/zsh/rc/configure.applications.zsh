@@ -89,7 +89,9 @@ fi
 
 # xdg-open
 if type xdg-open > /dev/null 2>&1; then
-    alias open="xdg-open"
+    function open() {
+        xdg-open $@ > /dev/null 2>&1
+    }
 fi
 # anyenv
 if type anyenv > /dev/null 2>&1; then
