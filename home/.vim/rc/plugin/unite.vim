@@ -210,19 +210,27 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \ ['vim'],
       \ [
       \   'vimrc',
-      \   fnamemodify($MYVIMRC, ':~'),
+      \   fnamemodify(resolve($MYVIMRC), ':~'),
       \ ],
       \ [
       \   'gvimrc',
-      \   fnamemodify($MYGVIMRC, ':~'),
+      \   fnamemodify(resolve($MYGVIMRC), ':~'),
       \ ],
       \ [
-      \   'autoload/rook.vim',
-      \   fnamemodify(rook#normpath('autoload/rook.vim'), ':~'),
+      \   'vimshrc',
+      \   '~/.vim/vimshrc',
       \ ],
       \ [
       \   'filetype.vim',
       \   fnamemodify(rook#normpath('filetype.vim'), ':~'),
+      \ ],
+      \ [
+      \   'vintrc.yaml',
+      \   '~/.vintrc.yaml',
+      \ ],
+      \ [
+      \   'autoload/rook.vim',
+      \   fnamemodify(rook#normpath('autoload/rook.vim'), ':~'),
       \ ],
       \ [
       \   'rc/plugin.vim',
@@ -253,12 +261,16 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \   fnamemodify(rook#normpath('rc/plugin/vimshell.vim'), ':~'),
       \ ],
       \ [
-      \   'vintrc.yaml',
-      \   '~/.vintrc.yaml',
+      \   'vim',
+      \   '~/.vim',
       \ ],
       \ [
-      \   'vim',
-      \   expand('~/.vim'),
+      \   'bundle',
+      \   '~/.vim/bundle',
+      \ ],
+      \ [
+      \   'ftplugin',
+      \   '~/.vim/ftplugin',
       \ ],
       \ ['zsh'],
       \ [
