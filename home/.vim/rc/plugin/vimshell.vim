@@ -3,7 +3,6 @@ let s:zsh_history_path = expand('~/.config/zsh/.zsh_history')
 
 let g:vimshell_prompt = '$ '
 let g:vimshell_secondary_prompt = '| '
-let g:vimshell_vimshrc_path = $MY_VIMRUNTIME .  '/vimshrc'
 if filereadable(s:zsh_history_path)
   let g:vimshell_external_history_path = s:zsh_history_path
 endif
