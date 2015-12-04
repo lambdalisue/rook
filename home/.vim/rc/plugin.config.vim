@@ -300,13 +300,10 @@ endif " }}}
 if neobundle#tap('vim-findent') " {{{
   augroup findent
     autocmd!
-    autocmd BufRead *.js   Findent --no-warnings
-    autocmd BufRead *.ts   Findent --no-warnings
-    autocmd BufRead *.css  Findent --no-warnings
-    autocmd BufRead *.scss Findent --no-warnings
-    autocmd BufRead *.sass Findent --no-warnings
-    autocmd BufRead *.less Findent --no-warnings
-    autocmd BufRead *.html Findent --no-warnings
+    autocmd FileType vim,vimspec        Findent --no-warnings
+    autocmd FileType json,javascript    Findent --no-warnings
+    autocmd FileType css,scss,sass,less Findent --no-warnings
+    autocmd FileType xml,html           Findent --no-warnings
   augroup END
   call neobundle#untap()
 endif " }}}
