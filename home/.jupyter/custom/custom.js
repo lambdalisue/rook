@@ -1,3 +1,19 @@
+require([
+  'base/js/namespace',
+  'notebook/js/cell',
+  'codemirror/addon/edit/trailingspace'
+], function(ns, cell) {
+  var cm_config = cell.Cell.options_default.cm_config;
+  cm_config.showTrailingSpace = true;
+
+  ns.notebook.get_cells().map(function(cell) {
+    var cm = cell.code_mirror;
+    if (cm) {
+      cm.setOption('showTrailingSpace', true);
+    }
+  });
+});
+
 require(['codemirror/keymap/vim'], function() {
   // Use gj/gk instead of j/k
   CodeMirror.Vim.map("j", "gj", "normal");
