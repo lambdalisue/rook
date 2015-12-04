@@ -326,7 +326,6 @@ if neobundle#tap('neocomplete.vim') && has('lua') " {{{
 
   inoremap <silent><expr><C-x><C-x> neocomplete#start_manual_complete()
   inoremap <expr><C-g> neocomplete#undo_completion()
-  inoremap <expr><C-h> neocomplete#smart_close_popup() . "\<C-h>"
   inoremap <expr><BS>  neocomplete#smart_close_popup() . "\<BS>"
   inoremap <expr><CR>  (pumvisible() ? "\<C-y>" : "") . "\<CR>"
 
@@ -365,9 +364,9 @@ if neobundle#tap('neosnippet.vim') " {{{
   endfunction
 
   " Plugin key-mappings.
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
+  imap <C-i> <Plug>(neosnippet_expand_or_jump)
+  smap <C-i> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-i> <Plug>(neosnippet_expand_target)
 
   call neobundle#untap()
 endif " }}}
