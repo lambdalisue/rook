@@ -3,6 +3,8 @@ unsetopt promptcr
 
 # Disable Ctrl-D logout
 setopt IGNOREEOF
+# Disable Ctrl-S susspend (Ctrl-Q to back)
+stty stop undef
 
 # print character as eight bit to prevent mojibake
 setopt print_eight_bit
