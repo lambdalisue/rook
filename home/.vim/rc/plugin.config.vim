@@ -325,9 +325,7 @@ if neobundle#tap('neocomplete.vim') && has('lua') " {{{
   endfunction
 
   inoremap <silent><expr><C-x><C-x> neocomplete#start_manual_complete()
-  inoremap <expr><C-g> neocomplete#undo_completion()
-  inoremap <expr><BS>  neocomplete#smart_close_popup() . "\<BS>"
-  inoremap <expr><CR>  (pumvisible() ? "\<C-y>" : "") . "\<CR>"
+  inoremap <expr><CR> (pumvisible() ? "\<C-y>" : "") . "\<CR>"
 
   call neobundle#untap()
 endif " }}}
@@ -345,9 +343,7 @@ if neobundle#tap('deoplete.nvim') && has('nvim') " {{{
   endfunction
 
   inoremap <silent><expr><C-x><C-x> deoplete#mappings#manual_complete()
-  "inoremap <expr><C-h> deoplete#mappings#smart_close_popup() . "\<C-h>"
-  "inoremap <expr><BS>  deoplete#mappings#smart_close_popup() . "\<BS>"
-  inoremap <expr><CR>  (pumvisible() ? "\<C-y>" : "") . "\<CR>"
+  inoremap <expr><CR> (pumvisible() ? "\<C-y>" : "") . "\<CR>"
 
   call neobundle#untap()
 endif " }}}
@@ -364,9 +360,21 @@ if neobundle#tap('neosnippet.vim') " {{{
   endfunction
 
   " Plugin key-mappings.
-  imap <C-i> <Plug>(neosnippet_expand_or_jump)
-  smap <C-i> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-i> <Plug>(neosnippet_expand_target)
+  if has('lua') && neobundle#is_installed('neocomplete.vim')
+    imap <expr><C-g> pumvisible()
+          \ ? "\<Plug>(neosnippet_expand_or_jump)"
+          \ : neosnippet#expandable_or_jumpable()
+          \   ? "\<Plug>(neosnippet_expand_or_jump)"
+          \   : neocomplete#start_manual_complete('neosnippet')
+  else
+    imap <expr><C-g> pumvisible()
+          \ ? "\<Plug>(neosnippet_expand_or_jump)"
+          \ : neosnippet#expandable_or_jumpable()
+          \   ? "\<Plug>(neosnippet_expand_or_jump)"
+          \   : deoplete#custom#manual_complete('neosnippet')
+  endif
+  smap <C-g> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-g> <Plug>(neosnippet_expand_target)
 
   call neobundle#untap()
 endif " }}}

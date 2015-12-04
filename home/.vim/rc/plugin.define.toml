@@ -201,8 +201,8 @@ unite_sources = [
     'neosnippet/user',
     'neosnippet/runtime'
 ]
-mappings = '<Plug>(neosnippet_expand'
 filetype = 'snippet'
+insert = 1
 
 [[plugins]]
 repository = 'Shougo/echodoc.vim'
