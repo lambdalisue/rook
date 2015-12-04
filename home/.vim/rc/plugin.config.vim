@@ -555,7 +555,7 @@ if neobundle#tap('unite.vim') " {{{
   nnoremap <silent> <Plug>(my-unite)h :<C-u>Unite help
         \ -buffer-name=search<CR>
   nnoremap <silent> <Plug>(my-unite)mp
-        \ :<C-u>Unite output:map<BAR>map!<BAR>lmap
+        \ :<C-u>Unite output:map!<BAR>map<BAR>lmap
         \ -buffer-name=search<CR>
   vnoremap <silent> <Plug>(my-unite)l
         \ :<C-u>UniteWithCursorWord line
