@@ -10,9 +10,9 @@ function static() {
     elif type python > /dev/null 2>&1; then
         local VERSION=$(python -c "import sys; print(sys.version_info.major)")
         if [[ "$VERSION" == "3" ]]; then
-            python3 -m http.server $PORT
+            python -m http.server $PORT
         else
-            python2 -m SimpleHTTPServer $PORT
+            python -m SimpleHTTPServer $PORT
         fi
     else
         echo "'static' require python 2.x or 3.x but both is not installed."
