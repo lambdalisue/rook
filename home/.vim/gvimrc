@@ -59,11 +59,9 @@ set visualbell t_vb=
 set guicursor+=a:blinkon0
 
 if has('gui_macvim')
+  set transparency=3
   set antialias
-  set transparency=2
-  if has('vim_starting')
-    set guifont=RictyForPowerline:h10
-  endif
+  set guifont=Ricty\ for\ Powerline:h11
 else
   set antialias
   set guifont=RictyForPowerline\ 10
