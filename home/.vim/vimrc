@@ -137,6 +137,7 @@ if has('multi_byte')
   if has('vim_starting') || !has('nvim')
     set encoding=utf-8
     set termencoding=utf-8
+    set ambiwidth=double
   endif
   scriptencoding utf-8
   set fileencodings=ucs-bom,utf-8,euc-jp,iso-2022-jp,cp932,utf-16,utf-16le
@@ -283,7 +284,7 @@ set concealcursor=c
 set colorcolumn=80
 
 if has('multi_byte') && $LANG !=# 'C'
-  set fillchars=vert:│,fold:-
+  "set fillchars=vert:|,fold:-
   set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:$
 else
   set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%,eol:$
