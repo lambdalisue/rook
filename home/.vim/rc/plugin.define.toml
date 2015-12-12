@@ -146,6 +146,10 @@ repository = 'lambdalisue/vim-findent'
     name = 'FindentRestore'
     complete = 'customlist,findent#FindentRestoreComplete'
 
+[[plugins]]
+repository = 'osyo-manga/vim-trip'
+mappings = '<Plug>(trip-'
+
 # Completion ------------------------------------------------------------------
 [[plugins]]
 repository = 'Shougo/neocomplete.vim'
@@ -495,10 +499,11 @@ focus = 1
 
 [[plugins]]
 repository = 'lambdalisue/vim-gista'
-depends = ['Shougo/unite.vim', 'tyru/open-browser.vim']
-commands = 'Gista'
-mappings = '<Plug>(gista-'
-unite_sources = 'gista'
+lazy = 0
+#depends = ['Shougo/unite.vim', 'tyru/open-browser.vim']
+#commands = 'Gista'
+#mappings = '<Plug>(gista-'
+#unite_sources = 'gista'
 
 [[plugins]]
 repository = 'cohama/agit.vim'
@@ -687,6 +692,10 @@ lazy = 0
 
 [[plugins]]
 repository = 'lambdalisue/vital-VCS-Git'
+lazy = 0
+
+[[plugins]]
+repository = 'lambdalisue/vital-Web-API-GitHub'
 lazy = 0
 
 [[plugins]]

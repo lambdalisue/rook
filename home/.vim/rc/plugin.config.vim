@@ -300,11 +300,16 @@ endif " }}}
 if neobundle#tap('vim-findent') " {{{
   augroup findent
     autocmd!
-    autocmd FileType vim,vimspec        Findent --no-warnings
     autocmd FileType json,javascript    Findent --no-warnings
     autocmd FileType css,scss,sass,less Findent --no-warnings
     autocmd FileType xml,html           Findent --no-warnings
   augroup END
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('vim-trip') " {{{
+  nmap <C-a> <Plug>(trip-increment)
+  nmap <C-x> <Plug>(trip-decrement)
   call neobundle#untap()
 endif " }}}
 
