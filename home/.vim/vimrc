@@ -499,7 +499,7 @@ if has('vim_starting')
       execute printf('source %s', $MYGVIMRC)
     endif
     redraw
-    echo '.vimrc/.gvimrc has reloaded.'
+    echo printf('.vimrc/.gvimrc has reloaded (%s).', strftime('%c'))
   endfunction
 endif
 nmap <silent> <Plug>(my-reload-vimrc) :<C-u>call <SID>reload_vimrc()<CR>
@@ -527,7 +527,7 @@ function! s:source_current_vimscript() abort
   endif
   if rook#source(abspath)
     redraw
-    echo expand('%:t') . 'has sourced.'
+    echo printf('"%s" has sourced (%s).', expand('%:t'), strftime('%c'))
   endif
 endfunction
 nmap <silent> <Plug>(my-source) :<C-u>call <SID>source_current_vimscript()<CR>
