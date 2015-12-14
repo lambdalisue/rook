@@ -12,6 +12,7 @@ setl expandtab
 setl autoindent
 setl smartindent
 setl foldmethod=marker
+setl foldlevel=0
 
 setl textwidth=0
 if exists('&colorcolumn')
