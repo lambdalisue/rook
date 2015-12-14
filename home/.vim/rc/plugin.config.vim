@@ -900,6 +900,14 @@ endif " }}}
 
 " version controller system {{{
 
+if neobundle#tap('vim-gista') " {{{
+  function! neobundle#hooks.on_source(bundle) abort
+    " let g:gista#api#default_apiname = 'GitHub'
+    " let g:gista#api#default_username = 'lambdalisue'
+  endfunction
+  call neobundle#untap()
+endif " }}}
+
 if neobundle#tap('vim-gita') && executable('git') " {{{
   function! neobundle#hooks.on_source(bundle) abort
     let g:gita#features#browse#extra_translation_patterns = {
