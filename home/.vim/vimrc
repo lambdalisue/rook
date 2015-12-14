@@ -81,7 +81,9 @@ let $PYENV_ROOT =
 " fundemental config {{{
 
 " history ':' commands and search patterns as much as possible (max: 10000)
-set history=10000
+if &history != 10000
+  set history=10000
+endif
 
 " define <Leader> and <LocalLeader>
 let g:mapleader = ';'
@@ -236,7 +238,7 @@ set nocursorcolumn
 " folding {{{
 set foldenable
 set foldmethod=marker
-set foldlevel=0
+set foldlevel=99
 set foldnestmax=3         " maximum fold nesting level
 set foldcolumn=3          " show fold guide
 " }}}
@@ -284,7 +286,6 @@ set concealcursor=c
 set colorcolumn=80
 
 if has('multi_byte') && $LANG !=# 'C'
-  "set fillchars=vert:|,fold:-
   set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:$
 else
   set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%,eol:$
@@ -330,12 +331,6 @@ nnoremap <C-p> "0p
 
 " vv to select the line, like yy, dd
 nnoremap vv 0v$
-
-" simple window navigation
-nnoremap <C-w><C-j>  <C-w>j
-nnoremap <C-w><C-k>  <C-w>k
-nnoremap <C-w><C-h>  <C-w>h
-nnoremap <C-w><C-l>  <C-w>l
 
 " simple window resize navigation
 nnoremap <S-Left>  <C-w><<CR>
