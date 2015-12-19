@@ -313,15 +313,6 @@ if neobundle#tap('vim-trip') " {{{
   call neobundle#untap()
 endif " }}}
 
-if neobundle#tap('FastFold') " {{{
-  let g:tex_fold_enabled=1
-  let g:vimsyn_folding='af'
-  let g:xml_syntax_folding = 1
-  let g:php_folding = 1
-  let g:perl_fold = 1
-  call neobundle#untap()
-endif " }}}
-
 " }}}
 
 " completion " {{{

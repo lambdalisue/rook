@@ -18,16 +18,18 @@ if exists('&colorcolumn')
   setl colorcolumn=79
 endif
 
-function! s:Jq(...)
-  if !executable('jq')
-    echohl WarningMsg
-    echo 'No executable "jq" is found. Install via npm install -g jq'
-    echohl None
-    return
-  endif
-  let fname = expand(get(a:000, 0, '%'))
-  silent vnew
-  setlocal filetype=json
-  execute printf('%%!jq ''.'' "%s"', fnameescape(fname))
-endfunction
+if !exists('*s:Jq')
+  function! s:Jq(...)
+    if !executable('jq')
+      echohl WarningMsg
+      echo 'No executable "jq" is found. Install via npm install -g jq'
+      echohl None
+      return
+    endif
+    let fname = expand(get(a:000, 0, '%'))
+    silent vnew
+    setlocal filetype=json
+    execute printf('%%!jq ''.'' "%s"', fnameescape(fname))
+  endfunction
+endif
 command! -buffer -nargs=? Jq call s:Jq(<f-args>)

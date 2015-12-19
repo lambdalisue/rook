@@ -150,9 +150,6 @@ repository = 'lambdalisue/vim-findent'
 repository = 'osyo-manga/vim-trip'
 mappings = '<Plug>(trip-'
 
-[[plugins]]
-repository = 'Konfekt/FastFold'
-lazy = 0
 
 # Completion ------------------------------------------------------------------
 [[plugins]]
