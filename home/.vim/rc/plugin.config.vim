@@ -313,6 +313,15 @@ if neobundle#tap('vim-trip') " {{{
   call neobundle#untap()
 endif " }}}
 
+if neobundle#tap('FastFold') " {{{
+  let g:tex_fold_enabled=1
+  let g:vimsyn_folding='af'
+  let g:xml_syntax_folding = 1
+  let g:php_folding = 1
+  let g:perl_fold = 1
+  call neobundle#untap()
+endif " }}}
+
 " }}}
 
 " completion " {{{
@@ -902,8 +911,8 @@ endif " }}}
 
 if neobundle#tap('vim-gista') " {{{
   function! neobundle#hooks.on_source(bundle) abort
-    " let g:gista#api#default_apiname = 'GitHub'
-    " let g:gista#api#default_username = 'lambdalisue'
+    let g:gista#api#default_apiname = 'GitHub'
+    let g:gista#api#default_username = 'lambdalisue'
   endfunction
   call neobundle#untap()
 endif " }}}

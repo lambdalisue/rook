@@ -88,6 +88,8 @@ function! g:lightline.my.filename() abort
   elseif &filetype =~# '\v%(gita-blame-navi)'
     let fname = winwidth(0) > 79 ? expand('%') : get(split(expand('%'), ':'), 2, 'NAVI')
     return fname
+  elseif &filetype ==# 'gista-list'
+    return gista#command#list#get_status_string()
   else
     let fname = winwidth(0) > 79 ? expand('%') : pathshorten(expand('%'))
     let readonly = g:lightline.my.readonly()

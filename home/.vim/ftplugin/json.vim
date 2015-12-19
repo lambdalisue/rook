@@ -25,8 +25,9 @@ function! s:Jq(...)
     echohl None
     return
   endif
-  let fname = get(a:000, 0, '.')
+  let fname = expand(get(a:000, 0, '%'))
   silent vnew
-  execute printf('%%!jq %s', shellescape(fnameescape(fname)))
+  setlocal filetype=json
+  execute printf('%%!jq ''.'' "%s"', fnameescape(fname))
 endfunction
 command! -buffer -nargs=? Jq call s:Jq(<f-args>)
