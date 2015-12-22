@@ -520,10 +520,9 @@ function! s:source_current_vimscript() abort
     echohl None
     return
   endif
-  if rook#source(abspath)
-    redraw
-    echo printf('"%s" has sourced (%s).', expand('%:t'), strftime('%c'))
-  endif
+  execute printf('source %s', expand('%'))
+  redraw
+  echo printf('"%s" has sourced (%s).', expand('%:t'), strftime('%c'))
 endfunction
 nmap <silent> <Plug>(my-source) :<C-u>call <SID>source_current_vimscript()<CR>
 nmap <LocalLeader><LocalLeader>s <Plug>(my-source)

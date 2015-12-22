@@ -20,7 +20,10 @@ endfunction
 
 function! s:configure_neobundle() abort
   call neobundle#begin(s:remote_bundle_root)
-  if neobundle#load_cache()
+  if neobundle#load_cache(
+        \ $MYVIMRC,
+        \ 'rc/plugin.define.toml'
+        \)
     call neobundle#load_toml(
           \ rook#normpath('rc/plugin.define.toml'),
           \ { 'lazy': 1 }
