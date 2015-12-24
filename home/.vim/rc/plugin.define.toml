@@ -700,6 +700,10 @@ repository = 'lambdalisue/vital-Web-API-GitHub'
 lazy = 0
 
 [[plugins]]
+repository = 'lambdalisue/vital-Vim-Guard'
+lazy = 0
+
+[[plugins]]
 repository = 'thinca/vim-themis'
 filetypes = ['vim', 'vimspec']
 
