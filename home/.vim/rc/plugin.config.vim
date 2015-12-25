@@ -313,6 +313,10 @@ if neobundle#tap('vim-trip') " {{{
   call neobundle#untap()
 endif " }}}
 
+if neobundle#tap('FastFold') " {{{
+  call neobundle#untap()
+endif " }}}
+
 " }}}
 
 " completion " {{{
