@@ -317,6 +317,12 @@ if neobundle#tap('FastFold') " {{{
   call neobundle#untap()
 endif " }}}
 
+if neobundle#tap('vim-operator-flushy') " {{{
+  map y <Plug>(operator-flashy)
+  map Y <Plug>(operator-flashy)$
+  call neobundle#untap()
+endif " }}}
+
 " }}}
 
 " completion " {{{

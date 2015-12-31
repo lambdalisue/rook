@@ -154,6 +154,10 @@ mappings = '<Plug>(trip-'
 repository = 'Konfekt/FastFold'
 lazy = 0
 
+[[plugins]]
+repository = 'haya14busa/vim-operator-flashy'
+mappings = '<Plug>(operator-flushy)'
+
 # Completion ------------------------------------------------------------------
 [[plugins]]
 repository = 'Shougo/neocomplete.vim'
