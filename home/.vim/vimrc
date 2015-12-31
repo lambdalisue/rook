@@ -612,7 +612,9 @@ endfunction
 command! -nargs=0 ScreenCast call s:screen_cast()
 " }}}
 
-let g:hybrid_use_Xresources = 1
+if !has('gui_running')
+  let g:hybrid_use_Xresources = 1
+endif
 colorscheme hybrid
 
 call rook#source(rook#normpath('rc/plugin.vim'))
