@@ -86,10 +86,6 @@ repository = 'LeafCage/yankround.vim'
 mappings = '<Plug>(yankround-'
 
 [[plugins]]
-repository = 'chikatoike/concealedyank.vim'
-mappings = '<Plug>(operator-concealedyank'
-
-[[plugins]]
 repository = 'tyru/capture.vim'
 commands = 'Capture'
 
@@ -153,10 +149,6 @@ mappings = '<Plug>(trip-'
 [[plugins]]
 repository = 'Konfekt/FastFold'
 lazy = 0
-
-[[plugins]]
-repository = 'haya14busa/vim-operator-flashy'
-mappings = '<Plug>(operator-flushy)'
 
 # Completion ------------------------------------------------------------------
 [[plugins]]
@@ -353,6 +345,16 @@ repository = 'lambdalisue/vim-operator-breakline'
 depends = 'kana/vim-operator-user'
 mappings = '<Plug>(operator-breakline'
 
+
+[[plugins]]
+repository = 'chikatoike/concealedyank.vim'
+depends = 'kana/vim-operator-user'
+mappings = '<Plug>(operator-concealedyank'
+
+[[plugins]]
+repository = 'haya14busa/vim-operator-flashy'
+depends = 'kana/vim-operator-user'
+mappings = '<Plug>(operator-flashy'
 
 # Interface -------------------------------------------------------------------
 [[plugins]]

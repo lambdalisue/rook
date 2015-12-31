@@ -190,13 +190,6 @@ if neobundle#tap('yankround.vim') " {{{
   call neobundle#untap()
 endif " }}}
 
-if neobundle#tap('concealedyank.vim') " {{{
-
-  xmap Y <Plug>(operator-concealedyank)
-
-  call neobundle#untap()
-endif " }}}
-
 if neobundle#tap('vim-bookmarks') " {{{
   function! neobundle#hooks.on_source(bundle) abort
     let g:bookmark_auto_save = 1
@@ -317,11 +310,6 @@ if neobundle#tap('FastFold') " {{{
   call neobundle#untap()
 endif " }}}
 
-if neobundle#tap('vim-operator-flushy') " {{{
-  map y <Plug>(operator-flashy)
-  map Y <Plug>(operator-flashy)$
-  call neobundle#untap()
-endif " }}}
 
 " }}}
 
@@ -546,6 +534,17 @@ endif " }}}
 if neobundle#tap('vim-operator-breakline') " {{{
   map <Plug>(my-operator)b <Plug>(operator-breakline-manual)
   map <Plug>(my-operator)B <Plug>(operator-breakline-textwidth)
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('concealedyank.vim') " {{{
+  xmap Y <Plug>(operator-concealedyank)
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('vim-operator-flashy') " {{{
+  map y <Plug>(operator-flashy)
+  map Y <Plug>(operator-flashy)$
   call neobundle#untap()
 endif " }}}
 
