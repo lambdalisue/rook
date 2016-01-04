@@ -238,7 +238,7 @@ set nocursorcolumn
 " folding {{{
 set foldenable
 set foldmethod=marker
-set foldlevel=99
+set foldlevelstart=99
 set foldnestmax=3         " maximum fold nesting level
 set foldcolumn=3          " show fold guide
 " }}}
@@ -251,7 +251,7 @@ set scrolloff=4           " minimum number of screen lines to keep in scroll
 set sidescrolloff=4       " minimum number of screen columns to keep in scroll
 set cmdheight=2           " the number of screen lines to use for command line
 set showcmd               " show command on statusline
-set lazyredraw            " do not redraw while command execution
+set nolazyredraw          " do not redraw while command execution
 set nosplitbelow          " split to top
 set splitright            " vsplit to right
 set report=0              " report any changes
