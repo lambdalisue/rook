@@ -1022,15 +1022,6 @@ endif " }}}
 
 if neobundle#tap('jedi-vim') && executable('python') " {{{
   function! neobundle#hooks.on_source(bundle) abort
-    let g:jedi#auto_initialization = 0
-    let g:jedi#auto_vim_configuration = 0
-    let g:jedi#popup_on_dot = 0
-    let g:jedi#popup_select_first = 0
-    let g:jedi#auto_close_doc = 0
-    let g:jedi#show_call_signatures = 0
-    let g:jedi#squelch_py_warning = 1
-    let g:jedi#completions_enabled = 0
-
     function! s:jedi_vim_configure() abort
       setl omnifunc=jedi#completions
       setl completeopt=menu,longest
