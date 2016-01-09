@@ -8,3 +8,7 @@ if [ $(uname) = "Darwin" ]; then
         killall Finder
     }
 fi
+
+function remove_DS_Store_recursively() {
+    find . -name .DS_Store -exec rm -rf {}\;
+}
