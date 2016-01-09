@@ -10,5 +10,5 @@ if [ $(uname) = "Darwin" ]; then
 fi
 
 function remove_DS_Store_recursively() {
-    find . -name .DS_Store -exec rm -rf {}\;
+    find . -name ".DS_Store" -print -exec rm -rf {} \;
 }
