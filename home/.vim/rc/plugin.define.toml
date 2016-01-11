@@ -351,10 +351,11 @@ repository = 'chikatoike/concealedyank.vim'
 depends = 'kana/vim-operator-user'
 mappings = '<Plug>(operator-concealedyank'
 
-[[plugins]]
-repository = 'haya14busa/vim-operator-flashy'
-depends = 'kana/vim-operator-user'
-mappings = '<Plug>(operator-flashy'
+# Make Vim slow
+#[[plugins]]
+#repository = 'haya14busa/vim-operator-flashy'
+#depends = 'kana/vim-operator-user'
+#mappings = '<Plug>(operator-flashy'
 
 # Interface -------------------------------------------------------------------
 [[plugins]]
