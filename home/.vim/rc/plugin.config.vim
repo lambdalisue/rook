@@ -551,7 +551,17 @@ endif " }}}
 " }}}
 
 " interfaces {{{
-"
+
+if neobundle#tap('ctrlp.vim') " {{{
+  function! neobundle#hooks.on_source(bundle) abort
+    let g:ctrlp_map = '<Nop>'
+    let g:ctrlp_cmd = 'CtrlP'
+    " Guess VCS root directory as well
+    let g:ctrlp_working_path_mode = 'ra'
+  endfunction
+
+endif " }}}
+
 if neobundle#tap('unite.vim') " {{{
   " unite
   nnoremap <Plug>(my-unite) <Nop>

@@ -361,6 +361,11 @@ on_map = '<Plug>(operator-concealedyank'
 
 # Interface -------------------------------------------------------------------
 [[plugins]]
+repository = 'ctrlpvim/ctrlp.vim'
+on_cmd = 'CtrlP'
+on_func = 'ctrlp#'
+
+[[plugins]]
 repository = 'Shougo/unite.vim'
 focus = 1
     [[plugins.on_cmd]]
@@ -521,6 +526,12 @@ on_func = 'gista#'
 repository = 'lambdalisue/vim-gista-unite'
 depends = ['lambdalisue/vim-gista', 'Shougo/unite.vim']
 on_unite = ['gista', 'gista/file']
+
+[[plugins]]
+repository = 'lambdalisue/vim-gista-ctrlp'
+depends = ['lambdalisue/vim-gista', 'ctrlpvim/ctrlp.vim']
+on_cmd = 'CtrlPGista'
+on_func = 'ctrlp#gista#'
 
 [[plugins]]
 repository = 'cohama/agit.vim'
