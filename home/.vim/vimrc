@@ -610,6 +610,13 @@ function! s:screen_cast() abort
   set lines=30
 endfunction
 command! -nargs=0 ScreenCast call s:screen_cast()
+
+function! s:clear_messages() abort
+  for i in range(201)
+    echomsg ''
+  endfor
+endfunction
+command! -nargs=0 MessageClear call s:clear_messages()
 " }}}
 
 if !has('gui_running')

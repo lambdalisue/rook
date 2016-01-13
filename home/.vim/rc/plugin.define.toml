@@ -44,23 +44,23 @@ lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-repeat'
-mappings = '<Plug>(repeat-'
+on_map = '<Plug>(repeat-'
 
 [[plugins]]
 repository = 't9md/vim-quickhl'
 depends = 'kana/vim-operator-user'
-mappings = [
+on_map = [
     '<Plug>(quick-manual',
     '<Plug>(operator-quickhl-manual'
 ]
 
 [[plugins]]
 repository = 'tyru/open-browser.vim'
-mappings = '<Plug>(openbrowser-'
+on_map = '<Plug>(openbrowser-'
 
 [[plugins]]
 repository = 'lambdalisue/vim-fullscreen'
-mappings = '<Plug>(fullscreen-'
+on_map = '<Plug>(fullscreen-'
 
 [[plugins]]
 repository = 'osyo-manga/vim-over'
@@ -68,62 +68,62 @@ lazy = 0
 
 [[plugins]]
 repository = 'rhysd/clever-f.vim'
-mappings = '<Plug>(clever-f-'
+on_map = '<Plug>(clever-f-'
 
 [[plugins]]
 repository = 'haya14busa/vim-asterisk'
-mappings = '<Plug>(asterisk-'
+on_map = '<Plug>(asterisk-'
 on_source = 'incsearch.vim'
 focus = 1
 
 [[plugins]]
 repository = 'haya14busa/incsearch.vim'
-mappings = '<Plug>(incsearch-'
+on_map = '<Plug>(incsearch-'
 focus = 1
 
 [[plugins]]
 repository = 'LeafCage/yankround.vim'
-mappings = '<Plug>(yankround-'
+on_map = '<Plug>(yankround-'
 
 [[plugins]]
 repository = 'tyru/capture.vim'
-commands = 'Capture'
+on_cmd = 'Capture'
 
 [[plugins]]
 repository = 'MattesGroeger/vim-bookmarks'
 depends = 'Shougo/unite.vim'
 augroup = 'bm_vim_enter'
-mappings = '<Plug>Bookmark'
-unite_sources = 'vim_bookmarks'
+on_map = '<Plug>Bookmark'
+on_unite = 'vim_bookmarks'
 
 [[plugins]]
 repository = 'thinca/vim-quickrun'
-mappings = '<Plug>(quickrun'
+on_map = '<Plug>(quickrun'
 
 [[plugins]]
 repository = 'thinca/vim-qfreplace'
 on_source = ['unite.vim', 'vimfiler.vim']
-commands = 'Qfreplace'
+on_cmd = 'Qfreplace'
 
 [[plugins]]
 repository = 'AndrewRadev/switch.vim'
-commands = 'Switch'
+on_cmd = 'Switch'
 
 [[plugins]]
 repository = 'AndrewRadev/linediff.vim'
-commands = ['Linediff', 'LinediffReset']
+on_cmd = ['Linediff', 'LinediffReset']
 
 [[plugins]]
 repository = 'kurkale6ka/vim-swap'
-mappings = '<Plug>SwapSwap'
+on_map = '<Plug>SwapSwap'
 
 [[plugins]]
 repository = 'lambdalisue/vim-pager'
-commands = 'PAGER'
+on_cmd = 'PAGER'
 
 [[plugins]]
 repository = 'lambdalisue/vim-manpager'
-commands = ['MANPAGER', 'Man']
+on_cmd = ['MANPAGER', 'Man']
 
 #[[plugins]]
 #repository = 'cohama/lexima.vim'
@@ -131,20 +131,21 @@ commands = ['MANPAGER', 'Man']
 
 [[plugins]]
 repository = 't9md/vim-choosewin'
-mappings = '<Plug>(choosewin)'
+on_map = '<Plug>(choosewin)'
 
 [[plugins]]
 repository = 'lambdalisue/vim-findent'
-    [[plugins.commands]]
+on_func = 'findent#'
+    [[plugins.on_cmd]]
     name = 'Findent'
     complete = 'customlist,findent#FindentComplete'
-    [[plugins.commands]]
+    [[plugins.on_cmd]]
     name = 'FindentRestore'
     complete = 'customlist,findent#FindentRestoreComplete'
 
 [[plugins]]
 repository = 'osyo-manga/vim-trip'
-mappings = '<Plug>(trip-'
+on_map = '<Plug>(trip-'
 
 [[plugins]]
 repository = 'Konfekt/FastFold'
@@ -154,12 +155,12 @@ lazy = 0
 [[plugins]]
 repository = 'Shougo/neocomplete.vim'
 depends = 'Shougo/context_filetype.vim'
-insert = 1
+on_i = 1
 
 [[plugins]]
 repository = 'Shougo/deoplete.nvim'
 depends = 'Shougo/context_filetype.vim'
-insert = 1
+on_i = 1
 neovim = 1
 
 [[plugins]]
@@ -194,23 +195,23 @@ depends = [
     'Shougo/neosnippet-snippets',
     'Shougo/context_filetype.vim',
 ]
-commands = [
+on_cmd = [
     'NeoSnippetMakeCache',
     'NeoSnippetEdit',
     'NeoSnippetSource',
     'NeoSnippetClearMarkers',
 ]
-unite_sources = [
+on_unite = [
     'neosnippet',
     'neosnippet/user',
     'neosnippet/runtime'
 ]
-filetype = 'snippet'
-insert = 1
+on_ft = 'snippet'
+on_i = 1
 
 [[plugins]]
 repository = 'Shougo/echodoc.vim'
-insert = 1
+on_i = 1
 
 
 # Statusline ------------------------------------------------------------------
@@ -221,6 +222,7 @@ lazy = 0
 
 [[plugins]]
 repository = 'osyo-manga/vim-watchdogs'
+depends = 'Shougo/vimproc.vim'
 lazy = 0
 
 [[plugins]]
@@ -312,7 +314,7 @@ lazy = 0
 repository = 'bps/vim-textobj-python'
 depends = 'kana/vim-textobj-user'
 external_commands = 'python'
-filetype = ['python', 'python3']
+on_ft = ['python', 'python3']
 
 
 # Operator --------------------------------------------------------------------
@@ -323,70 +325,70 @@ lazy = 0
 [[plugins]]
 repository = 'kana/vim-operator-replace'
 depends = 'kana/vim-operator-user'
-mappings = '<Plug>(operator-replace'
+on_map = '<Plug>(operator-replace'
 
 [[plugins]]
 repository = 'sgur/vim-operator-openbrowser'
 depends = 'kana/vim-operator-user'
-mappings = '<Plug>(operator-openbrowser'
+on_map = '<Plug>(operator-openbrowser'
 
 [[plugins]]
 repository = 'rhysd/vim-operator-trailingspace-killer'
 depends = 'kana/vim-operator-user'
-mappings = '<Plug>(operator-trailingspace-killer'
+on_map = '<Plug>(operator-trailingspace-killer'
 
 [[plugins]]
 repository = 'rhysd/vim-operator-surround'
 depends = 'kana/vim-operator-user'
-mappings = '<Plug>(operator-surround'
+on_map = '<Plug>(operator-surround'
 
 [[plugins]]
 repository = 'lambdalisue/vim-operator-breakline'
 depends = 'kana/vim-operator-user'
-mappings = '<Plug>(operator-breakline'
+on_map = '<Plug>(operator-breakline'
 
 
 [[plugins]]
 repository = 'chikatoike/concealedyank.vim'
 depends = 'kana/vim-operator-user'
-mappings = '<Plug>(operator-concealedyank'
+on_map = '<Plug>(operator-concealedyank'
 
 # Make Vim slow
 #[[plugins]]
 #repository = 'haya14busa/vim-operator-flashy'
 #depends = 'kana/vim-operator-user'
-#mappings = '<Plug>(operator-flashy'
+#on_map = '<Plug>(operator-flashy'
 
 # Interface -------------------------------------------------------------------
 [[plugins]]
 repository = 'Shougo/unite.vim'
 focus = 1
-    [[plugins.commands]]
+    [[plugins.on_cmd]]
     name = 'Unite'
     complete = 'customlist,unite#complete_source'
 
 [[plugins]]
 repository = 'Shougo/vimshell.vim'
-    [[plugins.commands]]
+    [[plugins.on_cmd]]
     name = ['VimShell', 'VimShellPop']
     complete = 'customlist,vimshell#complete'
 
 [[plugins]]
 repository = 'Shougo/vimfiler.vim'
 depends = 'Shougo/unite.vim'
-explorer = '\h\w*:'
+on_path = '\h\w*:'
 focus = 1
-    [[plugins.commands]]
+    [[plugins.on_cmd]]
     name = ['VimFiler', 'VimFilerExplorer']
     complete = 'customlist,vimfiler#complete'
 
 [[plugins]]
 repository = 'mbbill/undotree'
-commands = 'UndotreeToggle'
+on_cmd = 'UndotreeToggle'
 
 [[plugins]]
 repository = 'thinca/vim-ref'
-commands = 'Ref'
+on_cmd = 'Ref'
 
 [[plugins]]
 repository = 'mojako/ref-sources.vim'
@@ -395,7 +397,7 @@ on_source = 'vim-ref'
 [[plugins]]
 repository = 'majutsushi/tagbar'
 augroup = 'TagbarAutoCmds'
-commands = ['Tagbar', 'TagbarToggle']
+on_cmd = ['Tagbar', 'TagbarToggle']
 
 [[plugins]]
 repository = 'glidenote/memolist.vim'
@@ -403,7 +405,7 @@ depends = [
     'Shougo/unite.vim',
     'fuenor/qfixgrep',
 ]
-commands = [
+on_cmd = [
     'MemoNew',
     'MemoList',
     'MemoGrep',
@@ -411,11 +413,11 @@ commands = [
 
 [[plugins]]
 repository = 'godlygeek/tabular'
-commands = 'Tabularize'
+on_cmd = 'Tabularize'
 
 [[plugins]]
 repository = 'deris/vim-rengbang'
-commands = [
+on_cmd = [
     'RengBang',
     'RengBangUsePrev',
     'RengBangConfirm',
@@ -423,8 +425,8 @@ commands = [
 
 [[plugins]]
 repository = 'lilydjwg/colorizer'
-mappings = '<Plug>Colorizer'
-commands = [
+on_map = '<Plug>Colorizer'
+on_cmd = [
     'ColorHighlight',
     'ColorClear',
     'ColorToggle',
@@ -432,94 +434,98 @@ commands = [
 
 [[plugins]]
 repository = 'itchyny/calendar.vim'
-commands = 'Calendar'
+on_cmd = 'Calendar'
 
 # Unite sources ---------------------------------------------------------------
 
 [[plugins]]
 repository = 'Shougo/neomru.vim'
 depends = 'Shougo/unite.vim'
-unite_sources = ['file_mru', 'directory_mru', 'neomru/file', 'neomru/directory']
+on_unite = ['file_mru', 'directory_mru', 'neomru/file', 'neomru/directory']
 
 [[plugins]]
 repository = 'Shougo/neossh.vim'
 depends = 'Shougo/unite.vim'
-unite_sources = 'ssh'
+on_unite = 'ssh'
 
 [[plugins]]
 repository = 'Shougo/unite-help'
 depends = 'Shougo/unite.vim'
-unite_sources = 'help'
+on_unite = 'help'
 
 [[plugins]]
 repository = 'Shougo/unite-outline'
 depends = 'Shougo/unite.vim'
-unite_sources = 'outline'
+on_unite = 'outline'
 
 [[plugins]]
 repository = 'osyo-manga/unite-quickfix'
 depends = 'Shougo/unite.vim'
-unite_sources = ['quickfix', 'location_list']
+on_unite = ['quickfix', 'location_list']
 
 [[plugins]]
 repository = 'ujihisa/unite-font'
 depends = 'Shougo/unite.vim'
-unite_sources = 'font'
+on_unite = 'font'
 
 [[plugins]]
 repository = 'ujihisa/unite-colorscheme'
 depends = 'Shougo/unite.vim'
-unite_sources = 'colorscheme'
+on_unite = 'colorscheme'
 
 [[plugins]]
 repository = 'rhysd/unite-codic.vim'
 depends = 'Shougo/unite.vim'
-unite_sources = 'codic'
+on_unite = 'codic'
 
 [[plugins]]
 repository = 'pasela/unite-webcolorname'
 depends = 'Shougo/unite.vim'
-unite_sources = 'webcolorname'
+on_unite = 'webcolorname'
 
 [[plugins]]
 repository = 'lambdalisue/unite-linephrase'
 depends = 'Shougo/unite.vim'
-unite_sources = 'linephase'
+on_unite = 'linephase'
 
 [[plugins]]
 repository = 'joker1007/unite-pull-request'
 depends = 'Shougo/unite.vim'
-unite_sources = 'pull_request'
+on_unite = 'pull_request'
 
 [[plugins]]
 repository = 'dameninngenn/unite-perldoc'
 depends = 'Shougo/unite.vim'
-unite_sources = 'perldoc'
+on_unite = 'perldoc'
 
 
 # Version controller system ---------------------------------------------------
 [[plugins]]
 repository = 'lambdalisue/vim-gita'
 external_commands = 'git'
-mappings = '<Plug>(gita-'
-functions = 'gita#'
+on_map  = '<Plug>(gita-'
+on_func = 'gita#'
 focus = 1
-    [[plugins.commands]]
+    [[plugins.on_cmd]]
     name = 'Gita'
     complete = 'customlist,gita#complete'
 
 [[plugins]]
 repository = 'lambdalisue/vim-gista'
-lazy = 0
-#depends = ['Shougo/unite.vim', 'tyru/open-browser.vim']
-#commands = 'Gista'
-#mappings = '<Plug>(gista-'
-#unite_sources = 'gista'
+on_func = 'gista#'
+    [[plugins.on_cmd]]
+    name = 'Gista'
+    complete = 'customlist,gista#command#complete'
+
+[[plugins]]
+repository = 'lambdalisue/vim-gista-unite'
+depends = ['lambdalisue/vim-gista', 'Shougo/unite.vim']
+on_unite = ['gista', 'gista/file']
 
 [[plugins]]
 repository = 'cohama/agit.vim'
 external_commands = 'git'
-commands = ['Agit', 'AgitFile']
+on_cmd    = ['Agit', 'AgitFile']
 on_source = 'unite.vim'
 focus = 1
 
@@ -527,7 +533,7 @@ focus = 1
 repository = 'kmnk/vim-unite-giti'
 depends = 'Shougo/unite.vim'
 focus = 1
-unite_sources = [
+on_unite = [
     'giti', 'giti/branch', 'giti/config', 'giti/log',
     'giti/remote', 'giti/status',
     'giti/pull_request/base',
@@ -538,7 +544,7 @@ unite_sources = [
 repository = 'tpope/vim-fugitive'
 external_commands = 'git'
 augroup = 'fugitive'
-commands = [
+on_cmd = [
     'Git', 'Gcd', 'Glcd', 'Gstatus', 'Gcommit', 'Gmerge',
     'Gpull', 'Gpush', 'Gfetch', 'Ggrep', 'Glgrep', 'Glog',
     'Gllog', 'Gedit', 'Gsplit', 'Gvsplit', 'Gtabedit', 'Gpedit',
@@ -550,73 +556,73 @@ commands = [
 # Syntax ----------------------------------------------------------------------
 [[plugins]]
 repository = 'hail2u/vim-css3-syntax'
-filetypes = [
+on_ft = [
     'css', 'sass', 'scss', 'less', 'html',
 ]
 
 [[plugins]]
 repository = 'othree/html5.vim'
-filetypes = 'html'
+on_ft = 'html'
 
 [[plugins]]
 repository = 'groenewege/vim-less'
-filetypes = 'less'
+on_ft = 'less'
 
 [[plugins]]
 repository = 'cakebaker/scss-syntax.vim'
-filetypes = ['sass', 'scss']
+on_ft = ['sass', 'scss']
 
 [[plugins]]
 repository = 'kchmck/vim-coffee-script'
-filetypes = 'coffeescript'
+on_ft = 'coffeescript'
 
 [[plugins]]
 repository = 'elzr/vim-json'
-filetypes = 'json'
+on_ft = 'json'
 
 [[plugins]]
 repository = 'jQuery'
-filetypes = ['javascript', 'coffeescript', 'typescript']
+on_ft = ['javascript', 'coffeescript', 'typescript']
 
 [[plugins]]
 repository = 'jelera/vim-javascript-syntax'
-filetypes = ['javascript', 'typescript']
+on_ft = ['javascript', 'typescript']
 
 [[plugins]]
 repository = 'jason0x43/vim-js-indent'
-filetypes = ['javascript', 'typescript']
+on_ft = ['javascript', 'typescript']
 
 [[plugins]]
 repository = 'leafgarland/typescript-vim'
-filetypes = 'typescript'
+on_ft = 'typescript'
 
 [[plugins]]
 repository = 'thinca/vim-ft-help_fold'
-filetypes = 'help'
+on_ft = 'help'
 
 [[plugins]]
 repository = 'vim-scripts/applescript.vim'
-filetypes = 'applescript'
+on_ft = 'applescript'
 
 [[plugins]]
 repository = 'cespare/vim-toml'
-filetypes = 'toml'
+on_ft = 'toml'
 
 [[plugins]]
 repository = 'vim-scripts/indentpython.vim'
-filetypes = ['python', 'python3']
+on_ft = ['python', 'python3']
 
 [[plugins]]
 repository = 'vim-scripts/python_match.vim'
-filetypes = ['python', 'python3']
+on_ft = ['python', 'python3']
 
 [[plugins]]
 repository = 'tmhedberg/SimpylFold'
-filetypes = ['python', 'python3']
+on_ft = ['python', 'python3']
 
 [[plugins]]
 repository = 'vim-perl/vim-perl'
-filetypes = 'perl'
+on_ft = 'perl'
 
 
 
@@ -624,7 +630,7 @@ filetypes = 'perl'
 [[plugins]]
 repository = 'LaTeX-Box-Team/LaTeX-Box'
 external_commands = 'latexmk'
-commands = [
+on_cmd = [
     'Latexmk',
     'LatexmkClean',
     'LatexmkStatus',
@@ -635,32 +641,32 @@ commands = [
     'LatexTOCToggle',
     'LatexLabels',
 ]
-filetypes = ['tex', 'plaintex']
+on_ft = ['tex', 'plaintex']
 
 [[plugins]]
 repository = 'tell-k/vim-autopep8'
 external_commands = 'autopep8'
 #build_commands = 'pip'
 #build = 'pip install autopep8'
-filetypes = ['python', 'python3']
+on_ft = ['python', 'python3']
 
 [[plugins]]
 repository = 'davidhalter/jedi-vim'
 build_commands = 'git'
 build = 'git submodule update --init'
 on_source = 'vim-pyenv'
-filetypes = ['python', 'python3']
+on_ft = ['python', 'python3']
 
 [[plugins]]
 repository = 'lambdalisue/vim-pyenv'
 external_commands = 'pyenv'
-commands = ['PyenvActivate', 'PyenvDeactivate']
-filetypes = ['python', 'python3']
+on_cmd = ['PyenvActivate', 'PyenvDeactivate']
+on_ft = ['python', 'python3']
 focus = 1
 
 [[plugins]]
 repository = 'hotchpotch/perldoc-vim'
-filetypes = 'perl'
+on_ft = 'perl'
 
 [[plugins]]
 repository = 'Quramy/tsuquyomi'
@@ -668,22 +674,22 @@ vim_version = '7.4'
 depends = 'Shougo/vimproc.vim'
 build_commands = 'npm'
 build = 'npm install -g typescript'
-filetypes = 'typescript'
+on_ft = 'typescript'
 
 [[plugins]]
 repository = 'vim-pandoc/vim-pandoc'
-filetypes = ['pandoc']
+on_ft = ['pandoc']
 
 [[plugins]]
 repository = 'kannokanno/previm'
 depends = 'tyru/open-browser.vim'
-commands = 'PrevimOpen'
+on_cmd = 'PrevimOpen'
 
 
 # Misc ------------------------------------------------------------------------
 [[plugins]]
 repository = 'cocopon/colorswatch.vim'
-commands = 'ColorSwatchGenerate'
+on_cmd = 'ColorSwatchGenerate'
 
 
 # Vimscript development -------------------------------------------------------
@@ -719,11 +725,11 @@ lazy = 0
 
 [[plugins]]
 repository = 'thinca/vim-themis'
-filetypes = ['vim', 'vimspec']
+on_ft = ['vim', 'vimspec']
 
 [[plugins]]
 repository = 'thinca/vim-prettyprint'
-commands = ['PP', 'PrettyPrint']
+on_cmd = ['PP', 'PrettyPrint']
 functions = ['PP', 'PrettyPrint']
 
 [[plugins]]
