@@ -921,7 +921,6 @@ endif " }}}
 
 if neobundle#tap('vim-gista') " {{{
   function! neobundle#hooks.on_source(bundle) abort
-    let g:gista#client#default_apiname = 'GitHub'
     let g:gista#client#default_username = 'lambdalisue'
   endfunction
   call neobundle#untap()
