@@ -35,7 +35,7 @@ let g:lightline = {
       \   'lineinfo': '(winwidth(0) >= 70)',
       \ },
       \ 'component_expand': {
-      \   'qfstatusline': 'qfstatusline#Update',
+      \   'qfstatusline': 'g:lightline.my.qfstatusline',
       \ },
       \ 'component_type': {
       \   'qfstatusline': 'error',
@@ -194,3 +194,13 @@ else
     return ''
   endfunction
 endif
+
+function! g:lightline.my.qfstatusline() abort
+  let message = qfstatusline#Update()
+  let message = substitute(
+        \ message,
+        \ '(@INC contains: .*)',
+        \ '', ''
+        \)
+  return winwidth(0) > 79 ? message[ : winwidth(0) ] : ''
+endfunction
