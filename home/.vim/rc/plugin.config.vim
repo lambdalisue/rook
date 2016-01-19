@@ -645,35 +645,29 @@ if neobundle#tap('unite.vim') " {{{
   nmap <Plug>(my-unite)g <Plug>(my-unite-grep)
   vmap <Plug>(my-unite)g <Plug>(my-unite-grep)
   nnoremap <silent> <Plug>(my-unite-grep)*
-        \ :<C-u>call <SID>unite_smart_grep_cursor()<CR>
+        \ :<C-u>UniteWithCursorWord grep:.
+        \ -buffer-name=search
+        \ -no-empty<CR>
   vnoremap <silent> <Plug>(my-unite-grep)*
-        \ :<C-u>call <SID>unite_smart_grep_cursor()<CR>
+        \ :UniteWithCursorWord grep:.
+        \ -buffer-name=search
+        \ -no-empty<CR>
   nnoremap <silent> <Plug>(my-unite-grep)g
-        \ :<C-u>call <SID>unite_smart_grep()<CR>
+        \ :<C-u>Unite grep:.
+        \ -buffer-name=search
+        \ -no-empty<CR>
   vnoremap <silent> <Plug>(my-unite-grep)g
-        \ :<C-u>call <SID>unite_smart_grep_cursor()<CR>
+        \ :Unite grep:.
+        \ -buffer-name=search
+        \ -no-empty<CR>
   nnoremap <silent> <Plug>(my-unite-grep)i
         \ :<C-u>Unite grep/git:/
         \ -buffer-name=search
         \ -no-empty<CR>
-  nnoremap <silent> <Plug>(my-unite-grep)r
-        \ :<C-u>Unite grep:.
+  vnoremap <silent> <Plug>(my-unite-grep)i
+        \ :Unite grep/git:/
         \ -buffer-name=search
         \ -no-empty<CR>
-  function! s:unite_smart_grep()
-    if s:is_git_available()
-      Unite grep/git:/ -buffer-name=search
-    else
-      Unite grep:.     -buffer-name=search
-    endif
-  endfunction
-  function! s:unite_smart_grep_cursor()
-    if executable('git') && s:is_git_available()
-      UniteWithCursorWord grep/git:/ -buffer-name=search
-    else
-      UniteWithCursorWord grep:.     -buffer-name=search
-    endif
-  endfunction
 
   " unite-git
   nnoremap <Plug>(my-unite-git) <Nop>
@@ -921,7 +915,6 @@ endif " }}}
 
 if neobundle#tap('vim-gista') " {{{
   function! neobundle#hooks.on_source(bundle) abort
-    "let g:gista#client#default_apiname = 'GitHub'
     let g:gista#client#default_username = 'lambdalisue'
   endfunction
   call neobundle#untap()
