@@ -30,10 +30,10 @@
     graph = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
     remove-remote = !sh -c 'git push origin :$0'
     remove = !sh -c 'git branch -d $0 && git push origin :$0'
-    changelog = !python /Users/alisue/.gittag-changelog/src/gittag_changelog.py
-    changelog-latest = !python /Users/alisue/.gittag-changelog/src/gittag_changelog.py --latest-only
-    changelog-head = !python /Users/alisue/.gittag-changelog/src/gittag_changelog.py --include-head
-    changelog-latest-head = !python /Users/alisue/.gittag-changelog/src/gittag_changelog.py --latest-only --include-head
+    changelog-latest = !python $HOME/.gittag-changelog/src/gittag_changelog.py --latest-only
+    changelog-head = !python $HOME/.gittag-changelog/src/gittag_changelog.py --include-head
+    changelog-latest-head = !python $HOME/.gittag-changelog/src/gittag_changelog.py --latest-only --include-head
+    changelog = !python $HOME/.gittag-changelog/src/gittag_changelog.py
 
 [ghq]
     root = ~/.ghq

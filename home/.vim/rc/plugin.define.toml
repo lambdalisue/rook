@@ -525,7 +525,7 @@ on_func = 'gista#'
 [[plugins]]
 repository = 'lambdalisue/vim-gista-unite'
 depends = ['lambdalisue/vim-gista', 'Shougo/unite.vim']
-on_unite = ['gista', 'gista/file']
+on_unite = ['gista', 'gista/file', 'gista/commit']
 
 [[plugins]]
 repository = 'lambdalisue/vim-gista-ctrlp'
@@ -727,11 +727,20 @@ repository = 'lambdalisue/vital-Web-API-GitHub'
 lazy = 0
 
 [[plugins]]
-repository = 'lambdalisue/vital-Vim-Guard'
+repository = 'lambdalisue/vital-Vim-Buffer-Anchor'
 lazy = 0
 
 [[plugins]]
-repository = 'lambdalisue/vital-Vim-Python'
+repository = 'lambdalisue/vital-Vim-Prompt'
+lazy = 0
+
+[[plugins]]
+repository = 'lambdalisue/vital-Vim-Validate'
+lazy = 0
+
+[[plugins]]
+repository = 'haya14busa/vital-power-assert'
+depends = ['haya14busa/vital-vimlcompiler']
 lazy = 0
 
 [[plugins]]
