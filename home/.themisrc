@@ -1,6 +1,3 @@
 call themis#option('runtimepath', expand('~/.vim/bundle/vimproc.vim'))
 call themis#option('runtimepath', expand('~/.vim/bundle/vital.vim'))
-call themis#option('runtimepath', expand('~/.vim/bundle/vital-Vim-Guard'))
-call themis#option('runtimepath', expand('~/.vim/bundle/vital-Vim-Python'))
-call themis#option('runtimepath', expand('~/.vim/bundle/vital-ArgumentParser'))
 call themis#option('runtimepath', expand('.'))
