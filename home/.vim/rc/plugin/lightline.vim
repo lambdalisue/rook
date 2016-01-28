@@ -1,6 +1,10 @@
 scriptencoding utf-8
 set noshowmode
 
+function! s:is_filelike() abort
+  return &buftype =~# '^\|nowrite\|acwrite$'
+endfunction
+
 let g:lightline = {
       \ 'colorscheme': 'hybrid',
       \ 'active': {
@@ -74,13 +78,13 @@ function! g:lightline.my.cwd() abort
   return fnamemodify(getcwd(), ':~')
 endfunction
 function! g:lightline.my.readonly() abort
-  return empty(&buftype) && &readonly ? g:lightline.my.symbol_readonly : ''
+  return s:is_filelike() && &readonly ? g:lightline.my.symbol_readonly : ''
 endfunction
 function! g:lightline.my.modified() abort
-  return empty(&buftype) && &modified ? g:lightline.my.symbol_modified : ''
+  return s:is_filelike() && &modified ? g:lightline.my.symbol_modified : ''
 endfunction
 function! g:lightline.my.nomodifiable() abort
-  return empty(&buftype) && !&modifiable ? g:lightline.my.symbol_nomodifiable : ''
+  return s:is_filelike() && !&modifiable ? g:lightline.my.symbol_nomodifiable : ''
 endfunction
 function! g:lightline.my.filename() abort
   if &filetype =~# '\v%(unite|vimfiler|vimshell)'
