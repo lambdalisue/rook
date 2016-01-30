@@ -32,7 +32,7 @@ let g:lightline = {
       \   ],
       \   'right': [
       \     [ 'close' ],
-      \     [ 'pyenv', 'gita_debug', 'gita_branch', 'gita_traffic', 'gita_status', 'cwd' ],
+      \     [ 'pyenv', 'gita_branch', 'gita_traffic', 'gita_status', 'cwd' ],
       \   ],
       \ },
       \ 'component_visible_condition': {
@@ -51,9 +51,8 @@ let g:lightline = {
       \   'fileformat': 'g:lightline.my.fileformat',
       \   'fileencoding': 'g:lightline.my.fileencoding',
       \   'filetype': 'g:lightline.my.filetype',
-      \   'gita_debug': 'g:lightline.my.gita_debug',
-      \   'gita_branch': 'g:lightline.my.gita_branch',
       \   'git_branch': 'g:lightline.my.git_branch',
+      \   'gita_branch': 'g:lightline.my.gita_branch',
       \   'gita_traffic': 'g:lightline.my.gita_traffic',
       \   'gita_status': 'g:lightline.my.gita_status',
       \   'pyenv': 'g:lightline.my.pyenv',
@@ -118,21 +117,29 @@ function! g:lightline.my.fileencoding() abort "{{{
 endfunction " }}}
 
 if neobundle#is_installed('vim-gita') && executable('git')
-  function! g:lightline.my.gita_debug() abort
-    return neobundle#is_sourced('vim-gita')
-          \ ? gita#statusline#debug() : ''
-  endfunction
+  "function! g:lightline.my.gita_branch() abort
+  "  return neobundle#is_sourced('vim-gita')
+  "        \ ? gita#statusline#preset('branch_short_fancy') : ''
+  "endfunction
+  "function! g:lightline.my.gita_traffic() abort
+  "  return neobundle#is_sourced('vim-gita')
+  "        \ ? gita#statusline#preset('traffic_fancy') : ''
+  "endfunction
+  "function! g:lightline.my.gita_status() abort
+  "  return neobundle#is_sourced('vim-gita')
+  "        \ ? gita#statusline#preset('status') : ''
+  "endfunction
   function! g:lightline.my.gita_branch() abort
     return neobundle#is_sourced('vim-gita')
-          \ ? gita#statusline#preset('branch_short_fancy') : ''
+          \ ? hita#statusline#preset('branch_short_fancy') : ''
   endfunction
   function! g:lightline.my.gita_traffic() abort
     return neobundle#is_sourced('vim-gita')
-          \ ? gita#statusline#preset('traffic_fancy') : ''
+          \ ? hita#statusline#preset('traffic_fancy') : ''
   endfunction
   function! g:lightline.my.gita_status() abort
     return neobundle#is_sourced('vim-gita')
-          \ ? gita#statusline#preset('status') : ''
+          \ ? hita#statusline#preset('status') : ''
   endfunction
 else
   function! g:lightline.my.gita_debug() abort
