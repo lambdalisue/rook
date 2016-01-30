@@ -940,11 +940,17 @@ if neobundle#tap('vim-gita') && executable('git') " {{{
 
   nnoremap <Plug>(my-gita) <Nop>
   nmap <Leader>a <Plug>(my-gita)
-  nnoremap <Plug>(my-gita)a :<C-u>Gita status  --ignore-submodules<CR>
-  nnoremap <Plug>(my-gita)s :<C-u>Gita status<CR>
-  nnoremap <Plug>(my-gita)c :<C-u>Gita commit<CR>
-  nnoremap <Plug>(my-gita)d :<C-u>Gita diff    --ignore-submodules -- %<CR>
-  nnoremap <Plug>(my-gita)l :<C-u>Gita diff-ls --ignore-submodules origin/HEAD...<CR>
+  "nnoremap <Plug>(my-gita)a :<C-u>Gita status  --ignore-submodules<CR>
+  "nnoremap <Plug>(my-gita)s :<C-u>Gita status<CR>
+  "nnoremap <Plug>(my-gita)c :<C-u>Gita commit<CR>
+  "nnoremap <Plug>(my-gita)d :<C-u>Gita diff    --ignore-submodules -- %<CR>
+  "nnoremap <Plug>(my-gita)l :<C-u>Gita diff-ls --ignore-submodules origin/HEAD...<CR>
+
+  nnoremap <Plug>(my-gita)a :<C-u>Hita status  --ignore-submodules<CR>
+  nnoremap <Plug>(my-gita)s :<C-u>Hita status<CR>
+  nnoremap <Plug>(my-gita)c :<C-u>Hita commit<CR>
+  nnoremap <Plug>(my-gita)d :<C-u>Hita diff    --ignore-submodules -- %<CR>
+  "nnoremap <Plug>(my-gita)l :<C-u>Gita diff-ls --ignore-submodules origin/HEAD...<CR>
 
   call neobundle#untap()
 endif " }}}

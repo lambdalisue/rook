@@ -147,9 +147,10 @@ on_func = 'findent#'
 repository = 'osyo-manga/vim-trip'
 on_map = '<Plug>(trip-'
 
-[[plugins]]
-repository = 'Konfekt/FastFold'
-lazy = 0
+# The following makes things incorrect
+#[[plugins]]
+#repository = 'Konfekt/FastFold'
+#lazy = 0
 
 # Completion ------------------------------------------------------------------
 [[plugins]]
@@ -509,11 +510,14 @@ on_unite = 'perldoc'
 repository = 'lambdalisue/vim-gita'
 external_commands = 'git'
 on_map  = '<Plug>(gita-'
-on_func = 'gita#'
+on_func = ['gita#', 'hita#']
 focus = 1
     [[plugins.on_cmd]]
     name = 'Gita'
     complete = 'customlist,gita#complete'
+    [[plugins.on_cmd]]
+    name = 'Hita'
+    complete = 'customlist,hita#complete'
 
 [[plugins]]
 repository = 'lambdalisue/vim-gista'
