@@ -445,7 +445,7 @@ nnoremap <silent> <Plug>(my-switch)t :<C-u>setl expandtab! expandtab?<CR>
 nnoremap <silent> <Plug>(my-switch)w :<C-u>setl wrap! wrap?<CR>
 nnoremap <silent> <Plug>(my-switch)p :<C-u>setl paste! paste?<CR>
 nnoremap <silent> <Plug>(my-switch)b :<C-u>setl scrollbind! scrollbind?<CR>
-nnoremap <silent> <Plug>(my-switch)y :call <SID>toggle_syntax()<CR>
+nnoremap <silent> <Plug>(my-switch)y :<C-u>call <SID>toggle_syntax()<CR>
 function! s:toggle_syntax() abort
   if exists('g:syntax_on')
     syntax off
