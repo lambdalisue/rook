@@ -117,29 +117,17 @@ function! g:lightline.my.fileencoding() abort "{{{
 endfunction " }}}
 
 if neobundle#is_installed('vim-gita') && executable('git')
-  "function! g:lightline.my.gita_branch() abort
-  "  return neobundle#is_sourced('vim-gita')
-  "        \ ? gita#statusline#preset('branch_short_fancy') : ''
-  "endfunction
-  "function! g:lightline.my.gita_traffic() abort
-  "  return neobundle#is_sourced('vim-gita')
-  "        \ ? gita#statusline#preset('traffic_fancy') : ''
-  "endfunction
-  "function! g:lightline.my.gita_status() abort
-  "  return neobundle#is_sourced('vim-gita')
-  "        \ ? gita#statusline#preset('status') : ''
-  "endfunction
   function! g:lightline.my.gita_branch() abort
     return neobundle#is_sourced('vim-gita')
-          \ ? hita#statusline#preset('branch_short_fancy') : ''
+          \ ? gita#statusline#preset('branch_short_fancy') : ''
   endfunction
   function! g:lightline.my.gita_traffic() abort
     return neobundle#is_sourced('vim-gita')
-          \ ? hita#statusline#preset('traffic_fancy') : ''
+          \ ? gita#statusline#preset('traffic_fancy') : ''
   endfunction
   function! g:lightline.my.gita_status() abort
     return neobundle#is_sourced('vim-gita')
-          \ ? hita#statusline#preset('status') : ''
+          \ ? gita#statusline#preset('status') : ''
   endfunction
 else
   function! g:lightline.my.gita_debug() abort
