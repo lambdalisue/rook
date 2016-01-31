@@ -1,3 +1,2 @@
 call themis#option('runtimepath', expand('~/.vim/bundle/vimproc.vim'))
 call themis#option('runtimepath', expand('~/.vim/bundle/vital.vim'))
-call themis#option('runtimepath', expand('.'))

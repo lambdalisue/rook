@@ -28,10 +28,10 @@ mathtext.default  : regular
 
 savefig.dpi : 300
 
-#ps.fonttype  : 42
-#pdf.fonttype : 42
+ps.fonttype  : 42
+pdf.fonttype : 42
 svg.fonttype  : none
-#svg.fonttype  : path
+##svg.fonttype  : path
 
 font.size       : 12
 font.family     : sans-serif
