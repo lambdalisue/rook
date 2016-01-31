@@ -317,9 +317,6 @@ endif " }}}
 
 if neobundle#tap('vim-foldround') " {{{
   function! neobundle#hooks.on_source(bundle) abort
-    call foldround#register('.*', [
-          \ 'disable', 'manual', 'indent', 'expr', 'marker', 'syntax',
-          \])
     call foldround#register('\.vim$', [
           \ 'syntax', 'manual'
           \])
