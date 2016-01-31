@@ -1,0 +1,88 @@
+*vim-XXXXX.txt*					DESCRIPTION
+
+Version: 0.1.0
+Author:  Alisue <lambdalisue@hashnote.net>		*vim-XXXXX-author*
+Support: Vim 7.4 and above
+License: MIT license
+
+    Copyright (c) 2016 Alisue, hashnote.net
+
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files
+    (the "Software"), to deal in the Software without restriction,
+    including without limitation the rights to use, copy, modify, merge,
+    publish, distribute, sublicense, and/or sell copies of the Software,
+    and to permit persons to whom the Software is furnished to do so,
+    subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be
+    included in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+=============================================================================
+CONTENTS					*vim-XXXXX-contents*
+
+Introduction			|vim-XXXXX-introduction|
+Install				|vim-XXXXX-install|
+Usage				|vim-XXXXX-usage|
+Interface			|vim-XXXXX-interface|
+  Commands			|vim-XXXXX-commands|
+  Functions			|vim-XXXXX-functions|
+  Variables			|vim-XXXXX-variables|
+  Mappings			|vim-XXXXX-mappings|
+
+
+=============================================================================
+INTRODUCTION					*vim-XXXXX-introduction*
+
+<+CURSOR+>
+
+=============================================================================
+INSTALL						*vim-XXXXX-install*
+
+Use Plug.vim, neobundle.vim, or whatever you want like:
+>
+	" Plug.vim
+	Plug 'lambdalisue/vim-XXXXX'
+
+	" neobundle.vim
+	NeoBundle 'lambdalisue/vim-XXXXX'
+
+	" neobundle.vim (Lazy)
+	NeoBundleLazy 'lambdalisue/vim-XXXXX', {
+		\ 'on_cmd': ['XXXXX'],
+		\}
+<
+If you does not use any vim plugin manager, you can copy the repository to
+one of directory in |runtimepath| to enable the plugin.
+
+
+=============================================================================
+USAGE						*vim-XXXXX-usage*
+
+
+=============================================================================
+INTERFACE					*vim-XXXXX-interface*
+
+-----------------------------------------------------------------------------
+COMMANDS					*vim-XXXXX-commands*
+
+-----------------------------------------------------------------------------
+FUNCTIONS					*vim-XXXXX-functions*
+
+-----------------------------------------------------------------------------
+VARIABLES					*vim-XXXXX-variables*
+
+-----------------------------------------------------------------------------
+MAPPINGS					*vim-XXXXX-mappings*
+
+
+=============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

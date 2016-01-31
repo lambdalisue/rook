@@ -147,6 +147,10 @@ on_func = 'findent#'
 repository = 'osyo-manga/vim-trip'
 on_map = '<Plug>(trip-'
 
+[[plugins]]
+repository = 'kana/vim-altr'
+on_map = '<Plug>(altr-'
+
 # The following makes things incorrect
 #[[plugins]]
 #repository = 'Konfekt/FastFold'

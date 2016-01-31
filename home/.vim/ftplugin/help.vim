@@ -25,5 +25,5 @@ endif
 " Each lines should be shorter than 78 characters
 setl textwidth=78
 if exists('&colorcolumn')
-  setl colorcolumn=
+  setl colorcolumn=78
 endif

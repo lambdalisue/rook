@@ -184,8 +184,12 @@ if neobundle#tap('yankround.vim') " {{{
   nmap P     <Plug>(yankround-P)
   nmap gp    <Plug>(yankround-gp)
   nmap gP    <Plug>(yankround-gP)
-  nmap <C-p> <Plug>(yankround-prev)
-  nmap <C-n> <Plug>(yankround-next)
+  nmap <expr><C-p> yankround#is_active()
+        \ ? "\<Plug>(yankround-prev)"
+        \ : "\<Plug>(my-tab-prev)"
+  nmap <expr><C-n> yankround#is_active()
+        \ ? "\<Plug>(yankround-next)"
+        \ : "\<Plug>(my-tab-next)"
 
   call neobundle#untap()
 endif " }}}
@@ -303,6 +307,11 @@ endif " }}}
 if neobundle#tap('vim-trip') " {{{
   nmap <C-a> <Plug>(trip-increment)
   nmap <C-x> <Plug>(trip-decrement)
+  call neobundle#untap()
+endif " }}}
+
+if neobundle#tap('vim-altr') " {{{
+  nmap <F2> <Plug>(altr-forward)
   call neobundle#untap()
 endif " }}}
 

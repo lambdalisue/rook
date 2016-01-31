@@ -362,13 +362,6 @@ nnoremap g}f :<C-u>last<CR>
 
 " tab operation (make similar mapping with window operation)
 " ref.
-" <C-w>n    Create a new window and start editing an empty file in it.
-" <C-w>q    Quit the current window. (:quit)
-" <C-w>c    Close the current window. (:close)
-" <C-w>o    Only
-" <C-w>w    Move to below/right
-" <C-w>W    Move to top/left
-" <C-w>p    Move to previous
 function! s:tab_quit() abort
   if tabpagenr('$') == 1
     quit
@@ -376,65 +369,16 @@ function! s:tab_quit() abort
     tabclose
   endif
 endfunction
-
-nnoremap <silent> <Plug>(my-tab-new) :<C-u>tabnew<CR>
+nnoremap <silent> <Plug>(my-tab-new)  :<C-u>tabnew<CR>
 nnoremap <silent> <Plug>(my-tab-quit) :<C-u>call <SID>tab_quit()<CR>
-nnoremap <silent> <Plug>(my-tab-close) :<C-u>tabclose<CR>
-nnoremap <silent> <Plug>(my-tab-only) :<C-u>tabonly<CR>
 nnoremap <silent> <Plug>(my-tab-next) :<C-u>tabnext<CR>
 nnoremap <silent> <Plug>(my-tab-prev) :<C-u>tabprevious<CR>
-nnoremap <silent> <Plug>(my-tab-move-0) :<C-u>0tabmove<CR>
-nnoremap <silent> <Plug>(my-tab-move-L) :<C-u>-tabmove<CR>
-nnoremap <silent> <Plug>(my-tab-move-R) :<C-u>+tabmove<CR>
-nnoremap <silent> <Plug>(my-tab-move-$) :<C-u>$tabmove<CR>
-nnoremap <silent> <Plug>(my-tab-0) :<C-u>tabfirst<CR>
-nnoremap <silent> <Plug>(my-tab-1) :<C-u>tabnext1<CR>
-nnoremap <silent> <Plug>(my-tab-2) :<C-u>tabnext2<CR>
-nnoremap <silent> <Plug>(my-tab-3) :<C-u>tabnext3<CR>
-nnoremap <silent> <Plug>(my-tab-4) :<C-u>tabnext4<CR>
-nnoremap <silent> <Plug>(my-tab-5) :<C-u>tabnext5<CR>
-nnoremap <silent> <Plug>(my-tab-6) :<C-u>tabnext6<CR>
-nnoremap <silent> <Plug>(my-tab-7) :<C-u>tabnext7<CR>
-nnoremap <silent> <Plug>(my-tab-8) :<C-u>tabnext8<CR>
-nnoremap <silent> <Plug>(my-tab-9) :<C-u>tabnext9<CR>
-nnoremap <silent> <Plug>(my-tab-$) :<C-u>tablast<CR>
-
-nmap <C-t>n     <Plug>(my-tab-new)
-nmap <C-t><C-n> <Plug>(my-tab-new)
-nmap <C-t>q     <Plug>(my-tab-quit)
+nmap <C-n> <Plug>(my-tab-next)
+nmap <C-p> <Plug>(my-tab-prev)
+nmap <C-t>t <Plug>(my-tab-new)
+nmap <C-t><C-t> <Plug>(my-tab-new)
+nmap <C-t>q <Plug>(my-tab-quit)
 nmap <C-t><C-q> <Plug>(my-tab-quit)
-nmap <C-t>c     <Plug>(my-tab-close)
-nmap <C-t>o     <Plug>(my-tab-only)
-nmap <C-t><C-o> <Plug>(my-tab-only)
-
-nmap <C-t>t     <Plug>(my-tab-next)
-nmap <C-t><C-t> <Plug>(my-tab-next)
-nmap <C-t>l     <Plug>(my-tab-next)
-nmap <C-t><C-l> <Plug>(my-tab-next)
-nmap <C-t>T     <Plug>(my-tab-prev)
-nmap <C-t>h     <Plug>(my-tab-prev)
-nmap <C-t><C-h> <Plug>(my-tab-prev)
-nmap <C-t>j     <Plug>(my-tab-$)
-nmap <C-t><C-j> <Plug>(my-tab-$)
-nmap <C-t>k     <Plug>(my-tab-0)
-nmap <C-t><C-k> <Plug>(my-tab-0)
-
-nmap <C-t>L     <Plug>(my-tab-move-R)
-nmap <C-t>H     <Plug>(my-tab-move-L)
-nmap <C-t>J     <Plug>(my-tab-move-$)
-nmap <C-t>K     <Plug>(my-tab-move-0)
-
-nmap <C-t>0 <Plug>(my-tab-0)
-nmap <C-t>1 <Plug>(my-tab-1)
-nmap <C-t>2 <Plug>(my-tab-2)
-nmap <C-t>3 <Plug>(my-tab-3)
-nmap <C-t>4 <Plug>(my-tab-4)
-nmap <C-t>5 <Plug>(my-tab-5)
-nmap <C-t>6 <Plug>(my-tab-6)
-nmap <C-t>7 <Plug>(my-tab-7)
-nmap <C-t>8 <Plug>(my-tab-8)
-nmap <C-t>9 <Plug>(my-tab-9)
-nmap <C-t>$ <Plug>(my-tab-$)
 
 " switch options
 nnoremap <Plug>(my-switch) <Nop>
@@ -639,6 +583,22 @@ function! s:timeit(q_args) abort
   endtry
 endfunction
 command! -nargs=+ -bang -complete=command Timeit call s:timeit(<q-args>)
+
+function! s:foldround(...) abort
+  let foldmethods = ['manual', 'indent', 'expr', 'marker', 'syntax', 'diff']
+  if !exists('b:_foldindex')
+    let b:_foldindex = index(foldmethods, &foldmethod)
+  endif
+  let b:_foldindex += get(a:000, 0, 1)
+  let b:_foldindex = len(foldmethods) <= b:_foldindex ? 0 : b:_foldindex
+  let b:_foldindex = 0 > b:_foldindex ? len(foldmethods) - 1 : b:_foldindex
+  let &foldmethod = foldmethods[b:_foldindex]
+  echo printf('foldmethod: %s', &foldmethod)
+endfunction
+nnoremap <silent> <Plug>(foldround-next) :<C-u>call <SID>foldround()<CR>
+nnoremap <silent> <Plug>(foldround-prev) :<C-u>call <SID>foldround(-1)<CR>
+nmap <C-f> <Plug>(foldround-next)
+
 " }}}
 
 if !has('gui_running')
