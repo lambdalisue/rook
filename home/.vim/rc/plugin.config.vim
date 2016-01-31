@@ -315,6 +315,28 @@ if neobundle#tap('vim-altr') " {{{
   call neobundle#untap()
 endif " }}}
 
+if neobundle#tap('vim-foldround') " {{{
+  function! neobundle#hooks.on_source(bundle) abort
+    call foldround#register('.*', [
+          \ 'disable', 'manual', 'indent', 'expr', 'marker', 'syntax',
+          \])
+    call foldround#register('\.vim$', [
+          \ 'syntax', 'manual'
+          \])
+    call foldround#register('\.vim/.*\.vim$', [
+          \ 'syntax', 'manual', 'marker',
+          \])
+    call foldround#register('[./]g\?vimrc$', [
+          \ 'syntax', 'manual', 'marker',
+          \])
+  endfunction
+  nmap <C-f>f     <Plug>(foldround-forward)
+  nmap <C-f><C-f> <Plug>(foldround-forward)
+  nmap <C-f>b     <Plug>(foldround-backward)
+  nmap <C-f><C-b> <Plug>(foldround-backward)
+  call neobundle#untap()
+endif " }}}
+
 if neobundle#tap('FastFold') " {{{
   call neobundle#untap()
 endif " }}}

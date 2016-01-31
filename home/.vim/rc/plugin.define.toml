@@ -149,7 +149,13 @@ on_map = '<Plug>(trip-'
 
 [[plugins]]
 repository = 'kana/vim-altr'
+on_func = 'altr#'
 on_map = '<Plug>(altr-'
+
+[[plugins]]
+repository = 'lambdalisue/vim-foldround'
+on_func = 'foldround#'
+on_map = '<Plug>(foldround-'
 
 # The following makes things incorrect
 #[[plugins]]

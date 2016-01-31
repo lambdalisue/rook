@@ -584,21 +584,6 @@ function! s:timeit(q_args) abort
 endfunction
 command! -nargs=+ -bang -complete=command Timeit call s:timeit(<q-args>)
 
-function! s:foldround(...) abort
-  let foldmethods = ['manual', 'indent', 'expr', 'marker', 'syntax', 'diff']
-  if !exists('b:_foldindex')
-    let b:_foldindex = index(foldmethods, &foldmethod)
-  endif
-  let b:_foldindex += get(a:000, 0, 1)
-  let b:_foldindex = len(foldmethods) <= b:_foldindex ? 0 : b:_foldindex
-  let b:_foldindex = 0 > b:_foldindex ? len(foldmethods) - 1 : b:_foldindex
-  let &foldmethod = foldmethods[b:_foldindex]
-  echo printf('foldmethod: %s', &foldmethod)
-endfunction
-nnoremap <silent> <Plug>(foldround-next) :<C-u>call <SID>foldround()<CR>
-nnoremap <silent> <Plug>(foldround-prev) :<C-u>call <SID>foldround(-1)<CR>
-nmap <C-f> <Plug>(foldround-next)
-
 " }}}
 
 if !has('gui_running')
