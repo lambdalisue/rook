@@ -234,6 +234,7 @@ lazy = 0
 [[plugins]]
 repository = 'osyo-manga/vim-watchdogs'
 depends = 'Shougo/vimproc.vim'
+vim_version = '7.4'
 lazy = 0
 
 [[plugins]]
