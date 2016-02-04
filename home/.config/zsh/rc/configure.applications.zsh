@@ -71,7 +71,9 @@ fi
 export EDITOR=vim
 export MANPAGER="vim -c MANPAGER -"
 alias view="vim -c PAGER"
-if [[ -d "/Applications/MacVim.app" ]]; then
+if type nvim > /dev/null 2>&1; then
+    alias vim=nvim
+elif [[ -d "/Applications/MacVim.app" ]]; then
     VIM="/Applications/MacVim.app/Contents/MacOS/Vim" 
     alias vim=$VIM
     alias view="$VIM -c PAGER"
