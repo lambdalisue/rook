@@ -950,7 +950,10 @@ endif " }}}
 
 if neobundle#tap('vim-gita') && executable('git') " {{{
   function! neobundle#hooks.on_source(bundle) abort
-    let g:gita#features#browse#extra_translation_patterns = {
+    if executable('hub')
+      let g:gita#executable = 'hub'
+    endif
+    let g:gita#command#browse#extra_translation_patterns = {
           \ 'ghe.admin.h': [
           \   [
           \     '\vhttps?://(%domain)/(.{-})/(.{-})%(\.git)?$',
