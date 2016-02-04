@@ -36,11 +36,7 @@ if !has('gui_running')
 endif
 
 " environmental variables {{{
-if has('nvim')
-  set shell=/bin/zsh
-else
-  set shell=/bin/bash
-endif
+set shell=/bin/bash
 
 " Add several required path to $PATH
 call rook#add_path([
@@ -294,6 +290,14 @@ endif
 
 " key mapping {{{
 
+" disable dengerous mappings (ZZ: save and close, ZQ close)
+nnoremap ZZ <Nop>
+nnoremap ZQ <Nop>
+
+" disable EX mode and assign it into gq
+" gq{motion} : format the lines that {motion} moves over
+nnoremap Q gq
+
 " disable middle-click paste
 map <MiddleMouse>   <Nop>
 map <2-MiddleMouse> <Nop>
@@ -310,9 +314,12 @@ nnoremap k gk
 nnoremap gj j
 nnoremap gk k
 
+nnoremap H ^
+nnoremap L $
+
 " Emacs like binding in Insert mode
-inoremap <C-a> <C-o>^
-inoremap <C-e> <C-o>$
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
 inoremap <C-f> <C-o>w
 inoremap <C-b> <C-o>b
 inoremap <C-d> <C-o>x
@@ -337,6 +344,12 @@ nnoremap <S-Left>  <C-w><<CR>
 nnoremap <S-Right> <C-w>><CR>
 nnoremap <S-Up>    <C-w>-<CR>
 nnoremap <S-Down>  <C-w>+<CR>
+
+" simple window navigation
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 
 " tag navigation
 nnoremap [t  :<C-u>tprevious<CR>
@@ -401,6 +414,7 @@ function! s:toggle_syntax() abort
     echo 'syntax on'
   endif
 endfunction
+
 " }}}
 
 " macros {{{
@@ -584,6 +598,22 @@ function! s:timeit(q_args) abort
 endfunction
 command! -nargs=+ -bang -complete=command Timeit call s:timeit(<q-args>)
 
+" }}}
+
+" nvim specific {{{
+" nvim
+if has('nvim')
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap <A-h> <C-\><C-n><C-w>h
+  tnoremap <A-j> <C-\><C-n><C-w>j
+  tnoremap <A-k> <C-\><C-n><C-w>k
+  tnoremap <A-l> <C-\><C-n><C-w>l
+
+  function! s:on_TermOpen() abort
+    setlocal nolist
+  endfunction
+  autocmd MyAutoCmd TermOpen * call s:on_TermOpen()
+endif
 " }}}
 colorscheme hybrid
 

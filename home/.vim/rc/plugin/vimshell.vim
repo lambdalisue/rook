@@ -37,8 +37,15 @@ function! s:configure_vimshell() abort
   if neobundle#is_installed('concealedyank')
     xmap <buffer> y <Plug>(operator-concealedyank)
   endif
+  nmap <buffer><silent> q :<C-u>close<CR>
   imap <buffer> ^^ cd ..<CR>
   imap <buffer> [[ popd<CR>
+  silent! iunmap <buffer> <C-n>
+  silent! iunmap <buffer> <C-p>
+  silent! nunmap <buffer> <C-n>
+  silent! nunmap <buffer> <C-p>
+  nmap <buffer> <Up>   <Plug>(vimshell-previous-prompt)
+  nmap <buffer> <Down> <Plug>(vimshell-next-prompt)
 
   inoremap <buffer><silent><C-r> <Esc>:<C-u>Unite
         \ -buffer-name=history

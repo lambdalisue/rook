@@ -68,9 +68,9 @@ if neobundle#tap('vim-quickhl') " {{{
   nnoremap <Plug>(my-quickhl) <Nop>
   vnoremap <Plug>(my-quickhl) <Nop>
   xnoremap <Plug>(my-quickhl) <Nop>
-  nmap H <Plug>(my-quickhl)
-  vmap H <Plug>(my-quickhl)
-  xmap H <Plug>(my-quickhl)
+  nmap <C-h> <Plug>(my-quickhl)
+  vmap <C-h> <Plug>(my-quickhl)
+  xmap <C-h> <Plug>(my-quickhl)
 
   nmap <Plug>(my-quickhl)h <Plug>(quickhl-manual-this)
   vmap <Plug>(my-quickhl)h <Plug>(quickhl-manual-this)
@@ -260,15 +260,6 @@ if neobundle#tap('switch.vim') " {{{
 endif " }}}
 
 if neobundle#tap('linediff.vim') " {{{
-  vnoremap <Plug>(my-linediff) <Nop>
-  nnoremap <Plug>(my-linediff) <Nop>
-  vmap <S-l> <Plug>(my-linediff)
-  nmap <S-l> <Plug>(my-linediff)
-  nmap <Plug>(my-linediff)d v$:<C-u>Linediff<CR>
-  nmap <Plug>(my-linediff)r :<C-u>LinediffReset<CR>
-  vmap <Plug>(my-linediff)d :<C-u>'<,'>Linediff<CR>
-  vmap <Plug>(my-linediff)r :<C-u>LinediffReset<CR>
-
   call neobundle#untap()
 endif " }}}
 
@@ -784,6 +775,14 @@ if neobundle#tap('vimshell.vim') " {{{
   function! neobundle#hooks.on_post_source(bundle)
     highlight! vimshellError gui=NONE cterm=NONE guifg='#cc6666' ctermfg=9
   endfunction
+
+  nnoremap <Plug>(my-vimshell) <Nop>
+  nmap s <Plug>(my-vimshell)
+  nnoremap <silent> <Plug>(my-vimshell)s :<C-u>VimShell<CR>
+  nnoremap <silent> <Plug>(my-vimshell)v :<C-u>VimShell -split -split-command=vsplit<CR>
+  nnoremap <silent> <Plug>(my-vimshell)h :<C-u>VimShell -split -split-command=split<CR>
+  nnoremap <silent> <Plug>(my-vimshell)t :<C-u>VimShellTab<CR>
+
   call neobundle#untap()
 endif " }}}
 
