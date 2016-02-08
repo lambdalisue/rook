@@ -243,6 +243,7 @@ lazy = 0
 
 [[plugins]]
 repository = 'KazuakiM/vim-qfstatusline'
+vim_version = '7.4'
 depends = 'osyo-manga/shabadou.vim'
 lazy = 0
 

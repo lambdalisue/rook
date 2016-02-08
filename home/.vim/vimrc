@@ -40,6 +40,7 @@ set shell=/bin/bash
 
 " Add several required path to $PATH
 call rook#add_path([
+      \ '/usr/local/bin',
       \ '/usr/local/texlive/2013/bin/x86_64-linux',
       \ '/usr/local/texlive/2013/bin/x86_64-darwin',
       \ '~/.pyenv/bin',
@@ -60,6 +61,10 @@ call rook#add_path([
       \ '~/.anyenv/envs/ndenv/shims',
       \ '~/.cabal/bin',
       \ '~/.vim/bundle/vim-themis/bin',
+      \])
+
+call rook#add_manpath([
+      \ '/usr/local/share/man/',
       \])
 
 let $MYVIMRUNTIME = expand('~/.vim')
@@ -185,7 +190,9 @@ set switchbuf=useopen   " use an existing buffer instaed of creating a new one
 set autoread            " automatically read the changed contents
 
 " Remove a comment leader when joining lines (j)
-set formatoptions& formatoptions+=j
+if v:version >= 704
+  set formatoptions& formatoptions+=j
+endif
 
 " store cursor, folds, slash, unix on view
 set viewoptions=cursor,folds,slash,unix
