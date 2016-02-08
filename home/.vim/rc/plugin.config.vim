@@ -120,8 +120,12 @@ if neobundle#tap('vim-over') " {{{
 
   " Use vim-over instead of builtin substitution
   " http://leafcage.hateblo.jp/entry/2013/11/23/212838
-  cnoreabb <silent><expr>s getcmdtype()==':' && getcmdline()=~'^s' ?
-        \ 'OverCommandLine<CR><C-u>%s/<C-r>=get([], getchar(0), '')<CR>' : 's'
+  cnoreabb <silent><expr>s getcmdtype() ==# ':'
+        \ ? 'OverCommandLine<CR><C-u>%s/'
+        \ : 's'
+  cnoreabb <silent><expr>'<,'>s getcmdtype() ==# ':'
+        \ ? "'<,'>OverCommandLine<CR>s/"
+        \ : "'<,'>s"
 
   call neobundle#untap()
 endif " }}}
@@ -233,6 +237,9 @@ if neobundle#tap('vim-quickrun') " {{{
           \ 'outputter/buffer/close_on_empty': 1,
           \ 'hook/time/enable': 1,
           \}
+    let g:quickrun_config['pyrex'] = {
+          \ 'command': 'cython',
+          \}
     " Terminate the quickrun with <C-c>
     nnoremap <expr><silent> <C-c> quickrun#is_running()
           \ ? quickrun#sweep_sessions() : "\<C-c>"
@@ -332,7 +339,7 @@ endif " }}}
 
 " }}}
 
-" completion " {{{
+" completion {{{
 
 if neobundle#tap('neocomplete.vim') && has('lua') " {{{
   function! neobundle#hooks.on_source(bundle) abort

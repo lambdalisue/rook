@@ -578,6 +578,15 @@ on_cmd = [
     'Gmove', 'Gremove', 'Gblame', 'Gbrowse',
 ]
 
+[[plugins]]
+repository = 'rafi/vim-unite-issue'
+depends = [
+    'Shougo/unite.vim',
+    'mattn/webapi-vim',
+    'tyru/open-browser.vim',
+]
+on_unite = 'issue'
+
 
 # Syntax ----------------------------------------------------------------------
 [[plugins]]

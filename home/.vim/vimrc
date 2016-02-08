@@ -184,6 +184,9 @@ set hidden              " hide the buffer instead of close
 set switchbuf=useopen   " use an existing buffer instaed of creating a new one
 set autoread            " automatically read the changed contents
 
+" Remove a comment leader when joining lines (j)
+set formatoptions& formatoptions+=j
+
 " store cursor, folds, slash, unix on view
 set viewoptions=cursor,folds,slash,unix
 " change default view directory
@@ -308,6 +311,21 @@ imap <2-MiddleMouse> <Nop>
 imap <3-MiddleMouse> <Nop>
 imap <4-MiddleMouse> <Nop>
 
+" Use Backspace to matchit
+nnoremap <Backspace> %
+xnoremap <Backspace> %
+
+" Quick substitute within selected area
+xnoremap s :s//g<Left><Left>
+
+" Allow misspellings when :wq
+cnoreabbrev Wq :wq
+cnoreabbrev qw :wq
+cnoreabbrev Qa :qa
+
+" Select last paste
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
 " remap j and k to act as expected when used on long, wrapped, lines
 nnoremap j gj
 nnoremap k gk
@@ -420,7 +438,7 @@ endfunction
 " macros {{{
 
 " save the file as root with 'sudo"
-cabbr w!! w !sudo tee > /dev/null %
+cnoreabbr w!! w !sudo tee > /dev/null %
 
 " save and restore the cursor position and folding level
 function! s:is_view_available() abort " {{{
@@ -441,8 +459,8 @@ function! s:loadview() abort " {{{
     silent! loadview
   endif
 endfunction " }}}
-"autocmd MyAutoCmd BufWinLeave ?* call s:mkview()
-"autocmd MyAutoCmd BufReadPost ?* call s:loadview()
+autocmd MyAutoCmd BufWinLeave * call s:mkview()
+autocmd MyAutoCmd BufReadPost * call s:loadview()
 
 " reload vimrc with <Leader><Leader>r {{{
 if has('vim_starting')
@@ -566,6 +584,20 @@ function! s:open_junk_file() abort
 endfunction
 command! -nargs=0 JunkFile call s:open_junk_file()
 " }}}
+
+" Automatically re-assign filetype {{{
+autocmd MyAutoCmd BufWritePost *
+      \ if &filetype ==# '' || exists('b:ftdetect') |
+      \  unlet! b:ftdetect |
+      \  filetype detect |
+      \ endif
+"}}}
+
+" Use relative syntax when the file is too big
+autocmd MyAutoCmd Syntax *
+      \ if line('%') > 5000 |
+      \  syntax sync minlines=100 |
+      \ endif
 
 function! s:screen_cast() abort
   set columns=80
