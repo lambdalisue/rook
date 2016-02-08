@@ -270,8 +270,8 @@ function() {
         __prompt_dust_set_config 'character' 'lock' '!'
         __prompt_dust_set_config 'character' 'snake' '#'
     else
-        __prompt_dust_set_config 'character' 'bullet' '•'
-        __prompt_dust_set_config 'character' 'indicator' '•'
+        __prompt_dust_set_config 'character' 'bullet' '*'
+        __prompt_dust_set_config 'character' 'indicator' '*'
         __prompt_dust_set_config 'character' 'lock' '⭤'
         __prompt_dust_set_config 'character' 'snake' '#'
     fi
