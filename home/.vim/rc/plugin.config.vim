@@ -938,7 +938,7 @@ endif " }}}
 
 if neobundle#tap('unite-linephrase') " {{{
   function! neobundle#hooks.on_source(bundle) abort
-    let g:linephrase#directory = expand('~/Copy/Apps/Vim/linephrase')
+    let g:linephrase#directory = expand('~/Dropbox/Apps/Vim/linephrase')
   endfunction
   call neobundle#untap()
 endif " }}}
