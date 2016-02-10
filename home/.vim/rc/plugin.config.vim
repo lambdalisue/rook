@@ -754,6 +754,7 @@ if neobundle#tap('unite.vim') " {{{
   if neobundle#is_installed('unite-linephrase')
     nnoremap <silent> <Plug>(my-unite)p
           \ :<C-u>Unite linephrase
+          \ -no-quit -keep-focus -no-start-insert
           \ -buffer-name=search<CR>
   endif
 
@@ -770,6 +771,7 @@ if neobundle#tap('unite.vim') " {{{
   if neobundle#is_installed('vim-bookmarks')
     nnoremap <silent> <Plug>(my-unite)mm
           \ :<C-u>Unite vim_bookmarks
+          \ -no-quit -keep-focus -no-start-insert
           \ -buffer-name=search<CR>
   endif
 
