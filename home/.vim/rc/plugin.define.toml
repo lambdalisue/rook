@@ -94,7 +94,7 @@ repository = 'MattesGroeger/vim-bookmarks'
 depends = 'Shougo/unite.vim'
 augroup = 'bm_vim_enter'
 on_map = '<Plug>Bookmark'
-on_unite = 'vim_bookmarks'
+on_source = 'unite.vim'
 
 [[plugins]]
 repository = 'thinca/vim-quickrun'
@@ -212,11 +212,7 @@ on_cmd = [
     'NeoSnippetSource',
     'NeoSnippetClearMarkers',
 ]
-on_unite = [
-    'neosnippet',
-    'neosnippet/user',
-    'neosnippet/runtime'
-]
+on_source = 'unite.vim'
 on_ft = 'snippet'
 on_i = 1
 
@@ -459,62 +455,62 @@ on_cmd = 'Calendar'
 [[plugins]]
 repository = 'Shougo/neomru.vim'
 depends = 'Shougo/unite.vim'
-on_unite = ['file_mru', 'directory_mru', 'neomru/file', 'neomru/directory']
+on_source = 'unite.vim'
 
 [[plugins]]
 repository = 'Shougo/neossh.vim'
 depends = 'Shougo/unite.vim'
-on_unite = 'ssh'
+on_source = 'unite.vim'
 
 [[plugins]]
 repository = 'Shougo/unite-help'
 depends = 'Shougo/unite.vim'
-on_unite = 'help'
+on_source = 'unite.vim'
 
 [[plugins]]
 repository = 'Shougo/unite-outline'
 depends = 'Shougo/unite.vim'
-on_unite = 'outline'
+on_source = 'unite.vim'
 
 [[plugins]]
 repository = 'osyo-manga/unite-quickfix'
 depends = 'Shougo/unite.vim'
-on_unite = ['quickfix', 'location_list']
+on_source = 'unite.vim'
 
 [[plugins]]
 repository = 'ujihisa/unite-font'
 depends = 'Shougo/unite.vim'
-on_unite = 'font'
+on_source = 'unite.vim'
 
 [[plugins]]
 repository = 'ujihisa/unite-colorscheme'
 depends = 'Shougo/unite.vim'
-on_unite = 'colorscheme'
+on_source = 'unite.vim'
 
 [[plugins]]
 repository = 'rhysd/unite-codic.vim'
 depends = 'Shougo/unite.vim'
-on_unite = 'codic'
+on_source = 'unite.vim'
 
 [[plugins]]
 repository = 'pasela/unite-webcolorname'
 depends = 'Shougo/unite.vim'
-on_unite = 'webcolorname'
+on_source = 'unite.vim'
 
 [[plugins]]
 repository = 'lambdalisue/unite-linephrase'
 depends = 'Shougo/unite.vim'
-on_unite = 'linephase'
+on_source = 'unite.vim'
 
 [[plugins]]
 repository = 'joker1007/unite-pull-request'
 depends = 'Shougo/unite.vim'
-on_unite = 'pull_request'
+on_source = 'unite.vim'
 
 [[plugins]]
 repository = 'dameninngenn/unite-perldoc'
 depends = 'Shougo/unite.vim'
-on_unite = 'perldoc'
+on_source = 'unite.vim'
 
 
 # Version controller system ---------------------------------------------------
@@ -541,7 +537,7 @@ on_func = 'gista#'
 [[plugins]]
 repository = 'lambdalisue/vim-gista-unite'
 depends = ['lambdalisue/vim-gista', 'Shougo/unite.vim']
-on_unite = ['gista', 'gista/file', 'gista/commit']
+on_source = 'unite.vim'
 
 [[plugins]]
 repository = 'lambdalisue/vim-gista-ctrlp'
@@ -560,12 +556,7 @@ focus = 1
 repository = 'kmnk/vim-unite-giti'
 depends = 'Shougo/unite.vim'
 focus = 1
-on_unite = [
-    'giti', 'giti/branch', 'giti/config', 'giti/log',
-    'giti/remote', 'giti/status',
-    'giti/pull_request/base',
-    'giti/pull_request/head',
-]
+on_source = 'unite.vim'
 
 [[plugins]]
 repository = 'tpope/vim-fugitive'
@@ -586,7 +577,7 @@ depends = [
     'mattn/webapi-vim',
     'tyru/open-browser.vim',
 ]
-on_unite = 'issue'
+on_source = 'unite.vim'
 
 
 # Syntax ----------------------------------------------------------------------
