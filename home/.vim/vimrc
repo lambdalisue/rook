@@ -36,14 +36,11 @@ if !has('gui_running')
 endif
 
 " environmental variables {{{
-if has('nvim')
-  set shell=/bin/zsh
-else
-  set shell=/bin/bash
-endif
+set shell=/bin/bash
 
 " Add several required path to $PATH
 call rook#add_path([
+      \ '/usr/local/bin',
       \ '/usr/local/texlive/2013/bin/x86_64-linux',
       \ '/usr/local/texlive/2013/bin/x86_64-darwin',
       \ '~/.pyenv/bin',
@@ -64,6 +61,10 @@ call rook#add_path([
       \ '~/.anyenv/envs/ndenv/shims',
       \ '~/.cabal/bin',
       \ '~/.vim/bundle/vim-themis/bin',
+      \])
+
+call rook#add_manpath([
+      \ '/usr/local/share/man/',
       \])
 
 let $MYVIMRUNTIME = expand('~/.vim')
@@ -132,7 +133,7 @@ set helplang=en,ja
 " cjk - ignore spell check on Asian characters (China, Japan, Korea)
 set nospell
 set spelllang=en_us,cjk
-let &spellfile = expand('~/Copy/Apps/Vim/system/spellfile.utf-8.add')
+let &spellfile = expand('~/Dropbox/Apps/Vim/system/spellfile.utf-8.add')
 
 " prefer UTF-8
 if has('multi_byte')
@@ -187,6 +188,11 @@ endif
 set hidden              " hide the buffer instead of close
 set switchbuf=useopen   " use an existing buffer instaed of creating a new one
 set autoread            " automatically read the changed contents
+
+" Remove a comment leader when joining lines (j)
+if v:version >= 704
+  set formatoptions& formatoptions+=j
+endif
 
 " store cursor, folds, slash, unix on view
 set viewoptions=cursor,folds,slash,unix
@@ -294,6 +300,14 @@ endif
 
 " key mapping {{{
 
+" disable dengerous mappings (ZZ: save and close, ZQ close)
+nnoremap ZZ <Nop>
+nnoremap ZQ <Nop>
+
+" disable EX mode and assign it into gq
+" gq{motion} : format the lines that {motion} moves over
+nnoremap Q gq
+
 " disable middle-click paste
 map <MiddleMouse>   <Nop>
 map <2-MiddleMouse> <Nop>
@@ -304,15 +318,33 @@ imap <2-MiddleMouse> <Nop>
 imap <3-MiddleMouse> <Nop>
 imap <4-MiddleMouse> <Nop>
 
+" Use Backspace to matchit
+nnoremap <Backspace> %
+xnoremap <Backspace> %
+
+" Quick substitute within selected area
+xnoremap s :s//g<Left><Left>
+
+" Allow misspellings when :wq
+cnoreabbrev Wq :wq
+cnoreabbrev qw :wq
+cnoreabbrev Qa :qa
+
+" Select last paste
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
 " remap j and k to act as expected when used on long, wrapped, lines
 nnoremap j gj
 nnoremap k gk
 nnoremap gj j
 nnoremap gk k
 
+nnoremap H ^
+nnoremap L $
+
 " Emacs like binding in Insert mode
-inoremap <C-a> <C-o>^
-inoremap <C-e> <C-o>$
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
 inoremap <C-f> <C-o>w
 inoremap <C-b> <C-o>b
 inoremap <C-d> <C-o>x
@@ -337,6 +369,12 @@ nnoremap <S-Left>  <C-w><<CR>
 nnoremap <S-Right> <C-w>><CR>
 nnoremap <S-Up>    <C-w>-<CR>
 nnoremap <S-Down>  <C-w>+<CR>
+
+" simple window navigation
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 
 " tag navigation
 nnoremap [t  :<C-u>tprevious<CR>
@@ -401,12 +439,13 @@ function! s:toggle_syntax() abort
     echo 'syntax on'
   endif
 endfunction
+
 " }}}
 
 " macros {{{
 
 " save the file as root with 'sudo"
-cabbr w!! w !sudo tee > /dev/null %
+cnoreabbr w!! w !sudo tee > /dev/null %
 
 " save and restore the cursor position and folding level
 function! s:is_view_available() abort " {{{
@@ -427,8 +466,8 @@ function! s:loadview() abort " {{{
     silent! loadview
   endif
 endfunction " }}}
-"autocmd MyAutoCmd BufWinLeave ?* call s:mkview()
-"autocmd MyAutoCmd BufReadPost ?* call s:loadview()
+autocmd MyAutoCmd BufWinLeave * call s:mkview()
+autocmd MyAutoCmd BufReadPost * call s:loadview()
 
 " reload vimrc with <Leader><Leader>r {{{
 if has('vim_starting')
@@ -553,6 +592,20 @@ endfunction
 command! -nargs=0 JunkFile call s:open_junk_file()
 " }}}
 
+" Automatically re-assign filetype {{{
+autocmd MyAutoCmd BufWritePost *
+      \ if &filetype ==# '' || exists('b:ftdetect') |
+      \  unlet! b:ftdetect |
+      \  filetype detect |
+      \ endif
+"}}}
+
+" Use relative syntax when the file is too big
+autocmd MyAutoCmd Syntax *
+      \ if line('%') > 5000 |
+      \  syntax sync minlines=100 |
+      \ endif
+
 function! s:screen_cast() abort
   set columns=80
   set lines=30
@@ -586,9 +639,21 @@ command! -nargs=+ -bang -complete=command Timeit call s:timeit(<q-args>)
 
 " }}}
 
-if !has('gui_running')
-  let g:hybrid_use_Xresources = 1
+" nvim specific {{{
+" nvim
+if has('nvim')
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap <A-h> <C-\><C-n><C-w>h
+  tnoremap <A-j> <C-\><C-n><C-w>j
+  tnoremap <A-k> <C-\><C-n><C-w>k
+  tnoremap <A-l> <C-\><C-n><C-w>l
+
+  function! s:on_TermOpen() abort
+    setlocal nolist
+  endfunction
+  autocmd MyAutoCmd TermOpen * call s:on_TermOpen()
 endif
+" }}}
 colorscheme hybrid
 
 call rook#source(rook#normpath('rc/plugin.vim'))

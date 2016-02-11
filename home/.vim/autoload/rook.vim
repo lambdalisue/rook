@@ -39,6 +39,16 @@ function! rook#add_path(pathlist) abort " {{{
   let $PATH = join(pathlist, s:delimiter)
 endfunction " }}}
 
+function! rook#add_manpath(pathlist) abort " {{{
+  let pathlist = split($MANPATH, s:delimiter)
+  for path in map(filter(a:pathlist, 'v:val'), 'expand(v:val)') 
+    if isdirectory(path) && index(pathlist, path) == -1
+      call insert(pathlist, path, 0)
+    endif
+  endfor
+  let $MANPATH = join(pathlist, s:delimiter)
+endfunction " }}}
+
 function! rook#source(path) abort " {{{
   let path = expand(a:path)
   if filereadable(path)

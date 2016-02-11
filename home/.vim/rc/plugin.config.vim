@@ -68,9 +68,9 @@ if neobundle#tap('vim-quickhl') " {{{
   nnoremap <Plug>(my-quickhl) <Nop>
   vnoremap <Plug>(my-quickhl) <Nop>
   xnoremap <Plug>(my-quickhl) <Nop>
-  nmap H <Plug>(my-quickhl)
-  vmap H <Plug>(my-quickhl)
-  xmap H <Plug>(my-quickhl)
+  nmap <C-h> <Plug>(my-quickhl)
+  vmap <C-h> <Plug>(my-quickhl)
+  xmap <C-h> <Plug>(my-quickhl)
 
   nmap <Plug>(my-quickhl)h <Plug>(quickhl-manual-this)
   vmap <Plug>(my-quickhl)h <Plug>(quickhl-manual-this)
@@ -120,8 +120,12 @@ if neobundle#tap('vim-over') " {{{
 
   " Use vim-over instead of builtin substitution
   " http://leafcage.hateblo.jp/entry/2013/11/23/212838
-  cnoreabb <silent><expr>s getcmdtype()==':' && getcmdline()=~'^s' ?
-        \ 'OverCommandLine<CR><C-u>%s/<C-r>=get([], getchar(0), '')<CR>' : 's'
+  cnoreabb <silent><expr>s getcmdtype() ==# ':'
+        \ ? 'OverCommandLine<CR><C-u>%s/'
+        \ : 's'
+  cnoreabb <silent><expr>'<,'>s getcmdtype() ==# ':'
+        \ ? "'<,'>OverCommandLine<CR>s/"
+        \ : "'<,'>s"
 
   call neobundle#untap()
 endif " }}}
@@ -233,6 +237,9 @@ if neobundle#tap('vim-quickrun') " {{{
           \ 'outputter/buffer/close_on_empty': 1,
           \ 'hook/time/enable': 1,
           \}
+    let g:quickrun_config['pyrex'] = {
+          \ 'command': 'cython',
+          \}
     " Terminate the quickrun with <C-c>
     nnoremap <expr><silent> <C-c> quickrun#is_running()
           \ ? quickrun#sweep_sessions() : "\<C-c>"
@@ -260,15 +267,6 @@ if neobundle#tap('switch.vim') " {{{
 endif " }}}
 
 if neobundle#tap('linediff.vim') " {{{
-  vnoremap <Plug>(my-linediff) <Nop>
-  nnoremap <Plug>(my-linediff) <Nop>
-  vmap <S-l> <Plug>(my-linediff)
-  nmap <S-l> <Plug>(my-linediff)
-  nmap <Plug>(my-linediff)d v$:<C-u>Linediff<CR>
-  nmap <Plug>(my-linediff)r :<C-u>LinediffReset<CR>
-  vmap <Plug>(my-linediff)d :<C-u>'<,'>Linediff<CR>
-  vmap <Plug>(my-linediff)r :<C-u>LinediffReset<CR>
-
   call neobundle#untap()
 endif " }}}
 
@@ -341,7 +339,7 @@ endif " }}}
 
 " }}}
 
-" completion " {{{
+" completion {{{
 
 if neobundle#tap('neocomplete.vim') && has('lua') " {{{
   function! neobundle#hooks.on_source(bundle) abort
@@ -756,6 +754,7 @@ if neobundle#tap('unite.vim') " {{{
   if neobundle#is_installed('unite-linephrase')
     nnoremap <silent> <Plug>(my-unite)p
           \ :<C-u>Unite linephrase
+          \ -no-quit -keep-focus -no-start-insert
           \ -buffer-name=search<CR>
   endif
 
@@ -772,6 +771,7 @@ if neobundle#tap('unite.vim') " {{{
   if neobundle#is_installed('vim-bookmarks')
     nnoremap <silent> <Plug>(my-unite)mm
           \ :<C-u>Unite vim_bookmarks
+          \ -no-quit -keep-focus -no-start-insert
           \ -buffer-name=search<CR>
   endif
 
@@ -784,6 +784,14 @@ if neobundle#tap('vimshell.vim') " {{{
   function! neobundle#hooks.on_post_source(bundle)
     highlight! vimshellError gui=NONE cterm=NONE guifg='#cc6666' ctermfg=9
   endfunction
+
+  nnoremap <Plug>(my-vimshell) <Nop>
+  nmap s <Plug>(my-vimshell)
+  nnoremap <silent> <Plug>(my-vimshell)s :<C-u>VimShell<CR>
+  nnoremap <silent> <Plug>(my-vimshell)v :<C-u>VimShell -split -split-command=vsplit<CR>
+  nnoremap <silent> <Plug>(my-vimshell)h :<C-u>VimShell -split -split-command=split<CR>
+  nnoremap <silent> <Plug>(my-vimshell)t :<C-u>VimShellTab<CR>
+
   call neobundle#untap()
 endif " }}}
 
@@ -932,7 +940,7 @@ endif " }}}
 
 if neobundle#tap('unite-linephrase') " {{{
   function! neobundle#hooks.on_source(bundle) abort
-    let g:linephrase#directory = expand('~/Copy/Apps/Vim/linephrase')
+    let g:linephrase#directory = expand('~/Dropbox/Apps/Vim/linephrase')
   endfunction
   call neobundle#untap()
 endif " }}}
@@ -950,7 +958,10 @@ endif " }}}
 
 if neobundle#tap('vim-gita') && executable('git') " {{{
   function! neobundle#hooks.on_source(bundle) abort
-    let g:gita#features#browse#extra_translation_patterns = {
+    if executable('hub')
+      let g:gita#executable = 'hub'
+    endif
+    let g:gita#command#browse#extra_translation_patterns = {
           \ 'ghe.admin.h': [
           \   [
           \     '\vhttps?://(%domain)/(.{-})/(.{-})%(\.git)?$',

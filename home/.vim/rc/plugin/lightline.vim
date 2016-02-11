@@ -195,11 +195,15 @@ else
 endif
 
 function! g:lightline.my.qfstatusline() abort
-  let message = qfstatusline#Update()
-  let message = substitute(
-        \ message,
-        \ '(@INC contains: .*)',
-        \ '', ''
-        \)
-  return winwidth(0) > 79 ? message[ : winwidth(0) ] : ''
+  if neobundle#is_sourced('vim-qfstatusline')
+    let message = qfstatusline#Update()
+    let message = substitute(
+          \ message,
+          \ '(@INC contains: .*)',
+          \ '', ''
+          \)
+    return winwidth(0) > 79 ? message[ : winwidth(0) ] : ''
+  else
+    return ''
+  endif
 endfunction
