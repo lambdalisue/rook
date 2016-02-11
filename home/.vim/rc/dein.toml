@@ -235,7 +235,7 @@ on_cmd = [
 on_path = '\h\w*:'
 hook_add = '''
 nnoremap <Plug>(my-vimfiler) <Nop>
-nmap <Leader>e <Plug>(my-vimfiler)
+nmap <Space>e <Plug>(my-vimfiler)
 nnoremap <silent> <Plug>(my-vimfiler)e :<C-u>VimFilerExplorer<CR>
 nnoremap <silent> <Plug>(my-vimfiler)E :<C-u>VimFiler<CR>
 '''
@@ -584,8 +584,8 @@ on_cmd = [
 ]
 hook_add = '''
 nnoremap <Plug>(my-unite) <Nop>
-nmap <Leader>u <Plug>(my-unite)
-vmap <Leader>u <Plug>(my-unite)
+nmap <Space> <Plug>(my-unite)
+vmap <Space> <Plug>(my-unite)
 
 nnoremap <silent> <Plug>(my-unite)u :<C-u>UniteResume -no-start-insert<CR>
 nnoremap <silent> <Plug>(my-unite)w :<C-u>Unite buffer<CR>
@@ -623,7 +623,7 @@ nnoremap <silent> <Plug>(my-unite-grep)i :<C-u>Unite grep/git:/ -buffer-name=sea
 vnoremap <silent> <Plug>(my-unite-grep)i :Unite grep/git:/ -buffer-name=search -no-empty<CR>
 
 " unite-gista
-nnoremap <silent> <Plug>(my-unite-git)t :<C-u>Unite gista:lambdalisue<CR>
+nnoremap <silent> <Plug>(my-unite)t :<C-u>Unite gista:lambdalisue<CR>
 
 " unite-linephrase
 nnoremap <silent> <Plug>(my-unite)p

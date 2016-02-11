@@ -6,14 +6,16 @@ if has('vim_starting')
   scriptencoding utf-8
 
   " Use defaults.vim and revert several settings
-  source $VIMRUNTIME/defaults.vim
+  if filereadable(expand("$VIMRUNTIME/defaults.vim"))
+    source $VIMRUNTIME/defaults.vim
+  endif
   if has('vim_starting')
     set history=10000     " increate n of command line history
   endif
   set noruler             " [slow] do not show the cursor position.
 
   " Do not highlight string inside C comments.
-  unlet c_comment_strings
+  silent! unlet c_comment_strings
 
   " Disable annoying bells
   set belloff=all
@@ -238,7 +240,7 @@ set keywordprg=:help
 " :help insert-index
 
 " define <Leader> and <LocalLeader>
-let g:mapleader = ' '
+let g:mapleader = ','
 let g:maplocalleader = ','
 noremap <Leader>      <Nop>
 noremap <LocalLeader> <Nop>
@@ -280,9 +282,14 @@ nnoremap <silent><expr> gj v:count == 0 ? 'j' : 'gj'
 nnoremap <silent><expr> gk v:count == 0 ? 'k' : 'gk'
 
 " Tab navigations
-nnoremap <silent> <C-n> :<C-u>tabnext<CR>
-nnoremap <silent> <C-p> :<C-u>tabprevious<CR>
-nnoremap <silent> <C-t> :<C-u>tabnew<CR>
+nnoremap <silent> <C-n> gt
+nnoremap <silent> <C-p> gT
+nnoremap <silent> <C-t>t     :<C-u>tabnew<CR>
+nnoremap <silent> <C-t><C-t> :<C-u>tabnew<CR>
+nnoremap <silent> <C-t>n     gt
+nnoremap <silent> <C-t><C-n> gt
+nnoremap <silent> <C-t>p     gT
+nnoremap <silent> <C-t><C-p> gT
 
 " Window resize operations with <S-Arrow>
 nnoremap <S-Left>  <C-w><<CR>
