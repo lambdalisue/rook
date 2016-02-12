@@ -61,6 +61,7 @@ call rook#add_path([
       \ '~/.anyenv/envs/ndenv/shims',
       \ '~/.cabal/bin',
       \ '~/.vim/bundle/vim-themis/bin',
+      \ '~/.vim/bundle/vim-vimlint/bin',
       \])
 
 call rook#add_manpath([
