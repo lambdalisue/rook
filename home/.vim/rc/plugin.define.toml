@@ -162,6 +162,14 @@ on_map = '<Plug>(foldround-'
 #repository = 'Konfekt/FastFold'
 #lazy = 0
 
+[[plugins]]
+repository = 'thinca/vim-zenspace'
+lazy = 0
+
+[[plugins]]
+repository = 'Shougo/junkfile.vim'
+on_cmd = 'JunkfileOpen'
+
 # Completion ------------------------------------------------------------------
 [[plugins]]
 repository = 'Shougo/neocomplete.vim'

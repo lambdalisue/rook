@@ -564,35 +564,6 @@ endfunction
 nnoremap <silent> <Leader>q :call <SID>toggle_qf()<CR>
 " }}}
 
-" highlight zenkaku spaces {{{
-autocmd MyAutoCmd VimEnter,WinEnter * match MyZenkakuSpace /　/
-highlight MyZenkakuSpace
-      \ cterm=reverse ctermfg=DarkMagenta
-      \ gui=reverse guifg=DarkMagenta
-" }}}
-
-" Open junk file."{{{
-let s:junk_dir = rook#normpath('.junk')
-if !isdirectory(s:junk_dir)
-  call mkdir(s:junk_dir, 'p')
-endif
-function! s:open_junk_file() abort
-  let filename = strftime('%Y-%m-%d-%H-%M-%S.')
-  let filename = input(
-        \ 'Name of the junk file: ',
-        \ filename,
-        \)
-  let path = s:junk_dir . '/' . filename
-  redraw!
-  if !empty(path)
-    execute printf('edit %s', fnameescape(path))
-  else
-    echo 'The operation has canceled by user.'
-  endif
-endfunction
-command! -nargs=0 JunkFile call s:open_junk_file()
-" }}}
-
 " Automatically re-assign filetype {{{
 autocmd MyAutoCmd BufWritePost *
       \ if &filetype ==# '' || exists('b:ftdetect') |
