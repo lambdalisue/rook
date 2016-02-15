@@ -162,6 +162,10 @@ on_map = '<Plug>(foldround-'
 #repository = 'Konfekt/FastFold'
 #lazy = 0
 
+[[plugins]]
+repository = 'lambdalisue/vim-protocol'
+lazy = 0
+
 # Completion ------------------------------------------------------------------
 [[plugins]]
 repository = 'Shougo/neocomplete.vim'

@@ -980,10 +980,17 @@ if neobundle#tap('vim-gita') && executable('git') " {{{
   nnoremap <Plug>(my-gita) <Nop>
   nmap <Leader>a <Plug>(my-gita)
   nnoremap <Plug>(my-gita)a :<C-u>Gita status  --ignore-submodules<CR>
-  nnoremap <Plug>(my-gita)s :<C-u>Gita status<CR>
-  nnoremap <Plug>(my-gita)c :<C-u>Gita commit<CR>
-  nnoremap <Plug>(my-gita)d :<C-u>Gita diff    --ignore-submodules -- %<CR>
-  nnoremap <Plug>(my-gita)l :<C-u>Gita diff-ls --ignore-submodules origin/HEAD...<CR>
+  nnoremap <Plug>(my-gita)b :<C-u>Gita branch --all<CR>
+  nnoremap <Plug>(my-gita)d :<C-u>Gita diff-ls --ignore-submodules origin/HEAD...<CR>
+  nnoremap <Plug>(my-gita)l :<C-u>Gita ls<CR>
+
+  "function! s:my_commit_template() abort
+  "  if &filetype !=# 'gita-commit' || line('$') > 1
+  "    return
+  "  endif
+  "  call setline(1, ['Write a commit meesage here'])
+  "endfunction
+  "autocmd MyAutoCmd BufReadPre gita:* call s:my_commit_template()
 
   call neobundle#untap()
 endif " }}}
