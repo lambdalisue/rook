@@ -170,6 +170,10 @@ lazy = 0
 repository = 'Shougo/junkfile.vim'
 on_cmd = 'JunkfileOpen'
 
+[[plugins]]
+repository = 'lambdalisue/vim-protocol'
+lazy = 0
+
 # Completion ------------------------------------------------------------------
 [[plugins]]
 repository = 'Shougo/neocomplete.vim'
