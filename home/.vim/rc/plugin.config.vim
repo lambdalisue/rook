@@ -38,18 +38,9 @@ if neobundle#tap('vim-template') " {{{
   call neobundle#untap()
 endif " }}}
 
-if neobundle#tap('vim-unified-diff') && executable('git') " {{{
-  function! neobundle#hooks.on_source(bundle) abort
-    let unified_diff#arguments = [
-          \   'diff',
-          \   '--no-index',
-          \   '--no-color',
-          \   '--no-ext-diff',
-          \   '--unified=0',
-          \   '--histogram',
-          \ ]
-    set diffexpr=unified_diff#diffexpr()
-  endfunction
+if neobundle#tap('vim-diffa') " {{{
+  nmap <C-l> <Plug>(diffa-C-l)
+
   call neobundle#untap()
 endif " }}}
 

@@ -26,12 +26,7 @@ repository = 'thinca/vim-template'
 lazy = 0
 
 [[plugins]]
-repository = 'lambdalisue/vim-unified-diff'
-external_commands = 'git'
-lazy = 0
-
-[[plugins]]
-repository = 'lambdalisue/vim-improve-diff'
+repository = 'lambdalisue/vim-diffa'
 lazy = 0
 
 [[plugins]]
@@ -528,6 +523,7 @@ on_source = 'unite.vim'
 # Version controller system ---------------------------------------------------
 [[plugins]]
 repository = 'lambdalisue/vim-gita'
+rev = 'alpha-3'
 external_commands = 'git'
 on_map  = '<Plug>(gita-'
 on_func = ['gita#', 'hita#']
