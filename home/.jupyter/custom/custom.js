@@ -14,7 +14,10 @@ require([
   });
 });
 
-require(['codemirror/keymap/vim'], function() {
+require([
+  'codemirror/keymap/vim',
+  'vim_binding/vim_binding'
+], function() {
   // Use gj/gk instead of j/k
   CodeMirror.Vim.map("j", "gj", "normal");
   CodeMirror.Vim.map("k", "gk", "normal");

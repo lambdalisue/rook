@@ -1,6 +1,7 @@
 {
   "nbext_hide_incompat": true,
   "load_extensions": {
+    "vim_binding/vim_binding": true,
     "usability/ruler/main": true,
     "usability/comment-uncomment/main": true,
     "usability/chrome-clipboard/main": true,
@@ -9,7 +10,6 @@
     "publishing/printview/main": true,
     "usability/python-markdown/main": true,
     "usability/execute_time/ExecuteTime": true,
-    "usability/vim_binding/vim_binding": true,
     "usability/codefolding/main": true,
     "styling/zenmode/main": true,
     "usability/latex_envs/latex_envs": true,
