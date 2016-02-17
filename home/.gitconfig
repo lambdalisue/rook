@@ -28,6 +28,7 @@
     user = lambdalisue
 
 [ghq]
+    root = ~/Code
     root = ~/.ghq
     root = ~/.go/src
 
