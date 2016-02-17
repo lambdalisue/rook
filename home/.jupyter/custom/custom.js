@@ -16,11 +16,13 @@ require([
 
 require([
   'codemirror/keymap/vim',
-  'vim_binding/vim_binding'
+  'nbextensions/vim_binding/vim_binding'
 ], function() {
   // Use gj/gk instead of j/k
-  CodeMirror.Vim.map("j", "gj", "normal");
-  CodeMirror.Vim.map("k", "gk", "normal");
+  CodeMirror.Vim.map("j", "<Plug>(vim-binding-gj)", "normal");
+  CodeMirror.Vim.map("k", "<Plug>(vim-binding-gk)", "normal");
+  CodeMirror.Vim.map("gj", "<Plug>(vim-binding-j)", "normal");
+  CodeMirror.Vim.map("gk", "<Plug>(vim-binding-k)", "normal");
 
   // Use Ctrl-h/l/j/k to move around in Insert mode
   CodeMirror.Vim.defineAction('[i]<C-h>', function(cm) {
