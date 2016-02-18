@@ -50,12 +50,9 @@ require([
   CodeMirror.Vim.map("<C-j>", "<Esc>ja", "insert");
   CodeMirror.Vim.map("<C-k>", "<Esc>ka", "insert");
 
-  // Use Ctrl-h/l/j/k to move around in Normal mode
-  // otherwise it would trigger browser shortcuts
-  CodeMirror.Vim.map("<C-h>", "h", "normal");
-  CodeMirror.Vim.map("<C-l>", "l", "normal");
-  CodeMirror.Vim.map("<C-j>", "j", "normal");
-  CodeMirror.Vim.map("<C-k>", "k", "normal");
+  // Map <Nop> otherwise it would trigger browser shortcuts
+  CodeMirror.Vim.map("<C-h>", "<Nop>", "normal");
+  CodeMirror.Vim.map("<C-l>", "<Nop>", "normal");
 
   // Emacs like binding
   CodeMirror.Vim.map("<C-a>", "<Esc>^i", "insert");
