@@ -14,5 +14,4 @@ mpl.rcParams['xtick.labelsize'] = 'medium'
 mpl.rcParams['ytick.labelsize'] = 'medium'
 mpl.rcParams['legend.fontsize'] = 'medium'
 mpl.rcParams['figure.figsize'] = (16, 9)
-mpl.rcParams['figure.autolayout'] = True
 mpl.rcParams['savefig.dpi'] = 300
