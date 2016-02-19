@@ -9,7 +9,7 @@ from IPython.display import display, HTML
 
 # Make figure larger
 mpl.rcParams['font.size'] = 16
-mpl.rcParams['axes.labelsize'] = 'large'
+mpl.rcParams['axes.labelsize'] = 'medium'
 mpl.rcParams['xtick.labelsize'] = 'medium'
 mpl.rcParams['ytick.labelsize'] = 'medium'
 mpl.rcParams['legend.fontsize'] = 'medium'
