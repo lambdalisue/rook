@@ -287,8 +287,11 @@ if neobundle#tap('vim-findent') " {{{
   augroup findent
     autocmd!
     autocmd FileType json,javascript    Findent --no-warnings
+    autocmd FileType typescript         Findent --no-warnings
+    autocmd FileType coffeescript       Findent --no-warnings
     autocmd FileType css,scss,sass,less Findent --no-warnings
     autocmd FileType xml,html           Findent --no-warnings
+    autocmd FileType perl,python,ruby   Findent --no-warnings
   augroup END
   call neobundle#untap()
 endif " }}}
