@@ -6,7 +6,7 @@ def repeat(n, fn, x):
     if n == 1:
         return fn(x)
     else:
-        return fn(repeat(fn, n-1, x))
+        return fn(repeat(n-1, fn, x))
 
 AMBERTOOLS = os.path.join(
     repeat(4, os.path.dirname, __file__),
