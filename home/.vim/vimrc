@@ -350,12 +350,6 @@ inoremap <C-f> <C-o>w
 inoremap <C-b> <C-o>b
 inoremap <C-d> <C-o>x
 
-" Ctrl-h/j/k/l to move around in Insert mode
-inoremap <C-h> <C-o>h
-inoremap <C-j> <C-o>j
-inoremap <C-k> <C-o>k
-inoremap <C-l> <C-o>l
-
 " Y to yank the end of line
 nnoremap Y y$
 
@@ -609,6 +603,11 @@ function! s:timeit(q_args) abort
 endfunction
 command! -nargs=+ -bang -complete=command Timeit call s:timeit(<q-args>)
 
+function! s:execute_macro_over_visual_range() abort
+  echo "@" . getcmdline()
+  execute ":'<,'>normal @" . nr2char(getchar())
+endfunction
+xnoremap @ :<C-u> call <SID>execute_macro_over_visual_range()<CR>
 " }}}
 
 " nvim specific {{{
@@ -630,5 +629,3 @@ colorscheme hybrid
 
 call rook#source(rook#normpath('rc/plugin.vim'))
 call rook#source(expand('~/.vimrc.local'))
-
-" vim:set et ts=2 sts=2 sw=2 tw=0 fdm=marker:
