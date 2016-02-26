@@ -97,6 +97,10 @@ xnoremap ; <Nop>
 nnoremap , <Nop>
 xnoremap , <Nop>
 
+set viminfo&
+set viminfo+=%
+set viminfo+=n~/.vim/viminfo
+
 if !has('gui_running')
   if !has('nvim') " neovim does not have the following features
     set ttyfast         " enable fast terminal connection
@@ -355,6 +359,13 @@ nnoremap Y y$
 
 " <C-p> to paste from 0 register
 nnoremap <C-p> "0p
+
+" Disable commad window mode which can enter with <C-f> in command mode
+noremap q: <Nop>
+
+" Better <C-n>/<C-p> in command mode
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
 
 " vv to select the line, like yy, dd
 nnoremap vv 0v$
