@@ -3,10 +3,11 @@ if exists('b:did_ftplugin')
 endif
 let b:did_ftplugin = 1
 
-let perl_fold = 1
-let perl_fold_blocks = 1
-let perl_fold_anonymous_subs = 1
-let perl_nofold_packages = 1
+" https://github.com/vim-perl/vim-perl/issues/170
+let g:perl_fold = 0
+"let g:perl_fold_blocks = 1
+"let g:perl_fold_anonymous_subs = 1
+"let g:perl_nofold_packages = 1
 
 setl iskeyword&
 setl iskeyword+=:

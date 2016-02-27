@@ -27,3 +27,5 @@ setl textwidth=78
 if exists('&colorcolumn')
   setl colorcolumn=78
 endif
+
+set nospell

@@ -65,7 +65,7 @@ autocmd MyAutoCmd User my-workon-post call s:cd_all_vimfiler(getcwd())
 "   This work around stands for fixing that.
 function! s:force_nofixwidth() abort
   if empty(&buftype) || &buftype ==# '\v^%(nowrite|acwrite)$'
-    setl nowinfixwidth
+    setlocal nowinfixwidth
   endif
 endfunction
 autocmd MyAutoCmd BufWinEnter * call s:force_nofixwidth()

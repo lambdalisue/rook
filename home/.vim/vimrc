@@ -4,14 +4,22 @@
 " URI:      http://hashnote.net/
 " Platform: Linux, Mac OS X
 "
+if has('vim_starting')
+  if has('multi_byte')
+    set ambiwidth=double
+    set encoding=utf-8
+    scriptencoding utf-8
+  endif
+  set history=10000
+  set runtimepath& runtimepath+=~/.vim
+endif
 
-" skip if the live Vim is vim-tiny or vim-small
-if !1 | finish | endif
-
-" reset settings for reloading vimrc
-augroup MyAutoCmd
-  autocmd!
-augroup END
+" Disable unnecessary features {{{
+set noswapfile
+set nobackup
+set nowritebackup
+set noerrorbells
+set novisualbell t_vb=
 
 " disable unnecessary default plugins
 let g:loaded_gzip              = 1
@@ -29,17 +37,17 @@ let g:loaded_netrw             = 1
 let g:loaded_netrwPlugin       = 1
 let g:loaded_netrwSettings     = 1
 let g:loaded_netrwFileHandlers = 1
+" }}}
 
-if !has('gui_running')
-  " disable matchparen in non GUI Vim
-  let g:loaded_matchparen = 1
-endif
-
-" environmental variables {{{
+" Environmental configure {{{
 set shell=/bin/bash
+let $MYVIM_HOME   = expand('~/.vim')
+let $MYVIM_DATA   = expand('~/Dropbox/Apps/Vim')
+let $MYVIM_VIMRC  = resolve(expand('$MYVIM_HOME/vimrc'))
+let $MYVIM_GVIMRC = resolve(expand('$MYVIM_HOME/gvimrc'))
 
 " Add several required path to $PATH
-call rook#add_path([
+call vimrc#prepend_envpath('$PATH', [
       \ '/usr/local/bin',
       \ '/usr/local/texlive/2013/bin/x86_64-linux',
       \ '/usr/local/texlive/2013/bin/x86_64-darwin',
@@ -60,73 +68,46 @@ call rook#add_path([
       \ '~/.anyenv/envs/rbenv/shims',
       \ '~/.anyenv/envs/ndenv/shims',
       \ '~/.cabal/bin',
-      \ '~/.vim/bundle/vim-themis/bin',
-      \ '~/.vim/bundle/vim-vimlint/bin',
+      \ '$MYVIMRUNTIME/bundle/vim-themis/bin',
+      \ '$MYVIMRUNTIME/bundle/vim-vimlint/bin',
       \])
-
-call rook#add_manpath([
+call vimrc#prepend_envpath('$MANPATH', [
       \ '/usr/local/share/man/',
       \])
+let $PYENV_ROOT = vimrc#pick_path([
+      \ expand('~/.anyenv/envs/pyenv'),
+      \ expand('~/.pyenv'),
+      \])
 
-let $MYVIMRUNTIME = expand('~/.vim')
-let $MYVIMRC  = resolve(rook#normpath('vimrc'))
-let $MYGVIMRC = resolve(rook#normpath('gvimrc'))
+set viminfo& viminfo+=n$MYVIM_HOME/.viminfo
+set viewdir=$MYVIM_HOME/.view
+set undodir=$MYVIM_HOME/.undo
+set spellfile=$MYVIM_DATA/system/spellfile.utf-8.add
+call vimrc#ensure_path(&viewdir)
+call vimrc#ensure_path(&undodir)
+call vimrc#ensure_path(fnamemodify(&spellfile, ':p:h'))
 
-let $PYENV_ROOT =
-    \ isdirectory(expand('~/.anyenv/envs/pyenv'))
-    \   ? expand('~/.anyenv/envs/pyenv')
-    \   : isdirectory(expand('~/.pyenv'))
-    \     ? expand('~/.pyenv')
-    \     : ''
-" }}}
-
-" fundemental config {{{
-
-" history ':' commands and search patterns as much as possible (max: 10000)
-if &history != 10000
-  set history=10000
-endif
-
-" define <Leader> and <LocalLeader>
-let g:mapleader = ';'
-let g:maplocalleader = ','
-
-" remove any existing keymap for leader and localleader
-nnoremap ; <Nop>
-xnoremap ; <Nop>
-nnoremap , <Nop>
-xnoremap , <Nop>
-
-set viminfo&
-set viminfo+=%
-set viminfo+=n~/.vim/viminfo
-
-if !has('gui_running')
-  if !has('nvim') " neovim does not have the following features
-    set ttyfast         " enable fast terminal connection
-    set ttyscroll=3     " the maximum number of lines for scrolling.
-                        " use small value here to prefer redraw the screen
-                        " instead of scrolling
-  endif
-  set t_Co=256        " use 256 colors
-  " to enable cursor keys in terminal
-  set notimeout ttimeout ttimeoutlen=100
-else
+if has('gui_running') || has('nvim')
   set timeout timeoutlen=1000 ttimeoutlen=100
+else
+  set t_Co=256     " use 256 colors
+  set ttyfast      " enable fast terminal connection
+  set ttyscroll=3  " the maximum number of lines for scrolling.
+                         " use small value here to prefer redraw the screen
+                         " instead of scrolling
+  set notimeout ttimeout ttimeoutlen=100
 endif
 
 " }}}
 
-" ancient features {{{
-set noswapfile
-set nobackup
-set nowritebackup
-set noerrorbells
-set novisualbell
-set t_vb=
-" }}}
+set modeline      " do not use modeline
+" K to search the help with the cursor word
+set keywordprg=:help
+" every wrapped line will continue visually indented
+set breakindent
+set showbreak=\ +
 
-" language and encoding {{{
+" Language {{{
 
 " prefer English interface
 language message C
@@ -138,123 +119,31 @@ set helplang=en,ja
 " cjk - ignore spell check on Asian characters (China, Japan, Korea)
 set nospell
 set spelllang=en_us,cjk
-let &spellfile = expand('~/Dropbox/Apps/Vim/system/spellfile.utf-8.add')
-
-" prefer UTF-8
-if has('multi_byte')
-  if has('vim_starting') || !has('nvim')
-    set encoding=utf-8
-    set termencoding=utf-8
-    set ambiwidth=double
-  endif
-  scriptencoding utf-8
-  set fileencodings=ucs-bom,utf-8,euc-jp,iso-2022-jp,cp932,utf-16,utf-16le
-  set fileformats=unix,dos,mac
-endif
-
+set fileencodings=ucs-bom,utf-8,euc-jp,iso-2022-jp,cp932,utf-16,utf-16le
+set fileformats=unix,dos,mac
 " }}}
 
-" search {{{
-set smartcase       " override the ignorecase if the search pattern contains
-                    " upper case characters
-set incsearch       " use incremental search
-set nowrapscan      " do not wrap scan
-set hlsearch        " highlight found terms
-
-" K to search the help with the cursor word
-set keywordprg=:help
-
-" automatically escape / or ?
-cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
-cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
-
-" remove highlight with pressing ESC twice
-nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
-" }}}
-
-" edit {{{
-set nomodeline    " do not use modeline
-set smarttab      " insert blanks according to shiftwidth
-set expandtab     " use spaces instead of TAB
-set tabstop=8     " the number of spaces that a TAB counts for
-set softtabstop=4 " the number of spaces that a TAB counts for
-set shiftwidth=4  " the number of spaces of an indent
-set shiftround    " round indent to multiple of shiftwidth with > and <
-
-set autoindent    " copy indent from current line when starting a new line
-set copyindent    " copy the structure of the existing lines indent when
-                  " autoindenting a new line
-
-" every wrapped line will continue visually indented
-if has('&breakindent')
-  set breakindent 
-endif
-
+" Interface {{{
 set hidden              " hide the buffer instead of close
 set switchbuf=useopen   " use an existing buffer instaed of creating a new one
 set autoread            " automatically read the changed contents
 
-" Remove a comment leader when joining lines (j)
-if v:version >= 704
-  set formatoptions& formatoptions+=j
-endif
+set showmatch           " highlight a partner of cursor character
+set matchtime=1         " highlight a partner ASAP
+set updatetime=1000     " increase speed of CursorHold autocommand
+set nostartofline       " let C-D, C-U,... to keep same column
+set smartcase           " override the ignorecase if the search pattern contains
+                              " upper case characters
+set incsearch           " use incremental search
+set wrapscan            " wrap scan
+set hlsearch            " highlight found terms
 
-" store cursor, folds, slash, unix on view
-set viewoptions=cursor,folds,slash,unix
-" change default view directory
-let &viewdir = rook#normpath('.view')
-if !isdirectory(&viewdir)
-  call mkdir(&viewdir, 'p', 0700)
-endif
-
-" use clipboard register
-if has('unnamedplus')
-  set clipboard=unnamedplus,unnamed
-else
-  set clipboard=unnamed
-endif
-
-" keep undo history on undofile
-if has('persistent_undo')
-  let &undodir = rook#normpath('.undo')
-  if !isdirectory(&undodir)
-    call mkdir(&undodir, 'p', 0700)
-  endif
-  set undofile
-endif
-
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-
-" }}}
-
-" cursor {{{
-set showmatch             " highlight a partner of cursor character
-set matchtime=1           " highlight a partner ASAP
-set matchpairs& mps+=<:>  " add < and > pair
-set updatetime=1000       " increase speed of CursorHold autocommand
-
-set virtualedit=all       " allow virtual editing in all modes
-set nostartofline         " let C-D, C-U,... to keep same column
-
-" move cursor previous/next line when the cursor is first/last character in the
-" line and user move the cursor left/right
-set whichwrap=b,s,<,>,~,[,]
-
-" do not display cursorline/column (it makes Vim really slow)
-set nocursorline
-set nocursorcolumn
-" }}}
-
-" folding {{{
 set foldenable
-set foldmethod=marker
+set foldmethod=manual
 set foldlevelstart=99
-set foldnestmax=3         " maximum fold nesting level
-set foldcolumn=3          " show fold guide
-" }}}
+set foldnestmax=3       " maximum fold nesting level
+set foldcolumn=3        " show fold guide
 
-" interface {{{
 set number                " show line numbers
 set list                  " show invisible characters
 set laststatus=2          " always shows statusline
@@ -269,374 +158,84 @@ set report=0              " report any changes
 set display=lastline      " display last line in a window AMAP
 set showtabline=2         " display tabline always
 
-set wrap                  " wrap long text
-set textwidth=0           " do not automatically break
-set breakat=\ \ ;:,!?     " characters which might cause a line break
+" move cursor previous/next line when the cursor is first/last character in the
+" line and user move the cursor left/right
+set whichwrap=b,s,<,>,~,[,]
 
-" do not display greeting message
-set shortmess=aTI
+" store cursor, folds, slash, unix on view
+set viewoptions=cursor,folds,slash,unix
 
 " use rich completion system in command line
 set wildmenu
 set wildmode=list:longest,full
 set wildoptions=tagfile
 
-" completion settings
-set completeopt=menu,longest
-set complete=.            " don't complete from other buffer
-set pumheight=20          " height of popup menu
-set showfulltag           " show both the tag name and the search pattern
-if has('patch-7.4.314')
-  " don't give ins-completion-menu messages
-  set shortmess+=c
-endif
-
-" Conceal
-set conceallevel=2
-set concealcursor=c
-set colorcolumn=80
+" do not display cursorline/column (it makes Vim really slow)
+set nocursorline
+set nocursorcolumn
 
 if has('multi_byte') && $LANG !=# 'C'
   set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:$
 else
   set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%,eol:$
 endif
-" }}}
-
-" key mapping {{{
-
-" disable dengerous mappings (ZZ: save and close, ZQ close)
-nnoremap ZZ <Nop>
-nnoremap ZQ <Nop>
-
-" disable EX mode and assign it into gq
-" gq{motion} : format the lines that {motion} moves over
-nnoremap Q gq
-
-" disable middle-click paste
-map <MiddleMouse>   <Nop>
-map <2-MiddleMouse> <Nop>
-map <3-MiddleMouse> <Nop>
-map <4-MiddleMouse> <Nop>
-imap <MiddleMouse>   <Nop>
-imap <2-MiddleMouse> <Nop>
-imap <3-MiddleMouse> <Nop>
-imap <4-MiddleMouse> <Nop>
-
-" Use Backspace to matchit
-nnoremap <Backspace> %
-xnoremap <Backspace> %
-
-" Quick substitute within selected area
-xnoremap s :s//g<Left><Left>
-
-" Allow misspellings when :wq
-cnoreabbrev Wq :wq
-cnoreabbrev qw :wq
-cnoreabbrev Qa :qa
-
-" Select last paste
-nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
-
-" remap j and k to act as expected when used on long, wrapped, lines
-nnoremap j gj
-nnoremap k gk
-nnoremap gj j
-nnoremap gk k
-
-nnoremap H ^
-nnoremap L $
-
-" Emacs like binding in Insert mode
-inoremap <C-a> <Home>
-inoremap <C-e> <End>
-inoremap <C-f> <C-o>w
-inoremap <C-b> <C-o>b
-inoremap <C-d> <C-o>x
-
-" Y to yank the end of line
-nnoremap Y y$
-
-" <C-p> to paste from 0 register
-nnoremap <C-p> "0p
-
-" Disable commad window mode which can enter with <C-f> in command mode
-noremap q: <Nop>
-
-" Better <C-n>/<C-p> in command mode
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
-
-" vv to select the line, like yy, dd
-nnoremap vv 0v$
-
-" simple window resize navigation
-nnoremap <S-Left>  <C-w><<CR>
-nnoremap <S-Right> <C-w>><CR>
-nnoremap <S-Up>    <C-w>-<CR>
-nnoremap <S-Down>  <C-w>+<CR>
-
-" simple window navigation
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
-
-" tag navigation
-nnoremap [t  :<C-u>tprevious<CR>
-nnoremap ]t  :<C-u>tnext<CR>
-nnoremap g[t :<C-u>tfirst<CR>
-nnoremap g]t :<C-u>tlast<CR>
-
-" quickfix navigation
-nnoremap [q  :<C-u>cprevious<CR>
-nnoremap ]q  :<C-u>cnext<CR>
-nnoremap g[q :<C-u>cfirst<CR>
-nnoremap g]q :<C-u>clast<CR>
-nnoremap [l  :<C-u>lprevious<CR>
-nnoremap ]l  :<C-u>lnext<CR>
-nnoremap g[l :<C-u>lfirst<CR>
-nnoremap g]l :<C-u>llast<CR>
-
-" file navigation
-nnoremap {f  :<C-u>previous<CR>
-nnoremap }f  :<C-u>next<CR>
-nnoremap g{f :<C-u>first<CR>
-nnoremap g}f :<C-u>last<CR>
-
-" tab operation (make similar mapping with window operation)
-" ref.
-function! s:tab_quit() abort
-  if tabpagenr('$') == 1
-    quit
-  else
-    tabclose
-  endif
-endfunction
-nnoremap <silent> <Plug>(my-tab-new)  :<C-u>tabnew<CR>
-nnoremap <silent> <Plug>(my-tab-quit) :<C-u>call <SID>tab_quit()<CR>
-nnoremap <silent> <Plug>(my-tab-next) :<C-u>tabnext<CR>
-nnoremap <silent> <Plug>(my-tab-prev) :<C-u>tabprevious<CR>
-nmap <C-n> <Plug>(my-tab-next)
-nmap <C-p> <Plug>(my-tab-prev)
-nmap <C-t>t <Plug>(my-tab-new)
-nmap <C-t><C-t> <Plug>(my-tab-new)
-nmap <C-t>q <Plug>(my-tab-quit)
-nmap <C-t><C-q> <Plug>(my-tab-quit)
-
-" switch options
-nnoremap <Plug>(my-switch) <Nop>
-nmap <Leader>s <Plug>(my-switch)
-nnoremap <silent> <Plug>(my-switch)s :<C-u>setl spell! spell?<CR>
-nnoremap <silent> <Plug>(my-switch)l :<C-u>setl list! list?<CR>
-nnoremap <silent> <Plug>(my-switch)t :<C-u>setl expandtab! expandtab?<CR>
-nnoremap <silent> <Plug>(my-switch)w :<C-u>setl wrap! wrap?<CR>
-nnoremap <silent> <Plug>(my-switch)p :<C-u>setl paste! paste?<CR>
-nnoremap <silent> <Plug>(my-switch)b :<C-u>setl scrollbind! scrollbind?<CR>
-nnoremap <silent> <Plug>(my-switch)y :<C-u>call <SID>toggle_syntax()<CR>
-function! s:toggle_syntax() abort
-  if exists('g:syntax_on')
-    syntax off
-    redraw
-    echo 'syntax off'
-  else
-    syntax on
-    redraw
-    echo 'syntax on'
-  endif
-endfunction
 
 " }}}
 
-" macros {{{
+" Editing {{{
+set smarttab        " insert blanks according to shiftwidth
+set expandtab       " use spaces instead of TAB
+set tabstop=8       " the number of spaces that a TAB counts for
+set softtabstop=4   " the number of spaces that a TAB counts for
+set shiftwidth=4    " the number of spaces of an indent
+set shiftround      " round indent to multiple of shiftwidth with > and <
 
-" save the file as root with 'sudo"
-cnoreabbr w!! w !sudo tee > /dev/null %
+set autoindent      " copy indent from current line when starting a new line
+set copyindent      " copy the structure of the existing lines indent when
+                          " autoindenting a new line
+set undofile        " keep undo history on undofile
+set virtualedit=all " allow virtual editing in all modes
 
-" save and restore the cursor position and folding level
-function! s:is_view_available() abort " {{{
-  if !&buflisted || &buftype !=# ''
-    return 0
-  elseif !filewritable(expand('%:p'))
-    return 0
-  endif
-  return 1
-endfunction " }}}
-function! s:mkview() abort " {{{
-  if s:is_view_available()
-    silent! mkview
-  endif
-endfunction " }}}
-function! s:loadview() abort " {{{
-  if s:is_view_available()
-    silent! loadview
-  endif
-endfunction " }}}
-autocmd MyAutoCmd BufWinLeave * call s:mkview()
-autocmd MyAutoCmd BufReadPost * call s:loadview()
+set wrap            " wrap long text
+set textwidth=0     " do not automatically break
 
-" reload vimrc with <Leader><Leader>r {{{
-if has('vim_starting')
-  function s:reload_vimrc() abort
-    execute printf('source %s', $MYVIMRC)
-    if has('gui_running')
-      execute printf('source %s', $MYGVIMRC)
-    endif
-    redraw
-    echo printf('.vimrc/.gvimrc has reloaded (%s).', strftime('%c'))
-  endfunction
-endif
-nmap <silent> <Plug>(my-reload-vimrc) :<C-u>call <SID>reload_vimrc()<CR>
-nmap <Leader><Leader>r <Plug>(my-reload-vimrc)
+" characters which might cause a line break
+set breakat& breakat-=-
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+" Remove a comment leader when joining lines (j)
+set formatoptions& formatoptions+=j
+
+" use clipboard register
+" - unnamed     : 'selection' in X11; clipboard in Mac OS X and Windows
+" - unnamedplus : 'clipboard' in X11, Mac OS X, and Windows
+set clipboard^=unnamed,unnamedplus
+
+" completion settings
+set complete&
+set complete-=i,d
+set complete+=.,w,b,u,k,s,t
+set completeopt&
+set completeopt-=preview
+set completeopt+=menu,longest,noselect
+set pumheight=20        " height of popup menu
+set showfulltag         " show both the tag name and the search pattern
 " }}}
 
-" source/reload current vimscript file " {{{
-function! s:source_current_vimscript() abort
-  let abspath = resolve(expand('%:p'))
-  if &filetype !=# 'vim'
-    redraw
-    echohl WarningMsg
-    echo printf(
-          \ 'The filetype of the current buffer is "%s" but it must be "vim" for source.',
-          \ &filetype,
-          \)
-    echohl None
-    return
-  elseif abspath ==# $MYVIMRC || abspath ==# $MYGVIMRC
-    redraw
-    echohl WarningMsg
-    echo 'The .vimrc/.gvimrc cannot be reloaded by this function. Use <Plug>(my-reload-vimrc) instead.'
-    echohl None
-    return
-  endif
-  execute printf('source %s', expand('%'))
-  redraw
-  echo printf('"%s" has sourced (%s).', expand('%:t'), strftime('%c'))
-endfunction
-nmap <silent> <Plug>(my-source) :<C-u>call <SID>source_current_vimscript()<CR>
-nmap <LocalLeader><LocalLeader>s <Plug>(my-source)
-" }}}
+call vimrc#source_path('$MYVIM_HOME/rc/mapping.vim')
+call vimrc#source_path('$MYVIM_HOME/rc/macro.vim')
+call vimrc#source_path('$MYVIM_HOME/rc/plugin.vim')
 
-" automatically create missing directories {{{
-autocmd MyAutoCmd BufWritePre * call s:makedirs(expand('<afile>:p:h'), v:cmdbang)
-function! s:makedirs(dir, force) abort
-  if a:dir =~# '^.\{-}://'
-      " Non local file, ignore
-      return
-  endif
-  if !isdirectory(a:dir)
-    if a:force || input(printf('"%s" does not exist. Create? [y/N]', a:dir)) =~? '^y\%[es]$'
-      call mkdir(a:dir, 'p')
-    endif
-  endif
-endfunction
-" }}}
-
-" automatically change working directory on vim enter {{{
-function! s:workon(dir, bang) abort
-  let dir = (a:dir ==# '' ? expand('%') : a:dir)
-  " convert filename to directory if required
-  if filereadable(dir)
-    let dir = fnamemodify(expand(dir),':p:h')
-  else
-    let dir = fnamemodify(dir, ':p')
-  endif
-  " change directory to specified directory
-  if isdirectory(dir)
-    silent execute 'cd ' . fnameescape(dir)
-    if a:bang ==# ''
-      redraw | echo 'Working on: '.dir
-      if v:version > 703 || (v:version == 703 && has('patch438'))
-        doautocmd <nomodeline> MyAutoCmd User my-workon-post
-      else
-        doautocmd MyAutoCmd User my-workon-post
-      endif
-    endif
-  endif
-endfunction
-autocmd MyAutoCmd VimEnter ?* call s:workon(expand('<afile>'), 1)
-command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
-" }}}
-
-" toggle quickfix window {{{
-function! s:toggle_qf() abort
-  let nwin = winnr('$')
-  cclose
-  if nwin == winnr('$')
-    cwindow
-  endif
-endfunction
-nnoremap <silent> <Leader>q :call <SID>toggle_qf()<CR>
-" }}}
-
-" Automatically re-assign filetype {{{
-autocmd MyAutoCmd BufWritePost *
-      \ if &filetype ==# '' || exists('b:ftdetect') |
-      \  unlet! b:ftdetect |
-      \  filetype detect |
-      \ endif
-"}}}
-
-" Use relative syntax when the file is too big
-autocmd MyAutoCmd Syntax *
-      \ if line('%') > 5000 |
-      \  syntax sync minlines=100 |
-      \ endif
-
-function! s:screen_cast() abort
-  set columns=80
-  set lines=30
-endfunction
-command! -nargs=0 ScreenCast call s:screen_cast()
-
-function! s:clear_messages() abort
-  for i in range(201)
-    echomsg ''
-  endfor
-endfunction
-command! -nargs=0 MessageClear call s:clear_messages()
-
-function! s:timeit(q_args) abort
-  let q_args = a:q_args
-  let q_args = substitute(q_args, '^[\t :]\+', '', '')
-  let q_args = substitute(q_args, '\s\+$', '', '')
-  let args = substitute(q_args, '^[ :]*!', '', '')
-  let start = reltime()
-  try
-    if q_args !=# '' && q_args[0] ==# '!'
-      echo system(args)
-    else
-      execute q_args
-    endif
-  finally
-    echomsg printf('Timeit: %s s [%s]', reltimestr(reltime(start)), a:q_args)
-  endtry
-endfunction
-command! -nargs=+ -bang -complete=command Timeit call s:timeit(<q-args>)
-
-function! s:execute_macro_over_visual_range() abort
-  echo "@" . getcmdline()
-  execute ":'<,'>normal @" . nr2char(getchar())
-endfunction
-xnoremap @ :<C-u> call <SID>execute_macro_over_visual_range()<CR>
-" }}}
-
-" nvim specific {{{
-" nvim
-if has('nvim')
-  tnoremap <Esc> <C-\><C-n>
-  tnoremap <A-h> <C-\><C-n><C-w>h
-  tnoremap <A-j> <C-\><C-n><C-w>j
-  tnoremap <A-k> <C-\><C-n><C-w>k
-  tnoremap <A-l> <C-\><C-n><C-w>l
-
-  function! s:on_TermOpen() abort
-    setlocal nolist
-  endfunction
-  autocmd MyAutoCmd TermOpen * call s:on_TermOpen()
-endif
-" }}}
 colorscheme hybrid
+filetype indent plugin on
+syntax on
 
-call rook#source(rook#normpath('rc/plugin.vim'))
-call rook#source(expand('~/.vimrc.local'))
+call vimrc#source_path('~/.vimrc.local')
+set secure
+" Create a new buffer window to apply options
+if has('vim_starting')
+  doautocmd BufRead
+endif
+" vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker

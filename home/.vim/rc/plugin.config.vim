@@ -6,19 +6,26 @@ function! s:is_git_available() "{{{
   if !executable('git')
     return 0
   endif
-  if neobundle#is_sourced('vim-gita')
-    return gita#is_enabled()
-  else
-    call vimproc#system('git rev-parse')
-    return (vimproc#get_last_status() == 0) ? 1 : 0
+  if exists('s:git_available')
+    return s:git_available
   endif
+  if neobundle#is_sourced('vim-gita')
+    let s:git_available = gita#is_enabled()
+  elseif neobundle#is_sourced('vimproc')
+    call vimproc#system('git rev-parse')
+    let s:git_available = (vimproc#get_last_status() == 0) ? 1 : 0
+  else
+    call system('git rev-parse')
+    let s:git_available = (v:shell_error == 0) ? 1 : 0
+  endif
+  return s:git_available
 endfunction "}}}
 
 " fundementals {{{
 
 if neobundle#tap('sudo.vim') " {{{
   function! neobundle#hooks.on_source(bundle) abort
-    cabbr w!! :w sudo:%
+    cnoreabbr w!! :w sudo:%
   endfunction
   call neobundle#untap()
 endif " }}}
@@ -56,29 +63,7 @@ if neobundle#tap('vim-repeat') " {{{
 endif " }}}
 
 if neobundle#tap('vim-quickhl') " {{{
-  nnoremap <Plug>(my-quickhl) <Nop>
-  vnoremap <Plug>(my-quickhl) <Nop>
-  xnoremap <Plug>(my-quickhl) <Nop>
-  nmap <C-h> <Plug>(my-quickhl)
-  vmap <C-h> <Plug>(my-quickhl)
-  xmap <C-h> <Plug>(my-quickhl)
-
-  nmap <Plug>(my-quickhl)h <Plug>(quickhl-manual-this)
-  vmap <Plug>(my-quickhl)h <Plug>(quickhl-manual-this)
-  xmap <Plug>(my-quickhl)h <Plug>(quickhl-manual-this)
-  nmap <Plug>(my-quickhl)r <Plug>(quickhl-manual-reset)
-  vmap <Plug>(my-quickhl)r <Plug>(quickhl-manual-reset)
-  xmap <Plug>(my-quickhl)r <Plug>(quickhl-manual-reset)
-
-  nmap <Plug>(my-quickhl)H  <Plug>(quickhl-manual-toggle)
-  vmap <Plug>(my-quickhl)H  <Plug>(quickhl-manual-toggle)
-  xmap <Plug>(my-quickhl)H  <Plug>(quickhl-manual-toggle)
-  nmap <Plug>(my-quickhl)c  <Plug>(quickhl-cword-toggle)
-  vmap <Plug>(my-quickhl)c  <Plug>(quickhl-cword-toggle)
-  nmap <Plug>(my-quickhl)t  <Plug>(quickhl-tag-toggle)
-  vmap <Plug>(my-quickhl)t  <Plug>(quickhl-tag-toggle)
-
-  map  <Plug>(my-operator)h <Plug>(operator-quickhl-manual-this-motion)
+  map H <Plug>(operator-quickhl-manual-this-motion)
 
   call neobundle#untap()
 endif " }}}
@@ -88,11 +73,8 @@ if neobundle#tap('open-browser.vim') " {{{
     let g:netrw_nogx = 1  " disable netrw's gx mapping
   endfunction
 
-  nnoremap <Plug>(my-openbrowser) <Nop>
-  nmap gx <Plug>(my-openbrowser)
-  vmap gx <Plug>(my-openbrowser)
-  nmap <Plug>(my-openbrowser) <Plug>(openbrowser-smart-search)
-  vmap <Plug>(my-openbrowser) <Plug>(openbrowser-smart-search)
+  nmap gx <Plug>(openbrowser-smart-search)
+  vmap gx <Plug>(openbrowser-smart-search)
 
   call neobundle#untap()
 endif " }}}
@@ -106,16 +88,19 @@ if neobundle#tap('vim-over') " {{{
   function! neobundle#hooks.on_source(bundle) abort
     let g:over_enable_auto_nohlsearch = 1
     let g:over_enable_cmd_window = 1
+    if has('multi_byte') && $LANG !=# 'C'
+      let g:over_command_line_prompt = '» '
+    endif
     let g:over#command_line#search#enable_incsearch = 1
   endfunction
 
   " Use vim-over instead of builtin substitution
   " http://leafcage.hateblo.jp/entry/2013/11/23/212838
-  cnoreabb <silent><expr>s getcmdtype() ==# ':'
-        \ ? 'OverCommandLine<CR><C-u>%s/'
+  cnoreabbrev <silent><expr>s getcmdtype() ==# ':' && getcmdline() =~# '^s'
+        \ ? "OverCommandLine<CR><C-u>%s/<C-r>=get([], getchar(0), '')<CR>"
         \ : 's'
-  cnoreabb <silent><expr>'<,'>s getcmdtype() ==# ':'
-        \ ? "'<,'>OverCommandLine<CR>s/"
+  cnoreabbrev <silent><expr>'<,'>s getcmdtype() ==# ':' && getcmdline() =~# "^'<,'>s"
+        \ ? "'<,'>OverCommandLine<CR>s/<C-r>=get([], getchar(0), '')<CR>"
         \ : "'<,'>s"
 
   call neobundle#untap()
@@ -137,12 +122,12 @@ endif " }}}
 
 if neobundle#tap('vim-asterisk') " {{{
   call neobundle#untap()
+  " See incsearch.vim
 endif " }}}
 
 if neobundle#tap('incsearch.vim') " {{{
   function! neobundle#hooks.on_source(bundle) abort
     let g:incsearch#auto_nohlsearch = 1
-    let g:incsearch#magic = '\v'
   endfunction
 
   map / <Plug>(incsearch-forward)
@@ -236,9 +221,7 @@ if neobundle#tap('vim-quickrun') " {{{
           \ ? quickrun#sweep_sessions() : "\<C-c>"
   endfunction
 
-  nnoremap <Plug>(my-quickrun) <Nop>
-  nmap <LocalLeader>r <Plug>(my-quickrun)
-  nmap <Plug>(my-quickrun) <Plug>(quickrun)
+  nmap <LocalLeader>r <Plug>(quickrun)
 
   call neobundle#untap()
 endif " }}}
@@ -310,23 +293,19 @@ endif " }}}
 if neobundle#tap('vim-foldround') " {{{
   function! neobundle#hooks.on_source(bundle) abort
     call foldround#register('\.vim$', [
-          \ 'syntax', 'manual'
+          \ 'syntax', 'marker',
           \])
     call foldround#register('\.vim/.*\.vim$', [
-          \ 'syntax', 'manual', 'marker',
+          \ 'syntax', 'marker',
           \])
     call foldround#register('[./]g\?vimrc$', [
-          \ 'syntax', 'manual', 'marker',
+          \ 'syntax', 'marker',
           \])
   endfunction
   nmap <C-f>f     <Plug>(foldround-forward)
   nmap <C-f><C-f> <Plug>(foldround-forward)
   nmap <C-f>b     <Plug>(foldround-backward)
   nmap <C-f><C-b> <Plug>(foldround-backward)
-  call neobundle#untap()
-endif " }}}
-
-if neobundle#tap('FastFold') " {{{
   call neobundle#untap()
 endif " }}}
 
@@ -373,12 +352,12 @@ endif " }}}
 
 if neobundle#tap('neosnippet.vim') " {{{
   function! neobundle#hooks.on_post_source(bundle) abort
-    let g:neosnippet#snippets_directory = rook#normpath('snippets')
+    let g:neosnippet#snippets_directory = expand('$MYVIM_HOME/snippets')
     let g:neosnippet#enable_snipmate_compatibility = 1
 
     " for snippet complete marker
     if has('conceal')
-      set conceallevel=2 concealcursor=niv
+      setglobal conceallevel=2 concealcursor=niv
     endif
   endfunction
 
@@ -404,8 +383,8 @@ endif " }}}
 
 if neobundle#tap('echodoc.vim') " {{{
   function! neobundle#hooks.on_source(bundle) abort
-    set cmdheight=2
-    set completeopt+=menuone
+    setglobal cmdheight=2
+    setglobal completeopt+=menuone
     "set completeopt-=preview
     let g:echodoc_enable_at_startup=1
   endfunction
@@ -509,12 +488,7 @@ endif " }}}
 " operator {{{
 
 if neobundle#tap('vim-operator-replace') " {{{
-  map <Plug>(my-operator)r <Plug>(operator-replace)
-  call neobundle#untap()
-endif " }}}
-
-if neobundle#tap('vim-operator-openbrowser') " {{{
-  map <Plug>(my-operator)x <Plug>(operator-openbrowser)
+  map R <Plug>(operator-replace)
   call neobundle#untap()
 endif " }}}
 
@@ -536,18 +510,13 @@ if neobundle#tap('vim-operator-surround') " {{{
         \ ]}
   endfunction
 
-  map <Plug>(my-operator)sa <Plug>(operator-surround-append)
-  map <Plug>(my-operator)sd <Plug>(operator-surround-delete)
-  map <Plug>(my-operator)sr <Plug>(operator-surround-replace)
-
-  nmap <Plug>(my-operator)sdd
-        \ <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
-  nmap <Plug>(my-operator)srr
-        \ <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
-  vmap <Plug>(my-operator)sdd
-        \ <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
-  vmap <Plug>(my-operator)srr
-        \ <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
+  map sa <Plug>(operator-surround-append)
+  map sd <Plug>(operator-surround-delete)
+  map sr <Plug>(operator-surround-replace)
+  nmap sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
+  nmap srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
+  vmap sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
+  vmap srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
   call neobundle#untap()
 endif " }}}
 
@@ -559,12 +528,6 @@ endif " }}}
 
 if neobundle#tap('concealedyank.vim') " {{{
   xmap Y <Plug>(operator-concealedyank)
-  call neobundle#untap()
-endif " }}}
-
-if neobundle#tap('vim-operator-flashy') " {{{
-  map y <Plug>(operator-flashy)
-  map Y <Plug>(operator-flashy)$
   call neobundle#untap()
 endif " }}}
 
@@ -769,12 +732,12 @@ if neobundle#tap('unite.vim') " {{{
           \ -buffer-name=search<CR>
   endif
 
-  let neobundle#hooks.on_source = rook#normpath('rc/plugin/unite.vim')
+  let neobundle#hooks.on_source = expand('$MYVIM_HOME/rc/plugin/unite.vim')
   call neobundle#untap()
 endif " }}}
 
 if neobundle#tap('vimshell.vim') " {{{
-  let neobundle#hooks.on_source = rook#normpath('rc/plugin/vimshell.vim')
+  let neobundle#hooks.on_source = expand('$MYVIM_HOME/rc/plugin/vimshell.vim')
   function! neobundle#hooks.on_post_source(bundle)
     highlight! vimshellError gui=NONE cterm=NONE guifg='#cc6666' ctermfg=9
   endfunction
@@ -794,7 +757,7 @@ if neobundle#tap('vimfiler.vim') " {{{
   nmap <Leader>e <Plug>(my-vimfiler)
   nnoremap <silent> <Plug>(my-vimfiler)e :<C-u>VimFilerExplorer<CR>
   nnoremap <silent> <Plug>(my-vimfiler)E :<C-u>VimFiler<CR>
-  let neobundle#hooks.on_source = rook#normpath('rc/plugin/vimfiler.vim')
+  let neobundle#hooks.on_source = expand('$MYVIM_HOME/rc/plugin/vimfiler.vim')
   call neobundle#untap()
 endif " }}}
 
@@ -820,8 +783,8 @@ endif " }}}
 
 if neobundle#tap('ref-sources.vim') " {{{
   function! neobundle#hooks.on_source(bundle) abort
-    let g:ref_jquery_doc_path     = rook#normpath('bundle/jqapi')
-    let g:ref_javascript_doc_path = rook#normpath('bundle/jsref/htdocs')
+    let g:ref_jquery_doc_path     = expand('$MYVIM_HOME/bundle/jqapi')
+    let g:ref_javascript_doc_path = expand('$MYVIM_HOME/bundle/jsref/htdocs')
     let g:ref_auto_resize = 1
     let g:ref_wikipedia_lang = ['ja', 'en']
   endfunction
@@ -1066,8 +1029,7 @@ endif " }}}
 if neobundle#tap('jedi-vim') && executable('python') " {{{
   function! neobundle#hooks.on_source(bundle) abort
     function! s:jedi_vim_configure() abort
-      setl omnifunc=jedi#completions
-      setl completeopt=menu,longest
+      setlocal omnifunc=jedi#completions
 
       nmap <buffer> <LocalLeader>g <Plug>(jedi-goto-assignments)
       nmap <buffer> <LocalLeader>d <Plug>(jedi-goto-definitions)
@@ -1115,8 +1077,8 @@ if neobundle#tap('tsuquyomi') && executable('tsc') " {{{
       nmap <buffer> <LocalLeader>r <Plug>(TsuquyomiReferences)
       nmap <buffer> <LocalLeader>R <Plug>(TsuquyomiRenameSymbolC)
       if exists('&ballooneval')
-        setl ballooneval
-        setl balloonexpr=tsuquyomi#balloonexpr()
+        setlocal ballooneval
+        setlocal balloonexpr=tsuquyomi#balloonexpr()
       endif
     endfunction
     autocmd MyAutoCmd FileType typescript call s:tsuquyomi_configure()
@@ -1125,3 +1087,4 @@ if neobundle#tap('tsuquyomi') && executable('tsc') " {{{
 endif " }}}
 
 " }}}
+" vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker

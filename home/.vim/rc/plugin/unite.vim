@@ -222,43 +222,51 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \ ],
       \ [
       \   'filetype.vim',
-      \   fnamemodify(rook#normpath('filetype.vim'), ':~'),
+      \   fnamemodify(expand('$MYVIM_HOME/filetype.vim'), ':~'),
       \ ],
       \ [
       \   'vintrc.yaml',
       \   '~/.vintrc.yaml',
       \ ],
       \ [
-      \   'autoload/rook.vim',
-      \   fnamemodify(rook#normpath('autoload/rook.vim'), ':~'),
+      \   'autoload/vimrc.vim',
+      \   fnamemodify(expand('$MYVIM_HOME/autoload/vimrc.vim'), ':~'),
+      \ ],
+      \ [
+      \   'rc/mapping.vim',
+      \   fnamemodify(expand('$MYVIM_HOME/rc/mapping.vim'), ':~'),
+      \ ],
+      \ [
+      \   'rc/macro.vim',
+      \   fnamemodify(expand('$MYVIM_HOME/rc/macro.vim'), ':~'),
       \ ],
       \ [
       \   'rc/plugin.vim',
-      \   fnamemodify(rook#normpath('rc/plugin.vim'), ':~'),
+      \   fnamemodify(expand('$MYVIM_HOME/rc/plugin.vim'), ':~'),
       \ ],
       \ [
       \   'rc/plugin.define.toml',
-      \   fnamemodify(rook#normpath('rc/plugin.define.toml'), ':~'),
+      \   fnamemodify(expand('$MYVIM_HOME/rc/plugin.define.toml'), ':~'),
       \ ],
       \ [
       \   'rc/plugin.config.vim',
-      \   fnamemodify(rook#normpath('rc/plugin.config.vim'), ':~'),
+      \   fnamemodify(expand('$MYVIM_HOME/rc/plugin.config.vim'), ':~'),
       \ ],
       \ [
       \   'rc/plugin/lightline.vim',
-      \   fnamemodify(rook#normpath('rc/plugin/lightline.vim'), ':~'),
+      \   fnamemodify(expand('$MYVIM_HOME/rc/plugin/lightline.vim'), ':~'),
       \ ],
       \ [
       \   'rc/plugin/unite.vim',
-      \   fnamemodify(rook#normpath('rc/plugin/unite.vim'), ':~'),
+      \   fnamemodify(expand('$MYVIM_HOME/rc/plugin/unite.vim'), ':~'),
       \ ],
       \ [
       \   'rc/plugin/vimfiler.vim',
-      \   fnamemodify(rook#normpath('rc/plugin/vimfiler.vim'), ':~'),
+      \   fnamemodify(expand('$MYVIM_HOME/rc/plugin/vimfiler.vim'), ':~'),
       \ ],
       \ [
       \   'rc/plugin/vimshell.vim',
-      \   fnamemodify(rook#normpath('rc/plugin/vimshell.vim'), ':~'),
+      \   fnamemodify(expand('$MYVIM_HOME/rc/plugin/vimshell.vim'), ':~'),
       \ ],
       \ [
       \   'vim',
