@@ -404,9 +404,9 @@ cnoreabbrev <silent><expr>'<,'>s getcmdtype() ==# ':' && getcmdline() =~# "^'<,'
 " Reload vimrc with <Leader><Leader>r {{{
 if !exists('*s:reload_vimrc')
   function! s:reload_vimrc() abort
-    call vimrc#source_path($MYVIM_VIMRC)
+    call vimrc#source_path($MYVIM_VIMRC, 1)
     if has('gui_running')
-      call vimrc#source_path($MYVIM_GVIMRC)
+      call vimrc#source_path($MYVIM_GVIMRC, 1)
       redraw | echo printf('"%s" and "%s" has sourced (%s).',
             \ fnamemodify($MYVIM_VIMRC, ':t'),
             \ fnamemodify($MYVIM_GVIMRC, ':t'),
@@ -554,13 +554,13 @@ xmap @ <Plug>(my-execute-macro)
 
 " }}}
 
-"call vimrc#source_path('$MYVIM_HOME/rc/neobundle.vim')
-call vimrc#source_path('$MYVIM_HOME/rc/dein.vim')
+"call vimrc#source_path('$MYVIM_HOME/rc/neobundle.vim', !has('vim_starting'))
+call vimrc#source_path('$MYVIM_HOME/rc/dein.vim', !has('vim_starting'))
 
 filetype indent plugin on
 syntax on
 colorscheme hybrid
 
-call vimrc#source_path('~/.vimrc.local')
+call vimrc#source_path('~/.vimrc.local', !has('vim_starting'))
 set secure
 " vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker

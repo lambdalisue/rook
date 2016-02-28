@@ -122,14 +122,15 @@ if dein#tap('clever-f.vim') " {{{
 endif " }}}
 
 if dein#tap('vim-asterisk') " {{{
-  map *   <Plug>(asterisk-*)
-  map #   <Plug>(asterisk-#)
-  map g*  <Plug>(asterisk-g*)
-  map g#  <Plug>(asterisk-g#)
-  map z*  <Plug>(asterisk-z*)
-  map gz* <Plug>(asterisk-gz*)
-  map z#  <Plug>(asterisk-z#)
-  map gz# <Plug>(asterisk-gz#)
+  " map *   <Plug>(asterisk-*)
+  " map #   <Plug>(asterisk-#)
+  " map g*  <Plug>(asterisk-g*)
+  " map g#  <Plug>(asterisk-g#)
+  " map z*  <Plug>(asterisk-z*)
+  " map gz* <Plug>(asterisk-gz*)
+  " map z#  <Plug>(asterisk-z#)
+  " map gz# <Plug>(asterisk-gz#)
+  " Note: see incsearch.vim
 endif " }}}
 
 if dein#tap('incsearch.vim') " {{{
@@ -144,21 +145,14 @@ if dein#tap('incsearch.vim') " {{{
   map n <Plug>(incsearch-nohl-n)
   map N <Plug>(incsearch-nohl-N)
 
-  if !empty(dein#get('asterisk.vim'))
-    map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)
-    map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
-    map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
-    map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
-    map z*  <Plug>(incsearch-nohl)<Plug>(asterisk-z*)
-    map gz* <Plug>(incsearch-nohl)<Plug>(asterisk-gz*)
-    map z#  <Plug>(incsearch-nohl)<Plug>(asterisk-z#)
-    map gz# <Plug>(incsearch-nohl)<Plug>(asterisk-gz#)
-  else
-    map *  <Plug>(incsearch-nohl-*)
-    map #  <Plug>(incsearch-nohl-#)
-    map g* <Plug>(incsearch-nohl-g*)
-    map g# <Plug>(incsearch-nohl-g#)
-  endif
+  map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)
+  map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
+  map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
+  map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
+  map z*  <Plug>(incsearch-nohl)<Plug>(asterisk-z*)
+  map gz* <Plug>(incsearch-nohl)<Plug>(asterisk-gz*)
+  map z#  <Plug>(incsearch-nohl)<Plug>(asterisk-z#)
+  map gz# <Plug>(incsearch-nohl)<Plug>(asterisk-gz#)
 endif " }}}
 
 if dein#tap('yankround.vim') " {{{
@@ -497,41 +491,22 @@ if dein#tap('lightline.vim') " {{{
   function! g:lightline.my.fileencoding() abort
     return winwidth(0) > 70 ? (strlen(&fileencoding) ? &fileencoding : &encoding) : ''
   endfunction
-
-  if !empty(dein#get('vim-gita'))
-    function! g:lightline.my.gita_branch() abort
-      return dein#is_sourced('vim-gita')
-            \ ? gita#statusline#preset('branch_short_fancy') : ''
-    endfunction
-    function! g:lightline.my.gita_traffic() abort
-      return dein#is_sourced('vim-gita')
-            \ ? gita#statusline#preset('traffic_fancy') : ''
-    endfunction
-    function! g:lightline.my.gita_status() abort
-      return dein#is_sourced('vim-gita')
-            \ ? gita#statusline#preset('status') : ''
-    endfunction
-  else
-    function! g:lightline.my.gita_branch() abort
-      return ''
-    endfunction
-    function! g:lightline.my.gita_traffic() abort
-      return ''
-    endfunction
-    function! g:lightline.my.gita_status() abort
-      return ''
-    endfunction
-  endif
-  if !empty(dein#get('vim-pyenv'))
-    function! g:lightline.my.pyenv() abort
-      return dein#is_sourced('vim-pyenv')
-            \ ? pyenv#info#preset('long') : ''
-    endfunction
-  else
-    function! g:lightline.my.pyenv() abort
-      return ''
-    endfunction
-  endif
+  function! g:lightline.my.gita_branch() abort
+    return dein#is_sourced('vim-gita')
+          \ ? gita#statusline#preset('branch_short_fancy') : ''
+  endfunction
+  function! g:lightline.my.gita_traffic() abort
+    return dein#is_sourced('vim-gita')
+          \ ? gita#statusline#preset('traffic_fancy') : ''
+  endfunction
+  function! g:lightline.my.gita_status() abort
+    return dein#is_sourced('vim-gita')
+          \ ? gita#statusline#preset('status') : ''
+  endfunction
+  function! g:lightline.my.pyenv() abort
+    return dein#is_sourced('vim-pyenv')
+          \ ? pyenv#info#preset('long') : ''
+  endfunction
   function! g:lightline.my.qfstatusline() abort
     if dein#is_sourced('vim-qfstatusline')
       let message = qfstatusline#Update()
@@ -545,6 +520,7 @@ if dein#tap('lightline.vim') " {{{
       return ''
     endif
   endfunction
+  call s:register_on_post_source_hook('lightline#update')
 endif " }}}
 
 if dein#tap('vim-watchdogs') " {{{
@@ -617,6 +593,10 @@ endif " }}}
 
 
 " Operator -------------------------------------------------------------------
+nnoremap <Plug>(my-operator) <Nop>
+xnoremap <Plug>(my-operator) <Nop>
+nmap - <Plug>(my-operator)
+xmap - <Plug>(my-operator)
 
 if dein#tap('vim-operator-replace') " {{{
   nmap R <Plug>(operator-replace)
@@ -669,347 +649,7 @@ endif " }}}
 
 if dein#tap('unite.vim') " {{{
   function! s:unite_vim_on_source() abort
-    " grep
-    if executable('hw')
-      " Use hw (highway)
-      " https://github.com/tkengo/highway
-      let g:unite_source_grep_command = 'hw'
-      let g:unite_source_grep_default_opts = '--no-group --no-color'
-      let g:unite_source_grep_recursive_opt = ''
-    elseif executable('ag')
-      " Use ag (the silver searcher)
-      " https://github.com/ggreer/the_silver_searcher
-      let g:unite_source_grep_command = 'ag'
-      let g:unite_source_grep_default_opts =
-            \ '-i --vimgrep --hidden --ignore ' .
-            \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-      let g:unite_source_grep_recursive_opt = ''
-    elseif executable('pt')
-      " Use pt (the platinum searcher)
-      " https://github.com/monochromegane/the_platinum_searcher
-      let g:unite_source_grep_command = 'pt'
-      let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-      let g:unite_source_grep_recursive_opt = ''
-    elseif executable('ack-grep')
-      " Use ack
-      " http://beyondgrep.com/
-      let g:unite_source_grep_command = 'ack-grep'
-      let g:unite_source_grep_default_opts =
-            \ '-i --no-heading --no-color -k -H'
-      let g:unite_source_grep_recursive_opt = ''
-    elseif executable('jvgrep')
-      " Use jvgrep
-      " https://github.com/mattn/jvgrep
-      let g:unite_source_grep_command = 'jvgrep'
-      let g:unite_source_grep_default_opts =
-            \ '-i --exclude ''\.(git|svn|hg|bzr)'''
-      let g:unite_source_grep_recursive_opt = '-R'
-    endif
-    if !has('multi_byte') || $LANG ==# 'C'
-      let config = {
-            \ 'prompt': '> ',
-            \ 'candidate_icon': ' ',
-            \ 'marked_icon': '*',
-            \}
-    else
-      let config = {
-            \ 'prompt': '» ',
-            \ 'candidate_icon': '⋮',
-            \ 'marked_icon': '✓',
-            \ 'no_hide_icon': 1,
-            \}
-    endif
-    call unite#custom#profile('source/bookmark', 'context', {
-          \ 'no_start_insert': 1,
-          \})
-    call unite#custom#profile('source/output', 'context', {
-          \ 'no_start_insert': 1,
-          \})
-    call unite#custom#profile('source/giti', 'context', {
-          \ 'no_start_insert': 1,
-          \})
-    call unite#custom#profile('source/menu', 'context', {
-          \ 'no_start_insert': 1,
-          \})
-    call unite#custom#profile('default', 'context', extend(config, {
-          \ 'start_insert': 1,
-          \ 'no_empty': 1,
-          \}))
-    call unite#custom#default_action('directory', 'cd')
-    call unite#custom#alias('file', 'edit', 'open')
-
-    " agit.vim
-    let agit = {
-          \ 'description': 'open the directory (or parent directory) in agit',
-          \ }
-    function! agit.func(candidate) abort
-      if isdirectory(a:candidate.action__path)
-        let path = a:candidate.action__path
-      else
-        let path = fnamemodify(a:candidate.action__path, ':h')
-      endif
-      execute 'Agit' '--dir=' . path
-    endfunction
-    call unite#custom#action('file,cdable', 'agit', agit)
-    let agit_file = {
-          \ 'description': "open the file's history in agit.vim",
-          \ }
-    function! agit_file.func(candidate) abort
-      execute 'AgitFile' '--file=' . a:candidate.action__path
-    endfunction
-    call unite#custom#action('file', 'agit_file', agit_file)
-
-    function! s:configure_unite() abort
-      let unite = unite#get_current_unite()
-
-      " map 'r' to 'replace' or 'rename' action
-      if get(unite, 'profile_name', '') ==# 'search'
-        nnoremap <silent><buffer><expr><nowait> r
-              \ unite#smart_map('r', unite#do_action('replace'))
-      else
-        nnoremap <silent><buffer><expr><nowait> r
-              \ unite#smart_map('r', unite#do_action('rename'))
-      endif
-
-      " 'J' to select candidate instead of <Space> / <S-Space>
-      silent! nunmap <buffer> <Space>
-      silent! vunmap <buffer> <Space>
-      silent! nunmap <buffer> <S-Space>
-      nmap <buffer><nowait> J <Plug>(unite_toggle_mark_current_candidate)
-      vmap <buffer><nowait> J <Plug>(unite_toggle_mark_selected_candidate)
-
-      " 'E' to open right
-      nnoremap <silent><buffer><expr><nowait> E
-            \ unite#smart_map('E', unite#do_action('right'))
-
-      " force winfixheight
-      setlocal winfixheight
-    endfunction
-    autocmd MyAutoCmd FileType unite call s:configure_unite()
-
-    function! s:register_filemenu(name, description, precursors) abort
-      " find the length of the longest name
-      let max_length = max(map(
-            \ filter(deepcopy(a:precursors), 'len(v:val) > 1'),
-            \ 'len(v:val[0])'
-            \))
-      let format = printf('%%-%ds : %%s', max_length)
-      let candidates = []
-      for precursor in a:precursors
-        if len(precursor) == 1
-          call add(candidates, [
-                \ precursor[0],
-                \ '',
-                \])
-        elseif len(precursor) >= 2
-          let name = precursor[0]
-          let desc = precursor[1]
-          let path = get(precursor, 2, '')
-          let path = resolve(expand(empty(path) ? desc : path))
-          let kind = isdirectory(path) ? 'directory' : 'file'
-          call add(candidates, [
-                \ printf(format, name, desc),
-                \ path,
-                \])
-        else
-          let msg = printf(
-                \ 'A candidate precursor must has 1 or more than two terms : %s',
-                \ string(precursor)
-                \)
-          call add(candidates, [
-                \ 'ERROR : ' . msg,
-                \ '',
-                \])
-        endif
-      endfor
-
-      let menu = {}
-      let menu.candidates = candidates
-      let menu.description = a:description
-      let menu.separator_length = max(map(
-            \ deepcopy(candidates),
-            \ 'len(v:val[0])',
-            \))
-      if menu.separator_length % 2 != 0
-        let menu.separator_length += 1
-      endif
-      function! menu.map(key, value) abort
-        let word = a:value[0]
-        let path = a:value[1]
-        if empty(path)
-          if word ==# '-'
-            let word = repeat('-', self.separator_length)
-          else
-            let length = self.separator_length - (len(word) + 3)
-            let word = printf('- %s %s', word, repeat('-', length))
-          endif
-          return {
-                \ 'word': '',
-                \ 'abbr': word,
-                \ 'kind': 'common',
-                \ 'is_dummy': 1,
-                \}
-        else
-          let kind = isdirectory(path) ? 'directory' : 'file'
-          let directory = isdirectory(path) ? path : fnamemodify(path, ':h')
-          return {
-                \ 'word': word,
-                \ 'abbr': printf('[%s] %s', toupper(kind[0]), word),
-                \ 'kind': kind,
-                \ 'action__path': path,
-                \ 'action__directory': directory,
-                \}
-        endif
-      endfunction
-
-      " register to 'g:unite_source_menu_menus'
-      let g:unite_source_menu_menus = get(g:, 'unite_source_menu_menus', {})
-      let g:unite_source_menu_menus[a:name] = menu
-    endfunction
-
-    call s:register_filemenu('shortcut', 'Shortcut menu', [
-          \ ['rook'],
-          \ [
-          \   'rook',
-          \   '~/.homesick/repos/rook',
-          \ ],
-          \ ['vim'],
-          \ [
-          \   'vimrc',
-          \   fnamemodify(resolve($MYVIMRC), ':~'),
-          \ ],
-          \ [
-          \   'gvimrc',
-          \   fnamemodify(resolve($MYGVIMRC), ':~'),
-          \ ],
-          \ [
-          \   'vimshrc',
-          \   '~/.vim/vimshrc',
-          \ ],
-          \ [
-          \   'filetype.vim',
-          \   fnamemodify(expand('$MYVIM_HOME/filetype.vim'), ':~'),
-          \ ],
-          \ [
-          \   'vintrc.yaml',
-          \   '~/.vintrc.yaml',
-          \ ],
-          \ [
-          \   'autoload/vimrc.vim',
-          \   fnamemodify(expand('$MYVIM_HOME/autoload/vimrc.vim'), ':~'),
-          \ ],
-          \ [
-          \   'rc/mapping.vim',
-          \   fnamemodify(expand('$MYVIM_HOME/rc/mapping.vim'), ':~'),
-          \ ],
-          \ [
-          \   'rc/macro.vim',
-          \   fnamemodify(expand('$MYVIM_HOME/rc/macro.vim'), ':~'),
-          \ ],
-          \ [
-          \   'rc/plugin.vim',
-          \   fnamemodify(expand('$MYVIM_HOME/rc/plugin.vim'), ':~'),
-          \ ],
-          \ [
-          \   'rc/plugin.define.toml',
-          \   fnamemodify(expand('$MYVIM_HOME/rc/plugin.define.toml'), ':~'),
-          \ ],
-          \ [
-          \   'rc/plugin.config.vim',
-          \   fnamemodify(expand('$MYVIM_HOME/rc/plugin.config.vim'), ':~'),
-          \ ],
-          \ [
-          \   'rc/plugin/lightline.vim',
-          \   fnamemodify(expand('$MYVIM_HOME/rc/plugin/lightline.vim'), ':~'),
-          \ ],
-          \ [
-          \   'rc/plugin/unite.vim',
-          \   fnamemodify(expand('$MYVIM_HOME/rc/plugin/unite.vim'), ':~'),
-          \ ],
-          \ [
-          \   'rc/plugin/vimfiler.vim',
-          \   fnamemodify(expand('$MYVIM_HOME/rc/plugin/vimfiler.vim'), ':~'),
-          \ ],
-          \ [
-          \   'rc/plugin/vimshell.vim',
-          \   fnamemodify(expand('$MYVIM_HOME/rc/plugin/vimshell.vim'), ':~'),
-          \ ],
-          \ [
-          \   'vim',
-          \   '~/.vim',
-          \ ],
-          \ [
-          \   'bundle',
-          \   '~/.vim/bundle',
-          \ ],
-          \ [
-          \   'ftplugin',
-          \   '~/.vim/ftplugin',
-          \ ],
-          \ ['zsh'],
-          \ [
-          \   'zshrc',
-          \   '~/.config/zsh/.zshrc',
-          \ ],
-          \ [
-          \   'rc/theme.dust.zsh',
-          \   '~/.config/zsh/rc/theme.dust.zsh',
-          \ ],
-          \ [
-          \   'rc/configure.applications.zsh',
-          \   '~/.config/zsh/rc/configure.applications.zsh',
-          \ ],
-          \ [
-          \   'zsh',
-          \   '~/.config/zsh',
-          \ ],
-          \ ['tmux'],
-          \ [
-          \   'tmux.conf',
-          \   '~/.tmux.conf',
-          \ ],
-          \ [
-          \   'tmux-powerlinerc',
-          \   '~/.tmux-powerlinerc',
-          \ ],
-          \ [
-          \   'tmux-powerline.conf',
-          \   '~/.config/tmux/tmux-powerline.conf',
-          \ ],
-          \ [
-          \   'tmux',
-          \   '~/.config/tmux',
-          \ ],
-          \ ['others'],
-          \ [
-          \   'gitconfig',
-          \   '~/.gitconfig',
-          \ ],
-          \ [
-          \   'gitignore',
-          \   '~/.gitignore',
-          \ ],
-          \ [
-          \   'pymolrc',
-          \   '~/.pymolrc',
-          \ ],
-          \ [
-          \   'vimperatorrc',
-          \   '~/.vimperatorrc',
-          \ ],
-          \ [
-          \   'latexmkrc',
-          \   '~/.latexmkrc',
-          \ ],
-          \ [
-          \   'jupyter custom.css',
-          \   '~/.jupyter/custom/custom.css',
-          \ ],
-          \ [
-          \   'jupyter custom.js',
-          \   '~/.jupyter/custom/custom.js',
-          \ ],
-          \])
+    call vimrc#source_path('$MYVIM_HOME/rc/config/unite.vim')
   endfunction
   call s:register_on_source_hook()
 
@@ -1188,70 +828,7 @@ endif " }}}
 
 if dein#tap('vimshell.vim') " {{{
   function! s:vimshell_vim_on_source() abort
-    let zsh_history_path = expand('~/.config/zsh/.zsh_history')
-
-    let g:vimshell_prompt = '$ '
-    let g:vimshell_secondary_prompt = '| '
-    if filereadable(zsh_history_path)
-      let g:vimshell_external_history_path = zsh_history_path
-    endif
-
-    let s:vimshell_hooks = {}
-    function! s:vimshell_hooks.chpwd(args, context) abort
-      if len(split(glob('*'), '\n')) < 100
-        call vimshell#execute('ls')
-      else
-        call vimshell#execute('echo "Many files."')
-      endif
-    endfunction
-    function! s:vimshell_hooks.emptycmd(cmdline, context) abort
-      call vimshell#execute('ls')
-    endfunction
-    function! s:vimshell_hooks.preexec(cmdline, context) abort
-      let args = vimproc#parser#split_args(a:cmdline)
-      if len(args) > 0 && args[0] ==# 'diff'
-        call vimshell#set_syntax('diff')
-      endif
-      return a:cmdline
-    endfunction
-
-    function! s:configure_vimshell() abort
-      " Initialize execute file list.
-      call vimshell#set_execute_file('rb', 'ruby')
-      call vimshell#set_execute_file('pl', 'perl')
-      call vimshell#set_execute_file('py', 'python')
-      call vimshell#set_execute_file('js', 'node')
-      call vimshell#set_execute_file('coffee', 'coffee')
-
-      if neobundle#is_installed('concealedyank')
-        xmap <buffer> y <Plug>(operator-concealedyank)
-      endif
-      nmap <buffer><silent> q :<C-u>close<CR>
-      imap <buffer> ^^ cd ..<CR>
-      imap <buffer> [[ popd<CR>
-      silent! iunmap <buffer> <C-n>
-      silent! iunmap <buffer> <C-p>
-      silent! nunmap <buffer> <C-n>
-      silent! nunmap <buffer> <C-p>
-      nmap <buffer> <Up>   <Plug>(vimshell-previous-prompt)
-      nmap <buffer> <Down> <Plug>(vimshell-next-prompt)
-
-      inoremap <buffer><silent><C-r> <Esc>:<C-u>Unite
-            \ -buffer-name=history
-            \ -default-action=execute
-            \ -no-split
-            \ vimshell/history vimshell/external_history<CR>
-      inoremap <buffer><silent><C-x><C-j> <Esc>:<C-u>Unite
-            \ -buffer-name=files
-            \ -default-action=cd
-            \ -no-split
-            \ directory_mru<CR>
-
-      call vimshell#hook#add('chpwd', 'my_chpwd', s:vimshell_hooks.chpwd)
-      call vimshell#hook#add('emptycmd', 'my_emptycmd', s:vimshell_hooks.emptycmd)
-      call vimshell#hook#add('preexec', 'my_preexec', s:vimshell_hooks.preexec)
-    endfunction
-    autocmd MyAutoCmd FileType vimshell call s:configure_vimshell()
+    call vimrc#source_path('$MYVIM_HOME/rc/config/vimshell.vim')
   endfunction
   function! s:vimshell_vim_on_post_source() abort
     highlight! vimshellError gui=NONE cterm=NONE guifg='#cc6666' ctermfg=9
@@ -1269,76 +846,7 @@ endif " }}}
 
 if dein#tap('vimfiler.vim') " {{{
   function! s:vimfiler_vim_on_source() abort
-    let g:vimfiler_as_default_explorer = 1
-    let g:vimfiler_ignore_pattern = printf('\%%(%s\)', join([
-          \ '^\..*',
-          \ '\.pyc$',
-          \ '^__pycache__$',
-          \ '\.egg-info$',
-          \], '\|'))
-    if has('multi_byte') && $LANG !=# 'C'
-      let g:vimfiler_tree_leaf_icon =  '|'
-      let g:vimfiler_tree_opened_icon = '-'
-      let g:vimfiler_tree_closed_icon = '+'
-      let g:vimfiler_file_icon = ' '
-      let g:vimfiler_readonly_file_icon = '⭤'
-      let g:vimfiler_marked_file_icon = '✓'
-    endif
-
-    call vimfiler#custom#profile('default', 'context', {
-          \ 'auto_cd': 1,
-          \ 'parent': 1,
-          \ 'safe': 0,
-          \ })
-
-    function! s:configure_vimfiler() abort
-      " use 'J' to select candidates instead of <Space> / <S-Space>
-      silent! nunmap <buffer> <Space>
-      silent! nunmap <buffer> <S-Space>
-      silent! vunmap <buffer> <Space>
-      nmap <buffer> J <Plug>(vimfiler_toggle_mark_current_line)
-      vmap <buffer> J <Plug>(vimfiler_toggle_mark_selected_lines)
-      " ^^ to go parent directory
-      nmap <buffer> ^^ <Plug>(vimfiler_switch_to_parent_directory)
-      " X to execute on the directory
-      nmap <buffer> X
-            \ <Plug>(vimfiler_switch_to_parent_directory)
-            \ <Plug>(vimfiler_execute_system_associated)
-            \ <Plug>(vimfiler_execute)
-      " t to open tab
-      nnoremap <buffer><silent> <Plug>(vimfiler_tab_edit_file)
-            \ :<C-u>call vimfiler#mappings#do_action(b:vimfiler, 'tabopen')<CR>
-      nmap <buffer> t <Plug>(vimfiler_tab_edit_file)
-      " <Space>k to open bookmark
-      nmap <buffer><silent> <Space>k :<C-u>Unite bookmark<CR>
-    endfunction
-    autocmd MyAutoCmd FileType vimfiler call s:configure_vimfiler()
-
-    function! s:cd_all_vimfiler(path) abort
-      let current_nr = winnr()
-      try
-        for winnr in filter(range(1, winnr('$')),
-              \ "getwinvar(v:val, '&filetype') ==# 'vimfiler'")
-          call vimfiler#util#winmove(winnr)
-          call vimfiler#mappings#cd(a:path)
-        endfor
-      finally
-        call vimfiler#util#winmove(current_nr)
-      endtry
-    endfunction
-    autocmd MyAutoCmd User my-workon-post call s:cd_all_vimfiler(getcwd())
-
-    " XXX: This is a work around
-    " Note:
-    "   Somehow, &winfixwidth of a buffer opened from VimFilerExplorer is set to
-    "   1 and thus <C-w>= or those kind of command doesn't work.
-    "   This work around stands for fixing that.
-    function! s:force_nofixwidth() abort
-      if empty(&buftype) || &buftype ==# '\v^%(nowrite|acwrite)$'
-        setlocal nowinfixwidth
-      endif
-    endfunction
-    autocmd MyAutoCmd BufWinEnter * call s:force_nofixwidth()
+    call vimrc#source_path('$MYVIM_HOME/rc/config/vimfiler.vim')
   endfunction
   call s:register_on_source_hook()
 

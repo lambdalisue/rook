@@ -1,4 +1,5 @@
 scriptencoding utf-8
+
 let s:zsh_history_path = expand('~/.config/zsh/.zsh_history')
 
 let g:vimshell_prompt = '$ '
@@ -63,3 +64,5 @@ function! s:configure_vimshell() abort
   call vimshell#hook#add('preexec', 'my_preexec', s:vimshell_hooks.preexec)
 endfunction
 autocmd MyAutoCmd FileType vimshell call s:configure_vimshell()
+
+" vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker

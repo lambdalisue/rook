@@ -21,7 +21,8 @@ endfunction
 function! s:configure_neobundle() abort
   call neobundle#begin(s:remote_bundle_root)
   if neobundle#load_cache(
-        \ $MYVIMRC,
+        \ $MYVIM_VIMRC,
+        \ expand('$MYVIM_HOME/rc/neobundle/config.vim'),
         \ expand('$MYVIM_HOME/rc/neobundle/define.toml'),
         \)
     call neobundle#load_toml(
@@ -31,17 +32,6 @@ function! s:configure_neobundle() abort
   endif
   call vimrc#source_path('$MYVIM_HOME/rc/neobundle/config.vim')
   call neobundle#end()
-
-  " required
-  filetype plugin indent on
-
-  " Don't check
-  " NeoBundleCheck
-
-  if !has('vim_starting')
-    call neobundle#call_hook('on_source')
-    call neobundle#call_hook('on_post_source')
-  endif
 endfunction
 
 if !filereadable(s:neobundle_root . '/plugin/neobundle.vim')

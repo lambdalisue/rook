@@ -29,9 +29,12 @@ endfunction
 
 if !exists('*vimrc#source_path')
   function! vimrc#source_path(path, ...) abort
-    let use_global = get(a:000, 0, !has('vim_starting'))
+    let use_global = get(a:000, 0, 0)
     let abspath = resolve(expand(a:path))
     if !filereadable(abspath)
+      return
+    elseif !use_global
+      execute printf('source %s', fnameescape(abspath))
       return
     endif
     let content = readfile(abspath)

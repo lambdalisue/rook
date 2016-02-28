@@ -1,6 +1,4 @@
 scriptencoding utf-8
-noremap <Plug>(my-operator) <Nop>
-map - <Plug>(my-operator)
 
 function! s:is_git_available() "{{{
   if !executable('git')
@@ -17,7 +15,7 @@ function! s:is_git_available() "{{{
   endif
 endfunction "}}}
 
-" fundementals {{{
+" Fundemental ----------------------------------------------------------------
 
 if neobundle#tap('sudo.vim') " {{{
   cnoreabbr w!! :w sudo:%
@@ -96,11 +94,18 @@ if neobundle#tap('clever-f.vim') " {{{
   map F <Plug>(clever-f-F)
   map T <Plug>(clever-f-T)
   map t <Plug>(clever-f-t)
-
 endif " }}}
 
 if neobundle#tap('vim-asterisk') " {{{
-  " See incsearch.vim
+  " map *   <Plug>(asterisk-*)
+  " map #   <Plug>(asterisk-#)
+  " map g*  <Plug>(asterisk-g*)
+  " map g#  <Plug>(asterisk-g#)
+  " map z*  <Plug>(asterisk-z*)
+  " map gz* <Plug>(asterisk-gz*)
+  " map z#  <Plug>(asterisk-z#)
+  " map gz# <Plug>(asterisk-gz#)
+  " Note: see incsearch.vim
 endif " }}}
 
 if neobundle#tap('incsearch.vim') " {{{
@@ -114,22 +119,14 @@ if neobundle#tap('incsearch.vim') " {{{
   map n <Plug>(incsearch-nohl-n)
   map N <Plug>(incsearch-nohl-N)
 
-  if neobundle#is_installed('asterisk.vim')
-    map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)
-    map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
-    map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
-    map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
-    map z*  <Plug>(incsearch-nohl)<Plug>(asterisk-z*)
-    map gz* <Plug>(incsearch-nohl)<Plug>(asterisk-gz*)
-    map z#  <Plug>(incsearch-nohl)<Plug>(asterisk-z#)
-    map gz# <Plug>(incsearch-nohl)<Plug>(asterisk-gz#)
-  else
-    map *  <Plug>(incsearch-nohl-*)
-    map #  <Plug>(incsearch-nohl-#)
-    map g* <Plug>(incsearch-nohl-g*)
-    map g# <Plug>(incsearch-nohl-g#)
-  endif
-
+  map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)
+  map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
+  map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
+  map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
+  map z*  <Plug>(incsearch-nohl)<Plug>(asterisk-z*)
+  map gz* <Plug>(incsearch-nohl)<Plug>(asterisk-gz*)
+  map z#  <Plug>(incsearch-nohl)<Plug>(asterisk-z#)
+  map gz# <Plug>(incsearch-nohl)<Plug>(asterisk-gz#)
 endif " }}}
 
 if neobundle#tap('yankround.vim') " {{{
@@ -147,7 +144,6 @@ if neobundle#tap('yankround.vim') " {{{
   nmap <expr><C-n> yankround#is_active()
         \ ? "\<Plug>(yankround-next)"
         \ : "\<Plug>(my-tab-next)"
-
 endif " }}}
 
 if neobundle#tap('vim-bookmarks') " {{{
@@ -197,19 +193,16 @@ if neobundle#tap('vim-quickrun') " {{{
   endfunction
 
   nmap <LocalLeader>r <Plug>(quickrun)
-
 endif " }}}
 
 if neobundle#tap('vim-qfreplace') " {{{
   " use 'r' to call Qfreplace in QuickFix
   autocmd MyAutoCmd FileType qf nnoremap <buffer><silent> r
         \ :<C-u>Qfreplace<CR>
-
 endif " }}}
 
 if neobundle#tap('switch.vim') " {{{
   nmap \ :<C-u>Switch<CR>
-
 endif " }}}
 
 if neobundle#tap('linediff.vim') " {{{
@@ -275,9 +268,7 @@ if neobundle#tap('vim-foldround') " {{{
 endif " }}}
 
 
-" }}}
-
-" completion {{{
+" Completion -----------------------------------------------------------------
 
 if neobundle#tap('neocomplete.vim') && has('lua') " {{{
   function! neobundle#hooks.on_source(bundle) abort
@@ -353,17 +344,159 @@ if neobundle#tap('echodoc.vim') " {{{
 
 endif " }}}
 
-" }}}
 
-" statusline {{{
+" Statusline -----------------------------------------------------------------
 
 if neobundle#tap('lightline.vim') " {{{
-  let neobundle#hooks.on_source =
-        \ '~/.vim/rc/plugin/lightline.vim'
+  function! s:is_filelike() abort
+    return &buftype =~# '^\|nowrite\|acwrite$'
+  endfunction
+  let g:lightline = {
+        \ 'colorscheme': 'hybrid',
+        \ 'active': {
+        \   'left': [
+        \     [ 'mode', 'paste' ],
+        \     [ 'filename' ],
+        \   ],
+        \   'right': [
+        \     [ 'qfstatusline' ],
+        \     [ 'lineinfo' ],
+        \     [ 'fileformat', 'fileencoding', 'filetype' ],
+        \   ],
+        \ },
+        \ 'inactive': {
+        \   'left': [
+        \     [ 'filename' ],
+        \   ],
+        \   'right': [
+        \     [ 'fileformat', 'fileencoding', 'filetype' ],
+        \   ],
+        \ },
+        \ 'tabline': {
+        \   'left': [
+        \     [ 'tabs' ],
+        \   ],
+        \   'right': [
+        \     [ 'close' ],
+        \     [ 'pyenv', 'gita_branch', 'gita_traffic', 'gita_status', 'cwd' ],
+        \   ],
+        \ },
+        \ 'component_visible_condition': {
+        \   'lineinfo': '(winwidth(0) >= 70)',
+        \ },
+        \ 'component_expand': {
+        \   'qfstatusline': 'g:lightline.my.qfstatusline',
+        \ },
+        \ 'component_type': {
+        \   'qfstatusline': 'error',
+        \ },
+        \ 'component_function': {
+        \   'mode': 'lightline#mode',
+        \   'cwd': 'g:lightline.my.cwd',
+        \   'filename': 'g:lightline.my.filename',
+        \   'fileformat': 'g:lightline.my.fileformat',
+        \   'fileencoding': 'g:lightline.my.fileencoding',
+        \   'filetype': 'g:lightline.my.filetype',
+        \   'git_branch': 'g:lightline.my.git_branch',
+        \   'gita_branch': 'g:lightline.my.gita_branch',
+        \   'gita_traffic': 'g:lightline.my.gita_traffic',
+        \   'gita_status': 'g:lightline.my.gita_status',
+        \   'pyenv': 'g:lightline.my.pyenv',
+        \ },
+        \}
+  " Note:
+  "   component_function cannot be a script local function so use
+  "   g:lightline.my namespace instead of s:
+  let g:lightline.my = {}
+  if !has('multi_byte') || $LANG ==# 'C'
+    let g:lightline.my.symbol_branch = ''
+    let g:lightline.my.symbol_readonly = '!'
+    let g:lightline.my.symbol_modified = '*'
+    let g:lightline.my.symbol_nomodifiable = '#'
+  else
+    let g:lightline.my.symbol_branch = '⭠'
+    let g:lightline.my.symbol_readonly = '⭤'
+    let g:lightline.my.symbol_modified = '*'
+    let g:lightline.my.symbol_nomodifiable = '#'
+  endif
+  function! g:lightline.my.cwd() abort
+    return fnamemodify(getcwd(), ':~')
+  endfunction
+  function! g:lightline.my.readonly() abort
+    return s:is_filelike() && &readonly ? g:lightline.my.symbol_readonly : ''
+  endfunction
+  function! g:lightline.my.modified() abort
+    return s:is_filelike() && &modified ? g:lightline.my.symbol_modified : ''
+  endfunction
+  function! g:lightline.my.nomodifiable() abort
+    return s:is_filelike() && !&modifiable ? g:lightline.my.symbol_nomodifiable : ''
+  endfunction
+  function! g:lightline.my.filename() abort
+    if &filetype =~# '\v%(unite|vimfiler|vimshell)'
+      return {&filetype}#get_status_string()
+    elseif &filetype =~# '\v%(gita-blame-navi)'
+      let fname = winwidth(0) > 79 ? expand('%') : get(split(expand('%'), ':'), 2, 'NAVI')
+      return fname
+    elseif &filetype ==# 'gista-list'
+      return gista#command#list#get_status_string()
+    else
+      let fname = winwidth(0) > 79 ? expand('%') : pathshorten(expand('%'))
+      let readonly = g:lightline.my.readonly()
+      let modified = g:lightline.my.modified()
+      let nomodifiable = g:lightline.my.nomodifiable()
+      return '' .
+            \ (empty(readonly) ? '' : readonly . ' ') .
+            \ (empty(fname) ? '[No name]' : fname) .
+            \ (empty(nomodifiable) ? '' : ' ' . nomodifiable) .
+            \ (empty(modified) ? '' : ' ' . modified)
+    endif
+    return ''
+  endfunction
+  function! g:lightline.my.fileformat() abort
+      return winwidth(0) > 70 ? &fileformat : ''
+  endfunction
+  function! g:lightline.my.filetype() abort " {{{
+    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+  endfunction " }}}
+  function! g:lightline.my.fileencoding() abort "{{{
+    return winwidth(0) > 70 ? (strlen(&fileencoding) ? &fileencoding : &encoding) : ''
+  endfunction " }}}
+
+  function! g:lightline.my.gita_branch() abort
+    return neobundle#is_sourced('vim-gita')
+          \ ? gita#statusline#preset('branch_short_fancy') : ''
+  endfunction
+  function! g:lightline.my.gita_traffic() abort
+    return neobundle#is_sourced('vim-gita')
+          \ ? gita#statusline#preset('traffic_fancy') : ''
+  endfunction
+  function! g:lightline.my.gita_status() abort
+    return neobundle#is_sourced('vim-gita')
+          \ ? gita#statusline#preset('status') : ''
+  endfunction
+  function! g:lightline.my.pyenv() abort
+    if neobundle#is_sourced('vim-pyenv')
+      return pyenv#info#preset('long')
+    else
+      return ''
+    endif
+  endfunction
+  function! g:lightline.my.qfstatusline() abort
+    if neobundle#is_sourced('vim-qfstatusline')
+      let message = qfstatusline#Update()
+      let message = substitute(
+            \ message,
+            \ '(@INC contains: .*)',
+            \ '', ''
+            \)
+      return winwidth(0) > 79 ? message[ : winwidth(0) ] : ''
+    else
+      return ''
+    endif
+  endfunction
   function! neobundle#hooks.on_post_source(bundle) abort
     call lightline#update()
   endfunction
-
 endif " }}}
 
 if neobundle#tap('vim-watchdogs') " {{{
@@ -416,9 +549,8 @@ if neobundle#tap('vim-qfstatusline') " {{{
   endfunction
 endif " }}}
 
-" }}}
 
-" textobj {{{
+" Textobj --------------------------------------------------------------------
 
 if neobundle#tap('vim-textobj-multiblock') " {{{
   omap ab <Plug>(textobj-multiblock-a)
@@ -439,16 +571,21 @@ if neobundle#tap('vim-textobj-python') && executable('python') " {{{
   endfunction
 endif " }}}
 
-" }}}
 
-" operator {{{
+" Operator -------------------------------------------------------------------
+nnoremap <Plug>(my-operator) <Nop>
+xnoremap <Plug>(my-operator) <Nop>
+nmap - <Plug>(my-operator)
+xmap - <Plug>(my-operator)
 
 if neobundle#tap('vim-operator-replace') " {{{
-  map R <Plug>(operator-replace)
+  nmap R <Plug>(operator-replace)
+  xmap R <Plug>(operator-replace)
 endif " }}}
 
 if neobundle#tap('vim-operator-trailingspace-killer') " {{{
-  map <Plug>(my-operator)k <Plug>(operator-trailingspace-killer)
+  nmap <Plug>(my-operator)k <Plug>(operator-trailingspace-killer)
+  xmap <Plug>(my-operator)k <Plug>(operator-trailingspace-killer)
 endif " }}}
 
 if neobundle#tap('vim-operator-surround') " {{{
@@ -464,27 +601,33 @@ if neobundle#tap('vim-operator-surround') " {{{
         \ ]}
   endfunction
 
-  map sa <Plug>(operator-surround-append)
-  map sd <Plug>(operator-surround-delete)
-  map sr <Plug>(operator-surround-replace)
+  nmap sa <Plug>(operator-surround-append)
+  nmap sd <Plug>(operator-surround-delete)
+  nmap sr <Plug>(operator-surround-replace)
+  xmap sa <Plug>(operator-surround-append)
+  xmap sd <Plug>(operator-surround-delete)
+  xmap sr <Plug>(operator-surround-replace)
+
   nmap sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
   nmap srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
-  vmap sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
-  vmap srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
+  xmap sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
+  xmap srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
 endif " }}}
 
 if neobundle#tap('vim-operator-breakline') " {{{
-  map <Plug>(my-operator)b <Plug>(operator-breakline-manual)
-  map <Plug>(my-operator)B <Plug>(operator-breakline-textwidth)
+  nmap <Plug>(my-operator)b <Plug>(operator-breakline-manual)
+  nmap <Plug>(my-operator)B <Plug>(operator-breakline-textwidth)
+  xmap <Plug>(my-operator)b <Plug>(operator-breakline-manual)
+  xmap <Plug>(my-operator)B <Plug>(operator-breakline-textwidth)
 endif " }}}
 
 if neobundle#tap('concealedyank.vim') " {{{
+  nmap Y <Plug>(operator-concealedyank)
   xmap Y <Plug>(operator-concealedyank)
 endif " }}}
 
-" }}}
 
-" interfaces {{{
+" Interfaces -----------------------------------------------------------------
 
 if neobundle#tap('ctrlp.vim') " {{{
   function! neobundle#hooks.on_source(bundle) abort
@@ -493,10 +636,13 @@ if neobundle#tap('ctrlp.vim') " {{{
     " Guess VCS root directory as well
     let g:ctrlp_working_path_mode = 'ra'
   endfunction
-
 endif " }}}
 
 if neobundle#tap('unite.vim') " {{{
+  function! neobundle#hooks.on_source(bundle) abort
+    call vimrc#source_path('$MYVIM_HOME/rc/config/unite.vim')
+  endfunction
+
   " unite
   nnoremap <Plug>(my-unite) <Nop>
   nmap <Space> <Plug>(my-unite)
@@ -560,19 +706,17 @@ if neobundle#tap('unite.vim') " {{{
         \ :<C-u>Unite directory_rec/async<CR>
 
   " unite-qf
-  if neobundle#is_installed('unite-quickfix')
-    nnoremap <Plug>(my-unite-qf) <Nop>
-    nmap <Plug>(my-unite)q <Plug>(my-unite-qf)
-    nnoremap <silent> <Plug>(my-unite-qf)q
-          \ :<C-u>Unite quickfix location_list
-          \ -buffer-name=search<CR>
-    nnoremap <silent> <Plug>(my-unite-qf)f
-          \ :<C-u>Unite quickfix
-          \ -buffer-name=search<CR>
-    nnoremap <silent> <Plug>(my-unite-qf)l
-          \ :<C-u>Unite location_list
-          \ -buffer-name=search<CR>
-  endif
+  nnoremap <Plug>(my-unite-qf) <Nop>
+  nmap <Plug>(my-unite)q <Plug>(my-unite-qf)
+  nnoremap <silent> <Plug>(my-unite-qf)q
+        \ :<C-u>Unite quickfix location_list
+        \ -buffer-name=search<CR>
+  nnoremap <silent> <Plug>(my-unite-qf)f
+        \ :<C-u>Unite quickfix
+        \ -buffer-name=search<CR>
+  nnoremap <silent> <Plug>(my-unite-qf)l
+        \ :<C-u>Unite location_list
+        \ -buffer-name=search<CR>
 
   " unite-grep
   nnoremap <Plug>(my-unite-grep) <Nop>
@@ -606,88 +750,74 @@ if neobundle#tap('unite.vim') " {{{
   " unite-git
   nnoremap <Plug>(my-unite-git) <Nop>
   nmap <Plug>(my-unite)i <Plug>(my-unite-git)
-  if neobundle#is_installed('vim-unite-giti')
-    nnoremap <silent> <Plug>(my-unite-git)i
-          \ :<C-u>Unite giti/branch_recent<CR>
-    nnoremap <silent> <Plug>(my-unite-git)b
-          \ :<C-u>Unite giti/branch_recent giti/branch_all<CR>
-    nnoremap <silent> <Plug>(my-unite-git)r
-          \ :<C-u>Unite giti/remote<CR>
-  endif
-  if neobundle#is_installed('vim-gista')
-    nnoremap <silent> <Plug>(my-unite-git)t
-          \ :<C-u>Unite gista:lambdalisue<CR>
-  endif
+  nnoremap <silent> <Plug>(my-unite-git)i
+        \ :<C-u>Unite giti/branch_recent<CR>
+  nnoremap <silent> <Plug>(my-unite-git)b
+        \ :<C-u>Unite giti/branch_recent giti/branch_all<CR>
+  nnoremap <silent> <Plug>(my-unite-git)r
+        \ :<C-u>Unite giti/remote<CR>
+  nnoremap <silent> <Plug>(my-unite-git)t
+        \ :<C-u>Unite gista:lambdalisue<CR>
 
   " unite-ref
   nnoremap <Plug>(my-unite-ref) <Nop>
   nmap <Plug>(my-unite)r <Plug>(my-unite-ref)
-  if neobundle#is_installed('vim-ref')
-    nnoremap <silent> <Plug>(my-unite-ref)r
-                \ :<C-u>call <SID>unite_smart_ref()<CR>
-    nnoremap <silent> <Plug>(my-unite-ref)p
-                \ :<C-u>Unite ref/pydoc<CR>
-    nnoremap <silent> <Plug>(my-unite-ref)l
-                \ :<C-u>Unite perldoc<CR>
-    nnoremap <silent> <Plug>(my-unite-ref)m
-                \ :<C-u>Unite ref/man<CR>
-    if neobundle#is_installed('ref-sources.vim')
-      nnoremap <silent> <Plug>(my-unite-ref)j
-                  \ :<C-u>Unite ref/javascript<CR>
-      nnoremap <silent> <Plug>(my-unite-ref)q
-                  \ :<C-u>Unite ref/jquery<CR>
-      nnoremap <silent> <Plug>(my-unite-ref)k
-                  \ :<C-u>Unite ref/kotobank<CR>
-      nnoremap <silent> <Plug>(my-unite-ref)w
-                  \ :<C-u>Unite ref/wikipedia<CR>
+  nnoremap <silent> <Plug>(my-unite-ref)r
+              \ :<C-u>call <SID>unite_smart_ref()<CR>
+  nnoremap <silent> <Plug>(my-unite-ref)p
+              \ :<C-u>Unite ref/pydoc<CR>
+  nnoremap <silent> <Plug>(my-unite-ref)l
+              \ :<C-u>Unite perldoc<CR>
+  nnoremap <silent> <Plug>(my-unite-ref)m
+              \ :<C-u>Unite ref/man<CR>
+  nnoremap <silent> <Plug>(my-unite-ref)j
+              \ :<C-u>Unite ref/javascript<CR>
+  nnoremap <silent> <Plug>(my-unite-ref)q
+              \ :<C-u>Unite ref/jquery<CR>
+  nnoremap <silent> <Plug>(my-unite-ref)k
+              \ :<C-u>Unite ref/kotobank<CR>
+  nnoremap <silent> <Plug>(my-unite-ref)w
+              \ :<C-u>Unite ref/wikipedia<CR>
+  function! s:unite_smart_ref()
+    if &filetype =~# 'perl'
+      Unite perldoc
+    elseif &filetype =~# 'python'
+      Unite ref/pydoc
+    elseif &filetype =~# 'ruby'
+      Unite ref/refe
+    elseif &filetype =~# 'javascript'
+      Unite ref/javascript
+    elseif &filetype =~# 'vim'
+      Unite help
+    else
+      Unite ref/man
     endif
-    function! s:unite_smart_ref()
-      if &filetype =~# 'perl'
-        Unite perldoc
-      elseif &filetype =~# 'python'
-        Unite ref/pydoc
-      elseif &filetype =~# 'ruby'
-        Unite ref/refe
-      elseif &filetype =~# 'javascript'
-        Unite ref/javascript
-      elseif &filetype =~# 'vim'
-        Unite help
-      else
-        Unite ref/man
-      endif
-    endfunction
-  endif
+  endfunction
 
   " unite-linephrase
-  if neobundle#is_installed('unite-linephrase')
-    nnoremap <silent> <Plug>(my-unite)p
-          \ :<C-u>Unite linephrase
-          \ -no-quit -keep-focus -no-start-insert
-          \ -buffer-name=search<CR>
-  endif
+  nnoremap <silent> <Plug>(my-unite)p
+        \ :<C-u>Unite linephrase
+        \ -no-quit -keep-focus -no-start-insert
+        \ -buffer-name=search<CR>
 
   " unite-outline
-  if neobundle#is_installed('unite-outline')
-    " Use outline like explorer
-    nnoremap <silent> <Leader>o
-          \ :<C-u>Unite outline
-          \ -no-quit -keep-focus -no-start-insert
-          \ -vertical -direction=botright -winwidth=30<CR>
-  endif
+  " Use outline like explorer
+  nnoremap <silent> <Leader>o
+        \ :<C-u>Unite outline
+        \ -no-quit -keep-focus -no-start-insert
+        \ -vertical -direction=botright -winwidth=30<CR>
 
   " vim-bookmarks
-  if neobundle#is_installed('vim-bookmarks')
-    nnoremap <silent> <Plug>(my-unite)mm
-          \ :<C-u>Unite vim_bookmarks
-          \ -no-quit -keep-focus -no-start-insert
-          \ -buffer-name=search<CR>
-  endif
-
-  let neobundle#hooks.on_source = expand('$MYVIM_HOME/rc/plugin/unite.vim')
+  nnoremap <silent> <Plug>(my-unite)mm
+        \ :<C-u>Unite vim_bookmarks
+        \ -no-quit -keep-focus -no-start-insert
+        \ -buffer-name=search<CR>
 endif " }}}
 
 if neobundle#tap('vimshell.vim') " {{{
-  let neobundle#hooks.on_source = expand('$MYVIM_HOME/rc/plugin/vimshell.vim')
+  function! neobundle#hooks.on_source(bundle) abort
+    call vimrc#source_path('$MYVIM_HOME/rc/config/vimshell.vim')
+  endfunction
   function! neobundle#hooks.on_post_source(bundle)
     highlight! vimshellError gui=NONE cterm=NONE guifg='#cc6666' ctermfg=9
   endfunction
@@ -702,11 +832,14 @@ if neobundle#tap('vimshell.vim') " {{{
 endif " }}}
 
 if neobundle#tap('vimfiler.vim') " {{{
+  function! neobundle#hooks.on_source(bundle) abort
+    call vimrc#source_path('$MYVIM_HOME/rc/config/vimfiler.vim')
+  endfunction
+
   nnoremap <Plug>(my-vimfiler) <Nop>
   nmap <Leader>e <Plug>(my-vimfiler)
   nnoremap <silent> <Plug>(my-vimfiler)e :<C-u>VimFilerExplorer<CR>
   nnoremap <silent> <Plug>(my-vimfiler)E :<C-u>VimFiler<CR>
-  let neobundle#hooks.on_source = expand('$MYVIM_HOME/rc/plugin/vimfiler.vim')
 endif " }}}
 
 if neobundle#tap('undotree') " {{{
@@ -830,9 +963,9 @@ if neobundle#tap('calendar.vim') " {{{
   nnoremap <silent> <Plug>(my-calendar)t :<C-u>Calendar -view=clock<CR>
 
 endif " }}}
-" }}}
 
-" unite sources {{{
+
+" Unite sources --------------------------------------------------------------
 
 if neobundle#tap('unite-linephrase') " {{{
   function! neobundle#hooks.on_source(bundle) abort
@@ -840,9 +973,8 @@ if neobundle#tap('unite-linephrase') " {{{
   endfunction
 endif " }}}
 
-" }}}
 
-" version controller system {{{
+" Version control system -----------------------------------------------------
 
 if neobundle#tap('vim-gista') " {{{
   function! neobundle#hooks.on_source(bundle) abort
@@ -850,7 +982,7 @@ if neobundle#tap('vim-gista') " {{{
   endfunction
 endif " }}}
 
-if neobundle#tap('vim-gita') && executable('git') " {{{
+if neobundle#tap('vim-gita') " {{{
   function! neobundle#hooks.on_source(bundle) abort
     if executable('hub')
       let g:gita#executable = 'hub'
@@ -888,7 +1020,7 @@ if neobundle#tap('vim-gita') && executable('git') " {{{
 
 endif " }}}
 
-if neobundle#tap('agit.vim') && executable('git') " {{{
+if neobundle#tap('agit.vim') " {{{
   function! neobundle#hooks.on_source(bundle) abort
     " add extra key-mappings
     function! s:my_agit_setting() abort
@@ -900,9 +1032,8 @@ if neobundle#tap('agit.vim') && executable('git') " {{{
 
 endif " }}}
 
-" }}}
 
-" syntax {{{
+" Syntax ---------------------------------------------------------------------
 
 if neobundle#tap('typescript-vim') " {{{
   function! neobundle#hooks.on_source(bundle) abort
@@ -911,10 +1042,9 @@ if neobundle#tap('typescript-vim') " {{{
   endfunction
 endif " }}}
 
-" }}}
+" Filetype specific ----------------------------------------------------------
 
-" filetype specific {{{
-if neobundle#tap('LaTeX-Box') && executable('latexmk') " {{{
+if neobundle#tap('LaTeX-Box') " {{{
   function! neobundle#hooks.on_source(bundle) abort
     let g:LatexBox_latexmk_async = 1
     let g:LatexBox_latexmk_preview_continuously = 1
@@ -952,13 +1082,13 @@ if neobundle#tap('LaTeX-Box') && executable('latexmk') " {{{
   endfunction
 endif " }}}
 
-if neobundle#tap('vim-autopep8') && executable('autopep8') " {{{
+if neobundle#tap('vim-autopep8') " {{{
   function! neobundle#hooks.on_source(bundle) abort
     let g:autopep8_disable_show_diff = 1
   endfunction
 endif " }}}
 
-if neobundle#tap('jedi-vim') && executable('python') " {{{
+if neobundle#tap('jedi-vim') " {{{
   function! neobundle#hooks.on_source(bundle) abort
     function! s:jedi_vim_configure() abort
       setlocal omnifunc=jedi#completions
@@ -986,7 +1116,7 @@ if neobundle#tap('jedi-vim') && executable('python') " {{{
 
 endif " }}}
 
-if neobundle#tap('vim-pyenv') && executable('pyenv') " {{{
+if neobundle#tap('vim-pyenv') " {{{
   function! neobundle#hooks.on_source(bundle) abort
     if neobundle#is_installed('jedi') && jedi#init_python()
       function! s:jedi_auto_force_py_version() abort
@@ -999,7 +1129,7 @@ if neobundle#tap('vim-pyenv') && executable('pyenv') " {{{
   endfunction
 endif " }}}
 
-if neobundle#tap('tsuquyomi') && executable('tsc') " {{{
+if neobundle#tap('tsuquyomi') " {{{
   function! neobundle#hooks.on_source(bundle) abort
     function! s:tsuquyomi_configure() abort
       nmap <buffer> <LocalLeader>d <Plug>(TsuquyomiDefinition)
@@ -1015,5 +1145,4 @@ if neobundle#tap('tsuquyomi') && executable('tsc') " {{{
   endfunction
 endif " }}}
 
-" }}}
 " vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker

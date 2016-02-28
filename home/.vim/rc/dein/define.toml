@@ -178,7 +178,7 @@ repo = 'thinca/vim-zenspace'
 
 [[plugins]]
 repo = 'Shougo/junkfile.vim'
-on_cmd = 'JunkFileOpen'
+on_cmd = 'JunkfileOpen'
 
 [[plugins]]
 repo = 'lambdalisue/vim-protocol'
@@ -392,19 +392,17 @@ repo = 'Shougo/vimfiler.vim'
 depends = 'unite.vim'
 on_cmd = [
     'VimFiler',
-    'VimFilerSimple',
-    'VimFilerSplit',
-    'VimFilerTab',
     'VimFilerExplorer',
 ]
+on_path = '\h\w*:'
 
 [[plugins]]
 repo = 'mbbill/undotree'
-lazy = 1
+on_cmd = 'UndotreeToggle'
 
 [[plugins]]
 repo = 'thinca/vim-ref'
-lazy = 1
+on_cmd = 'Ref'
 
 [[plugins]]
 repo = 'mojako/ref-sources.vim'
@@ -412,6 +410,7 @@ repo = 'mojako/ref-sources.vim'
 
 [[plugins]]
 repo = 'majutsushi/tagbar'
+augroup = 'TagbarAutoCmds'
 on_cmd = [
     'Tagbar',
     'TagbarOpen',
@@ -451,7 +450,7 @@ on_cmd = [
 
 [[plugins]]
 repo = 'itchyny/calendar.vim'
-on_cmd = ['Calendar']
+on_cmd = 'Calendar'
 
 
 # Unite sources ---------------------------------------------------------------
@@ -628,8 +627,8 @@ repo = 'tell-k/vim-autopep8'
 
 [[plugins]]
 if = "executable('git')"
-repo = 'davidhalter/jedi-vim'
 build = 'git submodule update --init'
+repo = 'davidhalter/jedi-vim'
 on_ft = ['python', 'python3']
 on_source = 'vim-pyenv'
 
@@ -645,9 +644,9 @@ on_ft = 'perl'
 
 [[plugins]]
 if = "v:version >= 704 && executable('npm')"
+build = 'npm install -g typescript'
 repo = 'Quramy/tsuquyomi'
 depends = 'vimproc.vim'
-build = 'npm install -g typescript'
 on_ft = 'typescript'
 
 [[plugins]]

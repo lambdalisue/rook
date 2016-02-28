@@ -1,4 +1,5 @@
 scriptencoding utf-8
+
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_ignore_pattern = printf('\%%(%s\)', join([
       \ '^\..*',
@@ -69,3 +70,5 @@ function! s:force_nofixwidth() abort
   endif
 endfunction
 autocmd MyAutoCmd BufWinEnter * call s:force_nofixwidth()
+
+" vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker

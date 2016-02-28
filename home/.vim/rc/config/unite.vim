@@ -69,30 +69,26 @@ call unite#custom#profile('default', 'context', extend(config, {
 call unite#custom#default_action('directory', 'cd')
 call unite#custom#alias('file', 'edit', 'open')
 
-if neobundle#is_installed('agit.vim')
-  " add unite interface
-  let agit = {
-        \ 'description': 'open the directory (or parent directory) in agit',
-        \ }
-  function! agit.func(candidate) abort
-    if isdirectory(a:candidate.action__path)
-      let path = a:candidate.action__path
-    else
-      let path = fnamemodify(a:candidate.action__path, ':h')
-    endif
-    execute 'Agit' '--dir=' . path
-  endfunction
-
-  let agit_file = {
-        \ 'description': "open the file's history in agit.vim",
-        \ }
-  function! agit_file.func(candidate) abort
-    execute 'AgitFile' '--file=' . a:candidate.action__path
-  endfunction
-
-  call unite#custom#action('file,cdable', 'agit', agit)
-  call unite#custom#action('file', 'agit_file', agit_file)
-endif
+" add unite interface
+let agit = {
+      \ 'description': 'open the directory (or parent directory) in agit',
+      \ }
+function! agit.func(candidate) abort
+  if isdirectory(a:candidate.action__path)
+    let path = a:candidate.action__path
+  else
+    let path = fnamemodify(a:candidate.action__path, ':h')
+  endif
+  execute 'Agit' '--dir=' . path
+endfunction
+call unite#custom#action('file,cdable', 'agit', agit)
+let agit_file = {
+      \ 'description': "open the file's history in agit.vim",
+      \ }
+function! agit_file.func(candidate) abort
+  execute 'AgitFile' '--file=' . a:candidate.action__path
+endfunction
+call unite#custom#action('file', 'agit_file', agit_file)
 
 function! s:configure_unite() abort
   let unite = unite#get_current_unite()
@@ -122,7 +118,7 @@ function! s:configure_unite() abort
 endfunction
 autocmd MyAutoCmd FileType unite call s:configure_unite()
 
-function! s:register_filemenu(name, description, precursors) abort " {{{
+function! s:register_filemenu(name, description, precursors) abort
   " find the length of the longest name
   let max_length = max(map(
         \ filter(deepcopy(a:precursors), 'len(v:val) > 1'),
@@ -200,7 +196,8 @@ function! s:register_filemenu(name, description, precursors) abort " {{{
   " register to 'g:unite_source_menu_menus'
   let g:unite_source_menu_menus = get(g:, 'unite_source_menu_menus', {})
   let g:unite_source_menu_menus[a:name] = menu
-endfunction " }}}
+endfunction
+
 call s:register_filemenu('shortcut', 'Shortcut menu', [
       \ ['rook'],
       \ [
@@ -210,15 +207,15 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \ ['vim'],
       \ [
       \   'vimrc',
-      \   fnamemodify(resolve($MYVIMRC), ':~'),
+      \   fnamemodify(resolve($MYVIM_VIMRC), ':~'),
       \ ],
       \ [
       \   'gvimrc',
-      \   fnamemodify(resolve($MYGVIMRC), ':~'),
+      \   fnamemodify(resolve($MYVIM_GVIMRC), ':~'),
       \ ],
       \ [
       \   'vimshrc',
-      \   '~/.vim/vimshrc',
+      \   fnamemodify(expand('$MYVIM_HOME/vimshrc'), ':~'),
       \ ],
       \ [
       \   'filetype.vim',
@@ -241,44 +238,52 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \   fnamemodify(expand('$MYVIM_HOME/rc/macro.vim'), ':~'),
       \ ],
       \ [
-      \   'rc/plugin.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/plugin.vim'), ':~'),
+      \   'rc/dein.vim',
+      \   fnamemodify(expand('$MYVIM_HOME/rc/dein.vim'), ':~'),
       \ ],
       \ [
-      \   'rc/plugin.define.toml',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/plugin.define.toml'), ':~'),
+      \   'rc/dein/define.toml',
+      \   fnamemodify(expand('$MYVIM_HOME/rc/dein/define.toml'), ':~'),
       \ ],
       \ [
-      \   'rc/plugin.config.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/plugin.config.vim'), ':~'),
+      \   'rc/dein/config.vim',
+      \   fnamemodify(expand('$MYVIM_HOME/rc/dein/config.vim'), ':~'),
       \ ],
       \ [
-      \   'rc/plugin/lightline.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/plugin/lightline.vim'), ':~'),
+      \   'rc/neobundle.vim',
+      \   fnamemodify(expand('$MYVIM_HOME/rc/neobundle.vim'), ':~'),
       \ ],
       \ [
-      \   'rc/plugin/unite.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/plugin/unite.vim'), ':~'),
+      \   'rc/neobundle/define.toml',
+      \   fnamemodify(expand('$MYVIM_HOME/rc/neobundle/define.toml'), ':~'),
       \ ],
       \ [
-      \   'rc/plugin/vimfiler.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/plugin/vimfiler.vim'), ':~'),
+      \   'rc/neobundle/config.vim',
+      \   fnamemodify(expand('$MYVIM_HOME/rc/neobundle/config.vim'), ':~'),
       \ ],
       \ [
-      \   'rc/plugin/vimshell.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/plugin/vimshell.vim'), ':~'),
+      \   'rc/individual/unite.config.vim',
+      \   fnamemodify(expand('$MYVIM_HOME/rc/individual/unite.config.vim'), ':~'),
+      \ ],
+      \ [
+      \   'rc/individual/vimfiler.config.vim',
+      \   fnamemodify(expand('$MYVIM_HOME/rc/individual/vimfiler.config.vim'), ':~'),
+      \ ],
+      \ [
+      \   'rc/individual/vimshell.config.vim',
+      \   fnamemodify(expand('$MYVIM_HOME/rc/individual/vimshell.config.vim'), ':~'),
       \ ],
       \ [
       \   'vim',
-      \   '~/.vim',
+      \   fnamemodify(expand('$MYVIM_HOME'), ':~'),
       \ ],
       \ [
       \   'bundle',
-      \   '~/.vim/bundle',
+      \   fnamemodify(expand('$MYVIM_HOME/bundle'), ':~'),
       \ ],
       \ [
       \   'ftplugin',
-      \   '~/.vim/ftplugin',
+      \   fnamemodify(expand('$MYVIM_HOME/ftplugin'), ':~'),
       \ ],
       \ ['zsh'],
       \ [
@@ -344,3 +349,6 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \   '~/.jupyter/custom/custom.js',
       \ ],
       \])
+
+
+" vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
