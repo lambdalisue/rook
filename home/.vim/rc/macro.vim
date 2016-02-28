@@ -23,14 +23,22 @@ cnoreabbrev <silent><expr>'<,'>s getcmdtype() ==# ':' && getcmdline() =~# "^'<,'
 " }}}
 
 " Reload vimrc with <Leader><Leader>r {{{
-if has('vim_starting')
-  function s:reload_vimrc() abort
-    execute printf('source %s', $MYVIM_VIMRC)
+if !exists('*s:reload_vimrc')
+  function! s:reload_vimrc() abort
+    call vimrc#source_path($MYVIM_VIMRC)
     if has('gui_running')
-      execute printf('source %s', $MYVIM_GVIMRC)
+      call vimrc#source_path($MYVIM_GVIMRC)
+      redraw | echo printf('"%s" and "%s" has sourced (%s).',
+            \ fnamemodify($MYVIM_VIMRC, ':t'),
+            \ fnamemodify($MYVIM_GVIMRC, ':t'),
+            \ strftime('%c')
+            \)
+    else
+      redraw | echo printf('"%s" has sourced (%s).',
+            \ fnamemodify($MYVIM_VIMRC, ':t'),
+            \ strftime('%c')
+            \)
     endif
-    redraw
-    echo printf('.vimrc/.gvimrc has reloaded (%s).', strftime('%c'))
   endfunction
 endif
 nnoremap <silent> <Plug>(my-reload-vimrc)
@@ -39,29 +47,24 @@ nmap <Leader><Leader>r <Plug>(my-reload-vimrc)
 " }}}
 
 " source/reload current vimscript file " {{{
-function! s:source_current_vimscript() abort
-  let abspath = resolve(expand('%:p'))
-  if &filetype !=# 'vim'
-    redraw
-    echohl WarningMsg
-    echo printf(
-          \ 'The filetype of the current buffer is "%s" but it must be "vim" for source.',
-          \ &filetype,
-          \)
-    echohl None
-    return
-  elseif abspath ==# $MYVIMRC || abspath ==# $MYGVIMRC
-    redraw
-    echohl WarningMsg
-    echo 'The .vimrc/.gvimrc cannot be reloaded by this function. Use <Plug>(my-reload-vimrc) instead.'
-    echohl None
-    return
-  endif
-  execute printf('source %s', expand('%'))
-  redraw
-  echo printf('"%s" has sourced (%s).', expand('%:t'), strftime('%c'))
-endfunction
-nmap <silent> <Plug>(my-source) :<C-u>call <SID>source_current_vimscript()<CR>
+if !exists('*s:source_current_path')
+  function! s:source_current_path() abort
+    let abspath = resolve(expand('%:p'))
+    if &filetype !=# 'vim'
+      redraw
+      echohl WarningMsg
+      echo printf(
+            \ 'The filetype of the current buffer is "%s" but it must be "vim" for source.',
+            \ &filetype,
+            \)
+      echohl None
+      return
+    endif
+    call vimrc#source_path(expand('%'))
+    redraw | echo printf('"%s" has sourced (%s).', expand('%:t'), strftime('%c'))
+  endfunction
+endif
+nmap <silent> <Plug>(my-source) :<C-u>call <SID>source_current_path()<CR>
 nmap <LocalLeader><LocalLeader>s <Plug>(my-source)
 " }}}
 

@@ -27,9 +27,30 @@ function! vimrc#ensure_path(path, ...) abort
   endif
 endfunction
 
-function! vimrc#source_path(path) abort
-  let path = expand(a:path)
-  if filereadable(path)
-    execute printf('source %s', fnameescape(path))
-  endif
-endfunction
+if !exists('*vimrc#source_path')
+  function! vimrc#source_path(path, ...) abort
+    let use_global = get(a:000, 0, !has('vim_starting'))
+    let abspath = resolve(expand(a:path))
+    if !filereadable(abspath)
+      return
+    endif
+    let content = readfile(abspath)
+    if use_global
+      " substitute all 'set' to 'setglobal'
+      call map(
+            \ content,
+            \ 'substitute(v:val, "^\\W*\\zsset\\ze\\W", "setglobal", "")'
+            \)
+    endif
+    " create tempfile and source the tempfile
+    let tempfile = tempname()
+    try
+      call writefile(content, tempfile)
+      execute printf('source %s', fnameescape(tempfile))
+    finally
+      if filereadable(tempfile)
+        call delete(tempfile)
+      endif
+    endtry
+  endfunction
+endif
