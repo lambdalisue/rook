@@ -81,7 +81,7 @@ repo = 'tyru/open-browser.vim'
 on_map = '<Plug>'
 
 [[plugins]]
-disabled = "!has('gui_running')"
+if = "has('gui_running')"
 repo = 'lambdalisue/vim-fullscreen'
 on_map = '<Plug>'
 
@@ -188,13 +188,13 @@ repo = 'w0ng/vim-hybrid'
 
 # Completion ------------------------------------------------------------------
 [[plugins]]
-disabled = "!has('lua')"
+if = "has('lua')"
 repo = 'Shougo/neocomplete.vim'
 depends = 'context_filetype.vim'
 on_i = 1
 
 [[plugins]]
-disabled = "!has('nvim')"
+if = "has('nvim')"
 repo = 'Shougo/deoplete.nvim'
 depends = 'context_filetype.vim'
 on_i = 1
@@ -224,6 +224,11 @@ on_source = ['neocomplete.vim', 'deoplete.nvim']
 [[plugins]]
 repo = 'hrsh7th/vim-neco-calc'
 #on_source = ['neocomplete.vim', 'deoplete.nvim']
+
+[[plugins]]
+repo = 'zchee/deoplete-jedi'
+depends = 'deoplete.nvim'
+on_source = 'jedi-vim'
 
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
@@ -511,7 +516,6 @@ on_source = 'unite.vim'
 [[plugins]]
 if = 'executable("git")'
 repo = 'lambdalisue/vim-gita'
-rev = 'alpha-3'
 on_cmd = 'Gita'
 
 [[plugins]]
@@ -531,7 +535,7 @@ on_cmd = ['Agit', 'AgitFile']
 on_source = 'unite.vim'
 
 [[plugins]]
-disabled = 1
+if = 0
 if = "executable('git')"
 repo = 'tpope/vim-fugitive'
 augroup = 'fugitive'
@@ -642,6 +646,10 @@ on_cmd = 'PyenvActivate'
 
 [[plugins]]
 repo = 'hotchpotch/perldoc-vim'
+on_ft = 'perl'
+
+[[plugins]]
+repo = 'c9s/perlomni.vim'
 on_ft = 'perl'
 
 [[plugins]]

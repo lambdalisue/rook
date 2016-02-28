@@ -4,6 +4,7 @@ let s:dein_abspath  = printf(
       \ '%s/repos/github.com/Shougo/dein.vim',
       \ s:dein_basepath,
       \)
+let s:dein_localpath = printf('%s/local', s:dein_basepath)
 
 function! s:configure() abort
   execute printf('set runtimepath+=%s', fnameescape(s:dein_abspath))
@@ -18,6 +19,7 @@ function! s:configure() abort
           \)
     call dein#save_cache()
   endif
+  call dein#local(s:dein_localpath)
   call vimrc#source_path(
         \ expand('$MYVIM_HOME/rc/dein/config.vim'),
         \)

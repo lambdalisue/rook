@@ -11,8 +11,8 @@ if has('vim_starting')
     scriptencoding utf-8
   endif
   set history=10000
-  set runtimepath& runtimepath+=~/.vim
 endif
+set runtimepath& runtimepath+=~/.vim
 
 " Disable unnecessary features {{{
 set noswapfile
@@ -76,8 +76,8 @@ call vimrc#prepend_envpath('$MANPATH', [
       \ '/usr/local/share/man/',
       \])
 let $PYENV_ROOT = vimrc#pick_path([
-      \ expand('~/.anyenv/envs/pyenv'),
-      \ expand('~/.pyenv'),
+      \ '~/.anyenv/envs/pyenv',
+      \ '~/.pyenv',
       \])
 set viewdir=$MYVIM_HOME/.view
 set undodir=$MYVIM_HOME/.undo
@@ -210,7 +210,7 @@ set formatoptions& formatoptions+=j
 " use clipboard register
 " - unnamed     : 'selection' in X11; clipboard in Mac OS X and Windows
 " - unnamedplus : 'clipboard' in X11, Mac OS X, and Windows
-set clipboard^=unnamed,unnamedplus
+set clipboard^=unnamedplus
 
 " completion settings
 set complete&
