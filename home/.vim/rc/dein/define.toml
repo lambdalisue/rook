@@ -14,39 +14,30 @@ repo = 'vim-jp/vimdoc-ja'
 # Requirement -----------------------------------------------------------------
 [[plugins]]
 repo = 'kana/vim-operator-user'
-lazy = 1
 
 [[plugins]]
 repo = 'kana/vim-textobj-user'
-lazy = 1
 
 [[plugins]]
 repo = 'mattn/webapi-vim'
-#lazy = 1
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
-#lazy = 1
 
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
-#lazy = 1
 
 [[plugins]]
 repo = 'cocopon/lightline-hybrid.vim'
-lazy = 1
 
 [[plugins]]
 repo = 'osyo-manga/shabadou.vim'
-lazy = 1
 
 [[plugins]]
 repo = 'fuenor/qfixgrep'
-lazy = 1
 
 [[plugins]]
 repo = 'ynkdir/vim-vimlparser'
-lazy = 1
 
 
 # Fundemental -----------------------------------------------------------------
