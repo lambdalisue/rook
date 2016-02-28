@@ -12,7 +12,7 @@ function! vimrc#prepend_envpath(name, pathlist) abort
 endfunction
 
 function! vimrc#pick_path(pathlist, ...) abort
-  for path in map(filter(a:pathlist, 'v:val'), 'expand(v:val)')
+  for path in map(filter(a:pathlist, '!empty(v:val)'), 'resolve(expand(v:val))')
     if isdirectory(path)
       return path
     endif
