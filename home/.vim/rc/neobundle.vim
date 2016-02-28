@@ -22,15 +22,15 @@ function! s:configure_neobundle() abort
   call neobundle#begin(s:remote_bundle_root)
   if neobundle#load_cache(
         \ $MYVIMRC,
-        \ expand('$MYVIM_HOME/rc/plugin.define.toml'),
+        \ expand('$MYVIM_HOME/rc/neobundle/define.toml'),
         \)
     call neobundle#load_toml(
-          \ expand('$MYVIM_HOME/rc/plugin.define.toml'),
+          \ expand('$MYVIM_HOME/rc/neobundle/define.toml'),
           \ { 'lazy': 1 }
           \)
     NeoBundleSaveCache
   endif
-  call vimrc#source_path('$MYVIM_HOME/rc/plugin.config.vim')
+  call vimrc#source_path('$MYVIM_HOME/rc/neobundle/config.vim')
   call neobundle#end()
 
   " required

@@ -554,11 +554,11 @@ xmap @ <Plug>(my-execute-macro)
 
 " }}}
 
-call vimrc#source_path('$MYVIM_HOME/rc/plugin.vim')
+call vimrc#source_path('$MYVIM_HOME/rc/neobundle.vim')
 
-colorscheme hybrid
 filetype indent plugin on
 syntax on
+colorscheme hybrid
 
 call vimrc#source_path('~/.vimrc.local')
 set secure
