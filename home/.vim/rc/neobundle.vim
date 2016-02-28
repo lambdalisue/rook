@@ -26,7 +26,6 @@ function! s:configure_neobundle() abort
         \)
     call neobundle#load_toml(
           \ expand('$MYVIM_HOME/rc/neobundle/define.toml'),
-          \ { 'lazy': 1 }
           \)
     NeoBundleSaveCache
   endif

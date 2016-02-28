@@ -251,10 +251,10 @@ nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " Improve cursor operation
-nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
-nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
-nnoremap <expr> gj v:count == 0 ? 'j' : 'gj'
-nnoremap <expr> gk v:count == 0 ? 'k' : 'gk'
+nnoremap <silent><expr> j  v:count == 0 ? 'gj' : 'j'
+nnoremap <silent><expr> k  v:count == 0 ? 'gk' : 'k'
+nnoremap <silent><expr> gj v:count == 0 ? 'j' : 'gj'
+nnoremap <silent><expr> gk v:count == 0 ? 'k' : 'gk'
 
 xnoremap <silent><expr> <C-k> mode() ==# 'V'
       \ ? ':<C-u>execute printf("move -1-%d", v:count1)<CR>gv'
@@ -554,7 +554,8 @@ xmap @ <Plug>(my-execute-macro)
 
 " }}}
 
-call vimrc#source_path('$MYVIM_HOME/rc/neobundle.vim')
+"call vimrc#source_path('$MYVIM_HOME/rc/neobundle.vim')
+call vimrc#source_path('$MYVIM_HOME/rc/dein.vim')
 
 filetype indent plugin on
 syntax on

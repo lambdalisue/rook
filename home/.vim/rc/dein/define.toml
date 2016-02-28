@@ -1,0 +1,699 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+rtp = ''
+
+[[plugins]]
+if = "executable('make')"
+repo = 'Shougo/vimproc.vim'
+build = 'make'
+
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+
+
+# Requirement -----------------------------------------------------------------
+[[plugins]]
+repo = 'kana/vim-operator-user'
+lazy = 1
+
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+lazy = 1
+
+[[plugins]]
+repo = 'mattn/webapi-vim'
+#lazy = 1
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+#lazy = 1
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+#lazy = 1
+
+[[plugins]]
+repo = 'cocopon/lightline-hybrid.vim'
+lazy = 1
+
+[[plugins]]
+repo = 'osyo-manga/shabadou.vim'
+lazy = 1
+
+[[plugins]]
+repo = 'fuenor/qfixgrep'
+lazy = 1
+
+[[plugins]]
+repo = 'ynkdir/vim-vimlparser'
+lazy = 1
+
+
+# Fundemental -----------------------------------------------------------------
+[[plugins]]
+if = "executable('sudo')"
+repo = 'sudo.vim'
+
+[[plugins]]
+repo = 'cohama/vim-hier'
+
+[[plugins]]
+repo = 'thinca/vim-template'
+
+[[plugins]]
+repo = 'lambdalisue/vim-diffa'
+
+[[plugins]]
+repo = 'powerman/vim-plugin-AnsiEsc'
+on_cmd = 'AnsiEsc'
+
+[[plugins]]
+repo = 'osyo-manga/vim-over'
+on_cmd = [
+    'OverCommandLine',
+    'OverCommandLineNoremap',
+]
+
+[[plugins]]
+repo = 'kana/vim-repeat'
+on_map = '<Plug>'
+
+[[plugins]]
+repo = 't9md/vim-quickhl'
+depends = 'vim-operator-user'
+on_map = [
+    '<Plug>',
+    '<Plug>(operator-quickhl-manual'
+]
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+on_map = '<Plug>'
+
+[[plugins]]
+if = "has('gui_running')"
+repo = 'lambdalisue/vim-fullscreen'
+on_map = '<Plug>'
+
+[[plugins]]
+repo = 'rhysd/clever-f.vim'
+on_map = '<Plug>'
+
+[[plugins]]
+repo = 'haya14busa/incsearch.vim'
+on_map = '<Plug>'
+
+[[plugins]]
+repo = 'haya14busa/vim-asterisk'
+on_map = '<Plug>'
+on_source = 'incsearch.vim'
+
+[[plugins]]
+repo = 'LeafCage/yankround.vim'
+on_map = '<Plug>'
+
+[[plugins]]
+repo = 'tyru/capture.vim'
+on_cmd = 'Capture'
+
+[[plugins]]
+repo = 'MattesGroeger/vim-bookmarks'
+depends = 'unite.vim'
+augroup = 'bm_vim_enter'
+on_map = '<Plug>'
+on_source = 'unite.vim'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+on_map = '<Plug>'
+on_cmd = 'QuickRun'
+
+[[plugins]]
+repo = 'thinca/vim-qfreplace'
+on_source = ['unite.vim', 'vimfiler.vim']
+on_cmd = 'Qfreplace'
+
+[[plugins]]
+repo = 'AndrewRadev/switch.vim'
+on_cmd = 'Switch'
+
+[[plugins]]
+repo = 'AndrewRadev/linediff.vim'
+on_cmd = 'Linediff'
+
+[[plugins]]
+repo = 'kurkale6ka/vim-swap'
+on_map = '<Plug>'
+
+[[plugins]]
+repo = 'lambdalisue/vim-pager'
+on_cmd = 'PAGER'
+
+[[plugins]]
+repo = 'lambdalisue/vim-manpager'
+on_cmd = ['MANPAGER', 'Man']
+
+[[plugins]]
+repo = 't9md/vim-choosewin'
+on_map = '<Plug>'
+
+[[plugins]]
+repo = 'lambdalisue/vim-findent'
+on_cmd = 'Findent'
+
+[[plugins]]
+repo = 'osyo-manga/vim-trip'
+on_map = '<Plug>'
+
+[[plugins]]
+repo = 'kana/vim-altr'
+on_map = '<Plug>'
+
+[[plugins]]
+repo = 'lambdalisue/vim-foldround'
+on_map = '<Plug>'
+
+[[plugins]]
+repo = 'thinca/vim-zenspace'
+
+[[plugins]]
+repo = 'Shougo/junkfile.vim'
+on_cmd = 'JunkFileOpen'
+
+[[plugins]]
+repo = 'lambdalisue/vim-protocol'
+on_path = '\%(^https\?://\|\.zip$\)'
+
+
+# Completion ------------------------------------------------------------------
+[[plugins]]
+if = "has('lua')"
+repo = 'Shougo/neocomplete.vim'
+depends = 'context_filetype.vim'
+on_i = 1
+
+[[plugins]]
+if = "has('nvim')"
+repo = 'Shougo/deoplete.nvim'
+depends = 'context_filetype.vim'
+on_i = 1
+
+[[plugins]]
+repo = 'Shougo/neco-syntax'
+#on_source = ['neocomplete.vim', 'deoplete.nvim']
+
+[[plugins]]
+repo = 'Shougo/neco-vim'
+on_source = ['neocomplete.vim', 'deoplete.nvim']
+
+[[plugins]]
+repo = 'Shougo/neoinclude.vim'
+on_source = ['neocomplete.vim', 'deoplete.nvim']
+
+[[plugins]]
+if = 'executable("look")'
+repo = 'ujihisa/neco-look'
+#on_source = ['neocomplete.vim', 'deoplete.nvim']
+
+[[plugins]]
+if = 'executable("ghc-mod")'
+repo = 'eagletmt/neco-ghc'
+on_source = ['neocomplete.vim', 'deoplete.nvim']
+
+[[plugins]]
+repo = 'hrsh7th/vim-neco-calc'
+#on_source = ['neocomplete.vim', 'deoplete.nvim']
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+depends = ['neosnippet-snippets', 'context_filetype.vim']
+on_source = 'unite.vim'
+on_ft = 'snippet'
+on_i = 1
+
+[[plugins]]
+repo = 'Shougo/echodoc.vim'
+on_i = 1
+
+
+# Statusline ------------------------------------------------------------------
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+depends = 'lightline-hybrid.vim'
+
+[[plugins]]
+if = "v:version >= 704"
+repo = 'osyo-manga/vim-watchdogs'
+depends = 'vimproc.vim'
+
+[[plugins]]
+repo = 'dannyob/quickfixstatus'
+
+[[plugins]]
+if = "v:version >= 704"
+repo = 'KazuakiM/vim-qfstatusline'
+depends = 'shabadou.vim'
+
+
+# Textobj ---------------------------------------------------------------------
+[[plugins]]
+repo = 'kana/vim-textobj-entire'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+
+[[plugins]]
+repo = 'kana/vim-textobj-line'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+
+[[plugins]]
+repo = 'kana/vim-textobj-syntax'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+
+[[plugins]]
+repo = 'kana/vim-textobj-indent'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+
+[[plugins]]
+repo = 'kana/vim-textobj-datetime'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+
+[[plugins]]
+repo = 'thinca/vim-textobj-comment'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+
+[[plugins]]
+repo = 'saihoooooooo/vim-textobj-space'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+
+[[plugins]]
+repo = 'kana/vim-textobj-fold'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+
+[[plugins]]
+repo = 'kana/vim-textobj-underscore'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+
+[[plugins]]
+repo = 'RyanMcG/vim-textobj-dash'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+
+[[plugins]]
+repo = 'mattn/vim-textobj-url'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+
+[[plugins]]
+repo = 'sgur/vim-textobj-parameter'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+
+[[plugins]]
+repo = 'osyo-manga/vim-textobj-multiblock'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+
+[[plugins]]
+repo = 'rhysd/vim-textobj-word-column'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+
+[[plugins]]
+if = "executable('python')"
+repo = 'bps/vim-textobj-python'
+depends = 'vim-textobj-user'
+#on_ft = ['python', 'python3']
+
+
+# Operator --------------------------------------------------------------------
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+depends = 'vim-operator-user'
+on_map = [['nx', '<Plug>']]
+
+[[plugins]]
+repo = 'sgur/vim-operator-openbrowser'
+depends = 'vim-operator-user'
+on_map = [['nx', '<Plug>']]
+
+[[plugins]]
+repo = 'rhysd/vim-operator-trailingspace-killer'
+depends = 'vim-operator-user'
+on_map = [['nx', '<Plug>']]
+
+[[plugins]]
+repo = 'rhysd/vim-operator-surround'
+depends = 'vim-operator-user'
+on_map = [['nx', '<Plug>']]
+
+[[plugins]]
+repo = 'lambdalisue/vim-operator-breakline'
+depends = 'vim-operator-user'
+on_map = [['nx', '<Plug>']]
+
+
+[[plugins]]
+repo = 'chikatoike/concealedyank.vim'
+depends = 'vim-operator-user'
+on_map = [['nx', '<Plug>(operator-concealedyank)']]
+
+
+# Interface -------------------------------------------------------------------
+[[plugins]]
+repo = 'ctrlpvim/ctrlp.vim'
+lazy = 1
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+on_cmd = [
+    'Unite',
+    'UniteWithCursorWord',
+    'UniteBookmarkAdd',
+]
+
+[[plugins]]
+repo = 'Shougo/vimshell.vim'
+on_cmd = [
+    'VimShell',
+    'VimShellTab',
+    'VimShellPop',
+]
+
+[[plugins]]
+repo = 'Shougo/vimfiler.vim'
+depends = 'unite.vim'
+on_cmd = [
+    'VimFiler',
+    'VimFilerSimple',
+    'VimFilerSplit',
+    'VimFilerTab',
+    'VimFilerExplorer',
+]
+
+[[plugins]]
+repo = 'mbbill/undotree'
+lazy = 1
+
+[[plugins]]
+repo = 'thinca/vim-ref'
+lazy = 1
+
+[[plugins]]
+repo = 'mojako/ref-sources.vim'
+#on_source = 'vim-ref'
+
+[[plugins]]
+repo = 'majutsushi/tagbar'
+on_cmd = [
+    'Tagbar',
+    'TagbarOpen',
+    'TagbarToggle',
+]
+
+lazy = 1
+
+[[plugins]]
+repo = 'glidenote/memolist.vim'
+depends = ['unite.vim', 'qfixgrep']
+on_cmd = [
+    'MemoNew',
+    'MemoList',
+    'MemoGrep',
+]
+
+[[plugins]]
+repo = 'godlygeek/tabular'
+on_cmd = 'Tabularize'
+
+[[plugins]]
+repo = 'deris/vim-rengbang'
+on_cmd = [
+    'RengBang',
+    'RengBangUsePrev',
+    'RengBangConfirm',
+]
+
+[[plugins]]
+repo = 'lilydjwg/colorizer'
+on_map = '<Plug>'
+on_cmd = [
+    'ColorHighlight',
+    'ColorToggle',
+]
+
+[[plugins]]
+repo = 'itchyny/calendar.vim'
+on_cmd = ['Calendar']
+
+
+# Unite sources ---------------------------------------------------------------
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+
+[[plugins]]
+repo = 'Shougo/neossh.vim'
+
+[[plugins]]
+repo = 'Shougo/unite-help'
+
+[[plugins]]
+repo = 'Shougo/unite-outline'
+
+[[plugins]]
+repo = 'osyo-manga/unite-quickfix'
+
+[[plugins]]
+repo = 'ujihisa/unite-font'
+
+[[plugins]]
+repo = 'ujihisa/unite-colorscheme'
+
+[[plugins]]
+repo = 'rhysd/unite-codic.vim'
+
+[[plugins]]
+repo = 'pasela/unite-webcolorname'
+
+[[plugins]]
+repo = 'lambdalisue/unite-linephrase'
+
+[[plugins]]
+repo = 'joker1007/unite-pull-request'
+
+[[plugins]]
+repo = 'dameninngenn/unite-perldoc'
+
+[[plugins]]
+if = "executable('git')"
+repo = 'kmnk/vim-unite-giti'
+
+[[plugins]]
+repo = 'rafi/vim-unite-issue'
+depends = ['webapi-vim', 'open-browser.vim']
+on_source = 'unite.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vim-gista-unite'
+depends = ['vim-gista']
+on_source = 'unite.vim'
+
+
+# Version controller system ---------------------------------------------------
+[[plugins]]
+if = 'executable("git")'
+repo = 'lambdalisue/vim-gita'
+rev = 'alpha-3'
+on_cmd = 'Gita'
+
+[[plugins]]
+repo = 'lambdalisue/vim-gista'
+on_cmd = 'Gista'
+
+[[plugins]]
+repo = 'lambdalisue/vim-gista-ctrlp'
+depends = ['vim-gista', 'ctrlp.vim']
+on_cmd = 'CtrlPGista'
+on_func = 'ctrlp#gista#'
+
+[[plugins]]
+if = "executable('git')"
+repo = 'cohama/agit.vim'
+on_cmd = ['Agit', 'AgitFile']
+on_source = 'unite.vim'
+
+[[plugins]]
+disabled = 1
+if = "executable('git')"
+repo = 'tpope/vim-fugitive'
+augroup = 'fugitive'
+on_cmd = [
+    'Git', 'Gcd', 'Glcd', 'Gstatus', 'Gcommit', 'Gmerge',
+    'Gpull', 'Gpush', 'Gfetch', 'Ggrep', 'Glgrep', 'Glog',
+    'Gllog', 'Gedit', 'Gsplit', 'Gvsplit', 'Gtabedit', 'Gpedit',
+    'Gread', 'Gwrite', 'Gwq', 'Gdiff', 'Gsdiff', 'Gvdiff',
+    'Gmove', 'Gremove', 'Gblame', 'Gbrowse',
+]
+
+
+# Syntax ----------------------------------------------------------------------
+[[plugins]]
+repo = 'hail2u/vim-css3-syntax'
+#on_ft = ['css', 'sass', 'scss', 'less', 'html']
+
+[[plugins]]
+repo = 'othree/html5.vim'
+#on_ft = 'html'
+
+[[plugins]]
+repo = 'groenewege/vim-less'
+#on_ft = 'less'
+
+[[plugins]]
+repo = 'cakebaker/scss-syntax.vim'
+#on_ft = ['sass', 'scss']
+
+[[plugins]]
+repo = 'kchmck/vim-coffee-script'
+#on_ft = 'coffeescript'
+
+[[plugins]]
+repo = 'elzr/vim-json'
+#on_ft = 'json'
+
+[[plugins]]
+repo = 'jQuery'
+#on_ft = ['javascript', 'coffeescript', 'typescript']
+
+[[plugins]]
+repo = 'jelera/vim-javascript-syntax'
+#on_ft = ['javascript', 'typescript']
+
+[[plugins]]
+repo = 'jason0x43/vim-js-indent'
+#on_ft = ['javascript', 'typescript']
+
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+#on_ft = 'typescript'
+
+[[plugins]]
+repo = 'thinca/vim-ft-help_fold'
+#on_ft = 'help'
+
+[[plugins]]
+repo = 'vim-scripts/applescript.vim'
+#on_ft = 'applescript'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+#on_ft = 'toml'
+
+[[plugins]]
+repo = 'vim-scripts/indentpython.vim'
+#on_ft = ['python', 'python3']
+
+[[plugins]]
+repo = 'vim-scripts/python_match.vim'
+#on_ft = ['python', 'python3']
+
+[[plugins]]
+repo = 'tmhedberg/SimpylFold'
+#on_ft = ['python', 'python3']
+
+[[plugins]]
+repo = 'vim-perl/vim-perl'
+#on_ft = 'perl'
+
+
+# Specific --------------------------------------------------------------------
+[[plugins]]
+if = "executable('latexmk')"
+repo = 'LaTeX-Box-Team/LaTeX-Box'
+on_cmd = 'Latexmk',
+on_ft = ['tex', 'plaintex']
+
+[[plugins]]
+if = "executable('pip')"
+build = 'pip install autopep8'
+repo = 'tell-k/vim-autopep8'
+#on_ft = ['python', 'python3']
+
+[[plugins]]
+if = "executable('git')"
+repo = 'davidhalter/jedi-vim'
+build = 'git submodule update --init'
+on_ft = ['python', 'python3']
+on_source = 'vim-pyenv'
+
+[[plugins]]
+if = "executable('pyenv')"
+repo = 'lambdalisue/vim-pyenv'
+on_ft = ['python', 'python3']
+on_cmd = 'PyenvActivate'
+
+[[plugins]]
+repo = 'hotchpotch/perldoc-vim'
+on_ft = 'perl'
+
+[[plugins]]
+if = "v:version >= 704 && executable('npm')"
+repo = 'Quramy/tsuquyomi'
+depends = 'vimproc.vim'
+build = 'npm install -g typescript'
+on_ft = 'typescript'
+
+[[plugins]]
+repo = 'vim-pandoc/vim-pandoc'
+on_ft = 'pandoc'
+
+[[plugins]]
+repo = 'kannokanno/previm'
+depends = 'open-browser.vim'
+on_cmd = 'PrevimOpen'
+
+
+# Misc ------------------------------------------------------------------------
+[[plugins]]
+repo = 'cocopon/colorswatch.vim'
+on_cmd = 'ColorSwatchGenerate'
+
+
+# Vimscript development -------------------------------------------------------
+[[plugins]]
+repo = 'vim-jp/vital.vim'
+on_cmd = 'Vitalize'
+
+[[plugins]]
+repo = 'lambdalisue/vital-ArgumentParser'
+
+[[plugins]]
+repo = 'haya14busa/vital-vimlcompiler'
+
+[[plugins]]
+repo = 'haya14busa/vital-power-assert'
+depends = 'vital-vimlcompiler'
+
+[[plugins]]
+repo = 'thinca/vim-themis'
+#on_ft = ['vim', 'vimspec']
+
+[[plugins]]
+repo = 'thinca/vim-prettyprint'
+on_cmd  = ['PP', 'PrettyPrint']
+on_func = ['PP', 'PrettyPrint']
+
+[[plugins]]
+repo = 'syngan/vim-vimlint'
+depends = 'vim-vimlparser'
+
+[[plugins]]
+repo = 'LeafCage/laptime.vim'
+#lazy = 1

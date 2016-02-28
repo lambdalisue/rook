@@ -6,79 +6,70 @@ fetch = 1
 repository = 'Shougo/vimproc.vim'
 build_commands = 'make'
 build = 'make'
-lazy = 0
 
 [[plugins]]
 repository = 'vim-jp/vimdoc-ja'
-lazy = 0
 
 # Fundemental -----------------------------------------------------------------
 [[plugins]]
 repository = 'sudo.vim'
-lazy = 0
 
 [[plugins]]
 repository = 'cohama/vim-hier'
-lazy = 0
 
 [[plugins]]
 repository = 'thinca/vim-template'
-lazy = 0
 
 [[plugins]]
 repository = 'lambdalisue/vim-diffa'
-lazy = 0
 
 [[plugins]]
 repository = 'powerman/vim-plugin-AnsiEsc'
-lazy = 0
 
 [[plugins]]
 repository = 'osyo-manga/vim-over'
-lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-repeat'
-on_map = '<Plug>(repeat-'
+on_map = '<Plug>'
 
 [[plugins]]
 repository = 't9md/vim-quickhl'
 depends = 'kana/vim-operator-user'
 on_map = [
-    '<Plug>(quick-manual',
+    '<Plug>',
     '<Plug>(operator-quickhl-manual'
 ]
 
 [[plugins]]
 repository = 'tyru/open-browser.vim'
-on_map = '<Plug>(openbrowser-'
+on_map = '<Plug>'
 
 [[plugins]]
 repository = 'lambdalisue/vim-fullscreen'
-on_map = '<Plug>(fullscreen-'
+on_map = '<Plug>'
 
 [[plugins]]
 repository = 'osyo-manga/vim-over'
-lazy = 0
 
 [[plugins]]
 repository = 'rhysd/clever-f.vim'
-on_map = '<Plug>(clever-f-'
+on_map = '<Plug>'
 
 [[plugins]]
 repository = 'haya14busa/vim-asterisk'
-on_map = '<Plug>(asterisk-'
+on_map = '<Plug>'
 on_source = 'incsearch.vim'
 focus = 1
 
 [[plugins]]
 repository = 'haya14busa/incsearch.vim'
-on_map = '<Plug>(incsearch-'
+on_map = '<Plug>'
 focus = 1
 
 [[plugins]]
 repository = 'LeafCage/yankround.vim'
-on_map = '<Plug>(yankround-'
+on_map = '<Plug>'
 
 [[plugins]]
 repository = 'tyru/capture.vim'
@@ -88,12 +79,12 @@ on_cmd = 'Capture'
 repository = 'MattesGroeger/vim-bookmarks'
 depends = 'Shougo/unite.vim'
 augroup = 'bm_vim_enter'
-on_map = '<Plug>Bookmark'
+on_map = '<Plug>'
 on_source = 'unite.vim'
 
 [[plugins]]
 repository = 'thinca/vim-quickrun'
-on_map = '<Plug>(quickrun'
+on_map = '<Plug>'
 
 [[plugins]]
 repository = 'thinca/vim-qfreplace'
@@ -110,7 +101,7 @@ on_cmd = ['Linediff', 'LinediffReset']
 
 [[plugins]]
 repository = 'kurkale6ka/vim-swap'
-on_map = '<Plug>SwapSwap'
+on_map = '<Plug>'
 
 [[plugins]]
 repository = 'lambdalisue/vim-pager'
@@ -120,17 +111,12 @@ on_cmd = 'PAGER'
 repository = 'lambdalisue/vim-manpager'
 on_cmd = ['MANPAGER', 'Man']
 
-#[[plugins]]
-#repository = 'cohama/lexima.vim'
-#insert = 1
-
 [[plugins]]
 repository = 't9md/vim-choosewin'
-on_map = '<Plug>(choosewin)'
+on_map = '<Plug>'
 
 [[plugins]]
 repository = 'lambdalisue/vim-findent'
-on_func = 'findent#'
     [[plugins.on_cmd]]
     name = 'Findent'
     complete = 'customlist,findent#FindentComplete'
@@ -140,34 +126,27 @@ on_func = 'findent#'
 
 [[plugins]]
 repository = 'osyo-manga/vim-trip'
-on_map = '<Plug>(trip-'
+on_map = '<Plug>'
 
 [[plugins]]
 repository = 'kana/vim-altr'
 on_func = 'altr#'
-on_map = '<Plug>(altr-'
+on_map = '<Plug>'
 
 [[plugins]]
 repository = 'lambdalisue/vim-foldround'
 on_func = 'foldround#'
-on_map = '<Plug>(foldround-'
-
-# The following makes things incorrect
-#[[plugins]]
-#repository = 'Konfekt/FastFold'
-#lazy = 0
+on_map = '<Plug>'
 
 [[plugins]]
 repository = 'thinca/vim-zenspace'
-lazy = 0
 
 [[plugins]]
 repository = 'Shougo/junkfile.vim'
-on_cmd = 'JunkfileOpen'
+lazy = 1
 
 [[plugins]]
 repository = 'lambdalisue/vim-protocol'
-lazy = 0
 
 # Completion ------------------------------------------------------------------
 [[plugins]]
@@ -213,12 +192,6 @@ depends = [
     'Shougo/neosnippet-snippets',
     'Shougo/context_filetype.vim',
 ]
-on_cmd = [
-    'NeoSnippetMakeCache',
-    'NeoSnippetEdit',
-    'NeoSnippetSource',
-    'NeoSnippetClearMarkers',
-]
 on_source = 'unite.vim'
 on_ft = 'snippet'
 on_i = 1
@@ -232,99 +205,80 @@ on_i = 1
 [[plugins]]
 repository = 'itchyny/lightline.vim'
 depends = 'cocopon/lightline-hybrid.vim'
-lazy = 0
 
 [[plugins]]
 repository = 'osyo-manga/vim-watchdogs'
 depends = 'Shougo/vimproc.vim'
 vim_version = '7.4'
-lazy = 0
 
 [[plugins]]
 repository = 'dannyob/quickfixstatus'
-lazy = 0
 
 [[plugins]]
 repository = 'KazuakiM/vim-qfstatusline'
 vim_version = '7.4'
 depends = 'osyo-manga/shabadou.vim'
-lazy = 0
 
 
 # Textobj ---------------------------------------------------------------------
 [[plugins]]
 repository = 'kana/vim-textobj-user'
-lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-textobj-entire'
 depends = 'kana/vim-textobj-user'
-lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-textobj-line'
 depends = 'kana/vim-textobj-user'
-lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-textobj-syntax'
 depends = 'kana/vim-textobj-user'
-lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-textobj-indent'
 depends = 'kana/vim-textobj-user'
-lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-textobj-datetime'
 depends = 'kana/vim-textobj-user'
-lazy = 0
 
 [[plugins]]
 repository = 'thinca/vim-textobj-comment'
 depends = 'kana/vim-textobj-user'
-lazy = 0
 
 [[plugins]]
 repository = 'saihoooooooo/vim-textobj-space'
 depends = 'kana/vim-textobj-user'
-lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-textobj-fold'
 depends = 'kana/vim-textobj-user'
-lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-textobj-underscore'
 depends = 'kana/vim-textobj-user'
-lazy = 0
 
 [[plugins]]
 repository = 'RyanMcG/vim-textobj-dash'
 depends = 'kana/vim-textobj-user'
-lazy = 0
 
 [[plugins]]
 repository = 'mattn/vim-textobj-url'
 depends = 'kana/vim-textobj-user'
-lazy = 0
 
 [[plugins]]
 repository = 'sgur/vim-textobj-parameter'
 depends = 'kana/vim-textobj-user'
-lazy = 0
 
 [[plugins]]
 repository = 'osyo-manga/vim-textobj-multiblock'
 depends = 'kana/vim-textobj-user'
-lazy = 0
 
 [[plugins]]
 repository = 'rhysd/vim-textobj-word-column'
 depends = 'kana/vim-textobj-user'
-lazy = 0
 
 [[plugins]]
 repository = 'bps/vim-textobj-python'
@@ -336,44 +290,43 @@ on_ft = ['python', 'python3']
 # Operator --------------------------------------------------------------------
 [[plugins]]
 repository = 'kana/vim-operator-user'
-lazy = 0
 
 [[plugins]]
 repository = 'kana/vim-operator-replace'
 depends = 'kana/vim-operator-user'
-on_map = '<Plug>(operator-replace'
+on_map = '<Plug>'
 
 [[plugins]]
 repository = 'sgur/vim-operator-openbrowser'
 depends = 'kana/vim-operator-user'
-on_map = '<Plug>(operator-openbrowser'
+on_map = '<Plug>'
 
 [[plugins]]
 repository = 'rhysd/vim-operator-trailingspace-killer'
 depends = 'kana/vim-operator-user'
-on_map = '<Plug>(operator-trailingspace-killer'
+on_map = '<Plug>'
 
 [[plugins]]
 repository = 'rhysd/vim-operator-surround'
 depends = 'kana/vim-operator-user'
-on_map = '<Plug>(operator-surround'
+on_map = '<Plug>'
 
 [[plugins]]
 repository = 'lambdalisue/vim-operator-breakline'
 depends = 'kana/vim-operator-user'
-on_map = '<Plug>(operator-breakline'
+on_map = '<Plug>'
 
 
 [[plugins]]
 repository = 'chikatoike/concealedyank.vim'
 depends = 'kana/vim-operator-user'
-on_map = '<Plug>(operator-concealedyank'
+on_map = '<Plug>'
 
 # Make Vim slow
 #[[plugins]]
 #repository = 'haya14busa/vim-operator-flashy'
 #depends = 'kana/vim-operator-user'
-#on_map = '<Plug>(operator-flashy'
+#on_map = '<Plug>'
 
 # Interface -------------------------------------------------------------------
 [[plugins]]
@@ -446,7 +399,7 @@ on_cmd = [
 
 [[plugins]]
 repository = 'lilydjwg/colorizer'
-on_map = '<Plug>Colorizer'
+on_map = '<Plug>'
 on_cmd = [
     'ColorHighlight',
     'ColorClear',
@@ -525,7 +478,7 @@ on_source = 'unite.vim'
 repository = 'lambdalisue/vim-gita'
 rev = 'alpha-3'
 external_commands = 'git'
-on_map  = '<Plug>(gita-'
+on_map  = '<Plug>'
 on_func = ['gita#', 'hita#']
 focus = 1
     [[plugins.on_cmd]]
@@ -730,42 +683,14 @@ on_cmd = 'ColorSwatchGenerate'
 # Vimscript development -------------------------------------------------------
 [[plugins]]
 repository = 'vim-jp/vital.vim'
-lazy = 0
-
-[[plugins]]
-repository = 'osyo-manga/vital-over'
-
-[[plugins]]
-repository = 'osyo-manga/vital-unlocker'
+on_cmd = 'Vitalize'
 
 [[plugins]]
 repository = 'lambdalisue/vital-ArgumentParser'
-lazy = 0
-
-[[plugins]]
-repository = 'lambdalisue/vital-VCS-Git'
-lazy = 0
-
-[[plugins]]
-repository = 'lambdalisue/vital-Web-API-GitHub'
-lazy = 0
-
-[[plugins]]
-repository = 'lambdalisue/vital-Vim-Buffer-Anchor'
-lazy = 0
-
-[[plugins]]
-repository = 'lambdalisue/vital-Vim-Prompt'
-lazy = 0
-
-[[plugins]]
-repository = 'lambdalisue/vital-Vim-Validate'
-lazy = 0
 
 [[plugins]]
 repository = 'haya14busa/vital-power-assert'
 depends = ['haya14busa/vital-vimlcompiler']
-lazy = 0
 
 [[plugins]]
 repository = 'thinca/vim-themis'
@@ -774,7 +699,7 @@ on_ft = ['vim', 'vimspec']
 [[plugins]]
 repository = 'thinca/vim-prettyprint'
 on_cmd = ['PP', 'PrettyPrint']
-functions = ['PP', 'PrettyPrint']
+on_func = ['PP', 'PrettyPrint']
 
 [[plugins]]
 repository = 'syngan/vim-vimlint'
@@ -782,4 +707,4 @@ depends = 'ynkdir/vim-vimlparser'
 
 [[plugins]]
 repository = 'LeafCage/laptime.vim'
-functions = 'laptime#'
+lazy = 1
