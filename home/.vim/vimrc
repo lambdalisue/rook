@@ -78,8 +78,6 @@ let $PYENV_ROOT = vimrc#pick_path([
       \ expand('~/.anyenv/envs/pyenv'),
       \ expand('~/.pyenv'),
       \])
-
-set viminfo& viminfo+=n$MYVIM_HOME/.viminfo
 set viewdir=$MYVIM_HOME/.view
 set undodir=$MYVIM_HOME/.undo
 set spellfile=$MYVIM_DATA/system/spellfile.utf-8.add
