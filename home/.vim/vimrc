@@ -209,8 +209,12 @@ set formatoptions& formatoptions+=j
 
 " use clipboard register
 " - unnamed     : 'selection' in X11; clipboard in Mac OS X and Windows
-" - unnamedplus : 'clipboard' in X11, Mac OS X, and Windows
-set clipboard^=unnamedplus
+" - unnamedplus : 'clipboard' in X11, Mac OS X, and Windows (but yank)
+if has('unnamedplus')
+  set clipboard+=unnamedplus,unnamed
+else
+  set clipboard+=unnamed
+endif
 
 " completion settings
 set complete&

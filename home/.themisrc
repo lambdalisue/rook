@@ -1,2 +1,2 @@
-call themis#option('runtimepath', expand('~/.vim/bundle/vimproc.vim'))
-call themis#option('runtimepath', expand('~/.vim/bundle/vital.vim'))
+call themis#option('runtimepath', expand('~/.vim/bundle/repos/github.com/Shougo/vimproc.vim'))
+call themis#option('runtimepath', expand('~/.vim/bundle/repos/github.com/vim-jp/vital.vim'))
