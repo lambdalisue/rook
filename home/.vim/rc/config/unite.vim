@@ -69,6 +69,14 @@ call unite#custom#profile('default', 'context', extend(config, {
 call unite#custom#default_action('directory', 'cd')
 call unite#custom#alias('file', 'edit', 'open')
 
+" Alias
+let g:unite_source_alias_aliases = {
+      \ 'map': {
+      \   'source': 'output',
+      \   'args': 'map|map!|lmap',
+      \ },
+      \}
+
 " add unite interface
 let agit = {
       \ 'description': 'open the directory (or parent directory) in agit',
@@ -262,16 +270,16 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \   fnamemodify(expand('$MYVIM_HOME/rc/neobundle/config.vim'), ':~'),
       \ ],
       \ [
-      \   'rc/individual/unite.config.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/individual/unite.config.vim'), ':~'),
+      \   'rc/config/unite.vim',
+      \   fnamemodify(expand('$MYVIM_HOME/rc/config/unite.vim'), ':~'),
       \ ],
       \ [
-      \   'rc/individual/vimfiler.config.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/individual/vimfiler.config.vim'), ':~'),
+      \   'rc/config/vimfiler.vim',
+      \   fnamemodify(expand('$MYVIM_HOME/rc/config/vimfiler.vim'), ':~'),
       \ ],
       \ [
-      \   'rc/individual/vimshell.config.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/individual/vimshell.config.vim'), ':~'),
+      \   'rc/config/vimshell.vim',
+      \   fnamemodify(expand('$MYVIM_HOME/rc/config/vimshell.vim'), ':~'),
       \ ],
       \ [
       \   'vim',

@@ -150,6 +150,18 @@ on_cmd = 'JunkfileOpen'
 repository = 'lambdalisue/vim-protocol'
 on_path = '\%(^https\?://\|\.zip$\)'
 
+
+# Colorscheme -----------------------------------------------------------------
+[[plugins]]
+repository = 'cocopon/iceberg.vim'
+
+[[plugins]]
+repository = 'w0ng/vim-hybrid'
+
+#[[plugins]]
+#repository = 'cocopon/lightline-hybrid.vim'
+
+
 # Completion ------------------------------------------------------------------
 [[plugins]]
 disabled = "!has('lua')"

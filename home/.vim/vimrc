@@ -142,7 +142,7 @@ set foldlevelstart=99
 set foldnestmax=3       " maximum fold nesting level
 set foldcolumn=3        " show fold guide
 
-set number                " show line numbers
+set nonumber              " do not show line numbers
 set list                  " show invisible characters
 set laststatus=2          " always shows statusline
 set scrolloff=4           " minimum number of screen lines to keep in scroll
@@ -509,7 +509,7 @@ autocmd MyAutoCmd BufWritePost *
 
 " Use relative syntax when the file is too big {{{
 autocmd MyAutoCmd Syntax *
-      \ if line('%') > 1000 |
+      \ if line('%') > 500 |
       \  syntax sync minlines=100 |
       \ endif
 " }}}
@@ -552,6 +552,17 @@ xnoremap <silent> <Plug>(my-execute-macro)
 xmap @ <Plug>(my-execute-macro)
 " }}}
 
+function! s:switch_colorscheme() abort
+  set background=dark
+  if get(g:, 'colors_name', '') ==# 'hybrid'
+    colorscheme iceberg
+  else
+    colorscheme hybrid
+  endif
+  redraw | echo g:colors_name
+endfunction
+nnoremap <silent><F3> :<C-u>call <SID>switch_colorscheme()<CR>
+
 " }}}
 
 "call vimrc#source_path('$MYVIM_HOME/rc/neobundle.vim', !has('vim_starting'))
@@ -559,7 +570,11 @@ call vimrc#source_path('$MYVIM_HOME/rc/dein.vim', !has('vim_starting'))
 
 filetype indent plugin on
 syntax on
-colorscheme hybrid
+try
+  colorscheme iceberg
+catch
+  colorscheme desert
+endtry
 
 call vimrc#source_path('~/.vimrc.local', !has('vim_starting'))
 set secure

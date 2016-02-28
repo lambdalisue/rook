@@ -1,6 +1,5 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
-rtp = ''
 
 [[plugins]]
 if = "executable('make')"
@@ -82,7 +81,7 @@ repo = 'tyru/open-browser.vim'
 on_map = '<Plug>'
 
 [[plugins]]
-if = "has('gui_running')"
+disabled = "!has('gui_running')"
 repo = 'lambdalisue/vim-fullscreen'
 on_map = '<Plug>'
 
@@ -176,15 +175,26 @@ repo = 'lambdalisue/vim-protocol'
 on_path = '\%(^https\?://\|\.zip$\)'
 
 
+# Colorscheme -----------------------------------------------------------------
+[[plugins]]
+repo = 'cocopon/iceberg.vim'
+
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
+
+#[[plugins]]
+#repo = 'cocopon/lightline-hybrid.vim'
+
+
 # Completion ------------------------------------------------------------------
 [[plugins]]
-if = "has('lua')"
+disabled = "!has('lua')"
 repo = 'Shougo/neocomplete.vim'
 depends = 'context_filetype.vim'
 on_i = 1
 
 [[plugins]]
-if = "has('nvim')"
+disabled = "!has('nvim')"
 repo = 'Shougo/deoplete.nvim'
 depends = 'context_filetype.vim'
 on_i = 1
@@ -446,9 +456,6 @@ on_cmd = 'Calendar'
 
 # Unite sources ---------------------------------------------------------------
 [[plugins]]
-repo = 'Shougo/neomru.vim'
-
-[[plugins]]
 repo = 'Shougo/neossh.vim'
 
 [[plugins]]
@@ -484,6 +491,10 @@ repo = 'dameninngenn/unite-perldoc'
 [[plugins]]
 if = "executable('git')"
 repo = 'kmnk/vim-unite-giti'
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+on_source = 'unite.vim'
 
 [[plugins]]
 repo = 'rafi/vim-unite-issue'

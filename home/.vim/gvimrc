@@ -58,7 +58,7 @@ set visualbell t_vb=
 " Disable cursor blinking in any mode
 set guicursor+=a:blinkon0
 
-colorscheme hybrid
+"colorscheme hybrid
 
 if has('gui_macvim')
   set transparency=3

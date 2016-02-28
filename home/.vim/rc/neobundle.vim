@@ -1,4 +1,4 @@
-let s:remote_bundle_root = expand('$MYVIM_HOME/bundle')
+let s:remote_bundle_root = expand('$MYVIM_HOME/bundle/neobundle')
 let s:neobundle_root     = s:remote_bundle_root . '/neobundle.vim'
 let s:neobundle_url      = 'https://github.com/Shougo/neobundle.vim'
 

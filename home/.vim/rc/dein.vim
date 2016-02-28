@@ -6,9 +6,7 @@ let s:dein_abspath  = printf(
       \)
 
 function! s:configure() abort
-  if has('vim_starting')
-    execute printf('set runtimepath+=%s', fnameescape(s:dein_abspath))
-  endif
+  execute printf('set runtimepath+=%s', fnameescape(s:dein_abspath))
   call dein#begin(s:dein_basepath)
   if dein#load_cache([
         \ expand('$MYVIM_VIMRC'),
@@ -32,6 +30,7 @@ function! s:configure() abort
   command! -nargs=* -complete=custom,s:complete_plugins DeinInstall   call dein#install(split(<q-args>))
   command! -nargs=* -complete=custom,s:complete_plugins DeinReinstall call dein#reinstall(split(<q-args>))
   command! -nargs=* -complete=custom,s:complete_plugins DeinUpdate    call dein#update(split(<q-args>))
+  command! DeinRecache call dein#recache_runtimepath()
   command! DeinCheck
         \ if dein#check_install() |
         \   call dein#install() |
