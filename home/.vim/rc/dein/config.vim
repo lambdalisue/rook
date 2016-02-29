@@ -571,11 +571,146 @@ endif " }}}
 
 " Textobj --------------------------------------------------------------------
 
+if dein#tap('vim-textobj-entire') " {{{
+  omap ae <Plug>(textobj-entire-a)
+  omap ie <Plug>(textobj-entire-i)
+  xmap ae <Plug>(textobj-entire-a)
+  xmap ie <Plug>(textobj-entire-i)
+endif " }}}
+
+if dein#tap('vim-textobj-line') " {{{
+  omap al <Plug>(textobj-line-a)
+  omap il <Plug>(textobj-line-i)
+  xmap al <Plug>(textobj-line-a)
+  xmap il <Plug>(textobj-line-i)
+endif " }}}
+
+if dein#tap('vim-textobj-syntax') " {{{
+  omap ay <Plug>(textobj-syntax-a)
+  omap iy <Plug>(textobj-syntax-i)
+  xmap ay <Plug>(textobj-syntax-a)
+  xmap iy <Plug>(textobj-syntax-i)
+endif " }}}
+
+if dein#tap('vim-textobj-indent') " {{{
+  omap ai <Plug>(textobj-indent-a)
+  omap ii <Plug>(textobj-indent-i)
+  xmap ai <Plug>(textobj-indent-a)
+  xmap ii <Plug>(textobj-indent-i)
+  omap aI <Plug>(textobj-indent-same-a)
+  omap iI <Plug>(textobj-indent-same-i)
+  xmap aI <Plug>(textobj-indent-same-a)
+  xmap iI <Plug>(textobj-indent-same-i)
+endif " }}}
+
+if dein#tap('vim-textobj-datetime') " {{{
+  omap ada <Plug>(textobj-datetime-auto)
+  omap add <Plug>(textobj-datetime-date)
+  omap adf <Plug>(textobj-datetime-full)
+  omap adt <Plug>(textobj-datetime-time)
+  omap adz <Plug>(textobj-datetime-tz)
+  omap ida <Plug>(textobj-datetime-auto)
+  omap idd <Plug>(textobj-datetime-date)
+  omap idf <Plug>(textobj-datetime-full)
+  omap idt <Plug>(textobj-datetime-time)
+  omap idz <Plug>(textobj-datetime-tz)
+  xmap ada <Plug>(textobj-datetime-auto)
+  xmap add <Plug>(textobj-datetime-date)
+  xmap adf <Plug>(textobj-datetime-full)
+  xmap adt <Plug>(textobj-datetime-time)
+  xmap adz <Plug>(textobj-datetime-tz)
+  xmap ida <Plug>(textobj-datetime-auto)
+  xmap idd <Plug>(textobj-datetime-date)
+  xmap idf <Plug>(textobj-datetime-full)
+  xmap idt <Plug>(textobj-datetime-time)
+  xmap idz <Plug>(textobj-datetime-tz)
+endif " }}}
+
+if dein#tap('vim-textobj-comment') " {{{
+  omap ac <Plug>(textobj-comment-a)
+  omap ic <Plug>(textobj-comment-i)
+  xmap ac <Plug>(textobj-comment-a)
+  xmap ic <Plug>(textobj-comment-i)
+endif " }}}
+
+if dein#tap('vim-textobj-space') " {{{
+  omap aS <Plug>(textobj-space-a)
+  omap iS <Plug>(textobj-space-i)
+  xmap aS <Plug>(textobj-space-a)
+  xmap iS <Plug>(textobj-space-i)
+endif " }}}
+
+if dein#tap('vim-textobj-fold') " {{{
+  omap az <Plug>(textobj-fold-a)
+  omap iz <Plug>(textobj-fold-i)
+  xmap az <Plug>(textobj-fold-a)
+  xmap iz <Plug>(textobj-fold-i)
+endif " }}}
+
+if dein#tap('vim-textobj-underscore') " {{{
+  " NOTE:
+  " Checkout tyru version!
+  omap a_ <Plug>(textobj-underscore-a)
+  omap i_ <Plug>(textobj-underscore-i)
+  xmap a_ <Plug>(textobj-underscore-a)
+  xmap i_ <Plug>(textobj-underscore-i)
+endif " }}}
+
+if dein#tap('vim-textobj-dash') " {{{
+  " NOTE:
+  " Send PR to add document
+  omap a- <Plug>(textobj-dash-a)
+  omap i- <Plug>(textobj-dash-i)
+  xmap a- <Plug>(textobj-dash-a)
+  xmap i- <Plug>(textobj-dash-i)
+endif " }}}
+
+if dein#tap('vim-textobj-url') " {{{
+  " NOTE:
+  " Send PR to add document
+  omap au <Plug>(textobj-url-a)
+  omap iu <Plug>(textobj-url-i)
+  xmap au <Plug>(textobj-url-a)
+  xmap iu <Plug>(textobj-url-i)
+endif " }}}
+
+if dein#tap('vim-textobj-parameter') " {{{
+  " NOTE:
+  " Send PR to add document
+  omap aP <Plug>(textobj-parameter-a)
+  omap iP <Plug>(textobj-parameter-i)
+  xmap aP <Plug>(textobj-parameter-a)
+  xmap iP <Plug>(textobj-parameter-i)
+endif " }}}
+
 if dein#tap('vim-textobj-multiblock') " {{{
   omap ab <Plug>(textobj-multiblock-a)
   omap ib <Plug>(textobj-multiblock-i)
   xmap ab <Plug>(textobj-multiblock-a)
   xmap ib <Plug>(textobj-multiblock-i)
+endif " }}}
+
+if dein#tap('vim-textobj-parameter') " {{{
+  " NOTE:
+  " Send PR to add document
+  omap aP <Plug>(textobj-parameter-a)
+  omap iP <Plug>(textobj-parameter-i)
+  xmap aP <Plug>(textobj-parameter-a)
+  xmap iP <Plug>(textobj-parameter-i)
+endif " }}}
+
+if dein#tap('vim-textobj-word-column') " {{{
+  " NOTE:
+  " Send PR about <Plug> mapping?
+  omap av <Plug>(textobj-word-column-a)
+  omap iv <Plug>(textobj-word-column-i)
+  xmap av <Plug>(textobj-word-column-a)
+  xmap iv <Plug>(textobj-word-column-i)
+
+  omap aV <Plug>(textobj-word-column-A)
+  omap iV <Plug>(textobj-word-column-I)
+  xmap aV <Plug>(textobj-word-column-A)
+  xmap iV <Plug>(textobj-word-column-I)
 endif " }}}
 
 if dein#tap('vim-textobj-python') " {{{
