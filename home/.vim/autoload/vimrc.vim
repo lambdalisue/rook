@@ -3,7 +3,7 @@ let s:path_delimiter = s:is_windows ? ';' : ':'
 
 function! vimrc#prepend_envpath(name, pathlist) abort
   let pathlist = split(eval(a:name), s:path_delimiter)
-  for path in map(filter(a:pathlist, 'v:val'), 'expand(v:val)')
+  for path in map(filter(a:pathlist, '!empty(v:val)'), 'expand(v:val)')
     if isdirectory(path) && index(pathlist, path) == -1
       call insert(pathlist, path, 0)
     endif
