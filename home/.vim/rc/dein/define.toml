@@ -494,6 +494,9 @@ repo = 'joker1007/unite-pull-request'
 repo = 'dameninngenn/unite-perldoc'
 
 [[plugins]]
+repo = 'naquad/unite-digraphs'
+
+[[plugins]]
 if = "executable('git')"
 repo = 'kmnk/vim-unite-giti'
 
