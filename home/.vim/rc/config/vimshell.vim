@@ -35,9 +35,6 @@ function! s:configure_vimshell() abort
   call vimshell#set_execute_file('js', 'node')
   call vimshell#set_execute_file('coffee', 'coffee')
 
-  if neobundle#is_installed('concealedyank')
-    xmap <buffer> y <Plug>(operator-concealedyank)
-  endif
   nmap <buffer><silent> q :<C-u>close<CR>
   imap <buffer> ^^ cd ..<CR>
   imap <buffer> [[ popd<CR>
