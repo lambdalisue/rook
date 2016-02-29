@@ -4,6 +4,9 @@
 " URI:      http://hashnote.net/
 " Platform: Linux, Mac OS X
 "
+let s:is_windows = has('win16') || has('win32') || has('win64')
+let s:is_darwin  = has('mac') || has('macunix') || has('gui_macvim')
+
 if has('vim_starting')
   if has('multi_byte')
     set ambiwidth=double
@@ -210,10 +213,10 @@ set formatoptions& formatoptions+=j
 " use clipboard register
 " - unnamed     : 'selection' in X11; clipboard in Mac OS X and Windows
 " - unnamedplus : 'clipboard' in X11, Mac OS X, and Windows (but yank)
-if has('unnamedplus')
-  set clipboard+=unnamedplus,unnamed
+if s:is_windows || s:is_darwin
+  set clipboard=unnamed
 else
-  set clipboard+=unnamed
+  set clipboard=unnamed,unnamedplus
 endif
 
 " completion settings
