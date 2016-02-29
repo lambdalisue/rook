@@ -250,7 +250,7 @@ depends = 'lightline-hybrid.vim'
 [[plugins]]
 if = "v:version >= 704"
 repo = 'osyo-manga/vim-watchdogs'
-depends = 'vimproc.vim'
+depends = ['vimproc.vim', 'vim-quickrun']
 
 [[plugins]]
 repo = 'dannyob/quickfixstatus'
@@ -694,10 +694,6 @@ repo = 'haya14busa/vital-power-assert'
 depends = 'vital-vimlcompiler'
 
 [[plugins]]
-repo = 'thinca/vim-themis'
-#on_ft = ['vim', 'vimspec']
-
-[[plugins]]
 repo = 'thinca/vim-prettyprint'
 on_cmd  = ['PP', 'PrettyPrint']
 on_func = ['PP', 'PrettyPrint']
@@ -709,3 +705,12 @@ depends = 'vim-vimlparser'
 [[plugins]]
 repo = 'LeafCage/laptime.vim'
 #lazy = 1
+
+[[plugins]]
+# non vim plugin
+repo = 'thinca/vim-themis'
+
+[[plugins]]
+# non vim plugin
+repo = 'Kuniwak/vint'
+

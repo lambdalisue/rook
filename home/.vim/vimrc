@@ -14,8 +14,8 @@ if has('vim_starting')
     scriptencoding utf-8
   endif
   set history=10000
+  set runtimepath& runtimepath+=~/.vim
 endif
-set runtimepath& runtimepath+=~/.vim
 
 " Disable unnecessary features {{{
 set noswapfile
@@ -74,8 +74,9 @@ call vimrc#prepend_envpath('$PATH', [
       \ '~/.anyenv/envs/rbenv/shims',
       \ '~/.anyenv/envs/ndenv/shims',
       \ '~/.cabal/bin',
-      \ '$MYVIMRUNTIME/bundle/vim-themis/bin',
-      \ '$MYVIMRUNTIME/bundle/vim-vimlint/bin',
+      \ '$MYVIM_HOME/bundle/repos/github.com/thinca/vim-themis/bin',
+      \ '$MYVIM_HOME/bundle/repos/github.com/syngan/vim-vimlint/bin',
+      \ '$MYVIM_HOME/bundle/repos/github.com/Kuniwak/vint/bin',
       \])
 call vimrc#prepend_envpath('$MANPATH', [
       \ '/usr/local/share/man/',
