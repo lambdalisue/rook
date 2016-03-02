@@ -222,6 +222,10 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \   fnamemodify(resolve($MYVIM_GVIMRC), ':~'),
       \ ],
       \ [
+      \   'init.vim',
+      \   fnamemodify(expand('$MYVIM_HOME/init.vim'), ':~'),
+      \ ],
+      \ [
       \   'vimshrc',
       \   fnamemodify(expand('$MYVIM_HOME/vimshrc'), ':~'),
       \ ],
