@@ -109,7 +109,9 @@ set modeline      " do not use modeline
 " K to search the help with the cursor word
 set keywordprg=:help
 " every wrapped line will continue visually indented
-set breakindent
+if exists('+breakindent')
+  set breakindent
+endif
 set showbreak=\ +
 
 " Language {{{
@@ -228,7 +230,10 @@ set complete-=i,d
 set complete+=.,w,b,u,k,s,t
 set completeopt&
 set completeopt-=preview
-set completeopt+=menu,longest,noselect
+set completeopt+=menu,longest
+if has('patch-7.4.775')
+  set completeopt+=noselect
+endif
 set pumheight=20        " height of popup menu
 set showfulltag         " show both the tag name and the search pattern
 " }}}
