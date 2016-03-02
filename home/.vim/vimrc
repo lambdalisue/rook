@@ -182,9 +182,9 @@ set nocursorline
 set nocursorcolumn
 
 if has('multi_byte') && $LANG !=# 'C'
-  set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:$
+  set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%
 else
-  set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%,eol:$
+  set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%
 endif
 
 " }}}
