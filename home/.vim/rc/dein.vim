@@ -32,6 +32,7 @@ function! s:configure() abort
   command! -nargs=* -complete=custom,s:complete_plugins DeinInstall   call dein#install(split(<q-args>))
   command! -nargs=* -complete=custom,s:complete_plugins DeinReinstall call dein#reinstall(split(<q-args>))
   command! -nargs=* -complete=custom,s:complete_plugins DeinUpdate    call dein#update(split(<q-args>))
+  command! -nargs=* -complete=custom,s:complete_plugins DeinSource    call dein#source(split(<q-args>))
   command! DeinRecache call dein#recache_runtimepath()
   command! DeinCheck
         \ if dein#check_install() |
