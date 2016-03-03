@@ -1,9 +1,9 @@
 scriptencoding utf-8
 
-let s:zsh_history_path = expand('~/.config/zsh/.zsh_history')
-
 let g:vimshell_prompt = '$ '
 let g:vimshell_secondary_prompt = '| '
+
+let s:zsh_history_path = expand('~/.config/zsh/.zsh_history')
 if filereadable(s:zsh_history_path)
   let g:vimshell_external_history_path = s:zsh_history_path
 endif
@@ -38,16 +38,23 @@ function! s:configure_vimshell() abort
   nmap <buffer><silent> q :<C-u>close<CR>
   imap <buffer> ^^ cd ..<CR>
   imap <buffer> [[ popd<CR>
-  silent! iunmap <buffer> <C-n>
-  silent! iunmap <buffer> <C-p>
-  silent! nunmap <buffer> <C-n>
-  silent! nunmap <buffer> <C-p>
-  nmap <buffer> <Up>   <Plug>(vimshell-previous-prompt)
-  nmap <buffer> <Down> <Plug>(vimshell-next-prompt)
+  nmap <buffer> <Up>   <Plug>(vimshell_previous_prompt)
+  nmap <buffer> <Down> <Plug>(vimshell_next_prompt)
+  " NOTE:
+  " it seems <Plug>(vimshell_history_neocomplete) does not work with deoplete?
+  if has('nvim')
+    nmap <buffer> <C-p>  <Plug>(vimshell_insert_head)<Plug>(vimshell_history_unite)
+    nmap <buffer> <C-n>  <Plug>(vimshell_insert_head)<Plug>(vimshell_history_unite)
+    imap <buffer> <C-p>  <Plug>(vimshell_history_unite)
+    imap <buffer> <C-n>  <Plug>(vimshell_history_unite)
+  else
+    nmap <buffer> <C-p>  <Plug>(vimshell_insert_head)<Plug>(vimshell_history_neocomplete)
+    nmap <buffer> <C-n>  <Plug>(vimshell_insert_head)<Plug>(vimshell_history_neocomplete)
+  endif
 
   inoremap <buffer><silent><C-r> <Esc>:<C-u>Unite
         \ -buffer-name=history
-        \ -default-action=execute
+        \ -default-action=append
         \ -no-split
         \ vimshell/history vimshell/external_history<CR>
   inoremap <buffer><silent><C-x><C-j> <Esc>:<C-u>Unite
@@ -60,6 +67,9 @@ function! s:configure_vimshell() abort
   call vimshell#hook#add('emptycmd', 'my_emptycmd', s:vimshell_hooks.emptycmd)
   call vimshell#hook#add('preexec', 'my_preexec', s:vimshell_hooks.preexec)
 endfunction
-autocmd MyAutoCmd FileType vimshell call s:configure_vimshell()
+augroup my_vimshell
+  autocmd! *
+  autocmd FileType vimshell call s:configure_vimshell()
+augroup END
 
 " vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
