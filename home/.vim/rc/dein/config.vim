@@ -108,19 +108,6 @@ if dein#tap('vim-over') " {{{
 
 endif " }}}
 
-if dein#tap('clever-f.vim') " {{{
-  function! s:clever_f_vim_on_source() abort
-    let g:clever_f_smart_case = 1
-    let g:clever_f_not_overwrite_standard_mappings = 1
-  endfunction
-  call s:register_on_source_hook()
-
-  map f <Plug>(clever-f-f)
-  map F <Plug>(clever-f-F)
-  map T <Plug>(clever-f-T)
-  map t <Plug>(clever-f-t)
-endif " }}}
-
 if dein#tap('vim-asterisk') " {{{
   " map *   <Plug>(asterisk-*)
   " map #   <Plug>(asterisk-#)
@@ -295,6 +282,37 @@ if dein#tap('vim-foldround') " {{{
   nmap <C-f><C-f> <Plug>(foldround-forward)
   nmap <C-f>b     <Plug>(foldround-backward)
   nmap <C-f><C-b> <Plug>(foldround-backward)
+endif " }}}
+
+if dein#tap('vim-easymotion') " {{{
+  function! s:incsearch_config(...) abort
+    return incsearch#util#deepextend(deepcopy({
+          \ 'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+          \ 'keymap': {
+          \   "\<C-l>": '<Over>(easymotion)',
+          \ },
+          \ 'is_expr': 0,
+          \}), get(a:, 1, {}))
+  endfunction
+  nnoremap <silent><expr> / incsearch#go(<SID>incsearch_config())
+  nnoremap <silent><expr> ? incsearch#go(<SID>incsearch_config({'command': '?'}))
+  nnoremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
+  nnoremap <silent><expr> g? incsearch#go(<SID>incsearch_config({'command': '?', 'is_stay': 1}))
+
+  nmap s <Plug>(easymotion-overwin-f2)
+endif " }}}
+
+if dein#tap('clever-f.vim') " {{{
+  function! s:clever_f_vim_on_source() abort
+    let g:clever_f_smart_case = 1
+    let g:clever_f_not_overwrite_standard_mappings = 1
+  endfunction
+  call s:register_on_source_hook()
+
+  map f <Plug>(clever-f-f)
+  map F <Plug>(clever-f-F)
+  map T <Plug>(clever-f-T)
+  map t <Plug>(clever-f-t)
 endif " }}}
 
 
@@ -970,13 +988,6 @@ if dein#tap('vimshell.vim') " {{{
   endfunction
   call s:register_on_source_hook()
   call s:register_on_post_source_hook()
-
-  nnoremap <Plug>(my-vimshell) <Nop>
-  nmap s <Plug>(my-vimshell)
-  nnoremap <silent> <Plug>(my-vimshell)s :<C-u>VimShell<CR>
-  nnoremap <silent> <Plug>(my-vimshell)v :<C-u>VimShell -split -split-command=vsplit<CR>
-  nnoremap <silent> <Plug>(my-vimshell)h :<C-u>VimShell -split -split-command=split<CR>
-  nnoremap <silent> <Plug>(my-vimshell)t :<C-u>VimShellTab<CR>
 endif " }}}
 
 if dein#tap('vimfiler.vim') " {{{

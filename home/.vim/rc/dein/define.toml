@@ -86,10 +86,6 @@ repo = 'lambdalisue/vim-fullscreen'
 on_map = '<Plug>'
 
 [[plugins]]
-repo = 'rhysd/clever-f.vim'
-on_map = '<Plug>'
-
-[[plugins]]
 repo = 'haya14busa/incsearch.vim'
 on_map = '<Plug>'
 
@@ -173,6 +169,19 @@ on_cmd = 'JunkfileOpen'
 [[plugins]]
 repo = 'lambdalisue/vim-protocol'
 on_path = '\%(^https\?://\|\.zip$\)'
+
+[[plugins]]
+repo = 'easymotion/vim-easymotion'
+depends = 'incsearch-easymotion.vim'
+on_map = '<Plug>'
+
+[[plugins]]
+repo = 'haya14busa/incsearch-easymotion.vim'
+depends = 'incsearch.vim'
+
+[[plugins]]
+repo = 'rhysd/clever-f.vim'
+on_map = '<Plug>'
 
 
 # Colorscheme -----------------------------------------------------------------
