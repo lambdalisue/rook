@@ -53,11 +53,10 @@ def save_movie(filename, delay=1, loop=1):
     # wait until previous command termination
     cmd.count_frames()  # this is required to wait mpng end
     cmd.sync()
-    # run ImageMagick to convert png files into a single movie file
-    args = ('convert',
-            '-delay', str(delay),
-            '-loop', str(loop), 
-            os.path.join(tempdir, 'mov*.png'),
+    # run ffmpeg to convert png files into a single movie file
+    args = ('ffmpeg',
+            '-pix_fmt', 'yuv420p',
+            '-i', os.path.join(tempdir, 'mov%04d.png'),
             filename)
     exit_code = subprocess.call(args)
     if exit_code == 0:
@@ -73,6 +72,8 @@ def save_movie(filename, delay=1, loop=1):
         print '|'
         print '|  %s' % ' '.join(args)
         print '|'
+        print '| Note that yuv420p format does not allow width which cannot be'
+        print '| devided by 2, due to the technical limitation.'
         showerror('Failed to save "%s"' % filename.decode('utf8'),
                 "Internally executed program was failed."
                 "See more detail on console.")
