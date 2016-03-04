@@ -289,17 +289,16 @@ if dein#tap('vim-easymotion') " {{{
     return incsearch#util#deepextend(deepcopy({
           \ 'modules': [incsearch#config#easymotion#module({'overwin': 1})],
           \ 'keymap': {
-          \   "\<C-l>": '<Over>(easymotion)',
+          \   "\<CR>": '<Over>(easymotion)',
           \ },
           \ 'is_expr': 0,
           \}), get(a:, 1, {}))
   endfunction
-  nnoremap <silent><expr> / incsearch#go(<SID>incsearch_config())
-  nnoremap <silent><expr> ? incsearch#go(<SID>incsearch_config({'command': '?'}))
-  nnoremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
-  nnoremap <silent><expr> g? incsearch#go(<SID>incsearch_config({'command': '?', 'is_stay': 1}))
+  nnoremap <nowait><silent><expr> / incsearch#go(<SID>incsearch_config())
+  nnoremap <nowait><silent><expr> ? incsearch#go(<SID>incsearch_config({'command': '?'}))
+  nnoremap <nowait><silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
 
-  nmap s <Plug>(easymotion-overwin-f2)
+  nmap <nowait> s <Plug>(easymotion-overwin-f2)
 endif " }}}
 
 if dein#tap('clever-f.vim') " {{{
@@ -762,17 +761,17 @@ if dein#tap('vim-operator-trailingspace-killer') " {{{
 endif " }}}
 
 if dein#tap('vim-operator-surround') " {{{
-  nmap sa <Plug>(operator-surround-append)
-  nmap sd <Plug>(operator-surround-delete)
-  nmap sr <Plug>(operator-surround-replace)
-  xmap sa <Plug>(operator-surround-append)
-  xmap sd <Plug>(operator-surround-delete)
-  xmap sr <Plug>(operator-surround-replace)
+  nmap Sa <Plug>(operator-surround-append)
+  nmap Sd <Plug>(operator-surround-delete)
+  nmap Sr <Plug>(operator-surround-replace)
+  xmap Sa <Plug>(operator-surround-append)
+  xmap Sd <Plug>(operator-surround-delete)
+  xmap Sr <Plug>(operator-surround-replace)
 
-  nmap sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
-  nmap srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
-  xmap sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
-  xmap srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
+  nmap Sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
+  nmap Srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
+  xmap Sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
+  xmap Srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
 endif " }}}
 
 if dein#tap('vim-operator-breakline') " {{{
