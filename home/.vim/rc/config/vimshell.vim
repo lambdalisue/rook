@@ -40,17 +40,8 @@ function! s:configure_vimshell() abort
   imap <buffer> [[ popd<CR>
   nmap <buffer> <Up>   <Plug>(vimshell_previous_prompt)
   nmap <buffer> <Down> <Plug>(vimshell_next_prompt)
-  " NOTE:
-  " it seems <Plug>(vimshell_history_neocomplete) does not work with deoplete?
-  if has('nvim')
-    nmap <buffer> <C-p>  <Plug>(vimshell_insert_head)<Plug>(vimshell_history_unite)
-    nmap <buffer> <C-n>  <Plug>(vimshell_insert_head)<Plug>(vimshell_history_unite)
-    imap <buffer> <C-p>  <Plug>(vimshell_history_unite)
-    imap <buffer> <C-n>  <Plug>(vimshell_history_unite)
-  else
-    nmap <buffer> <C-p>  <Plug>(vimshell_insert_head)<Plug>(vimshell_history_neocomplete)
-    nmap <buffer> <C-n>  <Plug>(vimshell_insert_head)<Plug>(vimshell_history_neocomplete)
-  endif
+  nmap <buffer> <C-p>  <Plug>(vimshell_insert_head)<Plug>(vimshell_history_neocomplete)
+  nmap <buffer> <C-n>  <Plug>(vimshell_insert_head)<Plug>(vimshell_history_neocomplete)
 
   inoremap <buffer><silent><C-r> <Esc>:<C-u>Unite
         \ -buffer-name=history

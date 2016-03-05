@@ -41,6 +41,7 @@ let g:loaded_netrwPlugin       = 1
 let g:loaded_netrwSettings     = 1
 let g:loaded_netrwFileHandlers = 1
 let g:loaded_logipat           = 1
+let g:loaded_matchparen        = 1
 " neovim
 let g:loaded_man               = 1
 " }}}
