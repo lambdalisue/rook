@@ -5,11 +5,10 @@ let b:did_ftplugin = 1
 
 " Ref:http://d.hatena.ne.jp/thinca/20130708/1373210009 
 " preview with p
-noremap <buffer> p <CR>zz<C-w>p
+nnoremap <buffer> p <CR>zz<C-w>p
 
-" Ctrl-n/p to preview and go
-noremap <buffer> <C-n> j<CR>zz<C-w>p
-noremap <buffer> <C-p> k<CR>zz<C-w>p
+" Close with q
+nnoremap <buffer> q :close<CR>
 
 " remove
 " TODO: it does not work with location list
@@ -23,10 +22,10 @@ function! s:del_entry() range
   call setqflist(qf, 'r')
   execute a:firstline
 endfunction
-nnoremap <silent> <buffer> dd :<C-u>call <SID>del_entry()<CR>
-nnoremap <silent> <buffer> x  :<C-u>call <SID>del_entry()<CR>
-vnoremap <silent> <buffer> d  :<C-u>'<,'>call <SID>del_entry()<CR>
-vnoremap <silent> <buffer> x  :<C-u>'<,'>call <SID>del_entry()<CR>
+nnoremap <silent><buffer> dd :<C-u>call <SID>del_entry()<CR>
+nnoremap <silent><buffer> x  :<C-u>call <SID>del_entry()<CR>
+vnoremap <silent><buffer> d  :<C-u>'<,'>call <SID>del_entry()<CR>
+vnoremap <silent><buffer> x  :<C-u>'<,'>call <SID>del_entry()<CR>
 
 " undo
 " TODO: it does not work with location list
@@ -37,4 +36,4 @@ function! s:undo_entry()
     call setqflist(remove(history, -1), 'r')
   endif
 endfunction
-nnoremap <silent> <buffer> u :<C-u>call <SID>undo_entry()<CR>
+nnoremap <silent><buffer> u :<C-u>call <SID>undo_entry()<CR>

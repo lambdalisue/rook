@@ -3,29 +3,32 @@ if exists('b:did_ftplugin')
 endif
 let b:did_ftplugin = 1
 
-setl iskeyword&
-setl iskeyword+=:
-setl iskeyword+=#
-setl iskeyword+=-
-setl iskeyword+=.
-setl iskeyword+=(
-setl iskeyword+=)
-setl tabstop=8
-setl softtabstop=8
-setl shiftwidth=8     " width of Indent
-setl nosmarttab       " use 'shiftwidth' and 'softtabstop' for indentation
-setl noexpandtab
-setl nospell
+setlocal iskeyword&
+setlocal iskeyword+=:
+setlocal iskeyword+=#
+setlocal iskeyword+=-
+setlocal iskeyword+=.
+setlocal iskeyword+=(
+setlocal iskeyword+=)
+setlocal tabstop=8
+setlocal softtabstop=8
+setlocal shiftwidth=8     " width of Indent
+setlocal nosmarttab       " use 'shiftwidth' and 'softtabstop' for indentation
+setlocal noexpandtab
+setlocal nospell
 if v:version >= 703
-  setl conceallevel=2
+  setlocal conceallevel=2
   " keep conceal of current line in command mode
-  setl concealcursor=nc
+  setlocal concealcursor=nc
 endif
 
 " Each lines should be shorter than 78 characters
-setl textwidth=78
+setlocal textwidth=78
 if exists('&colorcolumn')
-  setl colorcolumn=78
+  setlocal colorcolumn=78
 endif
 
-set nospell
+" Close with q
+nnoremap <buffer> q :close<CR>
+
+setlocal nospell
