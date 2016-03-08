@@ -22,7 +22,6 @@ if !exists('g:_nvim_qt_GUIEnter')
     autocmd! *
     autocmd FocusGained *
           \ doautocmd <nomodeline> User GUIEnter |
-          \ echomsg 'Called' |
           \ let g:_nvim_qt_GUIEnter = 1 |
           \ autocmd! nvim_qt_GUIEnter_workaround
   augroup END
