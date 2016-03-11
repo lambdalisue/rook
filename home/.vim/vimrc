@@ -482,6 +482,15 @@ endfunction
 autocmd MyAutoCmd BufWritePre * call s:makedirs(expand('<afile>:p:h'), v:cmdbang)
 " }}}
 
+" Show runtimepath {{{
+function! s:echo_runtimepath() abort
+  for path in split(&runtimepath, ',')
+    echo path
+  endfor
+endfunction
+command! EchoRuntimePath call s:echo_runtimepath()
+" }}}
+
 " automatically change working directory on vim enter {{{
 function! s:workon(dir, bang) abort
   let dir = (a:dir ==# '' ? expand('%') : a:dir)
