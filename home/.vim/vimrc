@@ -166,6 +166,9 @@ set report=0              " report any changes
 set display=lastline      " display last line in a window AMAP
 set showtabline=2         " display tabline always
 
+" vertically split buffers for vimdiff
+set diffopt& diffopt+=vertical
+
 " move cursor previous/next line when the cursor is first/last character in the
 " line and user move the cursor left/right
 set whichwrap=b,s,<,>,~,[,]
