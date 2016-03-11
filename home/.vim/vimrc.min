@@ -1,13 +1,23 @@
-set nocompatible
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" $ vim -u ~/.vim/vimrc.min
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has('vim_starting')
-  execute printf('set runtimepath+=%s', expand('~/.vim/bundle/neobundle.vim'))
+  if &compatible | set nocompatible | endif
+  set runtimepath& runtimepath+=~/.vim/bundle/repos/github.com/Shougo/dein.vim
 endif
-call neobundle#begin(expand('~/.vim/bundle'))
 
-NeoBundle 'tyru/capture.vim'
+call dein#begin(expand('~/.vim/bundle'))
+call dein#end()
 
-call neobundle#end()
-
-syntax on
 filetype plugin indent on
+syntax on
+
+" --- Utilities --------------------------------------------------------------
+function! s:echo_runtimepath() abort
+  for path in split(&runtimepath, ',')
+    echo path
+  endfor
+endfunction
+command! EchoRuntimePath call s:echo_runtimepath()
