@@ -1308,6 +1308,7 @@ if dein#tap('previm') " {{{
     doautocmd Previm FileType
   endfunction
   call s:register_on_post_source_hook()
+  let g:previm_show_header = 0
 endif " }}}
 
 " vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
