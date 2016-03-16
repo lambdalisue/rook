@@ -1303,4 +1303,11 @@ if dein#tap('tsuquyomi') " {{{
   call s:register_on_source_hook()
 endif " }}}
 
+if dein#tap('previm') " {{{
+  function! s:previm_on_post_source() abort
+    doautocmd Previm FileType
+  endfunction
+  call s:register_on_post_source_hook()
+endif " }}}
+
 " vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
