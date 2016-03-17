@@ -236,6 +236,7 @@ repo = 'hrsh7th/vim-neco-calc'
 #on_source = ['neocomplete.vim', 'deoplete.nvim']
 
 [[plugins]]
+if = "has('nvim')"
 repo = 'zchee/deoplete-jedi'
 depends = 'deoplete.nvim'
 on_source = 'jedi-vim'

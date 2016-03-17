@@ -106,7 +106,7 @@ endif
 
 " }}}
 
-set modeline      " do not use modeline
+set modeline      " use modeline
 " K to search the help with the cursor word
 set keywordprg=:help
 " every wrapped line will continue visually indented
