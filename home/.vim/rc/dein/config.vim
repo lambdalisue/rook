@@ -294,11 +294,8 @@ if dein#tap('vim-easymotion') " {{{
           \ 'is_expr': 0,
           \}), get(a:, 1, {}))
   endfunction
-  nnoremap <nowait><silent><expr> / incsearch#go(<SID>incsearch_config())
-  nnoremap <nowait><silent><expr> ? incsearch#go(<SID>incsearch_config({'command': '?'}))
-  nnoremap <nowait><silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
-
-  nmap <nowait> s <Plug>(easymotion-overwin-f2)
+  let g:EasyMotion_do_mapping = 0
+  nnoremap <nowait><silent><expr> s incsearch#go(<SID>incsearch_config())
 endif " }}}
 
 if dein#tap('clever-f.vim') " {{{
