@@ -538,44 +538,47 @@ if dein#tap('lightline.vim') " {{{
 endif " }}}
 
 if dein#tap('vim-watchdogs') " {{{
-  let g:watchdogs_check_CursorHold_enable = 0
-  let g:watchdogs_check_BufWritePost_enable = 0
-  let g:watchdogs_check_BufWritePost_enables = {
-        \ 'vim': 1,
-        \ 'zsh': 1,
-        \ 'python': 1,
-        \ 'perl': 1,
-        \ 'javascript': 1,
-        \ 'coffeescript': 1,
-        \}
-  let g:watchdogs_check_BufWritePost_enable_on_wq = 0
+  function! s:vim_watchdogs_on_source() abort
+    let g:watchdogs_check_CursorHold_enable = 0
+    let g:watchdogs_check_BufWritePost_enable = 0
+    let g:watchdogs_check_BufWritePost_enables = {
+          \ 'vim': 1,
+          \ 'zsh': 1,
+          \ 'python': 1,
+          \ 'perl': 1,
+          \ 'javascript': 1,
+          \ 'coffeescript': 1,
+          \}
+    let g:watchdogs_check_BufWritePost_enable_on_wq = 0
 
-  let g:quickrun_config = get(g:, 'quickrun_config', {})
-  let g:quickrun_config = extend(g:quickrun_config, {
-        \ 'watchdogs_checker/_': {
-        \   'runner/vimproc/updatetime': 40,
-        \   'outputter/quickfix/open_cmd': '',
-        \   'hook/qfstatusline_update/enable_exit': 1,
-        \   'hook/qfstatusline_update/priority_exit': 4,
-        \ }
-        \})
-  " use flake8 instead of pyflakes
-  if executable('flake8')
-    let g:quickrun_config['watchdogs_checker/pyflakes'] = {
-        \ 'command': 'flake8',
-        \}
-  endif
-  " use vint as a vimlint
-  if executable('vint')
-    let g:quickrun_config['watchdogs_checker/vint'] = {
-          \ 'command': 'vint',
-          \ 'exec'   : '%c %o %s:p',
+    let g:quickrun_config = get(g:, 'quickrun_config', {})
+    let g:quickrun_config = extend(g:quickrun_config, {
+          \ 'watchdogs_checker/_': {
+          \   'runner/vimproc/updatetime': 40,
+          \   'outputter/quickfix/open_cmd': '',
+          \   'hook/qfstatusline_update/enable_exit': 1,
+          \   'hook/qfstatusline_update/priority_exit': 4,
+          \ }
+          \})
+    " use flake8 instead of pyflakes
+    if executable('flake8')
+      let g:quickrun_config['watchdogs_checker/pyflakes'] = {
+          \ 'command': 'flake8',
           \}
-    let g:quickrun_config['vim/watchdogs_checker'] = {
-          \ 'type': 'watchdogs_checker/vint',
-          \}
-  endif
-  call watchdogs#setup(g:quickrun_config)
+    endif
+    " use vint as a vimlint
+    if executable('vint')
+      let g:quickrun_config['watchdogs_checker/vint'] = {
+            \ 'command': 'vint',
+            \ 'exec'   : '%c %o %s:p',
+            \}
+      let g:quickrun_config['vim/watchdogs_checker'] = {
+            \ 'type': 'watchdogs_checker/vint',
+            \}
+    endif
+    call watchdogs#setup(g:quickrun_config)
+  endfunction
+  call s:register_on_source_hook()
 endif " }}}
 
 if dein#tap('vim-qfstatusline') " {{{
