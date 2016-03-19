@@ -1024,10 +1024,10 @@ on_cmd = 'Gita'
 hook_add = '''
   nnoremap <Plug>(my-gita) <Nop>
   nmap <Leader>a <Plug>(my-gita)
-  nnoremap <Plug>(my-gita)a :<C-u>Gita status  --ignore-submodules<CR>
-  nnoremap <Plug>(my-gita)b :<C-u>Gita branch --all<CR>
-  nnoremap <Plug>(my-gita)d :<C-u>Gita diff-ls --ignore-submodules origin/HEAD...<CR>
-  nnoremap <Plug>(my-gita)l :<C-u>Gita ls-files<CR>
+  nnoremap <silent> <Plug>(my-gita)a :<C-u>Gita status  --ignore-submodules<CR>
+  nnoremap <silent> <Plug>(my-gita)b :<C-u>Gita branch --all<CR>
+  nnoremap <silent> <Plug>(my-gita)d :<C-u>Gita diff-ls --ignore-submodules origin/HEAD...<CR>
+  nnoremap <silent> <Plug>(my-gita)l :<C-u>Gita ls-files<CR>
 '''
 hook_source = '''
   let g:gita#command#browse#extra_translation_patterns = {
