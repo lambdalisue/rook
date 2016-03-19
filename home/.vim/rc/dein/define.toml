@@ -4,7 +4,6 @@ directory = 'dein.vim'
 rtp  = ''
 
 [[plugins]]
-if = "executable('make')"
 repo = 'Shougo/vimproc.vim'
 build = 'make'
 
@@ -43,8 +42,9 @@ repo = 'ynkdir/vim-vimlparser'
 
 # Fundemental -----------------------------------------------------------------
 [[plugins]]
-if = "executable('sudo')"
 repo = 'sudo.vim'
+on_path = 'sudo:*'
+hook_add = 'cnoreabbrev w!! :w sudo:%'
 
 [[plugins]]
 repo = 'cohama/vim-hier'
@@ -54,6 +54,7 @@ repo = 'thinca/vim-template'
 
 [[plugins]]
 repo = 'lambdalisue/vim-diffa'
+hook_add = 'nmap <C-l> <Plug>(diffa-C-l)'
 
 [[plugins]]
 repo = 'powerman/vim-plugin-AnsiEsc'
@@ -65,10 +66,36 @@ on_cmd = [
     'OverCommandLine',
     'OverCommandLineNoremap',
 ]
+hook_add = '''
+  " Use vim-over instead of builtin substitution
+  " http://leafcage.hateblo.jp/entry/2013/11/23/212838
+  cnoreabbrev <silent><expr>s getcmdtype() ==# ':' && getcmdline() =~# '^s'
+        \ ? "OverCommandLine<CR><C-u>%s/<C-r>=get([], getchar(0), '')<CR>"
+        \ : 's'
+  cnoreabbrev <silent><expr>'<,'>s getcmdtype() ==# ':' && getcmdline() =~# "^'<,'>s"
+        \ ? "'<,'>OverCommandLine<CR>s/<C-r>=get([], getchar(0), '')<CR>"
+        \ : "'<,'>s"
+'''
+hook_source = '''
+  let g:over_enable_auto_nohlsearch = 1
+  let g:over_enable_cmd_window = 1
+  if has('multi_byte') && $LANG !=# 'C'
+      let g:over_command_line_prompt = '» '
+  endif
+  let g:over#command_line#search#enable_incsearch = 1
+'''
 
 [[plugins]]
 repo = 'kana/vim-repeat'
 on_map = '<Plug>'
+hook_add = '''
+  nmap .     <Plug>(repeat-.)
+  nmap u     <Plug>(repeat-u)
+  nmap U     <Plug>(repeat-U)
+  nmap <C-r> <Plug>(repeat-<C-r>)
+  nmap g-    <Plug>(repeat-g-)
+  nmap g+    <Plug>(repeat-g+)
+'''
 
 [[plugins]]
 repo = 't9md/vim-quickhl'
@@ -77,19 +104,42 @@ on_map = [
     '<Plug>',
     '<Plug>(operator-quickhl-manual'
 ]
+hook_add = 'map H <Plug>(operator-quickhl-manual-this-motion)'
 
 [[plugins]]
 repo = 'tyru/open-browser.vim'
 on_map = '<Plug>'
+hook_add = '''
+  let g:netrw_nogx = 1 " disable netrw's gx mapping
+  nmap gx <Plug>(openbrowser-smart-search)
+  vmap gx <Plug>(openbrowser-smart-search)
+'''
 
 [[plugins]]
-if = "has('gui_running')"
 repo = 'lambdalisue/vim-fullscreen'
 on_map = '<Plug>'
+hook_add = 'nmap <C-CR> <Plug>(fullscreen-toggle)'
 
 [[plugins]]
 repo = 'haya14busa/incsearch.vim'
 on_map = '<Plug>'
+hook_add = '''
+  map / <Plug>(incsearch-forward)
+  map ? <Plug>(incsearch-backward)
+  map g/ <Plug>(incsearch-stay)
+  map n <Plug>(incsearch-nohl-n)
+  map N <Plug>(incsearch-nohl-N)
+
+  map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)
+  map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
+  map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
+  map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
+  map z*  <Plug>(incsearch-nohl)<Plug>(asterisk-z*)
+  map gz* <Plug>(incsearch-nohl)<Plug>(asterisk-gz*)
+  map z#  <Plug>(incsearch-nohl)<Plug>(asterisk-z#)
+  map gz# <Plug>(incsearch-nohl)<Plug>(asterisk-gz#)
+'''
+hook_source = 'let g:incsearch#auto_nohlsearch = 1'
 
 [[plugins]]
 repo = 'haya14busa/vim-asterisk'
@@ -99,6 +149,19 @@ on_source = 'incsearch.vim'
 [[plugins]]
 repo = 'LeafCage/yankround.vim'
 on_map = '<Plug>'
+hook_add = '''
+  nmap p     <Plug>(yankround-p)
+  nmap P     <Plug>(yankround-P)
+  nmap gp    <Plug>(yankround-gp)
+  nmap gP    <Plug>(yankround-gP)
+  nmap <expr><C-p> yankround#is_active()
+        \ ? "\<Plug>(yankround-prev)"
+        \ : "\<Plug>(my-tab-prev)"
+  nmap <expr><C-n> yankround#is_active()
+        \ ? "\<Plug>(yankround-next)"
+        \ : "\<Plug>(my-tab-next)"
+'''
+hook_source = 'let g:yankround_use_region_hl = 0'
 
 [[plugins]]
 repo = 'tyru/capture.vim'
@@ -107,23 +170,70 @@ on_cmd = 'Capture'
 [[plugins]]
 repo = 'MattesGroeger/vim-bookmarks'
 depends = 'unite.vim'
-augroup = 'bm_vim_enter'
 on_map = '<Plug>'
 on_source = 'unite.vim'
+hook_add = '''
+  nnoremap <Plug>(my-bookmark) <Nop>
+  nmap M <Plug>(my-bookmark)
+  vmap M <Plug>(my-bookmark)
+  nmap <Plug>(my-bookmark)m <Plug>BookmarkToggle
+  nmap <Plug>(my-bookmark)i <Plug>BookmarkAnnotate
+  vmap <Plug>(my-bookmark)m <Plug>BookmarkToggle
+  vmap <Plug>(my-bookmark)i <Plug>BookmarkAnnotate
+  nmap <Plug>(my-bookmark)n <Plug>BookmarkNext
+  nmap <Plug>(my-bookmark)p <Plug>BookmarkPrev
+  nmap <Plug>(my-bookmark)a <Plug>BookmarkShowAll
+  nmap <Plug>(my-bookmark)c <Plug>BookmarkClear
+  nmap <Plug>(my-bookmark)x <Plug>BookmarkClearAll
+
+  nmap ]m <Plug>BookmarkNext
+  nmap [m <Plug>BookmarkPrev
+'''
+hook_source = '''
+  let g:bookmark_auto_save = 1
+  let g:bookmark_save_per_working_dir = 1
+  let g:bookmark_highlight_lines = 0
+  " use 'long' converter to show actual file path
+  call unite#custom_source(
+        \ 'vim_bookmarks',
+        \ 'converters',
+        \ 'converter_vim_bookmarks_long')
+'''
 
 [[plugins]]
 repo = 'thinca/vim-quickrun'
 on_map = '<Plug>'
 on_cmd = 'QuickRun'
+hook_add = 'nmap <LocalLeader>r <Plug>(quickrun)'
+hook_source = '''
+  let g:quickrun_config = get(g:, 'quickrun_config', {})
+  let g:quickrun_config['_'] = {
+        \ 'runner' : 'vimproc',
+        \ 'outputter/buffer/split': ':botright 8sp',
+        \ 'outputter/buffer/close_on_empty': 1,
+        \ 'hook/time/enable': 1,
+        \}
+  let g:quickrun_config['pyrex'] = {
+        \ 'command': 'cython',
+        \}
+  " Terminate the quickrun with <C-c>
+  nnoremap <expr><silent> <C-c> quickrun#is_running()
+        \ ? quickrun#sweep_sessions() : "\<C-c>"
+'''
 
 [[plugins]]
 repo = 'thinca/vim-qfreplace'
 on_source = ['unite.vim', 'vimfiler.vim']
 on_cmd = 'Qfreplace'
+hook_add = '''
+  autocmd MyAutoCmd FileType qf nnoremap <buffer><silent> r
+        \ :<C-u>Qfreplace<CR>
+'''
 
 [[plugins]]
 repo = 'AndrewRadev/switch.vim'
 on_cmd = 'Switch'
+hook_add = 'nmap \ :<C-u>Switch<CR>'
 
 [[plugins]]
 repo = 'AndrewRadev/linediff.vim'
@@ -132,6 +242,17 @@ on_cmd = 'Linediff'
 [[plugins]]
 repo = 'kurkale6ka/vim-swap'
 on_map = '<Plug>'
+hook_add = '''
+  nnoremap <Plug>(my-swap) <Nop>
+  vnoremap <Plug>(my-swap) <Nop>
+  nmap ~ <Plug>(my-swap)
+  vmap ~ <Plug>(my-swap)
+  vmap <Plug>(my-swap)~  <Plug>SwapSwapOperands
+  vmap <Plug>(my-swap)-  <Plug>SwapSwapPivotOperands
+  nmap <Plug>(my-swap)~  <Plug>SwapSwapWithR_WORD
+  nmap <Plug>(my-swap)-  <Plug>SwapSwapWithL_WORD
+'''
+hook_source = 'let g:swap_enable_default_keymaps = 0'
 
 [[plugins]]
 repo = 'lambdalisue/vim-pager'
@@ -144,6 +265,7 @@ on_cmd = ['MANPAGER', 'Man']
 [[plugins]]
 repo = 't9md/vim-choosewin'
 on_map = '<Plug>'
+hook_add = 'nmap <C-w><C-w> <Plug>(choosewin)'
 
 [[plugins]]
 repo = 'lambdalisue/vim-findent'
@@ -152,14 +274,25 @@ on_cmd = 'Findent'
 [[plugins]]
 repo = 'osyo-manga/vim-trip'
 on_map = '<Plug>'
+hook_add = '''
+  nmap <C-a> <Plug>(trip-increment)
+  nmap <C-x> <Plug>(trip-decrement)
+'''
 
 [[plugins]]
 repo = 'kana/vim-altr'
 on_map = '<Plug>'
+hook_add = 'nmap <F2> <Plug>(altr-forward)'
 
 [[plugins]]
 repo = 'lambdalisue/vim-foldround'
 on_map = '<Plug>'
+hook_add = '''
+  nmap <C-f>f     <Plug>(foldround-forward)
+  nmap <C-f><C-f> <Plug>(foldround-forward)
+  nmap <C-f>b     <Plug>(foldround-backward)
+  nmap <C-f><C-b> <Plug>(foldround-backward)
+'''
 
 [[plugins]]
 repo = 'thinca/vim-zenspace'
@@ -184,6 +317,16 @@ on_source = 'vim-easymotion'
 [[plugins]]
 repo = 'rhysd/clever-f.vim'
 on_map = '<Plug>'
+hook_add = '''
+  map f <Plug>(clever-f-f)
+  map F <Plug>(clever-f-F)
+  map T <Plug>(clever-f-T)
+  map t <Plug>(clever-f-t)
+'''
+hook_source = '''
+  let g:clever_f_smart_case = 1
+  let g:clever_f_not_overwrite_standard_mappings = 1
+'''
 
 
 # Colorscheme -----------------------------------------------------------------
@@ -203,12 +346,40 @@ if = "has('lua')"
 repo = 'Shougo/neocomplete.vim'
 depends = 'context_filetype.vim'
 on_i = 1
+hook_add = '''
+  inoremap <silent><expr><C-x><C-x> neocomplete#start_manual_complete()
+  inoremap <expr><CR> (pumvisible() ? "\<C-y>" : "") . "\<CR>"
+'''
+hook_source = '''
+  let g:neocomplete#enable_at_startup = 1
+  let g:neocomplete#enable_smart_case = 1
+  let g:neocomplete#enable_fuzzy_completion = 0
+  let g:neocomplete#force_omni_input_patterns = extend(
+        \ get(g:, 'neocomplete#force_omni_input_patterns', {}), {
+        \   'python': '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*',
+        \})
+  let g:neocomplete#disable_auto_complete = 1
+'''
 
 [[plugins]]
 if = "has('nvim')"
 repo = 'Shougo/deoplete.nvim'
 depends = 'context_filetype.vim'
 on_i = 1
+hook_add = '''
+  inoremap <silent><expr><C-x><C-x> deoplete#mappings#manual_complete()
+  inoremap <expr><CR> (pumvisible() ? "\<C-y>" : "") . "\<CR>"
+'''
+hook_source = '''
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#enable_smart_case = 1
+  let g:deoplete#enable_fuzzy_completion = 0
+  let g:deoplete#force_omni_input_patterns = extend(
+        \ get(g:, 'deoplete#force_omni_input_patterns', {}), {
+        \   'python': '\v%([^. \t].|^\s*@|^\s*from\s.+import |^\s*from |^\s*import )\w*',
+        \})
+  let g:deoplete#disable_auto_complete = 1
+'''
 
 [[plugins]]
 repo = 'Shougo/neco-syntax'
@@ -248,29 +419,104 @@ depends = ['neosnippet-snippets', 'context_filetype.vim']
 on_source = 'unite.vim'
 on_ft = 'snippet'
 on_i = 1
+hook_add = '''
+  if has('nvim')
+    imap <expr><C-g> pumvisible()
+          \ ? "\<Plug>(neosnippet_expand_or_jump)"
+          \ : neosnippet#expandable_or_jumpable()
+          \   ? "\<Plug>(neosnippet_expand_or_jump)"
+          \   : deoplete#custom#manual_complete('neosnippet')
+  elseif has('lua')
+    imap <expr><C-g> pumvisible()
+          \ ? "\<Plug>(neosnippet_expand_or_jump)"
+          \ : neosnippet#expandable_or_jumpable()
+          \   ? "\<Plug>(neosnippet_expand_or_jump)"
+          \   : neocomplete#start_manual_complete('neosnippet')
+  endif
+  smap <C-g> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-g> <Plug>(neosnippet_expand_target)
+'''
+hook_source = '''
+  let g:neosnippet#snippets_directory = expand('$MYVIM_HOME/snippets')
+  let g:neosnippet#enable_snipmate_compatibility = 1
+
+  " for snippet complete marker
+  if has('conceal')
+    setglobal conceallevel=2 concealcursor=niv
+  endif
+'''
 
 [[plugins]]
 repo = 'Shougo/echodoc.vim'
 on_i = 1
+hook_source = '''
+  setglobal cmdheight=2
+  setglobal completeopt+=menuone
+  "set completeopt-=preview
+  let g:echodoc_enable_at_startup=1
+'''
 
 
 # Statusline ------------------------------------------------------------------
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 depends = 'lightline-hybrid.vim'
+hook_add = '''
+  call vimrc#source_path('$MYVIM_HOME/rc/config/lightline.vim')
+'''
 
 [[plugins]]
 if = "v:version >= 704"
 repo = 'osyo-manga/vim-watchdogs'
 depends = ['vimproc.vim', 'vim-quickrun']
+hook_source = '''
+  let g:watchdogs_check_CursorHold_enable = 0
+  let g:watchdogs_check_BufWritePost_enable = 0
+  let g:watchdogs_check_BufWritePost_enables = {
+        \ 'vim': 1,
+        \ 'zsh': 1,
+        \ 'python': 1,
+        \ 'perl': 1,
+        \ 'javascript': 1,
+        \ 'coffeescript': 1,
+        \}
+  let g:watchdogs_check_BufWritePost_enable_on_wq = 0
 
-[[plugins]]
-repo = 'dannyob/quickfixstatus'
+  let g:quickrun_config = get(g:, 'quickrun_config', {})
+  let g:quickrun_config = extend(g:quickrun_config, {
+        \ 'watchdogs_checker/_': {
+        \   'runner/vimproc/updatetime': 40,
+        \   'outputter/quickfix/open_cmd': '',
+        \   'hook/qfstatusline_update/enable_exit': 1,
+        \   'hook/qfstatusline_update/priority_exit': 4,
+        \ }
+        \})
+  " use flake8 instead of pyflakes
+  if executable('flake8')
+    let g:quickrun_config['watchdogs_checker/pyflakes'] = {
+        \ 'command': 'flake8',
+        \}
+  endif
+  " use vint as a vimlint
+  if executable('vint')
+    let g:quickrun_config['watchdogs_checker/vint'] = {
+          \ 'command': 'vint',
+          \ 'exec'   : '%c %o %s:p',
+          \}
+    let g:quickrun_config['vim/watchdogs_checker'] = {
+          \ 'type': 'watchdogs_checker/vint',
+          \}
+  endif
+  call watchdogs#setup(g:quickrun_config)
+'''
 
 [[plugins]]
 if = "v:version >= 704"
 repo = 'KazuakiM/vim-qfstatusline'
 depends = 'shabadou.vim'
+hook_add = '''
+  let g:Qfstatusline#UpdateCmd = function('lightline#update')
+'''
 
 
 # Textobj ---------------------------------------------------------------------
@@ -278,71 +524,190 @@ depends = 'shabadou.vim'
 repo = 'kana/vim-textobj-entire'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
+hook_add = '''
+  omap ae <Plug>(textobj-entire-a)
+  omap ie <Plug>(textobj-entire-i)
+  xmap ae <Plug>(textobj-entire-a)
+  xmap ie <Plug>(textobj-entire-i)
+'''
 
 [[plugins]]
 repo = 'kana/vim-textobj-line'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
+hook_add = '''
+  omap al <Plug>(textobj-line-a)
+  omap il <Plug>(textobj-line-i)
+  xmap al <Plug>(textobj-line-a)
+  xmap il <Plug>(textobj-line-i)
+'''
 
 [[plugins]]
 repo = 'kana/vim-textobj-syntax'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
+hook_add = '''
+  omap ay <Plug>(textobj-syntax-a)
+  omap iy <Plug>(textobj-syntax-i)
+  xmap ay <Plug>(textobj-syntax-a)
+  xmap iy <Plug>(textobj-syntax-i)
+'''
 
 [[plugins]]
 repo = 'kana/vim-textobj-indent'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
+hook_add = '''
+  omap ai <Plug>(textobj-indent-a)
+  omap ii <Plug>(textobj-indent-i)
+  xmap ai <Plug>(textobj-indent-a)
+  xmap ii <Plug>(textobj-indent-i)
+  omap aI <Plug>(textobj-indent-same-a)
+  omap iI <Plug>(textobj-indent-same-i)
+  xmap aI <Plug>(textobj-indent-same-a)
+  xmap iI <Plug>(textobj-indent-same-i)
+'''
 
 [[plugins]]
 repo = 'kana/vim-textobj-datetime'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
+hook_add = '''
+  omap ada <Plug>(textobj-datetime-auto)
+  omap add <Plug>(textobj-datetime-date)
+  omap adf <Plug>(textobj-datetime-full)
+  omap adt <Plug>(textobj-datetime-time)
+  omap adz <Plug>(textobj-datetime-tz)
+  omap ida <Plug>(textobj-datetime-auto)
+  omap idd <Plug>(textobj-datetime-date)
+  omap idf <Plug>(textobj-datetime-full)
+  omap idt <Plug>(textobj-datetime-time)
+  omap idz <Plug>(textobj-datetime-tz)
+  xmap ada <Plug>(textobj-datetime-auto)
+  xmap add <Plug>(textobj-datetime-date)
+  xmap adf <Plug>(textobj-datetime-full)
+  xmap adt <Plug>(textobj-datetime-time)
+  xmap adz <Plug>(textobj-datetime-tz)
+  xmap ida <Plug>(textobj-datetime-auto)
+  xmap idd <Plug>(textobj-datetime-date)
+  xmap idf <Plug>(textobj-datetime-full)
+  xmap idt <Plug>(textobj-datetime-time)
+  xmap idz <Plug>(textobj-datetime-tz)
+'''
 
 [[plugins]]
 repo = 'thinca/vim-textobj-comment'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
+hook_add = '''
+  omap ac <Plug>(textobj-comment-a)
+  omap ic <Plug>(textobj-comment-i)
+  xmap ac <Plug>(textobj-comment-a)
+  xmap ic <Plug>(textobj-comment-i)
+'''
 
 [[plugins]]
 repo = 'saihoooooooo/vim-textobj-space'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
+hook_add = '''
+  omap aS <Plug>(textobj-space-a)
+  omap iS <Plug>(textobj-space-i)
+  xmap aS <Plug>(textobj-space-a)
+  xmap iS <Plug>(textobj-space-i)
+'''
 
 [[plugins]]
 repo = 'kana/vim-textobj-fold'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
+hook_add = '''
+  omap az <Plug>(textobj-fold-a)
+  omap iz <Plug>(textobj-fold-i)
+  xmap az <Plug>(textobj-fold-a)
+  xmap iz <Plug>(textobj-fold-i)
+'''
 
 [[plugins]]
 repo = 'kana/vim-textobj-underscore'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
+hook_add = '''
+  " NOTE:
+  " Checkout tyru version!
+  omap a_ <Plug>(textobj-underscore-a)
+  omap i_ <Plug>(textobj-underscore-i)
+  xmap a_ <Plug>(textobj-underscore-a)
+  xmap i_ <Plug>(textobj-underscore-i)
+'''
 
 [[plugins]]
 repo = 'RyanMcG/vim-textobj-dash'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
+hook_add = '''
+  " NOTE:
+  " Send PR to add document
+  omap a- <Plug>(textobj-dash-a)
+  omap i- <Plug>(textobj-dash-i)
+  xmap a- <Plug>(textobj-dash-a)
+  xmap i- <Plug>(textobj-dash-i)
+'''
 
 [[plugins]]
 repo = 'mattn/vim-textobj-url'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
+hook_add = '''
+  " NOTE:
+  " Send PR to add document
+  omap au <Plug>(textobj-url-a)
+  omap iu <Plug>(textobj-url-i)
+  xmap au <Plug>(textobj-url-a)
+  xmap iu <Plug>(textobj-url-i)
+'''
 
 [[plugins]]
 repo = 'sgur/vim-textobj-parameter'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
+hook_add = '''
+  " NOTE:
+  " Send PR to add document
+  omap aP <Plug>(textobj-parameter-a)
+  omap iP <Plug>(textobj-parameter-i)
+  xmap aP <Plug>(textobj-parameter-a)
+  xmap iP <Plug>(textobj-parameter-i)
+'''
 
 [[plugins]]
 repo = 'osyo-manga/vim-textobj-multiblock'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
+hook_add = '''
+  omap ab <Plug>(textobj-multiblock-a)
+  omap ib <Plug>(textobj-multiblock-i)
+  xmap ab <Plug>(textobj-multiblock-a)
+  xmap ib <Plug>(textobj-multiblock-i)
+'''
 
 [[plugins]]
 repo = 'rhysd/vim-textobj-word-column'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
+hook_add = '''
+  " NOTE:
+  " Send PR about <Plug> mapping?
+  omap av <Plug>(textobj-word-column-a)
+  omap iv <Plug>(textobj-word-column-i)
+  xmap av <Plug>(textobj-word-column-a)
+  xmap iv <Plug>(textobj-word-column-i)
+
+  omap aV <Plug>(textobj-word-column-A)
+  omap iV <Plug>(textobj-word-column-I)
+  xmap aV <Plug>(textobj-word-column-A)
+  xmap iV <Plug>(textobj-word-column-I)
+'''
 
 [[plugins]]
 if = "executable('python')"
@@ -356,38 +721,78 @@ depends = 'vim-textobj-user'
 repo = 'kana/vim-operator-replace'
 depends = 'vim-operator-user'
 on_map = [['nx', '<Plug>']]
+hook_add = '''
+  nmap R <Plug>(operator-replace)
+  xmap R <Plug>(operator-replace)
+'''
 
 [[plugins]]
 repo = 'sgur/vim-operator-openbrowser'
 depends = 'vim-operator-user'
 on_map = [['nx', '<Plug>']]
+hook_add = '''
+  nmap -o <Plug>(operator-openbrowser)
+  xmap -o <Plug>(operator-openbrowser)
+'''
 
 [[plugins]]
 repo = 'rhysd/vim-operator-trailingspace-killer'
 depends = 'vim-operator-user'
 on_map = [['nx', '<Plug>']]
+hook_add = '''
+  nmap -k <Plug>(operator-trailingspace-killer)
+  xmap -k <Plug>(operator-trailingspace-killer)
+'''
 
 [[plugins]]
 repo = 'rhysd/vim-operator-surround'
 depends = 'vim-operator-user'
 on_map = [['nx', '<Plug>']]
+hook_add = '''
+  nmap Sa <Plug>(operator-surround-append)
+  nmap Sd <Plug>(operator-surround-delete)
+  nmap Sr <Plug>(operator-surround-replace)
+  xmap Sa <Plug>(operator-surround-append)
+  xmap Sd <Plug>(operator-surround-delete)
+  xmap Sr <Plug>(operator-surround-replace)
+
+  nmap Sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
+  nmap Srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
+  xmap Sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
+  xmap Srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
+'''
 
 [[plugins]]
 repo = 'lambdalisue/vim-operator-breakline'
 depends = 'vim-operator-user'
 on_map = [['nx', '<Plug>']]
-
+hook_add = '''
+  nmap -b <Plug>(operator-breakline-manual)
+  nmap -B <Plug>(operator-breakline-textwidth)
+  xmap -b <Plug>(operator-breakline-manual)
+  xmap -B <Plug>(operator-breakline-textwidth)
+'''
 
 [[plugins]]
 repo = 'chikatoike/concealedyank.vim'
 depends = 'vim-operator-user'
 on_map = [['nx', '<Plug>(operator-concealedyank)']]
+hook_add = '''
+  nmap Y <Plug>(operator-concealedyank)
+  xmap Y <Plug>(operator-concealedyank)
+'''
 
 
 # Interface -------------------------------------------------------------------
 [[plugins]]
 repo = 'ctrlpvim/ctrlp.vim'
 lazy = 1
+hook_source = '''
+  let g:ctrlp_map = '<Nop>'
+  let g:ctrlp_cmd = 'CtrlP'
+  " Guess VCS root directory as well
+  let g:ctrlp_working_path_mode = 'ra'
+'''
 
 [[plugins]]
 repo = 'Shougo/unite.vim'
@@ -396,6 +801,9 @@ on_cmd = [
     'UniteWithCursorWord',
     'UniteBookmarkAdd',
 ]
+hook_source = '''
+  call vimrc#source_path('$MYVIM_HOME/rc/config/unite.vim')
+'''
 
 [[plugins]]
 repo = 'Shougo/vimshell.vim'
@@ -404,6 +812,12 @@ on_cmd = [
     'VimShellTab',
     'VimShellPop',
 ]
+hook_source = '''
+  call vimrc#source_path('$MYVIM_HOME/rc/config/vimshell.vim')
+'''
+hook_post_source = '''
+  highlight! vimshellError gui=NONE cterm=NONE guifg='#cc6666' ctermfg=9
+'''
 
 [[plugins]]
 repo = 'Shougo/vimfiler.vim'
@@ -413,10 +827,24 @@ on_cmd = [
     'VimFilerExplorer',
 ]
 on_path = '\h\w*:'
+hook_add = '''
+  nnoremap <Plug>(my-vimfiler) <Nop>
+  nmap <Leader>e <Plug>(my-vimfiler)
+  nnoremap <silent> <Plug>(my-vimfiler)e :<C-u>VimFilerExplorer<CR>
+  nnoremap <silent> <Plug>(my-vimfiler)E :<C-u>VimFiler<CR>
+'''
+hook_source = '''
+  call vimrc#source_path('$MYVIM_HOME/rc/config/vimfiler.vim')
+'''
 
 [[plugins]]
 repo = 'mbbill/undotree'
 on_cmd = 'UndotreeToggle'
+hook_add = '''
+  nnoremap <Plug>(my-undotree) <Nop>
+  nmap <Leader>u <Plug>(my-undotree)
+  nnoremap <silent> <Plug>(my-undotree) :<C-u>UndotreeToggle<CR>
+'''
 
 [[plugins]]
 repo = 'thinca/vim-ref'
@@ -425,6 +853,12 @@ on_cmd = 'Ref'
 [[plugins]]
 repo = 'mojako/ref-sources.vim'
 #on_source = 'vim-ref'
+hook_source = '''
+  let g:ref_jquery_doc_path     = expand('$MYVIM_HOME/bundle/jqapi')
+  let g:ref_javascript_doc_path = expand('$MYVIM_HOME/bundle/jsref/htdocs')
+  let g:ref_auto_resize = 1
+  let g:ref_wikipedia_lang = ['ja', 'en']
+'''
 
 [[plugins]]
 repo = 'majutsushi/tagbar'
@@ -434,8 +868,11 @@ on_cmd = [
     'TagbarOpen',
     'TagbarToggle',
 ]
-
-lazy = 1
+hook_add = '''
+  nnoremap <Plug>(my-tagbar) <Nop>
+  nmap <Leader>t <Plug>(my-tagbar)
+  nnoremap <silent> <Plug>(my-tagbar) :<C-u>TagbarToggle<CR>
+'''
 
 [[plugins]]
 repo = 'glidenote/memolist.vim'
@@ -445,6 +882,19 @@ on_cmd = [
     'MemoList',
     'MemoGrep',
 ]
+hook_add = '''
+  nnoremap <Plug>(my-memolist) <Nop>
+  nmap <Leader>m <Plug>(my-memolist)
+  nnoremap <silent> <Plug>(my-memolist)m :<C-u>MemoList<CR>
+  nnoremap <silent> <Plug>(my-memolist)n :<C-u>MemoNew<CR>
+  nnoremap <silent> <Plug>(my-memolist)g :<C-u>MemoGrep<CR>
+'''
+hook_source = '''
+  let g:memolist_qfixgrep = 1
+  let g:memolist_path = expand('~/Dropbox/Apps/Byword/')
+  let g:memolist_unite = 1
+  let g:memolist_unite_option = '-no-start-insert'
+'''
 
 [[plugins]]
 repo = 'godlygeek/tabular'
@@ -457,18 +907,55 @@ on_cmd = [
     'RengBangUsePrev',
     'RengBangConfirm',
 ]
+hook_add = '''
+  nnoremap <Plug>(my-rengbang) <Nop>
+  vmap <C-a> <Plug>(my-rengbang)
+  vnoremap <Plug>(my-rengbang)a :<C-u>'<,'>RengBang<CR>
+  vnoremap <Plug>(my-rengbang)A :<C-u>'<,'>RengBangUsePrev<CR>
+  vnoremap <Plug>(my-rengbang)c :<C-u>'<,'>RengBangConfirm<CR>
+  map <Plug>(my-operator)rr <Plug>(operator-rengbang)
+  map <Plug>(my-operator)rR <Plug>(operator-rengbang-useprev)
+'''
+hook_source = '''
+  let g:rengbang_default_pattern  = '\(\d\+\)'
+  let g:rengbang_default_start    = 0
+  let g:rengbang_default_step     = 1
+  let g:rengbang_default_usefirst = 0
+  let g:rengbang_default_confirm_sequence = [
+        \ 'pattern',
+        \ 'start',
+        \ 'step',
+        \ 'usefirst',
+        \ 'format',
+        \]
+'''
 
 [[plugins]]
+# Note:
+#   This plugin is quite heavy and it add BufEnter autocmd to visualize
+#   color thus should not be autoloaded with filetype or so on.
 repo = 'lilydjwg/colorizer'
 on_map = '<Plug>'
 on_cmd = [
     'ColorHighlight',
     'ColorToggle',
 ]
+hook_source = 'let g:colorizer_nomap = 1'
 
 [[plugins]]
 repo = 'itchyny/calendar.vim'
 on_cmd = 'Calendar'
+hook_add = '''
+  nnoremap <Plug>(my-calendar) <Nop>
+  nmap <Leader>c <Plug>(my-calendar)
+  nnoremap <silent> <Plug>(my-calendar)c :<C-u>Calendar<CR>
+  nnoremap <silent> <Plug>(my-calendar)t :<C-u>Calendar -view=clock<CR>
+'''
+hook_source = '''
+  let g:calendar_frame = 'default'
+  let g:calendar_google_calendar = 1
+  let g:calendar_google_task = 1
+'''
 
 
 # Unite sources ---------------------------------------------------------------
@@ -498,6 +985,9 @@ repo = 'pasela/unite-webcolorname'
 
 [[plugins]]
 repo = 'lambdalisue/unite-linephrase'
+hook_source = '''
+  let g:linephrase#directory = expand('~/Dropbox/Apps/Vim/linephrase')
+'''
 
 [[plugins]]
 repo = 'joker1007/unite-pull-request'
@@ -529,13 +1019,39 @@ on_source = 'unite.vim'
 
 # Version controller system ---------------------------------------------------
 [[plugins]]
-if = 'executable("git")'
 repo = 'lambdalisue/vim-gita'
 on_cmd = 'Gita'
+hook_add = '''
+  nnoremap <Plug>(my-gita) <Nop>
+  nmap <Leader>a <Plug>(my-gita)
+  nnoremap <Plug>(my-gita)a :<C-u>Gita status  --ignore-submodules<CR>
+  nnoremap <Plug>(my-gita)b :<C-u>Gita branch --all<CR>
+  nnoremap <Plug>(my-gita)d :<C-u>Gita diff-ls --ignore-submodules origin/HEAD...<CR>
+  nnoremap <Plug>(my-gita)l :<C-u>Gita ls-files<CR>
+'''
+hook_source = '''
+  let g:gita#command#browse#extra_translation_patterns = {
+        \ 'ghe.admin.h': [
+        \   [
+        \     '\vhttps?://(%domain)/(.{-})/(.{-})%(\.git)?$',
+        \     '\vgit://(%domain)/(.{-})/(.{-})%(\.git)?$',
+        \     '\vgit\@(%domain):(.{-})/(.{-})%(\.git)?$',
+        \     '\vssh://git\@(%domain)/(.{-})/(.{-})%(\.git)?$',
+        \   ], {
+        \     '_':     'https://\1/\2/\3/blob/%c1/%pt%{#L|}ls%{-L|}le',
+        \     'exact': 'https://\1/\2/\3/blob/%r1/%pt%{#L|}ls%{-L|}le',
+        \     'blame': 'https://\1/\2/\3/blame/%c1/%pt%{#L|}ls%{-L|}le',
+        \   },
+        \ ],
+        \}
+'''
 
 [[plugins]]
 repo = 'lambdalisue/vim-gista'
 on_cmd = 'Gista'
+hook_source = '''
+  let g:gista#client#default_username = 'lambdalisue'
+'''
 
 [[plugins]]
 repo = 'lambdalisue/vim-gista-ctrlp'
@@ -544,16 +1060,12 @@ on_cmd = 'CtrlPGista'
 on_func = 'ctrlp#gista#'
 
 [[plugins]]
-if = "executable('git')"
 repo = 'cohama/agit.vim'
 on_cmd = ['Agit', 'AgitFile']
 on_source = 'unite.vim'
 
 [[plugins]]
-if = 0
-if = "executable('git')"
 repo = 'tpope/vim-fugitive'
-augroup = 'fugitive'
 on_cmd = [
     'Git', 'Gcd', 'Glcd', 'Gstatus', 'Gcommit', 'Gmerge',
     'Gpull', 'Gpush', 'Gfetch', 'Ggrep', 'Glgrep', 'Glog',
@@ -603,6 +1115,10 @@ repo = 'jason0x43/vim-js-indent'
 [[plugins]]
 repo = 'leafgarland/typescript-vim'
 #on_ft = 'typescript'
+hook_source = '''
+  let g:typescript_indent_disable = 1
+  let g:typescript_compiler_options = '-sourcemap'
+'''
 
 [[plugins]]
 repo = 'thinca/vim-ft-help_fold'
@@ -645,6 +1161,9 @@ if = "executable('pip')"
 build = 'pip install autopep8'
 repo = 'tell-k/vim-autopep8'
 #on_ft = ['python', 'python3']
+hook_source = '''
+  let g:autopep8_disable_show_diff = 1
+'''
 
 [[plugins]]
 if = "executable('git')"
@@ -665,7 +1184,7 @@ on_ft = 'perl'
 
 [[plugins]]
 repo = 'c9s/perlomni.vim'
-on_ft = 'perl'
+#on_ft = 'perl'
 
 [[plugins]]
 if = "v:version >= 704 && executable('npm')"
@@ -682,6 +1201,7 @@ on_ft = 'pandoc'
 repo = 'kannokanno/previm'
 depends = 'open-browser.vim'
 on_cmd = 'PrevimOpen'
+hook_source = 'let g:previm_show_header = 0'
 
 
 # Misc ------------------------------------------------------------------------
@@ -697,13 +1217,16 @@ on_cmd = 'Vitalize'
 
 [[plugins]]
 repo = 'lambdalisue/vital-ArgumentParser'
+on_cmd = 'Vitalize'
 
 [[plugins]]
 repo = 'haya14busa/vital-vimlcompiler'
+on_cmd = 'Vitalize'
 
 [[plugins]]
 repo = 'haya14busa/vital-power-assert'
 depends = 'vital-vimlcompiler'
+on_cmd = 'Vitalize'
 
 [[plugins]]
 repo = 'thinca/vim-prettyprint'
