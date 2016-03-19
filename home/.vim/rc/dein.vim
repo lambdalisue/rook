@@ -1,13 +1,9 @@
 let s:dein_url = 'https://github.com/Shougo/dein.vim'
 let s:dein_basepath = expand('$MYVIM_HOME/bundle')
-if isdirectory(expand('~/Code/github.com/lambdalisue/dein.vim/'))
-  let s:dein_abspath  = expand('~/Code/github.com/lambdalisue/dein.vim')
-else
-  let s:dein_abspath  = printf(
-        \ '%s/repos/dein.vim',
-        \ s:dein_basepath,
-        \)
-endif
+let s:dein_abspath  = printf(
+      \ '%s/repos/dein.vim',
+      \ s:dein_basepath,
+      \)
 let s:dein_localpath = printf('%s/local', s:dein_basepath)
 
 function! s:configure() abort
