@@ -63,7 +63,7 @@ set guicursor+=a:blinkon0
 if has('gui_macvim')
   set transparency=3
   set antialias
-  set guifont=Ricty\ for\ Powerline:h11
+  set guifont=Ricty\ for\ Powerline:h10
 else
   set antialias
   set guifont=RictyForPowerline\ 9
