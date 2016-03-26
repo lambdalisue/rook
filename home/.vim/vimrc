@@ -14,7 +14,6 @@ if has('vim_starting')
     scriptencoding utf-8
   endif
   set history=10000
-  set runtimepath& runtimepath+=~/.vim
 endif
 
 " Disable unnecessary features {{{
@@ -538,8 +537,8 @@ autocmd MyAutoCmd BufWritePost *
 
 " Use relative syntax when the file is too big {{{
 autocmd MyAutoCmd Syntax *
-      \ if line('%') > 500 |
-      \  syntax sync minlines=100 |
+      \ if line('%') > 1000 |
+      \  syntax sync minlines=500 |
       \ endif
 " }}}
 

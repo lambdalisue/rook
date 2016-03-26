@@ -394,7 +394,7 @@ repo = 'Shougo/neoinclude.vim'
 on_source = ['neocomplete.vim', 'deoplete.nvim']
 
 [[plugins]]
-if = 'executable("look")'
+#if = 'executable("look")'
 repo = 'ujihisa/neco-look'
 #on_source = ['neocomplete.vim', 'deoplete.nvim']
 
@@ -466,7 +466,7 @@ hook_add = '''
 '''
 
 [[plugins]]
-if = "v:version >= 704"
+#if = "v:version >= 704"
 repo = 'osyo-manga/vim-watchdogs'
 depends = ['vimproc.vim', 'vim-quickrun']
 hook_post_source = '''
@@ -511,7 +511,7 @@ hook_post_source = '''
 '''
 
 [[plugins]]
-if = "v:version >= 704"
+#if = "v:version >= 704"
 repo = 'KazuakiM/vim-qfstatusline'
 depends = 'shabadou.vim'
 hook_add = '''
@@ -710,7 +710,7 @@ hook_add = '''
 '''
 
 [[plugins]]
-if = "executable('python')"
+#if = "executable('python')"
 repo = 'bps/vim-textobj-python'
 depends = 'vim-textobj-user'
 #on_ft = ['python', 'python3']
@@ -999,7 +999,7 @@ repo = 'dameninngenn/unite-perldoc'
 repo = 'naquad/unite-digraphs'
 
 [[plugins]]
-if = "executable('git')"
+#if = "executable('git')"
 repo = 'kmnk/vim-unite-giti'
 
 [[plugins]]
@@ -1157,7 +1157,7 @@ on_cmd = 'Latexmk',
 on_ft = ['tex', 'plaintex']
 
 [[plugins]]
-if = "executable('pip')"
+#if = "executable('pip')"
 build = 'pip install autopep8'
 repo = 'tell-k/vim-autopep8'
 #on_ft = ['python', 'python3']
