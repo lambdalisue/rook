@@ -66,5 +66,5 @@ if has('gui_macvim')
   set guifont=Ricty\ for\ Powerline:h10
 else
   set antialias
-  set guifont=RictyForPowerline\ 9
+  set guifont=RictyForPowerline\ 8
 endif
