@@ -1256,4 +1256,3 @@ repo = 'thinca/vim-themis'
 [[plugins]]
 # non vim plugin
 repo = 'Kuniwak/vint'
-

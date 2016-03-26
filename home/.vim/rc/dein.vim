@@ -7,7 +7,7 @@ let s:dein_abspath  = printf(
 let s:dein_localpath = printf('%s/local', s:dein_basepath)
 
 function! s:configure() abort
-  execute 'set runtimepath+=' . fnameescape(s:dein_abspath)
+  execute 'set runtimepath^=' . fnameescape(s:dein_abspath)
   if dein#load_state(s:dein_basepath)
     call dein#begin(s:dein_basepath, [
           \ expand('$MYVIM_VIMRC'),
