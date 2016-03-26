@@ -9,7 +9,13 @@ let s:dein_localpath = printf('%s/local', s:dein_basepath)
 function! s:configure() abort
   execute printf('set runtimepath+=%s', fnameescape(s:dein_abspath))
   if dein#load_state(s:dein_basepath)
-    call dein#begin(s:dein_basepath)
+    call dein#begin(s:dein_basepath, [
+          \ expand('$MYVIM_VIMRC'),
+          \ expand('$MYVIM_GVIMRC'),
+          \ expand('$MYVIM_HOME/rc/dein/define.toml'),
+          \ expand('$MYVIM_HOME/rc/dein/config.vim'),
+          \ expand('$MYVIM_HOME/rc/dein/command.vim'),
+          \])
     call dein#load_toml(expand('$MYVIM_HOME/rc/dein/define.toml'))
     call dein#local(s:dein_localpath, {
           \ 'frozen': 1,
@@ -17,6 +23,9 @@ function! s:configure() abort
           \})
     call dein#end()
     call dein#save_state()
+  else
+    call dein#call_hook('source')
+    call dein#call_hook('post_source')
   endif
   call vimrc#source_path(expand('$MYVIM_HOME/rc/dein/config.vim'))
   call vimrc#source_path(expand('$MYVIM_HOME/rc/dein/command.vim'))

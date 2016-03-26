@@ -18,7 +18,3 @@ setl textwidth=0
 if exists('&colorcolumn')
   setl colorcolumn=79
 endif
-
-setl iskeyword&
-setl iskeyword+=:
-setl iskeyword+=#

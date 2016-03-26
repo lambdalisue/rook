@@ -469,7 +469,7 @@ hook_add = '''
 if = "v:version >= 704"
 repo = 'osyo-manga/vim-watchdogs'
 depends = ['vimproc.vim', 'vim-quickrun']
-hook_source = '''
+hook_post_source = '''
   let g:watchdogs_check_CursorHold_enable = 0
   let g:watchdogs_check_BufWritePost_enable = 0
   let g:watchdogs_check_BufWritePost_enables = {
@@ -1161,9 +1161,7 @@ if = "executable('pip')"
 build = 'pip install autopep8'
 repo = 'tell-k/vim-autopep8'
 #on_ft = ['python', 'python3']
-hook_source = '''
-  let g:autopep8_disable_show_diff = 1
-'''
+hook_source = 'let g:autopep8_disable_show_diff = 1'
 
 [[plugins]]
 if = "executable('git')"
@@ -1217,21 +1215,36 @@ on_cmd = 'Vitalize'
 
 [[plugins]]
 repo = 'lambdalisue/vital-ArgumentParser'
-on_cmd = 'Vitalize'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-ProgressBar'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Vim-Buffer-Anchor'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Vim-Prompt'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Vim-Validate'
+on_source = 'vital.vim'
 
 [[plugins]]
 repo = 'haya14busa/vital-vimlcompiler'
-on_cmd = 'Vitalize'
+on_source = 'vital.vim'
 
 [[plugins]]
 repo = 'haya14busa/vital-power-assert'
 depends = 'vital-vimlcompiler'
-on_cmd = 'Vitalize'
+on_source = 'vital.vim'
 
 [[plugins]]
 repo = 'thinca/vim-prettyprint'
 on_cmd  = ['PP', 'PrettyPrint']
-on_func = ['PP', 'PrettyPrint']
 
 [[plugins]]
 repo = 'syngan/vim-vimlint'
