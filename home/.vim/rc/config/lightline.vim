@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 function! s:is_filelike() abort
   return &buftype =~# '^\|nowrite\|acwrite$'
 endfunction

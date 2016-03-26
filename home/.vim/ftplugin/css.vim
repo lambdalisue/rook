@@ -17,7 +17,3 @@ setl textwidth=0
 if exists('&colorcolumn')
   setl colorcolumn=79
 endif
-
-" css use hyphen(-) often in id/class name
-setl iskeyword&
-setl iskeyword+=-

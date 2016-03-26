@@ -423,9 +423,9 @@ cnoreabbrev <silent><expr>'<,'>s getcmdtype() ==# ':' && getcmdline() =~# "^'<,'
 " Reload vimrc with <Leader><Leader>r {{{
 if !exists('*s:reload_vimrc')
   function! s:reload_vimrc() abort
-    call vimrc#source_path($MYVIM_VIMRC, 1)
+    call vimrc#source_path($MYVIM_VIMRC)
     if has('gui_running')
-      call vimrc#source_path($MYVIM_GVIMRC, 1)
+      call vimrc#source_path($MYVIM_GVIMRC)
       redraw | echo printf('"%s" and "%s" has sourced (%s).',
             \ fnamemodify($MYVIM_VIMRC, ':t'),
             \ fnamemodify($MYVIM_GVIMRC, ':t'),
@@ -458,7 +458,7 @@ if !exists('*s:source_current_path')
       echohl None
       return
     endif
-    call vimrc#source_path(expand('%'))
+    call vimrc#source_path(expand('%'), 0)
     redraw | echo printf('"%s" has sourced (%s).', expand('%:t'), strftime('%c'))
   endfunction
 endif
@@ -593,8 +593,7 @@ nnoremap <silent><F3> :<C-u>call <SID>switch_colorscheme()<CR>
 
 " }}}
 
-"call vimrc#source_path('$MYVIM_HOME/rc/neobundle.vim', !has('vim_starting'))
-call vimrc#source_path('$MYVIM_HOME/rc/dein.vim', !has('vim_starting'))
+call vimrc#source_path('$MYVIM_HOME/rc/dein.vim')
 
 filetype indent plugin on
 syntax on
@@ -604,6 +603,6 @@ catch
   colorscheme desert
 endtry
 
-call vimrc#source_path('~/.vimrc.local', !has('vim_starting'))
+call vimrc#source_path('~/.vimrc.local')
 set secure
 " vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker

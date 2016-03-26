@@ -12,6 +12,7 @@ function! s:configure() abort
     call dein#begin(s:dein_basepath, [
           \ expand('$MYVIM_VIMRC'),
           \ expand('$MYVIM_GVIMRC'),
+          \ expand('$MYVIM_HOME/rc/dein.vim'),
           \ expand('$MYVIM_HOME/rc/dein/define.toml'),
           \ expand('$MYVIM_HOME/rc/dein/config.vim'),
           \ expand('$MYVIM_HOME/rc/dein/command.vim'),

@@ -29,7 +29,7 @@ endfunction
 
 if !exists('*vimrc#source_path')
   function! vimrc#source_path(path, ...) abort
-    let use_global = get(a:000, 0, 0)
+    let use_global = get(a:000, 0, !has('vim_starting'))
     let abspath = resolve(expand(a:path))
     if !filereadable(abspath)
       return
@@ -42,7 +42,7 @@ if !exists('*vimrc#source_path')
       " substitute all 'set' to 'setglobal'
       call map(
             \ content,
-            \ 'substitute(v:val, "^\\W*\\zsset\\ze\\W", "setglobal", "")'
+            \ 'substitute(v:val, ''^\W*\zsset\ze\W'', ''setglobal'', '''')'
             \)
     endif
     " create tempfile and source the tempfile

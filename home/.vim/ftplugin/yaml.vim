@@ -17,6 +17,3 @@ setl textwidth=0
 if exists('&colorcolumn')
   setl colorcolumn=
 endif
-
-setl iskeyword&
-setl iskeyword+=-

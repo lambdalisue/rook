@@ -1,7 +1,6 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 directory = 'dein.vim'
-rtp  = ''
 
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
@@ -225,10 +224,6 @@ hook_source = '''
 repo = 'thinca/vim-qfreplace'
 on_source = ['unite.vim', 'vimfiler.vim']
 on_cmd = 'Qfreplace'
-hook_add = '''
-  autocmd MyAutoCmd FileType qf nnoremap <buffer><silent> r
-        \ :<C-u>Qfreplace<CR>
-'''
 
 [[plugins]]
 repo = 'AndrewRadev/switch.vim'

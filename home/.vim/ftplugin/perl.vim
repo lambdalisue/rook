@@ -9,9 +9,6 @@ let g:perl_fold = 0
 "let g:perl_fold_anonymous_subs = 1
 "let g:perl_nofold_packages = 1
 
-setl iskeyword&
-setl iskeyword+=:
-
 " check if the package name and file name are mismached {{{ 
 function! s:get_package_name()
     let mx = '^\s*package\s\+\([^ ;]\+\)'
