@@ -535,13 +535,6 @@ autocmd MyAutoCmd BufWritePost *
       \ endif
 "}}}
 
-" Use relative syntax when the file is too big {{{
-autocmd MyAutoCmd Syntax *
-      \ if line('%') > 1000 |
-      \  syntax sync minlines=500 |
-      \ endif
-" }}}
-
 " Profiling a command {{{
 function! s:timeit(q_args) abort
   let q_args = a:q_args

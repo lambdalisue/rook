@@ -29,6 +29,6 @@ if exists('&colorcolumn')
 endif
 
 " Close with q
-nnoremap <buffer> q :close<CR>
+nnoremap <buffer><expr> q &modifiable ? 'q' : ':<C-u>close<CR>'
 
 setlocal nospell
