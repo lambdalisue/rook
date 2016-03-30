@@ -323,6 +323,11 @@ hook_source = '''
   let g:clever_f_not_overwrite_standard_mappings = 1
 '''
 
+[[plugins]]
+repo = 'itchyny/vim-parenmatch'
+
+[[plugins]]
+repo = 'itchyny/vim-cursorword'
 
 # Colorscheme -----------------------------------------------------------------
 [[plugins]]
@@ -1256,3 +1261,7 @@ repo = 'thinca/vim-themis'
 [[plugins]]
 # non vim plugin
 repo = 'Kuniwak/vint'
+
+[[plugins]]
+repo = 'Shougo/neobundle.vim'
+lazy = 1
