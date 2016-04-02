@@ -50,6 +50,11 @@ else
         \ 'marked_icon': '*',
         \}
 endif
+
+call unite#custom#profile('default', 'context', extend(config, {
+      \ 'start_insert': 1,
+      \ 'no_empty': 1,
+      \}))
 call unite#custom#profile('source/bookmark', 'context', {
       \ 'no_start_insert': 1,
       \})
@@ -62,10 +67,6 @@ call unite#custom#profile('source/giti', 'context', {
 call unite#custom#profile('source/menu', 'context', {
       \ 'no_start_insert': 1,
       \})
-call unite#custom#profile('default', 'context', extend(config, {
-      \ 'start_insert': 1,
-      \ 'no_empty': 1,
-      \}))
 call unite#custom#default_action('directory', 'cd')
 call unite#custom#alias('file', 'edit', 'open')
 
@@ -226,28 +227,16 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \   fnamemodify(expand('$MYVIM_HOME/init.vim'), ':~'),
       \ ],
       \ [
-      \   'vimshrc',
-      \   fnamemodify(expand('$MYVIM_HOME/vimshrc'), ':~'),
+      \   'vimrc.local',
+      \   '~/.vimrc.local',
       \ ],
       \ [
       \   'filetype.vim',
       \   fnamemodify(expand('$MYVIM_HOME/filetype.vim'), ':~'),
       \ ],
       \ [
-      \   'vintrc.yaml',
-      \   '~/.vintrc.yaml',
-      \ ],
-      \ [
       \   'autoload/vimrc.vim',
       \   fnamemodify(expand('$MYVIM_HOME/autoload/vimrc.vim'), ':~'),
-      \ ],
-      \ [
-      \   'rc/mapping.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/mapping.vim'), ':~'),
-      \ ],
-      \ [
-      \   'rc/macro.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/macro.vim'), ':~'),
       \ ],
       \ [
       \   'rc/dein.vim',
@@ -262,18 +251,6 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \   fnamemodify(expand('$MYVIM_HOME/rc/dein/config.vim'), ':~'),
       \ ],
       \ [
-      \   'rc/neobundle.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/neobundle.vim'), ':~'),
-      \ ],
-      \ [
-      \   'rc/neobundle/define.toml',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/neobundle/define.toml'), ':~'),
-      \ ],
-      \ [
-      \   'rc/neobundle/config.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/neobundle/config.vim'), ':~'),
-      \ ],
-      \ [
       \   'rc/config/unite.vim',
       \   fnamemodify(expand('$MYVIM_HOME/rc/config/unite.vim'), ':~'),
       \ ],
@@ -286,6 +263,10 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \   fnamemodify(expand('$MYVIM_HOME/rc/config/vimshell.vim'), ':~'),
       \ ],
       \ [
+      \   'rc/config/lightline.vim',
+      \   fnamemodify(expand('$MYVIM_HOME/rc/config/lightline.vim'), ':~'),
+      \ ],
+      \ [
       \   'vim',
       \   fnamemodify(expand('$MYVIM_HOME'), ':~'),
       \ ],
@@ -296,6 +277,14 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \ [
       \   'ftplugin',
       \   fnamemodify(expand('$MYVIM_HOME/ftplugin'), ':~'),
+      \ ],
+      \ [
+      \   'vintrc.yaml',
+      \   '~/.vintrc.yaml',
+      \ ],
+      \ [
+      \   'vimshrc',
+      \   fnamemodify(expand('$MYVIM_HOME/vimshrc'), ':~'),
       \ ],
       \ ['zsh'],
       \ [
