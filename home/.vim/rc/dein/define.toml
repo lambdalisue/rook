@@ -329,6 +329,9 @@ repo = 'itchyny/vim-parenmatch'
 [[plugins]]
 repo = 'itchyny/vim-cursorword'
 
+[[plugins]]
+repo = 'Konfekt/FastFold'
+
 # Colorscheme -----------------------------------------------------------------
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
@@ -746,7 +749,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'rhysd/vim-operator-surround'
-depends = 'vim-operator-user'
+depends = ['vim-operator-user', 'vim-textobj-multiblock']
 on_map = [['nx', '<Plug>']]
 hook_add = '''
   nmap Sa <Plug>(operator-surround-append)

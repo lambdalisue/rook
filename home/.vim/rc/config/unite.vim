@@ -70,6 +70,10 @@ call unite#custom#profile('source/menu', 'context', {
 call unite#custom#default_action('directory', 'cd')
 call unite#custom#alias('file', 'edit', 'open')
 
+" Do not limit candidate for grep
+call unite#custom#source('grep', 'max_candidates', 0)
+call unite#custom#source('grep/git', 'max_candidates', 0)
+
 " Alias
 let g:unite_source_alias_aliases = {
       \ 'map': {
