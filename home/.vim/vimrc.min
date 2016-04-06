@@ -1,11 +1,7 @@
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"
-" $ vim -u ~/.vim/vimrc.min
-"
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim -u ~/.vim/vimrc.min
 if has('vim_starting')
-  if &compatible | set nocompatible | endif
-  set runtimepath& runtimepath+=~/.vim/bundle/repos/github.com/Shougo/dein.vim
+  set nocompatible
+  set runtimepath+=~/.vim/bundle/repos/dein.vim
 endif
 
 call dein#begin(expand('~/.vim/bundle'))
