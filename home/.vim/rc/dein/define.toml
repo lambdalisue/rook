@@ -328,6 +328,15 @@ repo = 'itchyny/vim-parenmatch'
 
 [[plugins]]
 repo = 'itchyny/vim-cursorword'
+hook_add = '''
+  augroup cursorword-disable
+    autocmd! *
+    autocmd FileType *
+          \ if &buftype =~# '^\%(nofile\|quickfix\|help\)$' |
+          \   let b:cursorword = 0 |
+          \ endif
+  augroup END
+'''
 
 [[plugins]]
 repo = 'Konfekt/FastFold'
@@ -865,7 +874,6 @@ hook_source = '''
 
 [[plugins]]
 repo = 'majutsushi/tagbar'
-augroup = 'TagbarAutoCmds'
 on_cmd = [
     'Tagbar',
     'TagbarOpen',
@@ -1028,6 +1036,10 @@ hook_add = '''
   nnoremap <silent> <Plug>(my-gita)g :<C-u>Gita grep<CR>
   nnoremap <silent> <Plug>(my-gita)d :<C-u>Gita diff-ls --ignore-submodules origin/HEAD...<CR>
   nnoremap <silent> <Plug>(my-gita)l :<C-u>Gita ls-files<CR>
+  augroup gita_qfreplace
+    autocmd! *
+    autocmd User GitaActionCalledPost:quickfix:quickfix call qfreplace#start('')
+  augroup END
 '''
 hook_source = '''
   let g:gita#command#browse#extra_translation_patterns = {
