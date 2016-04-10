@@ -23,3 +23,7 @@ set cartoon_ring_transparency, 0.5
 #set ambient, 1
 #set reflect, 0
 #set two_sided_lighting, on
+
+# Peformance improvement
+set defer_builds_mode, 3
+set async_builds, 1
