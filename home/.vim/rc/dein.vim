@@ -1,7 +1,7 @@
 let s:dein_url = 'https://github.com/Shougo/dein.vim'
 let s:dein_basepath = expand('$MYVIM_HOME/bundle')
 let s:dein_abspath  = printf(
-      \ '%s/repos/dein.vim',
+      \ '%s/repos/github.com/Shougo/dein.vim',
       \ s:dein_basepath,
       \)
 let s:dein_localpath = printf('%s/local', s:dein_basepath)
@@ -14,7 +14,6 @@ function! s:configure() abort
           \ expand('$MYVIM_GVIMRC'),
           \ expand('$MYVIM_HOME/rc/dein.vim'),
           \ expand('$MYVIM_HOME/rc/dein/define.toml'),
-          \ expand('$MYVIM_HOME/rc/dein/config.vim'),
           \ expand('$MYVIM_HOME/rc/dein/command.vim'),
           \])
     call dein#load_toml(expand('$MYVIM_HOME/rc/dein/define.toml'))
@@ -25,7 +24,6 @@ function! s:configure() abort
     call dein#end()
     call dein#save_state()
   endif
-  call vimrc#source_path(expand('$MYVIM_HOME/rc/dein/config.vim'))
   call vimrc#source_path(expand('$MYVIM_HOME/rc/dein/command.vim'))
   call dein#call_hook('source')
   call dein#call_hook('post_source')
