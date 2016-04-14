@@ -390,6 +390,15 @@ hook_add = '''
 [[plugins]]
 repo = 'Konfekt/FastFold'
 
+[[plugins]]
+repo = 'thinca/vim-fontzoom'
+on_map = '<Plug>'
+hook_add = '''
+  let g:fontzoom_no_default_key_mappings = 1
+  nmap <C-ScrollWheelUp>   <Plug>(fontzoom-larger)
+  nmap <C-ScrollWheelDown> <Plug>(fontzoom-smaller)
+'''
+
 # Colorscheme -----------------------------------------------------------------
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
