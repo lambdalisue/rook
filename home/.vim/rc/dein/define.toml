@@ -1571,6 +1571,31 @@ depends = 'open-browser.vim'
 on_cmd = 'PrevimOpen'
 hook_source = 'let g:previm_show_header = 0'
 
+[[plugins]]
+if = "executable('cargo')"
+repo = 'rust-lang/rust.vim'
+build = 'cargo install rustfmt'
+hook_add = '''
+  let g:rustfmt_autosave = 1
+  let g:rustfmt_command = expand('~/.cargo/bin/rustfmt')
+'''
+on_ft = 'rust'
+
+[[plugins]]
+if = "executable('cargo')"
+repo = 'phildawes/racer'
+build = 'cargo build --release'
+hook_add = '''
+  let g:racer_cmd = expand('~/.cargo/bin/racer')
+  let $RUST_SRC_PATH = expand('~/Code/github.com/rust-lang/rust/src')
+'''
+on_ft = 'rust'
+
+[[plugins]]
+if = "executable('cargo')"
+repo = 'rhysd/rust-doc.vim'
+on_ft = 'rust'
+
 
 # Misc ------------------------------------------------------------------------
 [[plugins]]
