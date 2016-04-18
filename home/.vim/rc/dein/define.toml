@@ -342,6 +342,8 @@ on_map = '<Plug>'
 hook_add = '''
   let g:EasyMotion_do_mapping = 0
   function! s:incsearch_config(...) abort
+    call dein#source('invsearch.vim')
+    call dein#source('vim-easymotion')
     return incsearch#util#deepextend(deepcopy({
           \ 'modules': [incsearch#config#easymotion#module({'overwin': 1})],
           \ 'keymap': {
