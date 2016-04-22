@@ -1,8 +1,26 @@
 # coding=utf-8
+import re
 from functools import wraps
 from pymol import cmd
 from pymol import cgo
 from chempy import cpv
+
+
+def to_color(c):
+    if isinstance(c, list):
+        return c
+    elif isinstance(c, (int, float)):
+        return c
+    else:
+        m = re.match(c, '^[(\d+),\s*(\d+),\s*(\d+)]$')
+        if m:
+            return [
+                float(m.group(1)),
+                float(m.group(2)),
+                float(m.group(3)),
+            ]
+        else:
+            return 0
 
 
 class CGO(object):
@@ -25,7 +43,9 @@ class CGO(object):
         # disable auto_zoom
         cmd.set('auto_zoom', 0.0)
         # create CGO
-        cmd.load_cgo([cgo.ALPHA, alpha] + self.primitive, name, state=state)
+        cmd.load_cgo(
+            [cgo.ALPHA, float(alpha)] + self.primitive, name, state=state
+        )
         # restore auto_zoom value
         cmd.set('auto_zoom', float(original_auto_zoom))
 
@@ -236,7 +256,7 @@ def draw_sphere_on_coc_selection(selection,
         dcoc resn PHE, state=10, radius=3.2
     """
     coc = find_coc_selection(selection, state=state)
-    sphere = Sphere(coc, radius, color)
+    sphere = Sphere(coc, radius, to_color(color))
     sphere.create(name, prefix, alpha)
 
 
@@ -275,7 +295,7 @@ def draw_sphere_on_com_selection(selection,
         dcom resn PHE, state=10, radius=3.2
     """
     com = find_coc_selection(selection, state=state)
-    sphere = Sphere(com, radius, color)
+    sphere = Sphere(com, radius, to_color(color))
     sphere.create(name, prefix, alpha)
 
 
