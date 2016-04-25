@@ -5,6 +5,7 @@ rtp = ''
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
 build = 'make'
+merged = 0
 
 [[plugins]]
 repo = 'vim-jp/vimdoc-ja'
@@ -1474,7 +1475,7 @@ hook_source = '''
 
 [[plugins]]
 #if = "executable('pip')"
-build = 'pip install autopep8'
+build = 'pip install -q --disable-pip-version-check autopep8'
 repo = 'tell-k/vim-autopep8'
 #on_ft = ['python', 'python3']
 hook_source = 'let g:autopep8_disable_show_diff = 1'
@@ -1546,7 +1547,7 @@ build = 'npm install -g typescript'
 repo = 'Quramy/tsuquyomi'
 depends = 'vimproc.vim'
 on_ft = 'typescript'
-hook_source = '''
+hook_add = '''
   function! s:tsuquyomi_configure() abort
     nmap <buffer> <LocalLeader>d <Plug>(TsuquyomiDefinition)
     nmap <buffer> <LocalLeader>b <Plug>(TsuquyomiGoBack)
