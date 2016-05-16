@@ -345,6 +345,7 @@ repo = 'easymotion/vim-easymotion'
 on_map = '<Plug>'
 hook_add = '''
   let g:EasyMotion_do_mapping = 0
+  let g:EasyMotion_smartcase = 1
   function! s:incsearch_config(...) abort
     call dein#source('invsearch.vim')
     call dein#source('vim-easymotion')
