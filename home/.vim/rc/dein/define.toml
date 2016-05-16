@@ -324,6 +324,9 @@ hook_post_source = '''
   call foldround#register('[./]g\?vimrc$', [
         \ 'syntax', 'marker',
         \])
+  call foldround#register('\.pl$', [
+        \ 'syntax',
+        \])
 '''
 
 [[plugins]]
