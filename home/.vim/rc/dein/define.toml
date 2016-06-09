@@ -1423,6 +1423,10 @@ repo = 'tmhedberg/SimpylFold'
 repo = 'vim-perl/vim-perl'
 #on_ft = 'perl'
 
+[[plugins]]
+repo = 'lambdalisue/vim-cython-syntax'
+merge = 0
+
 
 # Specific --------------------------------------------------------------------
 [[plugins]]

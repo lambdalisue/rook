@@ -12,6 +12,7 @@ def to_color(c):
     elif isinstance(c, (int, float)):
         return c
     else:
+        print(c)
         m = re.match(c, '^[(\d+),\s*(\d+),\s*(\d+)]$')
         if m:
             return [
