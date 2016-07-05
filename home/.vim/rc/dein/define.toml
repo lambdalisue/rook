@@ -122,6 +122,7 @@ hook_add = 'map H <Plug>(operator-quickhl-manual-this-motion)'
 
 [[plugins]]
 repo = 'tyru/open-browser.vim'
+normalized_name='openbrowser'
 on_map = '<Plug>'
 hook_add = '''
   let g:netrw_nogx = 1 " disable netrw's gx mapping
