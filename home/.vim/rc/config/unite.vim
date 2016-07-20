@@ -231,6 +231,10 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \   fnamemodify(expand('$MYVIM_HOME/init.vim'), ':~'),
       \ ],
       \ [
+      \   'ginit.vim',
+      \   fnamemodify(expand('$MYVIM_HOME/ginit.vim'), ':~'),
+      \ ],
+      \ [
       \   'vimrc.local',
       \   '~/.vimrc.local',
       \ ],

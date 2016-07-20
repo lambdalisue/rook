@@ -102,6 +102,11 @@ elif type pyenv > /dev/null 2>&1; then
     eval "$(pyenv virtualenv-init - zsh)"
 fi
 
+# gulp
+if type gulp > /dev/null 2>&1; then
+    eval "$(gulp --completion=zsh)"
+fi
+
 # go
 export GOPATH="$HOME/.go"
 

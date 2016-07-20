@@ -4,8 +4,8 @@ endif
 let b:did_ftplugin = 1
 
 setl tabstop=8
-setl softtabstop=4
-setl shiftwidth=4
+setl softtabstop=2
+setl shiftwidth=2
 setl smarttab
 setl expandtab
 
