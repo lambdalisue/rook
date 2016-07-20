@@ -20,13 +20,6 @@ augroup nvim_gui_fontset
   autocmd User GUIEnter GuiFont! Ricty for Powerline:h8
 augroup END
 
-function! s:fullscreen_start_command() abort
-  call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)
-endfunction
-let g:fullscreen#start_command = function('s:fullscreen_start_command')
-
-function! s:fullscreen_stop_command() abort
-  call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)
-endfunction
-let g:fullscreen#stop_command = function('s:fullscreen_stop_command')
+let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
+let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
 
