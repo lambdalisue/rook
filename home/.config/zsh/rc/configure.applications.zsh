@@ -118,6 +118,12 @@ if [[ -d "$GOPATH/src/github.com/motemen/ghq" ]]; then
     )
 fi
 
+# Amber
+if [[ -d "$HOME/amber14/" ]]; then
+    export AMBERHOME="$HOME/amber14"
+    source $AMBERHOME/amber.sh
+fi
+
 # pip
 # Note:
 #   it seems the command below makes zsh starting really slow

@@ -393,6 +393,7 @@ hook_add = '''
           \   let b:cursorword = 0 |
           \ endif
   augroup END
+  command Cursorword let b:cursorword = !get(b:, 'cursorword', 1)
 '''
 
 [[plugins]]
@@ -416,115 +417,6 @@ repo = 'w0ng/vim-hybrid'
 
 #[[plugins]]
 #repo = 'cocopon/lightline-hybrid.vim'
-
-
-# Completion ------------------------------------------------------------------
-[[plugins]]
-if = "has('lua')"
-repo = 'Shougo/neocomplete.vim'
-depends = 'context_filetype.vim'
-on_i = 1
-hook_add = '''
-  inoremap <silent><expr><C-x><C-x> neocomplete#start_manual_complete()
-  inoremap <expr><CR> (pumvisible() ? "\<C-y>" : "") . "\<CR>"
-'''
-hook_source = '''
-  let g:neocomplete#enable_at_startup = 1
-  let g:neocomplete#enable_smart_case = 1
-  let g:neocomplete#enable_fuzzy_completion = 0
-  let g:neocomplete#disable_auto_complete = 1
-'''
-
-[[plugins]]
-if = "has('nvim')"
-repo = 'Shougo/deoplete.nvim'
-depends = 'context_filetype.vim'
-on_i = 1
-hook_add = '''
-  inoremap <silent><expr><C-x><C-x> deoplete#mappings#manual_complete()
-  inoremap <expr><CR> (pumvisible() ? "\<C-y>" : "") . "\<CR>"
-'''
-hook_source = '''
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#enable_smart_case = 1
-  let g:deoplete#enable_fuzzy_completion = 0
-  let g:deoplete#disable_auto_complete = 1
-'''
-
-[[plugins]]
-repo = 'Shougo/neco-syntax'
-#on_source = ['neocomplete.vim', 'deoplete.nvim']
-
-[[plugins]]
-repo = 'Shougo/neco-vim'
-on_source = ['neocomplete.vim', 'deoplete.nvim']
-
-[[plugins]]
-repo = 'Shougo/neoinclude.vim'
-on_source = ['neocomplete.vim', 'deoplete.nvim']
-
-[[plugins]]
-#if = 'executable("look")'
-repo = 'ujihisa/neco-look'
-#on_source = ['neocomplete.vim', 'deoplete.nvim']
-
-[[plugins]]
-if = 'executable("ghc-mod")'
-repo = 'eagletmt/neco-ghc'
-on_source = ['neocomplete.vim', 'deoplete.nvim']
-
-[[plugins]]
-repo = 'hrsh7th/vim-neco-calc'
-#on_source = ['neocomplete.vim', 'deoplete.nvim']
-
-[[plugins]]
-if = "has('nvim')"
-repo = 'zchee/deoplete-jedi'
-depends = 'deoplete.nvim'
-on_source = 'jedi-vim'
-
-[[plugins]]
-repo = 'Shougo/neosnippet.vim'
-depends = ['neosnippet-snippets', 'context_filetype.vim']
-on_source = 'unite.vim'
-on_ft = 'snippet'
-on_i = 1
-hook_add = '''
-  if has('nvim')
-    imap <expr><C-g> pumvisible()
-          \ ? "\<Plug>(neosnippet_expand_or_jump)"
-          \ : neosnippet#expandable_or_jumpable()
-          \   ? "\<Plug>(neosnippet_expand_or_jump)"
-          \   : deoplete#custom#manual_complete('neosnippet')
-  elseif has('lua')
-    imap <expr><C-g> pumvisible()
-          \ ? "\<Plug>(neosnippet_expand_or_jump)"
-          \ : neosnippet#expandable_or_jumpable()
-          \   ? "\<Plug>(neosnippet_expand_or_jump)"
-          \   : neocomplete#start_manual_complete('neosnippet')
-  endif
-  smap <C-g> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-g> <Plug>(neosnippet_expand_target)
-'''
-hook_source = '''
-  let g:neosnippet#snippets_directory = expand('$MYVIM_HOME/snippets')
-  let g:neosnippet#enable_snipmate_compatibility = 1
-
-  " for snippet complete marker
-  if has('conceal')
-    setglobal conceallevel=2 concealcursor=niv
-  endif
-'''
-
-[[plugins]]
-repo = 'Shougo/echodoc.vim'
-on_i = 1
-hook_source = '''
-  setglobal cmdheight=2
-  setglobal completeopt+=menuone
-  "set completeopt-=preview
-  let g:echodoc_enable_at_startup=1
-'''
 
 
 # Statusline ------------------------------------------------------------------
@@ -1482,73 +1374,23 @@ repo = 'tell-k/vim-autopep8'
 hook_source = 'let g:autopep8_disable_show_diff = 1'
 
 [[plugins]]
-if = "executable('git')"
-build = 'git submodule update --init'
-repo = 'davidhalter/jedi-vim'
+repo = 'lambdalisue/vim-ledi'
 on_ft = ['python', 'python3']
-on_source = 'vim-pyenv'
-hook_source = '''
-  let g:jedi#auto_initialization = 0
-  let g:jedi#auto_vim_configuration = 0
-  let g:jedi#popup_on_dot = 0
-  let g:jedi#popup_select_first = 0
-  let g:jedi#auto_close_doc = 1
-  let g:jedi#show_call_signatures = 1
-  let g:jedi#show_call_signatures_delay = 500
-  let g:jedi#use_tabs_not_buffers = 0
-  let g:jedi#squelch_py_warning = 1
-  let g:jedi#completions_enabled = 1
-  let g:jedi#use_splits_not_buffers = ""
-  let g:jedi#smart_auto_mappings = 0
-  let g:jedi#use_tag_stack = 1
-
-  function! s:jedi_vim_configure() abort
-    setlocal omnifunc=jedi#completions
-    nmap <buffer> <LocalLeader>g <Plug>(jedi-goto-assignments)
-    nmap <buffer> <LocalLeader>d <Plug>(jedi-goto-definitions)
-    nmap <buffer> <LocalLeader>R <Plug>(jedi-rename)
-    nmap <buffer> <LocalLeader>n <Plug>(jedi-usage)
-    nmap <buffer> K <Plug>(jedi-show-documentation)
-    if g:jedi#show_call_signatures &&  has('conceal')
-      call jedi#configure_call_signatures()
-    endif
-  endfunction
-
-  augroup my-jedi-vim
-    autocmd! *
-    autocmd FileType python call s:jedi_vim_configure()
-  augroup END
-
-  " jedi does not provide <Plug>(jedi-X) mappings
-  nnoremap <silent> <Plug>(jedi-goto-assignments)
-        \ :<C-u>call jedi#goto_assignments()<CR>
-  nnoremap <silent> <Plug>(jedi-goto-definitions)
-        \ :<C-u>call jedi#goto_definitions()<CR>
-  nnoremap <silent> <Plug>(jedi-show-documentation)
-        \ :<C-u>call jedi#show_documentation()<CR>
-  nnoremap <silent> <Plug>(jedi-rename)
-        \ :<C-u>call jedi#rename()<CR>
-  nnoremap <silent> <Plug>(jedi-usages)
-        \ :<C-u>call jedi#usages()<CR>
-'''
 
 [[plugins]]
 if = "executable('pyenv')"
 repo = 'lambdalisue/vim-pyenv'
-on_ft = ['python', 'python3']
-on_cmd = 'PyenvActivate'
+on_source = 'vim-ledi'
 hook_post_source = '''
-  if jedi#init_python()
-    function! s:jedi_auto_force_py_version() abort
-      let major_version = pyenv#python#get_internal_major_version()
-      call jedi#force_py_version(major_version)
-    endfunction
-    augroup my-vim-pyenv
-      autocmd! *
-      autocmd User vim-pyenv-activate-post   call s:jedi_auto_force_py_version()
-      autocmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
-    augroup END
-  endif
+  function! s:ledi_auto_set_python_major_version() abort
+    let major_version = pyenv#python#get_internal_major_version()
+    call ledi#python#init(major_version)
+  endfunction
+  augroup my-vim-pyenv
+    autocmd! *
+    autocmd User vim-pyenv-activate-post   call s:ledi_auto_set_python_major_version()
+    autocmd User vim-pyenv-deactivate-post call s:ledi_auto_set_python_major_version()
+  augroup END
 '''
 
 [[plugins]]
