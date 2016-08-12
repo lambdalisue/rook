@@ -388,7 +388,7 @@ repo = 'itchyny/vim-cursorword'
 hook_add = '''
   augroup cursorword-disable
     autocmd! *
-    autocmd FileType *
+    autocmd BufRead *
           \ if &buftype =~# '^\%(nofile\|quickfix\|help\)$' |
           \   let b:cursorword = 0 |
           \ endif
