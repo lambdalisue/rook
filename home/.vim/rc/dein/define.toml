@@ -14,12 +14,11 @@ repo = 'vim-jp/vimdoc-ja'
 # Trial -----------------------------------------------------------------------
 [[plugins]]
 repo = 'junegunn/goyo.vim'
+on_cmd = 'Goyo'
 
 [[plugins]]
 repo = 'junegunn/limelight.vim'
-
-[[plugins]]
-repo = 'machakann/vim-sandwich'
+on_cmd = 'Limelight'
 
 # Requirement -----------------------------------------------------------------
 [[plugins]]
@@ -350,31 +349,6 @@ on_cmd = 'JunkfileOpen'
 [[plugins]]
 repo = 'lambdalisue/vim-protocol'
 on_path = '\%(^https\?://\|\.zip$\)'
-
-[[plugins]]
-repo = 'easymotion/vim-easymotion'
-on_map = '<Plug>'
-hook_add = '''
-  let g:EasyMotion_do_mapping = 0
-  let g:EasyMotion_smartcase = 1
-  function! s:incsearch_config(...) abort
-    call dein#source('invsearch.vim')
-    call dein#source('vim-easymotion')
-    return incsearch#util#deepextend(deepcopy({
-          \ 'modules': [incsearch#config#easymotion#module({'overwin': 1})],
-          \ 'keymap': {
-          \   "\<CR>": '<Over>(easymotion)',
-          \ },
-          \ 'is_expr': 0,
-          \}), get(a:, 1, {}))
-  endfunction
-  nnoremap <nowait><silent><expr> s incsearch#go(<SID>incsearch_config())
-'''
-
-[[plugins]]
-repo = 'haya14busa/incsearch-easymotion.vim'
-depends = 'incsearch.vim'
-on_source = 'vim-easymotion'
 
 [[plugins]]
 repo = 'rhysd/clever-f.vim'
@@ -729,21 +703,14 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'rhysd/vim-operator-surround'
-depends = ['vim-operator-user', 'vim-textobj-multiblock']
-on_map = [['nx', '<Plug>']]
+repo = 'machakann/vim-sandwich'
+depends = ['vim-operator-user']
+on_map = [['n', '<Plug>']]
 hook_add = '''
-  nmap Sa <Plug>(operator-surround-append)
-  nmap Sd <Plug>(operator-surround-delete)
-  nmap Sr <Plug>(operator-surround-replace)
-  xmap Sa <Plug>(operator-surround-append)
-  xmap Sd <Plug>(operator-surround-delete)
-  xmap Sr <Plug>(operator-surround-replace)
-
-  nmap Sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
-  nmap Srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
-  xmap Sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
-  xmap Srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
+  nmap <silent> sd <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+  nmap <silent> sr <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+  nmap <silent> sdb <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+  nmap <silent> srb <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
 '''
 
 [[plugins]]

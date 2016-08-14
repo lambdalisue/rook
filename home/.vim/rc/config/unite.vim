@@ -119,6 +119,8 @@ function! s:configure_unite() abort
   silent! nunmap <buffer> <Space>
   silent! vunmap <buffer> <Space>
   silent! nunmap <buffer> <S-Space>
+  silent! nunmap <buffer> <C-n>
+  silent! nunmap <buffer> <C-p>
   nmap <buffer><nowait> J <Plug>(unite_toggle_mark_current_candidate)
   vmap <buffer><nowait> J <Plug>(unite_toggle_mark_selected_candidate)
 

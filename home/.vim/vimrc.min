@@ -1,14 +1,8 @@
 " vim -u ~/.vim/vimrc.min
 if has('vim_starting')
   set nocompatible
-  set runtimepath+=~/bundle/repos/dein.vim
+  set runtimepath+=~/.vim/bundle/repos/github.com/machakann/vim-sandwich/
 endif
-
-call dein#begin(expand('~/bundle'))
-call dein#add('Shougo/dein.vim', {
-      \ 'directory': 'dein.vim',
-      \})
-call dein#end()
 
 filetype plugin indent on
 syntax on
