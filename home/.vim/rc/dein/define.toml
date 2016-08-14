@@ -11,6 +11,16 @@ merged = 0
 repo = 'vim-jp/vimdoc-ja'
 
 
+# Trial -----------------------------------------------------------------------
+[[plugins]]
+repo = 'junegunn/goyo.vim'
+
+[[plugins]]
+repo = 'junegunn/limelight.vim'
+
+[[plugins]]
+repo = 'machakann/vim-sandwich'
+
 # Requirement -----------------------------------------------------------------
 [[plugins]]
 repo = 'kana/vim-operator-user'
@@ -388,7 +398,7 @@ repo = 'itchyny/vim-cursorword'
 hook_add = '''
   augroup cursorword-disable
     autocmd! *
-    autocmd BufRead *
+    autocmd WinEnter,BufEnter *
           \ if &buftype =~# '^\%(nofile\|quickfix\|help\)$' |
           \   let b:cursorword = 0 |
           \ endif
