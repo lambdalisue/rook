@@ -1314,6 +1314,10 @@ repo = 'vim-perl/vim-perl'
 #on_ft = 'perl'
 
 [[plugins]]
+#repo = 'motemen/xslate-vim'
+repo = 'lambdalisue/xslate-vim'
+
+[[plugins]]
 repo = 'lambdalisue/vim-cython-syntax'
 merge = 0
 
