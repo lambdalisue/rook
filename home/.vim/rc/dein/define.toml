@@ -1518,6 +1518,10 @@ repo = 'thinca/vim-themis'
 
 [[plugins]]
 # non vim plugin
+repo = 'lambdalisue/themis-helper-global'
+
+[[plugins]]
+# non vim plugin
 repo = 'Kuniwak/vint'
 
 [[plugins]]
