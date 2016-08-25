@@ -1,5 +1,3 @@
-scriptencoding utf-8
-
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_ignore_pattern = printf('\%%(%s\)', join([
       \ '^\..*',
@@ -7,14 +5,6 @@ let g:vimfiler_ignore_pattern = printf('\%%(%s\)', join([
       \ '^__pycache__$',
       \ '\.egg-info$',
       \], '\|'))
-if has('multi_byte') && $LANG !=# 'C'
-  let g:vimfiler_tree_leaf_icon =  '|'
-  let g:vimfiler_tree_opened_icon = '-'
-  let g:vimfiler_tree_closed_icon = '+'
-  let g:vimfiler_file_icon = ' '
-  let g:vimfiler_readonly_file_icon = '⭤'
-  let g:vimfiler_marked_file_icon = '✓'
-endif
 
 call vimfiler#custom#profile('default', 'context', {
       \ 'auto_cd': 1,
@@ -65,7 +55,7 @@ autocmd MyAutoCmd User my-workon-post call s:cd_all_vimfiler(getcwd())
 "   1 and thus <C-w>= or those kind of command doesn't work.
 "   This work around stands for fixing that.
 function! s:force_nofixwidth() abort
-  if empty(&buftype) || &buftype ==# '\v^%(nowrite|acwrite)$'
+  if &buftype =~# '^\%(\|nowrite\|acwrite\)$'
     setlocal nowinfixwidth
   endif
 endfunction

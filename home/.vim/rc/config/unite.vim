@@ -1,5 +1,3 @@
-scriptencoding utf-8
-
 " grep
 if executable('hw')
   " Use hw (highway)
@@ -36,25 +34,11 @@ elseif executable('jvgrep')
         \ '-i --exclude ''\.(git|svn|hg|bzr)'''
   let g:unite_source_grep_recursive_opt = '-R'
 endif
-if has('multi_byte') && $LANG !=# 'C'
-  let config = {
-        \ 'prompt': '» ',
-        \ 'candidate_icon': '⋮',
-        \ 'marked_icon': '✓',
-        \ 'no_hide_icon': 1,
-        \}
-else
-  let config = {
-        \ 'prompt': '> ',
-        \ 'candidate_icon': ' ',
-        \ 'marked_icon': '*',
-        \}
-endif
 
-call unite#custom#profile('default', 'context', extend(config, {
+call unite#custom#profile('default', 'context', {
       \ 'start_insert': 1,
       \ 'no_empty': 1,
-      \}))
+      \})
 call unite#custom#profile('source/bookmark', 'context', {
       \ 'no_start_insert': 1,
       \})
@@ -81,27 +65,6 @@ let g:unite_source_alias_aliases = {
       \   'args': 'map|map!|lmap',
       \ },
       \}
-
-" add unite interface
-let agit = {
-      \ 'description': 'open the directory (or parent directory) in agit',
-      \ }
-function! agit.func(candidate) abort
-  if isdirectory(a:candidate.action__path)
-    let path = a:candidate.action__path
-  else
-    let path = fnamemodify(a:candidate.action__path, ':h')
-  endif
-  execute 'Agit' '--dir=' . path
-endfunction
-call unite#custom#action('file,cdable', 'agit', agit)
-let agit_file = {
-      \ 'description': "open the file's history in agit.vim",
-      \ }
-function! agit_file.func(candidate) abort
-  execute 'AgitFile' '--file=' . a:candidate.action__path
-endfunction
-call unite#custom#action('file', 'agit_file', agit_file)
 
 function! s:configure_unite() abort
   let unite = unite#get_current_unite()
@@ -360,6 +323,3 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \   '~/.jupyter/custom/custom.js',
       \ ],
       \])
-
-
-" vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
