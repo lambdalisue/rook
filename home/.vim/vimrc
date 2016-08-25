@@ -172,8 +172,8 @@ set diffopt& diffopt+=vertical
 " line and user move the cursor left/right
 set whichwrap=b,s,<,>,~,[,]
 
-" store cursor, folds, slash, unix, and options on view
-set viewoptions=cursor,folds,slash,unix,options
+" store cursor, folds, slash, and unix on view
+set viewoptions=cursor,folds,slash,unix
 
 " use rich completion system in command line
 set wildmenu
