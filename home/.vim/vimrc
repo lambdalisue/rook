@@ -172,8 +172,8 @@ set diffopt& diffopt+=vertical
 " line and user move the cursor left/right
 set whichwrap=b,s,<,>,~,[,]
 
-" store cursor, folds, slash, unix on view
-set viewoptions=cursor,folds,slash,unix
+" store cursor, folds, slash, unix, and options on view
+set viewoptions=cursor,folds,slash,unix,options
 
 " use rich completion system in command line
 set wildmenu
@@ -402,13 +402,13 @@ augroup END
 
 " Improve mkview/loadview {{{
 function! s:checkview() abort
-  if !&buflisted || &buftype =~# '^\%(nofile\|quickfix\|terminal\)$'
+  if !&buflisted || &buftype =~# '^\%(nofile\|help\|quickfix\|terminal\)$'
     return 0
   endif
   return 1
 endfunction
 autocmd MyAutoCmd BufWinLeave * if s:checkview() | silent! mkview   | endif
-autocmd MyAutoCmd BufReadPost * if s:checkview() | silent! loadview | endif
+autocmd MyAutoCmd BufWinEnter * if s:checkview() | silent! loadview | endif
 " }}}
 
 " Seemless substitution {{{
