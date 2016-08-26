@@ -575,8 +575,14 @@ xmap @ <Plug>(my-execute-macro)
 
 " Add runtimepath {{{
 function! s:add_runtimepath() abort
-  execute printf('set runtimepath^=%s', fnameescape(getcwd()))
-  echo printf('"%s" is added to &runtimepath', getcwd())
+  let path = getcwd()
+  execute printf('set runtimepath^=%s', fnameescape(path))
+  if isdirectory(path . '/plugin')
+    for filename in glob(path . '/plugin/*.vim', 0, 1)
+      execute printf('source %s', fnameescape(filename))
+    endfor
+  endif
+  echo printf('"%s" is added to &runtimepath', path)
 endfunction
 command! AddRuntimePath call s:add_runtimepath()
 " }}}
