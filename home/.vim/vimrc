@@ -393,6 +393,15 @@ cnoreabbrev Wq :wq
 cnoreabbrev qw :wq
 cnoreabbrev Qa :qa
 cnoreabbrev q: :q
+
+" I often mis-type...
+nnoremap cie <Nop>
+nnoremap cae <Nop>
+nnoremap die <Nop>
+nnoremap dae <Nop>
+nnoremap yie <Nop>
+nnoremap yae <Nop>
+
 " }}}
 
 " Macro {{{

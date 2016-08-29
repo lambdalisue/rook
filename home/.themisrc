@@ -1,8 +1,8 @@
-execute printf(
-      \ 'set runtimepath^=%s',
-      \ fnameescape(expand('~/.vim/bundle/repos/github.com/lambdalisue/themis-helper-global'))
-      \)
-
+"execute printf(
+"      \ 'set runtimepath^=%s',
+"      \ fnameescape(expand('~/.vim/bundle/repos/github.com/lambdalisue/themis-helper-global'))
+"      \)
+"
 call themis#option(
       \ 'runtimepath',
       \ expand('~/.vim/bundle/repos/github.com/Shougo/vimproc.vim')
