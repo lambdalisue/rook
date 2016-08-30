@@ -102,9 +102,6 @@ hook_add = '''
 hook_source = '''
   let g:over_enable_auto_nohlsearch = 1
   let g:over_enable_cmd_window = 1
-  if has('multi_byte') && $LANG !=# 'C'
-      let g:over_command_line_prompt = '» '
-  endif
   let g:over#command_line#search#enable_incsearch = 1
 '''
 
@@ -144,31 +141,40 @@ repo = 'lambdalisue/vim-fullscreen'
 on_map = '<Plug>'
 hook_add = 'nmap <C-CR> <Plug>(fullscreen-toggle)'
 
-[[plugins]]
-repo = 'haya14busa/incsearch.vim'
-on_map = '<Plug>'
-hook_add = '''
-  map / <Plug>(incsearch-forward)
-  map ? <Plug>(incsearch-backward)
-  map g/ <Plug>(incsearch-stay)
-  map n <Plug>(incsearch-nohl-n)
-  map N <Plug>(incsearch-nohl-N)
-
-  map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)
-  map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
-  map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
-  map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
-  map z*  <Plug>(incsearch-nohl)<Plug>(asterisk-z*)
-  map gz* <Plug>(incsearch-nohl)<Plug>(asterisk-gz*)
-  map z#  <Plug>(incsearch-nohl)<Plug>(asterisk-z#)
-  map gz# <Plug>(incsearch-nohl)<Plug>(asterisk-gz#)
-'''
-hook_source = 'let g:incsearch#auto_nohlsearch = 1'
+#[[plugins]]
+#repo = 'haya14busa/incsearch.vim'
+#on_map = '<Plug>'
+#hook_add = '''
+#  map / <Plug>(incsearch-forward)
+#  map ? <Plug>(incsearch-backward)
+#  map g/ <Plug>(incsearch-stay)
+#  map n <Plug>(incsearch-nohl-n)
+#  map N <Plug>(incsearch-nohl-N)
+#
+#  map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)
+#  map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
+#  map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
+#  map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
+#  map z*  <Plug>(incsearch-nohl)<Plug>(asterisk-z*)
+#  map gz* <Plug>(incsearch-nohl)<Plug>(asterisk-gz*)
+#  map z#  <Plug>(incsearch-nohl)<Plug>(asterisk-z#)
+#  map gz# <Plug>(incsearch-nohl)<Plug>(asterisk-gz#)
+#'''
+#hook_source = 'let g:incsearch#auto_nohlsearch = 1'
 
 [[plugins]]
 repo = 'haya14busa/vim-asterisk'
 on_map = '<Plug>'
-on_source = 'incsearch.vim'
+hook_add = '''
+  map *   <Plug>(asterisk-*)
+  map #   <Plug>(asterisk-#)
+  map g*  <Plug>(asterisk-g*)
+  map g#  <Plug>(asterisk-g#)
+  map z*  <Plug>(asterisk-z*)
+  map gz* <Plug>(asterisk-gz*)
+  map z#  <Plug>(asterisk-z#)
+  map gz# <Plug>(asterisk-gz#)
+'''
 
 [[plugins]]
 repo = 'LeafCage/yankround.vim'
@@ -178,12 +184,12 @@ hook_add = '''
   nmap P     <Plug>(yankround-P)
   nmap gp    <Plug>(yankround-gp)
   nmap gP    <Plug>(yankround-gP)
-  nmap <expr><C-p> yankround#is_active()
+  nmap <expr><C-k> yankround#is_active()
         \ ? "\<Plug>(yankround-prev)"
-        \ : "\<Plug>(my-tab-prev)"
-  nmap <expr><C-n> yankround#is_active()
+        \ : "\<C-k>"
+  nmap <expr><C-j> yankround#is_active()
         \ ? "\<Plug>(yankround-next)"
-        \ : "\<Plug>(my-tab-next)"
+        \ : "\<C-j>"
 '''
 hook_source = 'let g:yankround_use_region_hl = 0'
 
