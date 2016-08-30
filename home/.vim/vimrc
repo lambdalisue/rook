@@ -340,25 +340,13 @@ nnoremap g}f :<C-u>last<CR>
 
 " tab operation (make similar mapping with window operation)
 " ref.
-function! s:tab_quit() abort
-  if tabpagenr('$') == 1
-    quit
-  else
-    tabclose
-  endif
-endfunction
 nnoremap <silent> <Plug>(my-tab-new)  :<C-u>tabnew<CR>
-nnoremap <silent> <Plug>(my-tab-quit) :<C-u>call <SID>tab_quit()<CR>
 nnoremap <silent> <Plug>(my-tab-next) :<C-u>tabnext<CR>
 nnoremap <silent> <Plug>(my-tab-prev) :<C-u>tabprevious<CR>
-nmap <C-t>n <Plug>(my-tab-next)
-nmap <C-t>p <Plug>(my-tab-prev)
+nmap <C-n> <Plug>(my-tab-next)
+nmap <C-p> <Plug>(my-tab-prev)
 nmap <C-t>t <Plug>(my-tab-new)
-nmap <C-t>q <Plug>(my-tab-quit)
-nmap <C-t><C-n> <Plug>(my-tab-next)
-nmap <C-t><C-p> <Plug>(my-tab-prev)
 nmap <C-t><C-t> <Plug>(my-tab-new)
-nmap <C-t><C-q> <Plug>(my-tab-quit)
 
 " switch options
 nnoremap <Plug>(my-switch) <Nop>
