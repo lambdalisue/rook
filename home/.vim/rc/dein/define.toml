@@ -320,6 +320,10 @@ hook_add = '''
 repo = 'kana/vim-altr'
 on_map = '<Plug>'
 hook_add = 'nmap <F2> <Plug>(altr-forward)'
+hook_post_source = '''
+  call altr#define('autoload/%.vim', 'test/%.vimspec', 'plugin/%.vim', 'doc/%.txt')
+  call altr#define('lib/%.pm', 't/%.t', 'template/%.tx')
+'''
 
 [[plugins]]
 repo = 'lambdalisue/vim-foldround'
@@ -1479,11 +1483,26 @@ repo = 'vim-jp/vital.vim'
 on_cmd = 'Vitalize'
 
 [[plugins]]
+repo = 'vim-jp/vital-complete'
+on_ft = ['vim', 'vimspec']
+hook_add = '''
+  autocmd MyAutoCmd FileType vim,vimspec setlocal omnifunc=vital_complete#complete
+'''
+
+[[plugins]]
+repo = 'lambdalisue/vital-Argument'
+on_source = 'vital.vim'
+
+[[plugins]]
 repo = 'lambdalisue/vital-ArgumentParser'
 on_source = 'vital.vim'
 
 [[plugins]]
 repo = 'lambdalisue/vital-ProgressBar'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Vim-Buffer-Opener'
 on_source = 'vital.vim'
 
 [[plugins]]
@@ -1496,6 +1515,22 @@ on_source = 'vital.vim'
 
 [[plugins]]
 repo = 'lambdalisue/vital-Vim-Validate'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Data-List-Chunker'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Data-Dict-Option'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Data-String-Formatter'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Vim-Lua-String'
 on_source = 'vital.vim'
 
 [[plugins]]
