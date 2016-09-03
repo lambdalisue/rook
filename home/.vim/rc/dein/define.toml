@@ -3,6 +3,15 @@ repo = 'Shougo/dein.vim'
 rtp = ''
 
 [[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
 repo = 'Shougo/vimproc.vim'
 build = 'make'
 merged = 0
@@ -10,8 +19,106 @@ merged = 0
 [[plugins]]
 repo = 'vim-jp/vimdoc-ja'
 
+[[plugins]]
+repo = 'sudo.vim'
+on_path = 'sudo:*'
+hook_add = 'cnoreabbrev w!! :w sudo:%'
 
-# Trial -----------------------------------------------------------------------
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+normalized_name='openbrowser'
+on_map = '<Plug>'
+hook_add = '''
+let g:netrw_nogx = 1 " disable netrw's gx mapping
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
+'''
+
+[[plugins]]
+repo = 'lambdalisue/vim-fullscreen'
+on_map = '<Plug>'
+hook_add = 'nmap <C-CR> <Plug>(fullscreen-toggle)'
+
+[[plugins]]
+repo = 'thinca/vim-fontzoom'
+on_map = '<Plug>'
+on_cmd = 'Fontzoom'
+hook_add = '''
+let g:fontzoom_no_default_key_mappings = 1
+nmap <C-ScrollWheelUp>   <Plug>(fontzoom-larger)
+nmap <C-ScrollWheelDown> <Plug>(fontzoom-smaller)
+nmap <C-S-Up>            <Plug>(fontzoom-larger)
+nmap <C-S-Down>          <Plug>(fontzoom-smaller)
+'''
+
+[[plugins]]
+repo = 'vim-pandoc/vim-pandoc'
+on_ft = 'pandoc'
+
+[[plugins]]
+repo = 'powerman/vim-plugin-AnsiEsc'
+on_cmd = 'AnsiEsc'
+
+[[plugins]]
+repo = 'kannokanno/previm'
+depends = 'open-browser.vim'
+on_cmd = 'PrevimOpen'
+hook_source = 'let g:previm_show_header = 0'
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+hook_add = '''
+let g:context_filetype#search_offset = 50
+let g:precious_enable_switch_CursorMoved = { '*': 0 }
+let g:precious_enable_switch_CursorMoved_i = { '*': 0 }
+autocmd MyAutoCmd InsertEnter * :PreciousSwitchAutcmd
+autocmd MyAutoCmd InsertLeave * :PreciousSwitchAutcmd
+autocmd MyAutoCmd User PreviousFileType_vim 
+      \ :PreciousSetContextLocal foldlevel=0
+'''
+
+[[plugins]]
+repo = 'lambdalisue/vim-manpager'
+on_cmd = ['MANPAGER', 'Man']
+hook_add = '''
+let g:loaded_man = 1  " Disable Neovim builtin 'Man'
+'''
+
+[[plugins]]
+if = "executable('latexmk')"
+repo = 'LaTeX-Box-Team/LaTeX-Box'
+on_ft = ['tex', 'latex', 'plaintex']
+on_cmd = 'Latexmk',
+hook_source = '''
+let g:LatexBox_latexmk_async = 1
+let g:LatexBox_latexmk_preview_continuously = 1
+let g:LatexBox_latexmk_options = '-pdfdvi'
+let g:LatexBox_build_dir = 'build'
+let g:LatexBox_Folding = 1
+let g:LatexBox_quickfix = 2
+let g:LatexBox_ignore_warnings = [
+      \ 'Underfull', 'Overfull', 'specifier changed to',
+      \ 'Module luatexbase-mcb warning: several functions in ',
+      \ 'xparse/redefine-command',
+      \ 'luatexja-preset warning: "scale"',
+      \ 'Unsupported document class',
+      \ '\setcatcoderange is deprecated',
+      \ 'LaTeX Warning: You have requested document class',
+      \ 'LaTeX Font Warning: Font shape',
+      \ 'Package typearea Warning: Bad type area settings!',
+      \ 'LaTeX Font Warning: Some font shapes were not available, defaults substituted.'
+      \ ]
+function! s:latexbox_configure() abort
+  imap <buffer> [[     \begin{
+  imap <buffer> ]]     <Plug>LatexCloseCurEnv
+  nmap <buffer> <F5>   <Plug>LatexChangeEnv
+  vmap <buffer> <F7>   <Plug>LatexWrapSelection
+  vmap <buffer> <S-F7> <Plug>LatexEnvWrapSelection
+  imap <buffer> ((     \eqref{
+endfunction
+autocmd MyAutoCmd FileType tex,latex,plaintex call s:latexbox_configure()
+'''
+
 [[plugins]]
 repo = 'junegunn/goyo.vim'
 on_cmd = 'Goyo'
@@ -20,102 +127,337 @@ on_cmd = 'Goyo'
 repo = 'junegunn/limelight.vim'
 on_cmd = 'Limelight'
 
-# Requirement -----------------------------------------------------------------
 [[plugins]]
-repo = 'kana/vim-operator-user'
+repo = 'cocopon/colorswatch.vim'
+on_cmd = 'ColorSwatchGenerate'
 
 [[plugins]]
-repo = 'kana/vim-textobj-user'
+repo = 'itchyny/calendar.vim'
+on_cmd = 'Calendar'
+hook_source = '''
+let g:calendar_frame = 'default'
+let g:calendar_google_calendar = 1
+let g:calendar_google_task = 1
+'''
 
 [[plugins]]
-repo = 'mattn/webapi-vim'
+repo = 'lambdalisue/vim-gita'
+on_cmd = 'Gita'
+hook_add = '''
+nnoremap <Plug>(my-gita) <Nop>
+nmap <Leader>a <Plug>(my-gita)
+nnoremap <silent> <Plug>(my-gita)a :<C-u>Gita status --ignore-submodules<CR>
+nnoremap <silent> <Plug>(my-gita)b :<C-u>Gita branch --all<CR>
+nnoremap <silent> <Plug>(my-gita)g :<C-u>Gita grep<CR>
+nnoremap <silent> <Plug>(my-gita)d :<C-u>Gita diff-ls --ignore-submodules origin/HEAD...<CR>
+nnoremap <silent> <Plug>(my-gita)l :<C-u>Gita ls-files<CR>
+autocmd MyAutoCmd User GitaActionCalledPost:quickfix:quickfix call qfreplace#start('')
+'''
+hook_source = '''
+let g:gita#command#browse#extra_translation_patterns = {
+      \ 'ghe.admin.h': [
+      \   [
+      \     '\vhttps?://(%domain)/(.{-})/(.{-})%(\.git)?$',
+      \     '\vgit://(%domain)/(.{-})/(.{-})%(\.git)?$',
+      \     '\vgit\@(%domain):(.{-})/(.{-})%(\.git)?$',
+      \     '\vssh://git\@(%domain)/(.{-})/(.{-})%(\.git)?$',
+      \   ], {
+      \     '_':     'https://\1/\2/\3/blob/%c1/%pt%{#L|}ls%{-L|}le',
+      \     'exact': 'https://\1/\2/\3/blob/%r1/%pt%{#L|}ls%{-L|}le',
+      \     'blame': 'https://\1/\2/\3/blame/%c1/%pt%{#L|}ls%{-L|}le',
+      \   },
+      \ ],
+      \}
+'''
 
 [[plugins]]
-repo = 'Shougo/context_filetype.vim'
+repo = 'cohama/agit.vim'
+on_cmd = ['Agit', 'AgitFile']
+on_source = 'unite.vim'
+hook_add = '''
+" add extra key-mappings
+function! s:my_agit_setting() abort
+  nmap <buffer> ch <Plug>(agit-git-cherry-pick)
+  nmap <buffer> Rv <Plug>(agit-git-revert)
+endfunction
+autocmd MyAutoCmd FileType agit call s:my_agit_setting()
+'''
 
 [[plugins]]
-repo = 'Shougo/neosnippet-snippets'
+repo = 'tpope/vim-fugitive'
+on_cmd = [
+  'Git', 'Gcd', 'Glcd', 'Gstatus', 'Gcommit', 'Gmerge',
+  'Gpull', 'Gpush', 'Gfetch', 'Ggrep', 'Glgrep', 'Glog',
+  'Gllog', 'Gedit', 'Gsplit', 'Gvsplit', 'Gtabedit', 'Gpedit',
+  'Gread', 'Gwrite', 'Gwq', 'Gdiff', 'Gsdiff', 'Gvdiff',
+  'Gmove', 'Gremove', 'Gblame', 'Gbrowse',
+]
 
 [[plugins]]
-repo = 'cocopon/lightline-hybrid.vim'
+repo = 'lambdalisue/vim-gista'
+on_cmd = 'Gista'
+hook_source = '''
+let g:gista#client#default_username = 'lambdalisue'
+'''
+
+[[plugins]]
+repo = 'lambdalisue/vim-gista-ctrlp'
+depends = ['vim-gista', 'ctrlp.vim']
+on_cmd = 'CtrlPGista'
+on_func = 'ctrlp#gista#'
+
+[[plugins]]
+repo = 'ctrlpvim/ctrlp.vim'
+lazy = 1
+hook_source = '''
+let g:ctrlp_map = '<Nop>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+'''
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+on_cmd = [
+  'Unite',
+  'UniteWithCursorWord',
+  'UniteBookmarkAdd',
+]
+hook_add = '''
+nnoremap <Plug>(my-unite) <Nop>
+nmap <Space> <Plug>(my-unite)
+vmap <Space> <Plug>(my-unite)
+
+nnoremap <silent> <Plug>(my-unite)<Space> :<C-u>UniteResume -no-start-insert<CR>
+nnoremap <silent> <Plug>(my-unite)w :<C-u>Unite buffer<CR>
+nnoremap <silent> <Plug>(my-unite)k :<C-u>Unite bookmark<CR>
+nnoremap <silent> <Plug>(my-unite)l :<C-u>Unite line -buffer-name=search<CR>
+nnoremap <silent> <Plug>(my-unite)mp :<C-u>Unite map -buffer-name=search<CR>
+nnoremap <silent> <Plug>(my-unite)s :<C-u>Unite menu:shortcut<CR>
+
+" unite-file
+nnoremap <Plug>(my-unite-file) <Nop>
+nmap <Plug>(my-unite)f <Plug>(my-unite-file)
+nnoremap <silent> <Plug>(my-unite-file)f :<C-u>Unite file_rec/git file_rec/async<CR>
+nnoremap <silent> <Plug>(my-unite-file)i :<C-u>Unite file<CR>
+nnoremap <silent> <Plug>(my-unite-file)m :<C-u>Unite file_mru<CR>
+nnoremap <silent> <Plug>(my-unite-file)r :<C-u>Unite file_rec/async<CR>
+nnoremap <silent> <Plug>(my-unite-file)g :<C-u>Unite file_rec/git<CR>
+
+" unite-directory
+nnoremap <Plug>(my-unite-directory) <Nop>
+nmap <Plug>(my-unite)d <Plug>(my-unite-directory)
+nnoremap <silent> <Plug>(my-unite-directory)d :<C-u>Unite directory_rec/async<CR>
+nnoremap <silent> <Plug>(my-unite-directory)i :<C-u>Unite directory<CR>
+nnoremap <silent> <Plug>(my-unite-directory)m :<C-u>Unite directory_mru<CR>
+nnoremap <silent> <Plug>(my-unite-directory)r :<C-u>Unite directory_rec/async<CR>
+
+" unite-qf
+nnoremap <Plug>(my-unite-qf) <Nop>
+nmap <Plug>(my-unite)q <Plug>(my-unite-qf)
+nnoremap <silent> <Plug>(my-unite-qf)q :<C-u>Unite quickfix location_list -buffer-name=search<CR>
+nnoremap <silent> <Plug>(my-unite-qf)f :<C-u>Unite quickfix -buffer-name=search<CR>
+nnoremap <silent> <Plug>(my-unite-qf)l :<C-u>Unite location_list -buffer-name=search<CR>
+
+" unite-grep
+nnoremap <Plug>(my-unite-grep) <Nop>
+nmap <Plug>(my-unite)g <Plug>(my-unite-grep)
+vmap <Plug>(my-unite)g <Plug>(my-unite-grep)
+nnoremap <silent> <Plug>(my-unite-grep)* :<C-u>UniteWithCursorWord grep:. -buffer-name=search -no-empty<CR>
+vnoremap <silent> <Plug>(my-unite-grep)* :UniteWithCursorWord grep:. -buffer-name=search -no-empty<CR>
+nnoremap <silent> <Plug>(my-unite-grep)g :<C-u>Unite grep:. -buffer-name=search -no-empty<CR>
+vnoremap <silent> <Plug>(my-unite-grep)g :Unite grep:. -buffer-name=search -no-empty<CR>
+nnoremap <silent> <Plug>(my-unite-grep)i :<C-u>Unite grep/git:/ -buffer-name=search -no-empty<CR>
+vnoremap <silent> <Plug>(my-unite-grep)i :Unite grep/git:/ -buffer-name=search -no-empty<CR>
+
+" unite-gista
+nnoremap <silent> <Plug>(my-unite-git)t :<C-u>Unite gista:lambdalisue<CR>
+
+" unite-linephrase
+nnoremap <silent> <Plug>(my-unite)p
+      \ :<C-u>Unite linephrase
+      \ -no-quit -keep-focus -no-start-insert
+      \ -buffer-name=search<CR>
+
+" unite-outline
+nnoremap <silent> <Plug>(my-unite)o
+      \ :<C-u>Unite outline
+      \ -no-quit -keep-focus -no-start-insert
+      \ -vertical -direction=botright -winwidth=30<CR>
+
+" vim-bookmarks
+nnoremap <silent> <Plug>(my-unite)mm
+      \ :<C-u>Unite vim_bookmarks
+      \ -no-quit -keep-focus -no-start-insert
+      \ -buffer-name=search<CR>
+'''
+hook_source = '''
+call vimrc#source_path('$MYVIM_HOME/rc/config/unite.vim')
+'''
+
+[[plugins]]
+repo = 'Shougo/vimshell.vim'
+on_cmd = [
+  'VimShell',
+  'VimShellTab',
+  'VimShellPop',
+]
+hook_source = '''
+call vimrc#source_path('$MYVIM_HOME/rc/config/vimshell.vim')
+'''
+hook_post_source = '''
+highlight! vimshellError gui=NONE cterm=NONE guifg='#cc6666' ctermfg=9
+'''
+
+
+[[plugins]]
+repo = 'justinmk/vim-dirvish'
+on_cmd = 'Dirvish'
+
+[[plugins]]
+repo = 'Shougo/vimfiler.vim'
+depends = 'unite.vim'
+on_cmd = [
+  'VimFiler',
+  'VimFilerExplorer',
+]
+on_path = '\h\w*:'
+hook_add = '''
+nnoremap <Plug>(my-vimfiler) <Nop>
+nmap <Leader>e <Plug>(my-vimfiler)
+nnoremap <silent> <Plug>(my-vimfiler)e :<C-u>VimFilerExplorer<CR>
+nnoremap <silent> <Plug>(my-vimfiler)E :<C-u>VimFiler<CR>
+'''
+hook_source = '''
+call vimrc#source_path('$MYVIM_HOME/rc/config/vimfiler.vim')
+'''
+
+[[plugins]]
+repo = 'mbbill/undotree'
+on_cmd = 'UndotreeToggle'
+hook_add = '''
+nnoremap <Plug>(my-undotree) <Nop>
+nmap <Leader>u <Plug>(my-undotree)
+nnoremap <silent> <Plug>(my-undotree) :<C-u>UndotreeToggle<CR>
+'''
+
+[[plugins]]
+repo = 'thinca/vim-ref'
+on_cmd = 'Ref'
+hook_add = '''
+let g:ref_open = 'vsplit'
+function! s:ref_configure() abort
+  nmap <buffer><silent> <C-p> <Plug>(ref-back)
+  nmap <buffer><silent> <C-n> <Plug>(ref-forward)
+endfunction
+autocmd MyAutoCmd FileType ref call s:ref_configure()
+'''
+
+[[plugins]]
+repo = 'majutsushi/tagbar'
+on_cmd = [
+  'Tagbar',
+  'TagbarOpen',
+  'TagbarToggle',
+]
+hook_add = '''
+nnoremap <Plug>(my-tagbar) <Nop>
+nmap <Leader>t <Plug>(my-tagbar)
+nnoremap <silent> <Plug>(my-tagbar) :<C-u>TagbarToggle<CR>
+'''
+
+[[plugins]]
+repo = 'godlygeek/tabular'
+on_cmd = 'Tabularize'
+
+[[plugins]]
+repo = 'thinca/vim-template'
+
+[[plugins]]
+repo = 'thinca/vim-qfreplace'
+on_cmd = 'Qfreplace'
+on_source = ['unite.vim', 'vimfiler.vim']
+
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+on_map = '<Plug>'
+on_cmd = 'QuickRun'
+hook_add = 'nmap <LocalLeader>r <Plug>(quickrun)'
+hook_source = '''
+let g:quickrun_config = get(g:, 'quickrun_config', {})
+let g:quickrun_config._ = {
+      \ 'runner': 'job',
+      \ 'runner/job/interval': 200,
+      \ 'outputter/buffer/split': ':botright 8sp',
+      \ 'outputter/buffer/close_on_empty': 1,
+      \ 'hook/time/enable': 1,
+      \}
+let g:quickrun_config.pyrex = {
+      \ 'command': 'cython',
+      \}
+" Terminate the quickrun with <C-c>
+nnoremap <expr><silent> <C-c> quickrun#is_running()
+      \ ? quickrun#sweep_sessions()
+      \ : "\<C-c>"
+'''
+
+[[plugins]]
+repo = 'osyo-manga/vim-watchdogs'
+depends = 'vim-quickrun'
+hook_add = '''
+let g:watchdogs_check_CursorHold_enables = {
+      \ 'vim': 1,
+      \ 'perl': 1,
+      \ 'python': 1,
+      \ 'javascript': 1,
+      \ 'typescript': 1,
+      \ 'html': 1,
+      \ 'css': 1,
+      \ 'less': 1,
+      \ 'sass': 1,
+      \}
+let g:watchdogs_check_BufWritePost_enables =
+      \ g:watchdogs_check_CursorHold_enables
+let g:watchdogs_check_BufWritePost_enable_on_wq = 0
+
+let g:quickrun_config = get(g:, 'quickrun_config', {})
+let g:quickrun_config['watchdogs_checker/_'] = {
+      \ 'outputter/quickfix/open_cmd': '',
+      \ 'hook/qfstatusline_update/enable_exit': 1,
+      \ 'hook/qfstatusline_update/priority_exit': 4,
+      \}
+
+" use flake8 for Python
+if executable('flake8')
+  let g:quickrun_config['python/watchdogs_checker'] = {
+        \ 'type': 'watchdogs_checker/flake8',
+        \}
+endif
+" use vint for Vim script
+if executable('vint')
+  let g:quickrun_config['watchdogs_checker/vint'] = {
+        \ 'command': 'vint',
+        \ 'exec'   : '%c %o %s:p',
+        \}
+  let g:quickrun_config['vim/watchdogs_checker'] = {
+        \ 'type': 'watchdogs_checker/vint',
+        \}
+endif
+call watchdogs#setup(g:quickrun_config)
+'''
+
+[[plugins]]
+repo = 'KazuakiM/vim-qfstatusline'
+depends = 'shabadou.vim'
+hook_add = '''
+let g:Qfstatusline#UpdateCmd = function('lightline#update')
+'''
 
 [[plugins]]
 repo = 'osyo-manga/shabadou.vim'
 
 [[plugins]]
-repo = 'fuenor/qfixgrep'
-
-[[plugins]]
-repo = 'ynkdir/vim-vimlparser'
-
-
-# Fundemental -----------------------------------------------------------------
-[[plugins]]
-repo = 'sudo.vim'
-on_path = 'sudo:*'
-hook_add = 'cnoreabbrev w!! :w sudo:%'
-
-[[plugins]]
 repo = 'cohama/vim-hier'
-
-[[plugins]]
-repo = 'thinca/vim-template'
-hook_add = '''
-  function! s:template_call() abort
-    " evaluate {CODE} in <%={CODE}=> and replace
-    silent %s/<%=\(.\{-}\)%>/\=eval(submatch(1))/ge
-    " move the cursor into <+CURSOR+>
-    if search('<+CURSOR+>', 'cw')
-      silent execute 'normal! "_da>'
-    endif
-  endfunction
-  augroup my-vim-template
-    autocmd! *
-    autocmd User plugin-template-loaded call s:template_call()
-  augroup END
-'''
-
-[[plugins]]
-repo = 'lambdalisue/vim-diffa'
-hook_add = 'nmap <C-l> <Plug>(diffa-C-l)'
-
-[[plugins]]
-repo = 'powerman/vim-plugin-AnsiEsc'
-on_cmd = 'AnsiEsc'
-
-[[plugins]]
-repo = 'osyo-manga/vim-over'
-on_cmd = [
-    'OverCommandLine',
-    'OverCommandLineNoremap',
-]
-hook_add = '''
-  " Use vim-over instead of builtin substitution
-  " http://leafcage.hateblo.jp/entry/2013/11/23/212838
-  cnoreabbrev <silent><expr>s getcmdtype() ==# ':' && getcmdline() =~# '^s'
-        \ ? "OverCommandLine<CR><C-u>%s/<C-r>=get([], getchar(0), '')<CR>"
-        \ : 's'
-  cnoreabbrev <silent><expr>'<,'>s getcmdtype() ==# ':' && getcmdline() =~# "^'<,'>s"
-        \ ? "'<,'>OverCommandLine<CR>s/<C-r>=get([], getchar(0), '')<CR>"
-        \ : "'<,'>s"
-'''
-hook_source = '''
-  let g:over_enable_auto_nohlsearch = 1
-  let g:over_enable_cmd_window = 1
-  let g:over#command_line#search#enable_incsearch = 1
-'''
-
-[[plugins]]
-repo = 'kana/vim-repeat'
-on_map = '<Plug>'
-hook_add = '''
-  nmap .     <Plug>(repeat-.)
-  nmap u     <Plug>(repeat-u)
-  nmap U     <Plug>(repeat-U)
-  nmap <C-r> <Plug>(repeat-<C-r>)
-  nmap g-    <Plug>(repeat-g-)
-  nmap g+    <Plug>(repeat-g+)
-'''
 
 [[plugins]]
 repo = 't9md/vim-quickhl'
@@ -127,252 +469,7 @@ on_map = [
 hook_add = 'map H <Plug>(operator-quickhl-manual-this-motion)'
 
 [[plugins]]
-repo = 'tyru/open-browser.vim'
-normalized_name='openbrowser'
-on_map = '<Plug>'
-hook_add = '''
-  let g:netrw_nogx = 1 " disable netrw's gx mapping
-  nmap gx <Plug>(openbrowser-smart-search)
-  vmap gx <Plug>(openbrowser-smart-search)
-'''
-
-[[plugins]]
-repo = 'lambdalisue/vim-fullscreen'
-on_map = '<Plug>'
-hook_add = 'nmap <C-CR> <Plug>(fullscreen-toggle)'
-
-#[[plugins]]
-#repo = 'haya14busa/incsearch.vim'
-#on_map = '<Plug>'
-#hook_add = '''
-#  map / <Plug>(incsearch-forward)
-#  map ? <Plug>(incsearch-backward)
-#  map g/ <Plug>(incsearch-stay)
-#  map n <Plug>(incsearch-nohl-n)
-#  map N <Plug>(incsearch-nohl-N)
-#
-#  map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)
-#  map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
-#  map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
-#  map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
-#  map z*  <Plug>(incsearch-nohl)<Plug>(asterisk-z*)
-#  map gz* <Plug>(incsearch-nohl)<Plug>(asterisk-gz*)
-#  map z#  <Plug>(incsearch-nohl)<Plug>(asterisk-z#)
-#  map gz# <Plug>(incsearch-nohl)<Plug>(asterisk-gz#)
-#'''
-#hook_source = 'let g:incsearch#auto_nohlsearch = 1'
-
-[[plugins]]
-repo = 'haya14busa/vim-asterisk'
-on_map = '<Plug>'
-hook_add = '''
-  map *   <Plug>(asterisk-*)
-  map #   <Plug>(asterisk-#)
-  map g*  <Plug>(asterisk-g*)
-  map g#  <Plug>(asterisk-g#)
-  map z*  <Plug>(asterisk-z*)
-  map gz* <Plug>(asterisk-gz*)
-  map z#  <Plug>(asterisk-z#)
-  map gz# <Plug>(asterisk-gz#)
-'''
-
-[[plugins]]
-repo = 'LeafCage/yankround.vim'
-on_map = '<Plug>'
-hook_add = '''
-  nmap p     <Plug>(yankround-p)
-  nmap P     <Plug>(yankround-P)
-  nmap gp    <Plug>(yankround-gp)
-  nmap gP    <Plug>(yankround-gP)
-  nmap <expr><C-k> yankround#is_active()
-        \ ? "\<Plug>(yankround-prev)"
-        \ : "\<C-k>"
-  nmap <expr><C-j> yankround#is_active()
-        \ ? "\<Plug>(yankround-next)"
-        \ : "\<C-j>"
-'''
-hook_source = 'let g:yankround_use_region_hl = 0'
-
-[[plugins]]
-repo = 'tyru/capture.vim'
-on_cmd = 'Capture'
-
-[[plugins]]
-repo = 'MattesGroeger/vim-bookmarks'
-depends = 'unite.vim'
-on_map = '<Plug>'
-on_source = 'unite.vim'
-hook_add = '''
-  nnoremap <Plug>(my-bookmark) <Nop>
-  nmap M <Plug>(my-bookmark)
-  vmap M <Plug>(my-bookmark)
-  nmap <Plug>(my-bookmark)m <Plug>BookmarkToggle
-  nmap <Plug>(my-bookmark)i <Plug>BookmarkAnnotate
-  vmap <Plug>(my-bookmark)m <Plug>BookmarkToggle
-  vmap <Plug>(my-bookmark)i <Plug>BookmarkAnnotate
-  nmap <Plug>(my-bookmark)n <Plug>BookmarkNext
-  nmap <Plug>(my-bookmark)p <Plug>BookmarkPrev
-  nmap <Plug>(my-bookmark)a <Plug>BookmarkShowAll
-  nmap <Plug>(my-bookmark)c <Plug>BookmarkClear
-  nmap <Plug>(my-bookmark)x <Plug>BookmarkClearAll
-
-  nmap ]m <Plug>BookmarkNext
-  nmap [m <Plug>BookmarkPrev
-'''
-hook_source = '''
-  let g:bookmark_auto_save = 1
-  let g:bookmark_save_per_working_dir = 1
-  let g:bookmark_highlight_lines = 0
-  " use 'long' converter to show actual file path
-  call unite#custom_source(
-        \ 'vim_bookmarks',
-        \ 'converters',
-        \ 'converter_vim_bookmarks_long')
-'''
-
-[[plugins]]
-repo = 'thinca/vim-quickrun'
-on_map = '<Plug>'
-on_cmd = 'QuickRun'
-hook_add = 'nmap <LocalLeader>r <Plug>(quickrun)'
-hook_source = '''
-  let g:quickrun_config = get(g:, 'quickrun_config', {})
-  let g:quickrun_config['_'] = {
-        \ 'runner' : 'vimproc',
-        \ 'outputter/buffer/split': ':botright 8sp',
-        \ 'outputter/buffer/close_on_empty': 1,
-        \ 'hook/time/enable': 1,
-        \}
-  let g:quickrun_config['pyrex'] = {
-        \ 'command': 'cython',
-        \}
-  " Terminate the quickrun with <C-c>
-  nnoremap <expr><silent> <C-c> quickrun#is_running()
-        \ ? quickrun#sweep_sessions() : "\<C-c>"
-'''
-
-[[plugins]]
-repo = 'thinca/vim-qfreplace'
-on_source = ['unite.vim', 'vimfiler.vim']
-on_cmd = 'Qfreplace'
-
-[[plugins]]
-repo = 'AndrewRadev/switch.vim'
-on_cmd = 'Switch'
-hook_add = 'nmap \ :<C-u>Switch<CR>'
-
-[[plugins]]
-repo = 'AndrewRadev/linediff.vim'
-on_cmd = 'Linediff'
-
-[[plugins]]
-repo = 'kurkale6ka/vim-swap'
-on_map = '<Plug>'
-hook_add = '''
-  nnoremap <Plug>(my-swap) <Nop>
-  vnoremap <Plug>(my-swap) <Nop>
-  nmap ~ <Plug>(my-swap)
-  vmap ~ <Plug>(my-swap)
-  vmap <Plug>(my-swap)~  <Plug>SwapSwapOperands
-  vmap <Plug>(my-swap)-  <Plug>SwapSwapPivotOperands
-  nmap <Plug>(my-swap)~  <Plug>SwapSwapWithR_WORD
-  nmap <Plug>(my-swap)-  <Plug>SwapSwapWithL_WORD
-'''
-hook_source = 'let g:swap_enable_default_keymaps = 0'
-
-[[plugins]]
-repo = 'lambdalisue/vim-pager'
-on_cmd = 'PAGER'
-
-[[plugins]]
-repo = 'lambdalisue/vim-manpager'
-on_cmd = ['MANPAGER', 'Man']
-
-[[plugins]]
-repo = 't9md/vim-choosewin'
-on_map = '<Plug>'
-hook_add = 'nmap <C-w><C-w> <Plug>(choosewin)'
-
-[[plugins]]
-repo = 'lambdalisue/vim-findent'
-on_cmd = 'Findent'
-hook_source = '''
-  augroup findent
-    autocmd!
-    autocmd FileType json,javascript    Findent --no-warnings
-    autocmd FileType typescript         Findent --no-warnings
-    autocmd FileType coffeescript       Findent --no-warnings
-    autocmd FileType css,scss,sass,less Findent --no-warnings
-    autocmd FileType xml,html           Findent --no-warnings
-    autocmd FileType perl,python,ruby   Findent --no-warnings
-  augroup END
-'''
-
-[[plugins]]
-repo = 'osyo-manga/vim-trip'
-on_map = '<Plug>'
-hook_add = '''
-  nmap <C-a> <Plug>(trip-increment)
-  nmap <C-x> <Plug>(trip-decrement)
-'''
-
-[[plugins]]
-repo = 'kana/vim-altr'
-on_map = '<Plug>'
-hook_add = 'nmap <F2> <Plug>(altr-forward)'
-hook_post_source = '''
-  call altr#define('autoload/%.vim', 'test/%.vimspec', 'plugin/%.vim', 'doc/%.txt')
-  call altr#define('lib/%.pm', 't/%.t', 'template/%.tx')
-'''
-
-[[plugins]]
-repo = 'lambdalisue/vim-foldround'
-on_map = '<Plug>'
-hook_add = '''
-  nmap <C-f>f     <Plug>(foldround-forward)
-  nmap <C-f><C-f> <Plug>(foldround-forward)
-  nmap <C-f>b     <Plug>(foldround-backward)
-  nmap <C-f><C-b> <Plug>(foldround-backward)
-'''
-hook_post_source = '''
-  call foldround#register('\.vim$', [
-        \ 'syntax', 'marker',
-        \])
-  call foldround#register('\.vim/.*\.vim$', [
-        \ 'syntax', 'marker',
-        \])
-  call foldround#register('[./]g\?vimrc$', [
-        \ 'syntax', 'marker',
-        \])
-  call foldround#register('\.pl$', [
-        \ 'syntax',
-        \])
-'''
-
-[[plugins]]
 repo = 'thinca/vim-zenspace'
-
-[[plugins]]
-repo = 'Shougo/junkfile.vim'
-on_cmd = 'JunkfileOpen'
-
-[[plugins]]
-repo = 'lambdalisue/vim-protocol'
-on_path = '\%(^https\?://\|\.zip$\)'
-
-[[plugins]]
-repo = 'rhysd/clever-f.vim'
-on_map = '<Plug>'
-hook_add = '''
-  map f <Plug>(clever-f-f)
-  map F <Plug>(clever-f-F)
-  map T <Plug>(clever-f-T)
-  map t <Plug>(clever-f-t)
-'''
-hook_source = '''
-  let g:clever_f_smart_case = 1
-  let g:clever_f_not_overwrite_standard_mappings = 1
-'''
 
 [[plugins]]
 repo = 'itchyny/vim-parenmatch'
@@ -387,746 +484,173 @@ hook_add = '''
           \   let b:cursorword = 0 |
           \ endif
   augroup END
-  command Cursorword let b:cursorword = !get(b:, 'cursorword', 1)
 '''
 
 [[plugins]]
 repo = 'Konfekt/FastFold'
 
 [[plugins]]
-repo = 'thinca/vim-fontzoom'
+repo = 'osyo-manga/vim-trip'
 on_map = '<Plug>'
 hook_add = '''
-  let g:fontzoom_no_default_key_mappings = 1
-  nmap <C-ScrollWheelUp>   <Plug>(fontzoom-larger)
-  nmap <C-ScrollWheelDown> <Plug>(fontzoom-smaller)
-'''
-
-# Colorscheme -----------------------------------------------------------------
-[[plugins]]
-repo = 'cocopon/iceberg.vim'
-
-[[plugins]]
-repo = 'w0ng/vim-hybrid'
-
-#[[plugins]]
-#repo = 'cocopon/lightline-hybrid.vim'
-
-
-# Statusline ------------------------------------------------------------------
-[[plugins]]
-repo = 'itchyny/lightline.vim'
-depends = 'lightline-hybrid.vim'
-hook_add = '''
-  call vimrc#source_path('$MYVIM_HOME/rc/config/lightline.vim')
+nmap <C-a> <Plug>(trip-increment)
+nmap <C-x> <Plug>(trip-decrement)
 '''
 
 [[plugins]]
-#if = "v:version >= 704"
-repo = 'osyo-manga/vim-watchdogs'
-depends = ['vimproc.vim', 'vim-quickrun']
-hook_post_source = '''
-  let g:watchdogs_check_CursorHold_enable = 0
-  let g:watchdogs_check_BufWritePost_enable = 0
-  let g:watchdogs_check_BufWritePost_enables = {
-        \ 'vim': 1,
-        \ 'zsh': 1,
-        \ 'python': 1,
-        \ 'perl': 1,
-        \ 'javascript': 1,
-        \ 'coffeescript': 1,
-        \}
-  let g:watchdogs_check_BufWritePost_enable_on_wq = 0
-
-  let g:quickrun_config = get(g:, 'quickrun_config', {})
-  let g:quickrun_config = extend(g:quickrun_config, {
-        \ 'watchdogs_checker/_': {
-        \   'runner/vimproc/updatetime': 40,
-        \   'outputter/quickfix/open_cmd': '',
-        \   'hook/qfstatusline_update/enable_exit': 1,
-        \   'hook/qfstatusline_update/priority_exit': 4,
-        \ }
-        \})
-  " use flake8 instead of pyflakes
-  if executable('flake8')
-    let g:quickrun_config['watchdogs_checker/pyflakes'] = {
-        \ 'command': 'flake8',
-        \}
-  endif
-  " use vint as a vimlint
-  if executable('vint')
-    let g:quickrun_config['watchdogs_checker/vint'] = {
-          \ 'command': 'vint',
-          \ 'exec'   : '%c %o %s:p',
-          \}
-    let g:quickrun_config['vim/watchdogs_checker'] = {
-          \ 'type': 'watchdogs_checker/vint',
-          \}
-  endif
-  call watchdogs#setup(g:quickrun_config)
-'''
-
-[[plugins]]
-#if = "v:version >= 704"
-repo = 'KazuakiM/vim-qfstatusline'
-depends = 'shabadou.vim'
-hook_add = '''
-  let g:Qfstatusline#UpdateCmd = function('lightline#update')
-'''
-
-
-# Textobj ---------------------------------------------------------------------
-[[plugins]]
-repo = 'kana/vim-textobj-entire'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-  omap ae <Plug>(textobj-entire-a)
-  omap ie <Plug>(textobj-entire-i)
-  xmap ae <Plug>(textobj-entire-a)
-  xmap ie <Plug>(textobj-entire-i)
-'''
-
-[[plugins]]
-repo = 'kana/vim-textobj-line'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-  omap al <Plug>(textobj-line-a)
-  omap il <Plug>(textobj-line-i)
-  xmap al <Plug>(textobj-line-a)
-  xmap il <Plug>(textobj-line-i)
-'''
-
-[[plugins]]
-repo = 'kana/vim-textobj-syntax'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-  omap ay <Plug>(textobj-syntax-a)
-  omap iy <Plug>(textobj-syntax-i)
-  xmap ay <Plug>(textobj-syntax-a)
-  xmap iy <Plug>(textobj-syntax-i)
-'''
-
-[[plugins]]
-repo = 'kana/vim-textobj-indent'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-  omap ai <Plug>(textobj-indent-a)
-  omap ii <Plug>(textobj-indent-i)
-  xmap ai <Plug>(textobj-indent-a)
-  xmap ii <Plug>(textobj-indent-i)
-  omap aI <Plug>(textobj-indent-same-a)
-  omap iI <Plug>(textobj-indent-same-i)
-  xmap aI <Plug>(textobj-indent-same-a)
-  xmap iI <Plug>(textobj-indent-same-i)
-'''
-
-[[plugins]]
-repo = 'kana/vim-textobj-datetime'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-  omap ada <Plug>(textobj-datetime-auto)
-  omap add <Plug>(textobj-datetime-date)
-  omap adf <Plug>(textobj-datetime-full)
-  omap adt <Plug>(textobj-datetime-time)
-  omap adz <Plug>(textobj-datetime-tz)
-  omap ida <Plug>(textobj-datetime-auto)
-  omap idd <Plug>(textobj-datetime-date)
-  omap idf <Plug>(textobj-datetime-full)
-  omap idt <Plug>(textobj-datetime-time)
-  omap idz <Plug>(textobj-datetime-tz)
-  xmap ada <Plug>(textobj-datetime-auto)
-  xmap add <Plug>(textobj-datetime-date)
-  xmap adf <Plug>(textobj-datetime-full)
-  xmap adt <Plug>(textobj-datetime-time)
-  xmap adz <Plug>(textobj-datetime-tz)
-  xmap ida <Plug>(textobj-datetime-auto)
-  xmap idd <Plug>(textobj-datetime-date)
-  xmap idf <Plug>(textobj-datetime-full)
-  xmap idt <Plug>(textobj-datetime-time)
-  xmap idz <Plug>(textobj-datetime-tz)
-'''
-
-[[plugins]]
-repo = 'thinca/vim-textobj-comment'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-  omap ac <Plug>(textobj-comment-a)
-  omap ic <Plug>(textobj-comment-i)
-  xmap ac <Plug>(textobj-comment-a)
-  xmap ic <Plug>(textobj-comment-i)
-'''
-
-[[plugins]]
-repo = 'saihoooooooo/vim-textobj-space'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-  omap aS <Plug>(textobj-space-a)
-  omap iS <Plug>(textobj-space-i)
-  xmap aS <Plug>(textobj-space-a)
-  xmap iS <Plug>(textobj-space-i)
-'''
-
-[[plugins]]
-repo = 'kana/vim-textobj-fold'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-  omap az <Plug>(textobj-fold-a)
-  omap iz <Plug>(textobj-fold-i)
-  xmap az <Plug>(textobj-fold-a)
-  xmap iz <Plug>(textobj-fold-i)
-'''
-
-[[plugins]]
-repo = 'kana/vim-textobj-underscore'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-  " NOTE:
-  " Checkout tyru version!
-  omap a_ <Plug>(textobj-underscore-a)
-  omap i_ <Plug>(textobj-underscore-i)
-  xmap a_ <Plug>(textobj-underscore-a)
-  xmap i_ <Plug>(textobj-underscore-i)
-'''
-
-[[plugins]]
-repo = 'RyanMcG/vim-textobj-dash'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-  " NOTE:
-  " Send PR to add document
-  omap a- <Plug>(textobj-dash-a)
-  omap i- <Plug>(textobj-dash-i)
-  xmap a- <Plug>(textobj-dash-a)
-  xmap i- <Plug>(textobj-dash-i)
-'''
-
-[[plugins]]
-repo = 'mattn/vim-textobj-url'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-  " NOTE:
-  " Send PR to add document
-  omap au <Plug>(textobj-url-a)
-  omap iu <Plug>(textobj-url-i)
-  xmap au <Plug>(textobj-url-a)
-  xmap iu <Plug>(textobj-url-i)
-'''
-
-[[plugins]]
-repo = 'sgur/vim-textobj-parameter'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-  " NOTE:
-  " Send PR to add document
-  omap aP <Plug>(textobj-parameter-a)
-  omap iP <Plug>(textobj-parameter-i)
-  xmap aP <Plug>(textobj-parameter-a)
-  xmap iP <Plug>(textobj-parameter-i)
-'''
-
-[[plugins]]
-repo = 'osyo-manga/vim-textobj-multiblock'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-  omap ab <Plug>(textobj-multiblock-a)
-  omap ib <Plug>(textobj-multiblock-i)
-  xmap ab <Plug>(textobj-multiblock-a)
-  xmap ib <Plug>(textobj-multiblock-i)
-'''
-
-[[plugins]]
-repo = 'rhysd/vim-textobj-word-column'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-  " NOTE:
-  " Send PR about <Plug> mapping?
-  omap av <Plug>(textobj-word-column-a)
-  omap iv <Plug>(textobj-word-column-i)
-  xmap av <Plug>(textobj-word-column-a)
-  xmap iv <Plug>(textobj-word-column-i)
-
-  omap aV <Plug>(textobj-word-column-A)
-  omap iV <Plug>(textobj-word-column-I)
-  xmap aV <Plug>(textobj-word-column-A)
-  xmap iV <Plug>(textobj-word-column-I)
-'''
-
-[[plugins]]
-#if = "executable('python')"
-repo = 'bps/vim-textobj-python'
-depends = 'vim-textobj-user'
-#on_ft = ['python', 'python3']
-hook_add = '''
-    function! s:textobj_python_settings() abort
-      xmap <buffer> aF <Plug>(textobj-python-function-a)
-      omap <buffer> iF <Plug>(textobj-python-function-i)
-      xmap <buffer> aC <Plug>(textobj-python-class-a)
-      omap <buffer> iC <Plug>(textobj-python-class-i)
-    endfunction
-    augroup my-vim-textobj-python
-      autocmd! *
-      autocmd FileType python call s:textobj_python_settings()
-    augroup END
-'''
-
-
-# Operator --------------------------------------------------------------------
-[[plugins]]
-repo = 'kana/vim-operator-replace'
-depends = 'vim-operator-user'
-on_map = [['nx', '<Plug>']]
-hook_add = '''
-  nmap R <Plug>(operator-replace)
-  xmap R <Plug>(operator-replace)
-'''
-
-[[plugins]]
-repo = 'sgur/vim-operator-openbrowser'
-depends = 'vim-operator-user'
-on_map = [['nx', '<Plug>']]
-hook_add = '''
-  nmap -o <Plug>(operator-openbrowser)
-  xmap -o <Plug>(operator-openbrowser)
-'''
-
-[[plugins]]
-repo = 'rhysd/vim-operator-trailingspace-killer'
-depends = 'vim-operator-user'
-on_map = [['nx', '<Plug>']]
-hook_add = '''
-  nmap -k <Plug>(operator-trailingspace-killer)
-  xmap -k <Plug>(operator-trailingspace-killer)
-'''
-
-[[plugins]]
-repo = 'machakann/vim-sandwich'
-depends = 'vim-operator-user'
-on_map = [
-    ['nox', '<Plug>(operator-sandwich'],
-    ['nox', '<Plug>(textobj-sandwich'],
-]
-hook_add = '''
-  let g:operator_sandwich_no_default_key_mappings = 1
-
-  nmap sd <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
-  nmap sr <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
-  nmap sdb <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
-  nmap srb <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
-
-  omap ib <Plug>(textobj-sandwich-auto-i)
-  xmap ib <Plug>(textobj-sandwich-auto-i)
-  omap ab <Plug>(textobj-sandwich-auto-a)
-  xmap ab <Plug>(textobj-sandwich-auto-a)
-
-  omap is <Plug>(textobj-sandwich-query-i)
-  xmap is <Plug>(textobj-sandwich-query-i)
-  omap as <Plug>(textobj-sandwich-query-a)
-  xmap as <Plug>(textobj-sandwich-query-a)
-
-  nmap sa <Plug>(operator-sandwich-add)
-  xmap sa <Plug>(operator-sandwich-add)
-  xmap sd <Plug>(operator-sandwich-delete)
-  xmap sr <Plug>(operator-sandwich-replace)
-'''
-
-[[plugins]]
-repo = 'lambdalisue/vim-operator-breakline'
-depends = 'vim-operator-user'
-on_map = [['nx', '<Plug>']]
-hook_add = '''
-  nmap -b <Plug>(operator-breakline-manual)
-  nmap -B <Plug>(operator-breakline-textwidth)
-  xmap -b <Plug>(operator-breakline-manual)
-  xmap -B <Plug>(operator-breakline-textwidth)
-'''
-
-[[plugins]]
-repo = 'chikatoike/concealedyank.vim'
-depends = 'vim-operator-user'
-on_map = [['nx', '<Plug>(operator-concealedyank)']]
-hook_add = '''
-  nmap Y <Plug>(operator-concealedyank)
-  xmap Y <Plug>(operator-concealedyank)
-'''
-
-
-# Interface -------------------------------------------------------------------
-[[plugins]]
-repo = 'ctrlpvim/ctrlp.vim'
-lazy = 1
-hook_source = '''
-  let g:ctrlp_map = '<Nop>'
-  let g:ctrlp_cmd = 'CtrlP'
-  " Guess VCS root directory as well
-  let g:ctrlp_working_path_mode = 'ra'
-'''
-
-[[plugins]]
-repo = 'Shougo/unite.vim'
-on_cmd = [
-    'Unite',
-    'UniteWithCursorWord',
-    'UniteBookmarkAdd',
-]
-hook_add = '''
-  nnoremap <Plug>(my-unite) <Nop>
-  nmap <Space> <Plug>(my-unite)
-  vmap <Space> <Plug>(my-unite)
-
-  nnoremap <silent> <Plug>(my-unite)<Space>
-        \ :<C-u>UniteResume -no-start-insert<CR>
-  nnoremap <silent> <Plug>(my-unite)w
-        \ :<C-u>Unite buffer<CR>
-  nnoremap <silent> <Plug>(my-unite)k
-        \ :<C-u>Unite bookmark<CR>
-  nnoremap <silent> <Plug>(my-unite)l :<C-u>Unite line
-        \ -buffer-name=search<CR>
-  nnoremap <silent> <Plug>(my-unite)h :<C-u>Unite help
-        \ -buffer-name=search<CR>
-  nnoremap <silent> <Plug>(my-unite)mp
-        \ :<C-u>Unite map
-        \ -buffer-name=search<CR>
-  vnoremap <silent> <Plug>(my-unite)l
-        \ :<C-u>UniteWithCursorWord line
-        \ -buffer-name=search<CR>
-  vnoremap <silent> <Plug>(my-unite)h
-        \ :<C-u>UniteWithCursorWord help
-        \ -buffer-name=search<CR>
-
-  " unite-menu
-  nnoremap <silent> <Plug>(my-unite)s
-        \ :<C-u>Unite menu:shortcut<CR>
-
-  " unite-file
-  nnoremap <Plug>(my-unite-file) <Nop>
-  nmap <Plug>(my-unite)f <Plug>(my-unite-file)
-  nnoremap <silent> <Plug>(my-unite-file)f
-        \ :<C-u>call <SID>unite_smart_file()<CR>
-  nnoremap <silent> <Plug>(my-unite-file)i
-        \ :<C-u>Unite file<CR>
-  nnoremap <silent> <Plug>(my-unite-file)m
-        \ :<C-u>Unite file_mru<CR>
-  nnoremap <silent> <Plug>(my-unite-file)r
-        \ :<C-u>Unite file_rec/async<CR>
-  nnoremap <silent> <Plug>(my-unite-file)g
-        \ :<C-u>Unite file_rec/git<CR>
-  function! s:unite_smart_file()
-    if s:is_git_available()
-      Unite file_rec/git
-    else
-      Unite file_rec/async
-    endif
-  endfunction
-
-  " unite-directory
-  nnoremap <Plug>(my-unite-directory) <Nop>
-  nmap <Plug>(my-unite)d <Plug>(my-unite-directory)
-  nnoremap <silent> <Plug>(my-unite-directory)d
-        \ :<C-u>Unite directory_rec/async<CR>
-  nnoremap <silent> <Plug>(my-unite-directory)i
-        \ :<C-u>Unite directory<CR>
-  nnoremap <silent> <Plug>(my-unite-directory)m
-        \ :<C-u>Unite directory_mru<CR>
-  nnoremap <silent> <Plug>(my-unite-directory)r
-        \ :<C-u>Unite directory_rec/async<CR>
-
-  " unite-qf
-  nnoremap <Plug>(my-unite-qf) <Nop>
-  nmap <Plug>(my-unite)q <Plug>(my-unite-qf)
-  nnoremap <silent> <Plug>(my-unite-qf)q
-        \ :<C-u>Unite quickfix location_list
-        \ -buffer-name=search<CR>
-  nnoremap <silent> <Plug>(my-unite-qf)f
-        \ :<C-u>Unite quickfix
-        \ -buffer-name=search<CR>
-  nnoremap <silent> <Plug>(my-unite-qf)l
-        \ :<C-u>Unite location_list
-        \ -buffer-name=search<CR>
-
-  " unite-grep
-  nnoremap <Plug>(my-unite-grep) <Nop>
-  nmap <Plug>(my-unite)g <Plug>(my-unite-grep)
-  vmap <Plug>(my-unite)g <Plug>(my-unite-grep)
-  nnoremap <silent> <Plug>(my-unite-grep)*
-        \ :<C-u>UniteWithCursorWord grep:.
-        \ -buffer-name=search
-        \ -no-empty<CR>
-  vnoremap <silent> <Plug>(my-unite-grep)*
-        \ :UniteWithCursorWord grep:.
-        \ -buffer-name=search
-        \ -no-empty<CR>
-  nnoremap <silent> <Plug>(my-unite-grep)g
-        \ :<C-u>Unite grep:.
-        \ -buffer-name=search
-        \ -no-empty<CR>
-  vnoremap <silent> <Plug>(my-unite-grep)g
-        \ :Unite grep:.
-        \ -buffer-name=search
-        \ -no-empty<CR>
-  nnoremap <silent> <Plug>(my-unite-grep)i
-        \ :<C-u>Unite grep/git:/
-        \ -buffer-name=search
-        \ -no-empty<CR>
-  vnoremap <silent> <Plug>(my-unite-grep)i
-        \ :Unite grep/git:/
-        \ -buffer-name=search
-        \ -no-empty<CR>
-
-  " unite-git
-  nnoremap <Plug>(my-unite-git) <Nop>
-  nmap <Plug>(my-unite)i <Plug>(my-unite-git)
-  nnoremap <silent> <Plug>(my-unite-git)i
-        \ :<C-u>Unite giti/branch_recent<CR>
-  nnoremap <silent> <Plug>(my-unite-git)b
-        \ :<C-u>Unite giti/branch_recent giti/branch_all<CR>
-  nnoremap <silent> <Plug>(my-unite-git)r
-        \ :<C-u>Unite giti/remote<CR>
-
-  " unite-gista
-  nnoremap <silent> <Plug>(my-unite-git)t
-        \ :<C-u>Unite gista:lambdalisue<CR>
-
-  " unite-ref
-  nnoremap <Plug>(my-unite-ref) <Nop>
-  nmap <Plug>(my-unite)r <Plug>(my-unite-ref)
-  nnoremap <silent> <Plug>(my-unite-ref)r
-              \ :<C-u>call <SID>unite_smart_ref()<CR>
-  nnoremap <silent> <Plug>(my-unite-ref)p
-              \ :<C-u>Unite ref/pydoc<CR>
-  nnoremap <silent> <Plug>(my-unite-ref)l
-              \ :<C-u>Unite perldoc<CR>
-  nnoremap <silent> <Plug>(my-unite-ref)m
-              \ :<C-u>Unite ref/man<CR>
-  nnoremap <silent> <Plug>(my-unite-ref)j
-              \ :<C-u>Unite ref/javascript<CR>
-  nnoremap <silent> <Plug>(my-unite-ref)q
-              \ :<C-u>Unite ref/jquery<CR>
-  nnoremap <silent> <Plug>(my-unite-ref)k
-              \ :<C-u>Unite ref/kotobank<CR>
-  nnoremap <silent> <Plug>(my-unite-ref)w
-              \ :<C-u>Unite ref/wikipedia<CR>
-  function! s:unite_smart_ref()
-    if &filetype =~# 'perl'
-      Unite perldoc
-    elseif &filetype =~# 'python'
-      Unite ref/pydoc
-    elseif &filetype =~# 'ruby'
-      Unite ref/refe
-    elseif &filetype =~# 'javascript'
-      Unite ref/javascript
-    elseif &filetype =~# 'vim'
-      Unite help
-    else
-      Unite ref/man
-    endif
-  endfunction
-
-  " unite-linephrase
-  nnoremap <silent> <Plug>(my-unite)p
-        \ :<C-u>Unite linephrase
-        \ -no-quit -keep-focus -no-start-insert
-        \ -buffer-name=search<CR>
-
-  " unite-outline
-  nnoremap <silent> <Leader>o
-        \ :<C-u>Unite outline
-        \ -no-quit -keep-focus -no-start-insert
-        \ -vertical -direction=botright -winwidth=30<CR>
-
-  " vim-bookmarks
-  nnoremap <silent> <Plug>(my-unite)mm
-        \ :<C-u>Unite vim_bookmarks
-        \ -no-quit -keep-focus -no-start-insert
-        \ -buffer-name=search<CR>
-
-'''
-hook_source = '''
-  call vimrc#source_path('$MYVIM_HOME/rc/config/unite.vim')
-'''
-
-[[plugins]]
-repo = 'Shougo/vimshell.vim'
-on_cmd = [
-    'VimShell',
-    'VimShellTab',
-    'VimShellPop',
-]
-hook_source = '''
-  call vimrc#source_path('$MYVIM_HOME/rc/config/vimshell.vim')
-'''
-hook_post_source = '''
-  highlight! vimshellError gui=NONE cterm=NONE guifg='#cc6666' ctermfg=9
-'''
-
-[[plugins]]
-repo = 'Shougo/vimfiler.vim'
-depends = 'unite.vim'
-on_cmd = [
-    'VimFiler',
-    'VimFilerExplorer',
-]
-on_path = '\h\w*:'
-hook_add = '''
-  nnoremap <Plug>(my-vimfiler) <Nop>
-  nmap <Leader>e <Plug>(my-vimfiler)
-  nnoremap <silent> <Plug>(my-vimfiler)e :<C-u>VimFilerExplorer<CR>
-  nnoremap <silent> <Plug>(my-vimfiler)E :<C-u>VimFiler<CR>
-'''
-hook_source = '''
-  call vimrc#source_path('$MYVIM_HOME/rc/config/vimfiler.vim')
-'''
-
-[[plugins]]
-repo = 'mbbill/undotree'
-on_cmd = 'UndotreeToggle'
-hook_add = '''
-  nnoremap <Plug>(my-undotree) <Nop>
-  nmap <Leader>u <Plug>(my-undotree)
-  nnoremap <silent> <Plug>(my-undotree) :<C-u>UndotreeToggle<CR>
-'''
-
-[[plugins]]
-repo = 'thinca/vim-ref'
-on_cmd = 'Ref'
-hook_add = '''
-  let g:ref_open = 'vsplit'
-  function! s:ref_configure() abort
-    nmap <buffer><silent> <C-p> <Plug>(ref-back)
-    nmap <buffer><silent> <C-n> <Plug>(ref-forward)
-  endfunction
-  augroup my-vim-ref
-    autocmd! *
-    autocmd FileType ref call s:ref_configure()
-  augroup END
-'''
-
-[[plugins]]
-repo = 'mojako/ref-sources.vim'
-#on_source = 'vim-ref'
-hook_source = '''
-  let g:ref_jquery_doc_path     = expand('$MYVIM_HOME/bundle/jqapi')
-  let g:ref_javascript_doc_path = expand('$MYVIM_HOME/bundle/jsref/htdocs')
-  let g:ref_auto_resize = 1
-  let g:ref_wikipedia_lang = ['ja', 'en']
-'''
-
-[[plugins]]
-repo = 'majutsushi/tagbar'
-on_cmd = [
-    'Tagbar',
-    'TagbarOpen',
-    'TagbarToggle',
-]
-hook_add = '''
-  nnoremap <Plug>(my-tagbar) <Nop>
-  nmap <Leader>t <Plug>(my-tagbar)
-  nnoremap <silent> <Plug>(my-tagbar) :<C-u>TagbarToggle<CR>
-'''
-
-[[plugins]]
-repo = 'glidenote/memolist.vim'
-depends = ['unite.vim', 'qfixgrep']
-on_cmd = [
-    'MemoNew',
-    'MemoList',
-    'MemoGrep',
-]
-hook_add = '''
-  nnoremap <Plug>(my-memolist) <Nop>
-  nmap <Leader>m <Plug>(my-memolist)
-  nnoremap <silent> <Plug>(my-memolist)m :<C-u>MemoList<CR>
-  nnoremap <silent> <Plug>(my-memolist)n :<C-u>MemoNew<CR>
-  nnoremap <silent> <Plug>(my-memolist)g :<C-u>MemoGrep<CR>
-'''
-hook_source = '''
-  let g:memolist_qfixgrep = 1
-  let g:memolist_path = expand('~/Dropbox/Apps/Byword/')
-  let g:memolist_unite = 1
-  let g:memolist_unite_option = '-no-start-insert'
-'''
-
-[[plugins]]
-repo = 'godlygeek/tabular'
-on_cmd = 'Tabularize'
-
-[[plugins]]
-repo = 'deris/vim-rengbang'
-on_cmd = [
-    'RengBang',
-    'RengBangUsePrev',
-    'RengBangConfirm',
-]
-hook_add = '''
-  nnoremap <Plug>(my-rengbang) <Nop>
-  vmap <C-a> <Plug>(my-rengbang)
-  vnoremap <Plug>(my-rengbang)a :<C-u>'<,'>RengBang<CR>
-  vnoremap <Plug>(my-rengbang)A :<C-u>'<,'>RengBangUsePrev<CR>
-  vnoremap <Plug>(my-rengbang)c :<C-u>'<,'>RengBangConfirm<CR>
-  map <Plug>(my-operator)rr <Plug>(operator-rengbang)
-  map <Plug>(my-operator)rR <Plug>(operator-rengbang-useprev)
-'''
-hook_source = '''
-  let g:rengbang_default_pattern  = '\(\d\+\)'
-  let g:rengbang_default_start    = 0
-  let g:rengbang_default_step     = 1
-  let g:rengbang_default_usefirst = 0
-  let g:rengbang_default_confirm_sequence = [
-        \ 'pattern',
-        \ 'start',
-        \ 'step',
-        \ 'usefirst',
-        \ 'format',
-        \]
-'''
-
-[[plugins]]
-# Note:
-#   This plugin is quite heavy and it add BufEnter autocmd to visualize
-#   color thus should not be autoloaded with filetype or so on.
-repo = 'lilydjwg/colorizer'
+repo = 'kana/vim-repeat'
 on_map = '<Plug>'
-on_cmd = [
-    'ColorHighlight',
-    'ColorToggle',
-]
-hook_source = 'let g:colorizer_nomap = 1'
+hook_add = '''
+nmap .     <Plug>(repeat-.)
+nmap u     <Plug>(repeat-u)
+nmap U     <Plug>(repeat-U)
+nmap <C-r> <Plug>(repeat-<C-r>)
+nmap g-    <Plug>(repeat-g-)
+nmap g+    <Plug>(repeat-g+)
+'''
 
 [[plugins]]
-repo = 'itchyny/calendar.vim'
-on_cmd = 'Calendar'
+repo = 'haya14busa/vim-asterisk'
+on_map = '<Plug>'
 hook_add = '''
-  nnoremap <Plug>(my-calendar) <Nop>
-  nmap <Leader>c <Plug>(my-calendar)
-  nnoremap <silent> <Plug>(my-calendar)c :<C-u>Calendar<CR>
-  nnoremap <silent> <Plug>(my-calendar)t :<C-u>Calendar -view=clock<CR>
+map *   <Plug>(asterisk-*)
+map #   <Plug>(asterisk-#)
+map g*  <Plug>(asterisk-g*)
+map g#  <Plug>(asterisk-g#)
+map z*  <Plug>(asterisk-z*)
+map gz* <Plug>(asterisk-gz*)
+map z#  <Plug>(asterisk-z#)
+map gz# <Plug>(asterisk-gz#)
+'''
+
+[[plugins]]
+repo = 'LeafCage/yankround.vim'
+on_map = '<Plug>'
+hook_add = '''
+nmap p     <Plug>(yankround-p)
+nmap P     <Plug>(yankround-P)
+nmap gp    <Plug>(yankround-gp)
+nmap gP    <Plug>(yankround-gP)
+nmap <expr><C-k> yankround#is_active()
+      \ ? "\<Plug>(yankround-prev)"
+      \ : "\<C-k>"
+nmap <expr><C-j> yankround#is_active()
+      \ ? "\<Plug>(yankround-next)"
+      \ : "\<C-j>"
+'''
+hook_source = 'let g:yankround_use_region_hl = 0'
+
+[[plugins]]
+repo = 'osyo-manga/vim-over'
+on_cmd = [
+  'OverCommandLine',
+  'OverCommandLineNoremap',
+]
+hook_add = '''
+" Use vim-over instead of builtin substitution
+" http://leafcage.hateblo.jp/entry/2013/11/23/212838
+cnoreabbrev <silent><expr>s getcmdtype() ==# ':' && getcmdline() =~# '^s'
+      \ ? "OverCommandLine<CR><C-u>%s/<C-r>=get([], getchar(0), '')<CR>"
+      \ : 's'
+cnoreabbrev <silent><expr>'<,'>s getcmdtype() ==# ':' && getcmdline() =~# "^'<,'>s"
+      \ ? "'<,'>OverCommandLine<CR>s/<C-r>=get([], getchar(0), '')<CR>"
+      \ : "'<,'>s"
 '''
 hook_source = '''
-  let g:calendar_frame = 'default'
-  let g:calendar_google_calendar = 1
-  let g:calendar_google_task = 1
+let g:over_enable_auto_nohlsearch = 1
+let g:over_enable_cmd_window = 1
+let g:over#command_line#search#enable_incsearch = 1
 '''
 
+[[plugins]]
+repo = 'AndrewRadev/switch.vim'
+on_cmd = 'Switch'
+hook_add = 'nmap \ :<C-u>Switch<CR>'
 
-# Unite sources ---------------------------------------------------------------
+[[plugins]]
+repo = 'AndrewRadev/linediff.vim'
+on_cmd = 'Linediff'
+
+[[plugins]]
+repo = 'kurkale6ka/vim-swap'
+on_map = '<Plug>'
+hook_add = '''
+nnoremap <Plug>(my-swap) <Nop>
+vnoremap <Plug>(my-swap) <Nop>
+nmap ~ <Plug>(my-swap)
+vmap ~ <Plug>(my-swap)
+vmap <Plug>(my-swap)~ <Plug>SwapSwapOperands
+vmap <Plug>(my-swap)- <Plug>SwapSwapPivotOperands
+nmap <Plug>(my-swap)~ <Plug>SwapSwapWithR_WORD
+nmap <Plug>(my-swap)- <Plug>SwapSwapWithL_WORD
+'''
+hook_source = 'let g:swap_enable_default_keymaps = 0'
+
+[[plugins]]
+repo = 'MattesGroeger/vim-bookmarks'
+on_map = '<Plug>'
+on_source = 'unite.vim'
+hook_add = '''
+nnoremap <Plug>(my-bookmark) <Nop>
+nmap M <Plug>(my-bookmark)
+vmap M <Plug>(my-bookmark)
+nmap <Plug>(my-bookmark)m <Plug>BookmarkToggle
+nmap <Plug>(my-bookmark)i <Plug>BookmarkAnnotate
+vmap <Plug>(my-bookmark)m <Plug>BookmarkToggle
+vmap <Plug>(my-bookmark)i <Plug>BookmarkAnnotate
+nmap <Plug>(my-bookmark)a <Plug>BookmarkShowAll
+nmap <Plug>(my-bookmark)c <Plug>BookmarkClear
+nmap <Plug>(my-bookmark)x <Plug>BookmarkClearAll
+nmap ]m <Plug>BookmarkNext
+nmap [m <Plug>BookmarkPrev
+'''
+hook_source = '''
+let g:bookmark_no_default_keymappings = 1
+'''
+
+[[plugins]]
+repo = 't9md/vim-choosewin'
+on_map = '<Plug>'
+hook_add = 'nmap <C-w><C-w> <Plug>(choosewin)'
+
+[[plugins]]
+repo = 'lambdalisue/vim-findent'
+on_cmd = 'Findent'
+hook_source = '''
+autocmd MyAutoCmd FileType json,javascript    Findent --no-warnings
+autocmd MyAutoCmd FileType typescript         Findent --no-warnings
+autocmd MyAutoCmd FileType coffeescript       Findent --no-warnings
+autocmd MyAutoCmd FileType css,scss,sass,less Findent --no-warnings
+autocmd MyAutoCmd FileType xml,html           Findent --no-warnings
+autocmd MyAutoCmd FileType perl,python,ruby   Findent --no-warnings
+autocmd MyAutoCmd FileType help               Findent --no-warnings
+'''
+
+[[plugins]]
+repo = 'kana/vim-altr'
+on_map = '<Plug>'
+hook_add = 'nmap <F2> <Plug>(altr-forward)'
+hook_post_source = '''
+call altr#define('autoload/%.vim', 'test/%.vimspec', 'plugin/%.vim', 'doc/%.txt')
+call altr#define('lib/%.pm', 't/%.t', 'template/%.tx')
+'''
+
+[[plugins]]
+repo = 'lambdalisue/vim-foldround'
+on_map = '<Plug>'
+hook_add = '''
+nmap <C-f>f     <Plug>(foldround-forward)
+nmap <C-f><C-f> <Plug>(foldround-forward)
+nmap <C-f>b     <Plug>(foldround-backward)
+nmap <C-f><C-b> <Plug>(foldround-backward)
+'''
+
+[[plugins]]
+repo = 'lambdalisue/vim-protocol'
+on_path = '\%(^https\?://\|\.zip$\)'
+
 [[plugins]]
 repo = 'Shougo/neossh.vim'
-
-[[plugins]]
-repo = 'Shougo/unite-help'
 
 [[plugins]]
 repo = 'Shougo/unite-outline'
@@ -1149,7 +673,7 @@ repo = 'pasela/unite-webcolorname'
 [[plugins]]
 repo = 'lambdalisue/unite-linephrase'
 hook_source = '''
-  let g:linephrase#directory = expand('~/Dropbox/Apps/Vim/linephrase')
+let g:linephrase#directory = expand('~/Dropbox/Apps/Vim/linephrase')
 '''
 
 [[plugins]]
@@ -1162,10 +686,6 @@ repo = 'dameninngenn/unite-perldoc'
 repo = 'naquad/unite-digraphs'
 
 [[plugins]]
-#if = "executable('git')"
-repo = 'kmnk/vim-unite-giti'
-
-[[plugins]]
 repo = 'Shougo/neomru.vim'
 on_source = 'unite.vim'
 
@@ -1175,153 +695,351 @@ repo = 'rafi/vim-unite-issue'
 [[plugins]]
 repo = 'lambdalisue/vim-gista-unite'
 
-
-# Version controller system ---------------------------------------------------
 [[plugins]]
-repo = 'lambdalisue/vim-gita'
-on_cmd = 'Gita'
+repo = 'itchyny/lightline.vim'
+depends = 'lightline-hybrid.vim'
 hook_add = '''
-  nnoremap <Plug>(my-gita) <Nop>
-  nmap <Leader>a <Plug>(my-gita)
-  nnoremap <silent> <Plug>(my-gita)a :<C-u>Gita status  --ignore-submodules<CR>
-  nnoremap <silent> <Plug>(my-gita)b :<C-u>Gita branch --all<CR>
-  nnoremap <silent> <Plug>(my-gita)g :<C-u>Gita grep<CR>
-  nnoremap <silent> <Plug>(my-gita)d :<C-u>Gita diff-ls --ignore-submodules origin/HEAD...<CR>
-  nnoremap <silent> <Plug>(my-gita)l :<C-u>Gita ls-files<CR>
-  augroup gita_qfreplace
-    autocmd! *
-    autocmd User GitaActionCalledPost:quickfix:quickfix call qfreplace#start('')
-  augroup END
-'''
-hook_source = '''
-  let g:gita#command#browse#extra_translation_patterns = {
-        \ 'ghe.admin.h': [
-        \   [
-        \     '\vhttps?://(%domain)/(.{-})/(.{-})%(\.git)?$',
-        \     '\vgit://(%domain)/(.{-})/(.{-})%(\.git)?$',
-        \     '\vgit\@(%domain):(.{-})/(.{-})%(\.git)?$',
-        \     '\vssh://git\@(%domain)/(.{-})/(.{-})%(\.git)?$',
-        \   ], {
-        \     '_':     'https://\1/\2/\3/blob/%c1/%pt%{#L|}ls%{-L|}le',
-        \     'exact': 'https://\1/\2/\3/blob/%r1/%pt%{#L|}ls%{-L|}le',
-        \     'blame': 'https://\1/\2/\3/blame/%c1/%pt%{#L|}ls%{-L|}le',
-        \   },
-        \ ],
-        \}
+call vimrc#source_path('$MYVIM_HOME/rc/config/lightline.vim')
 '''
 
+# Colorscheme {{{
 [[plugins]]
-repo = 'lambdalisue/vim-gista'
-on_cmd = 'Gista'
-hook_source = '''
-  let g:gista#client#default_username = 'lambdalisue'
-'''
+repo = 'cocopon/iceberg.vim'
 
 [[plugins]]
-repo = 'lambdalisue/vim-gista-ctrlp'
-depends = ['vim-gista', 'ctrlp.vim']
-on_cmd = 'CtrlPGista'
-on_func = 'ctrlp#gista#'
+repo = 'w0ng/vim-hybrid'
 
 [[plugins]]
-repo = 'cohama/agit.vim'
-on_cmd = ['Agit', 'AgitFile']
-on_source = 'unite.vim'
+repo = 'cocopon/lightline-hybrid.vim'
+# }}}
+
+# Textobj {{{
+[[plugins]]
+repo = 'kana/vim-textobj-entire'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
 hook_add = '''
-  " add extra key-mappings
-  function! s:my_agit_setting() abort
-    nmap <buffer> ch <Plug>(agit-git-cherry-pick)
-    nmap <buffer> Rv <Plug>(agit-git-revert)
-  endfunction
-  augroup my-agit-vim
-    autocmd! *
-    autocmd FileType agit call s:my_agit_setting()
-  augroup END
+omap ae <Plug>(textobj-entire-a)
+omap ie <Plug>(textobj-entire-i)
+xmap ae <Plug>(textobj-entire-a)
+xmap ie <Plug>(textobj-entire-i)
 '''
 
 [[plugins]]
-repo = 'tpope/vim-fugitive'
-on_cmd = [
-    'Git', 'Gcd', 'Glcd', 'Gstatus', 'Gcommit', 'Gmerge',
-    'Gpull', 'Gpush', 'Gfetch', 'Ggrep', 'Glgrep', 'Glog',
-    'Gllog', 'Gedit', 'Gsplit', 'Gvsplit', 'Gtabedit', 'Gpedit',
-    'Gread', 'Gwrite', 'Gwq', 'Gdiff', 'Gsdiff', 'Gvdiff',
-    'Gmove', 'Gremove', 'Gblame', 'Gbrowse',
+repo = 'kana/vim-textobj-line'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap al <Plug>(textobj-line-a)
+omap il <Plug>(textobj-line-i)
+xmap al <Plug>(textobj-line-a)
+xmap il <Plug>(textobj-line-i)
+'''
+
+[[plugins]]
+repo = 'kana/vim-textobj-syntax'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap ay <Plug>(textobj-syntax-a)
+omap iy <Plug>(textobj-syntax-i)
+xmap ay <Plug>(textobj-syntax-a)
+xmap iy <Plug>(textobj-syntax-i)
+'''
+
+[[plugins]]
+repo = 'kana/vim-textobj-indent'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap ai <Plug>(textobj-indent-a)
+omap ii <Plug>(textobj-indent-i)
+xmap ai <Plug>(textobj-indent-a)
+xmap ii <Plug>(textobj-indent-i)
+omap aI <Plug>(textobj-indent-same-a)
+omap iI <Plug>(textobj-indent-same-i)
+xmap aI <Plug>(textobj-indent-same-a)
+xmap iI <Plug>(textobj-indent-same-i)
+'''
+
+[[plugins]]
+repo = 'kana/vim-textobj-datetime'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap ada <Plug>(textobj-datetime-auto)
+omap add <Plug>(textobj-datetime-date)
+omap adf <Plug>(textobj-datetime-full)
+omap adt <Plug>(textobj-datetime-time)
+omap adz <Plug>(textobj-datetime-tz)
+omap ida <Plug>(textobj-datetime-auto)
+omap idd <Plug>(textobj-datetime-date)
+omap idf <Plug>(textobj-datetime-full)
+omap idt <Plug>(textobj-datetime-time)
+omap idz <Plug>(textobj-datetime-tz)
+xmap ada <Plug>(textobj-datetime-auto)
+xmap add <Plug>(textobj-datetime-date)
+xmap adf <Plug>(textobj-datetime-full)
+xmap adt <Plug>(textobj-datetime-time)
+xmap adz <Plug>(textobj-datetime-tz)
+xmap ida <Plug>(textobj-datetime-auto)
+xmap idd <Plug>(textobj-datetime-date)
+xmap idf <Plug>(textobj-datetime-full)
+xmap idt <Plug>(textobj-datetime-time)
+xmap idz <Plug>(textobj-datetime-tz)
+'''
+
+[[plugins]]
+repo = 'thinca/vim-textobj-comment'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap ac <Plug>(textobj-comment-a)
+omap ic <Plug>(textobj-comment-i)
+xmap ac <Plug>(textobj-comment-a)
+xmap ic <Plug>(textobj-comment-i)
+'''
+
+[[plugins]]
+repo = 'saihoooooooo/vim-textobj-space'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap a<Space> <Plug>(textobj-space-a)
+omap i<Space> <Plug>(textobj-space-i)
+xmap a<Space> <Plug>(textobj-space-a)
+xmap i<Space> <Plug>(textobj-space-i)
+'''
+
+[[plugins]]
+repo = 'kana/vim-textobj-fold'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap az <Plug>(textobj-fold-a)
+omap iz <Plug>(textobj-fold-i)
+xmap az <Plug>(textobj-fold-a)
+xmap iz <Plug>(textobj-fold-i)
+'''
+
+[[plugins]]
+repo = 'kana/vim-textobj-underscore'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap a_ <Plug>(textobj-underscore-a)
+omap i_ <Plug>(textobj-underscore-i)
+xmap a_ <Plug>(textobj-underscore-a)
+xmap i_ <Plug>(textobj-underscore-i)
+'''
+
+[[plugins]]
+repo = 'RyanMcG/vim-textobj-dash'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap a- <Plug>(textobj-quoted-a)
+omap i- <Plug>(textobj-quoted-i)
+xmap a- <Plug>(textobj-quoted-a)
+xmap i- <Plug>(textobj-quoted-i)
+'''
+
+[[plugins]]
+repo = 'mattn/vim-textobj-url'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap au <Plug>(textobj-url-a)
+omap iu <Plug>(textobj-url-i)
+xmap au <Plug>(textobj-url-a)
+xmap iu <Plug>(textobj-url-i)
+'''
+
+[[plugins]]
+repo = 'sgur/vim-textobj-parameter'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap aP <Plug>(textobj-parameter-a)
+omap iP <Plug>(textobj-parameter-i)
+xmap aP <Plug>(textobj-parameter-a)
+xmap iP <Plug>(textobj-parameter-i)
+'''
+
+[[plugins]]
+repo = 'osyo-manga/vim-textobj-multiblock'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap ab <Plug>(textobj-multiblock-a)
+omap ib <Plug>(textobj-multiblock-i)
+xmap ab <Plug>(textobj-multiblock-a)
+xmap ib <Plug>(textobj-multiblock-i)
+'''
+
+[[plugins]]
+repo = 'rhysd/vim-textobj-word-column'
+depends = 'vim-textobj-user'
+on_map = [
+  ['ox', '<Plug>(textobj-wordcolumn-W-i)'],
+  ['ox', '<Plug>(textobj-wordcolumn-w-i)'],
+  ['ox', '<Plug>(textobj-wordcolumn-W-a)'],
+  ['ox', '<Plug>(textobj-wordcolumn-w-a)'],
 ]
+hook_add = '''
+omap av <Plug>(textobj-wordcolumn-w-a)
+omap iv <Plug>(textobj-wordcolumn-w-i)
+xmap av <Plug>(textobj-wordcolumn-w-a)
+xmap iv <Plug>(textobj-wordcolumn-w-i)
 
+omap aV <Plug>(textobj-wordcolumn-W-a)
+omap iV <Plug>(textobj-wordcolumn-W-i)
+xmap aV <Plug>(textobj-wordcolumn-W-a)
+xmap iV <Plug>(textobj-wordcolumn-W-i)
+'''
+# }}}
 
-# Syntax ----------------------------------------------------------------------
+# Operator {{{
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+depends = 'vim-operator-user'
+on_map = [['nx', '<Plug>']]
+hook_add = '''
+nmap -r <Plug>(operator-replace)
+xmap -r <Plug>(operator-replace)
+'''
+
+[[plugins]]
+repo = 'sgur/vim-operator-openbrowser'
+depends = 'vim-operator-user'
+on_map = [['nx', '<Plug>']]
+hook_add = '''
+nmap -o <Plug>(operator-openbrowser)
+xmap -o <Plug>(operator-openbrowser)
+'''
+
+[[plugins]]
+repo = 'rhysd/vim-operator-trailingspace-killer'
+depends = 'vim-operator-user'
+on_map = [['nx', '<Plug>']]
+hook_add = '''
+nmap -k <Plug>(operator-trailingspace-killer)
+xmap -k <Plug>(operator-trailingspace-killer)
+'''
+
+[[plugins]]
+repo = 'machakann/vim-sandwich'
+depends = 'vim-operator-user'
+on_map = [
+  ['nox', '<Plug>(operator-sandwich'],
+  ['nox', '<Plug>(textobj-sandwich'],
+]
+hook_add = '''
+let g:operator_sandwich_no_default_key_mappings = 1
+
+nmap sd <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+nmap sr <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+nmap sdb <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+nmap srb <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+
+omap ib <Plug>(textobj-sandwich-auto-i)
+xmap ib <Plug>(textobj-sandwich-auto-i)
+omap ab <Plug>(textobj-sandwich-auto-a)
+xmap ab <Plug>(textobj-sandwich-auto-a)
+
+omap is <Plug>(textobj-sandwich-query-i)
+xmap is <Plug>(textobj-sandwich-query-i)
+omap as <Plug>(textobj-sandwich-query-a)
+xmap as <Plug>(textobj-sandwich-query-a)
+
+nmap sa <Plug>(operator-sandwich-add)
+xmap sa <Plug>(operator-sandwich-add)
+xmap sd <Plug>(operator-sandwich-delete)
+xmap sr <Plug>(operator-sandwich-replace)
+'''
+
+[[plugins]]
+repo = 'lambdalisue/vim-operator-breakline'
+depends = 'vim-operator-user'
+on_map = [['nx', '<Plug>']]
+hook_add = '''
+nmap -b <Plug>(operator-breakline-manual)
+nmap -B <Plug>(operator-breakline-textwidth)
+xmap -b <Plug>(operator-breakline-manual)
+xmap -B <Plug>(operator-breakline-textwidth)
+'''
+
+[[plugins]]
+repo = 'dalance/vseq.vim'
+depends = 'vim-operator-user'
+on_map = [
+  ['nx', '<Plug>(operator-vseq-incr-dec)'],
+  ['nx', '<Plug>(operator-vseq-decr-dec)'],
+]
+hook_add = '''
+nmap <C-a> <Plug>(operator-vseq-incr-dec)
+nmap <C-x> <Plug>(operator-vseq-decr-dec)
+xmap <C-a> <Plug>(operator-vseq-incr-dec)
+xmap <C-x> <Plug>(operator-vseq-decr-dec)
+'''
+
+# }}}
+
+# Filetype specific {{{
 [[plugins]]
 repo = 'hail2u/vim-css3-syntax'
-#on_ft = ['css', 'sass', 'scss', 'less', 'html']
 
 [[plugins]]
 repo = 'othree/html5.vim'
-#on_ft = 'html'
 
 [[plugins]]
 repo = 'groenewege/vim-less'
-#on_ft = 'less'
 
 [[plugins]]
 repo = 'cakebaker/scss-syntax.vim'
-#on_ft = ['sass', 'scss']
 
 [[plugins]]
 repo = 'kchmck/vim-coffee-script'
-#on_ft = 'coffeescript'
 
 [[plugins]]
 repo = 'elzr/vim-json'
-#on_ft = 'json'
 
 [[plugins]]
 repo = 'jQuery'
-#on_ft = ['javascript', 'coffeescript', 'typescript']
 
 [[plugins]]
 repo = 'jelera/vim-javascript-syntax'
-#on_ft = ['javascript', 'typescript']
 
 [[plugins]]
 repo = 'jason0x43/vim-js-indent'
-#on_ft = ['javascript', 'typescript']
 
 [[plugins]]
 repo = 'leafgarland/typescript-vim'
-#on_ft = 'typescript'
 hook_source = '''
-  let g:typescript_indent_disable = 1
-  let g:typescript_compiler_options = '-sourcemap'
+let g:typescript_indent_disable = 1
+let g:typescript_compiler_options = '-sourcemap'
 '''
 
 [[plugins]]
 repo = 'thinca/vim-ft-help_fold'
-#on_ft = 'help'
 
 [[plugins]]
 repo = 'vim-scripts/applescript.vim'
-#on_ft = 'applescript'
 
 [[plugins]]
 repo = 'cespare/vim-toml'
-#on_ft = 'toml'
 
 [[plugins]]
 repo = 'vim-scripts/indentpython.vim'
-#on_ft = ['python', 'python3']
 
 [[plugins]]
 repo = 'vim-scripts/python_match.vim'
-#on_ft = ['python', 'python3']
 
 [[plugins]]
 repo = 'tmhedberg/SimpylFold'
-#on_ft = ['python', 'python3']
 
 [[plugins]]
 repo = 'vim-perl/vim-perl'
-#on_ft = 'perl'
 
 [[plugins]]
 #repo = 'motemen/xslate-vim'
@@ -1329,59 +1047,11 @@ repo = 'lambdalisue/xslate-vim'
 
 [[plugins]]
 repo = 'lambdalisue/vim-cython-syntax'
-merge = 0
-
-
-# Specific --------------------------------------------------------------------
-[[plugins]]
-if = "executable('latexmk')"
-repo = 'LaTeX-Box-Team/LaTeX-Box'
-on_cmd = 'Latexmk',
-on_ft = ['tex', 'plaintex']
-hook_source = '''
-  let g:LatexBox_latexmk_async = 1
-  let g:LatexBox_latexmk_preview_continuously = 1
-  let g:LatexBox_latexmk_options = '-pdfdvi'
-  let g:LatexBox_build_dir = 'build'
-  let g:LatexBox_Folding = 1
-  let g:LatexBox_quickfix = 2
-  let g:LatexBox_ignore_warnings = [
-        \ 'Underfull', 'Overfull', 'specifier changed to',
-        \ 'Module luatexbase-mcb warning: several functions in ',
-        \ 'xparse/redefine-command',
-        \ 'luatexja-preset warning: "scale"',
-        \ 'Unsupported document class',
-        \ '\setcatcoderange is deprecated',
-        \ 'LaTeX Warning: You have requested document class',
-        \ 'LaTeX Font Warning: Font shape',
-        \ 'Package typearea Warning: Bad type area settings!',
-        \ 'LaTeX Font Warning: Some font shapes were not available, defaults substituted.'
-        \ ]
-  " neocomplete should not used for tex
-  let g:neocomplete#force_omni_input_patterns =
-        \ get(g:, 'neocomplete#force_omni_input_patterns', {})
-  let g:neocomplete#force_omni_input_patterns.tex =
-        \ '\v(\\\a*(subref|ref|textcite|autocite|cite)\a*\{([^}]*,)?|\$)'
-
-  function! s:latexbox_configure() abort
-    imap <buffer> [[     \begin{
-    imap <buffer> ]]     <Plug>LatexCloseCurEnv
-    nmap <buffer> <F5>   <Plug>LatexChangeEnv
-    vmap <buffer> <F7>   <Plug>LatexWrapSelection
-    vmap <buffer> <S-F7> <Plug>LatexEnvWrapSelection
-    imap <buffer> ((     \eqref{
-  endfunction
-  augroup my-latex-box
-    autocmd! *
-    autocmd FileType tex,latex,plaintex call s:latexbox_configure()
-  augroup END
-'''
 
 [[plugins]]
-#if = "executable('pip')"
 build = 'pip install -q --disable-pip-version-check autopep8'
 repo = 'tell-k/vim-autopep8'
-#on_ft = ['python', 'python3']
+on_ft = ['python', 'python3']
 hook_source = 'let g:autopep8_disable_show_diff = 1'
 
 [[plugins]]
@@ -1393,15 +1063,12 @@ if = "executable('pyenv')"
 repo = 'lambdalisue/vim-pyenv'
 on_source = 'vim-ledi'
 hook_post_source = '''
-  function! s:ledi_auto_set_python_major_version() abort
-    let major_version = pyenv#python#get_internal_major_version()
-    call ledi#python#init(major_version)
-  endfunction
-  augroup my-vim-pyenv
-    autocmd! *
-    autocmd User vim-pyenv-activate-post   call s:ledi_auto_set_python_major_version()
-    autocmd User vim-pyenv-deactivate-post call s:ledi_auto_set_python_major_version()
-  augroup END
+function! s:ledi_auto_set_python_major_version() abort
+  let major_version = pyenv#python#get_internal_major_version()
+  call ledi#python#init(major_version)
+endfunction
+autocmd MyAutoCmd User vim-pyenv-activate-post   call s:ledi_auto_set_python_major_version()
+autocmd MyAutoCmd User vim-pyenv-deactivate-post call s:ledi_auto_set_python_major_version()
 '''
 
 [[plugins]]
@@ -1410,85 +1077,61 @@ on_ft = 'perl'
 
 [[plugins]]
 repo = 'c9s/perlomni.vim'
-#on_ft = 'perl'
+on_ft = 'perl'
 
 [[plugins]]
-if = "v:version >= 704 && executable('npm')"
-build = 'npm install -g typescript'
 repo = 'Quramy/tsuquyomi'
 depends = 'vimproc.vim'
+build = 'npm install -g typescript'
 on_ft = 'typescript'
 hook_add = '''
-  function! s:tsuquyomi_configure() abort
-    nmap <buffer> <LocalLeader>d <Plug>(TsuquyomiDefinition)
-    nmap <buffer> <LocalLeader>b <Plug>(TsuquyomiGoBack)
-    nmap <buffer> <LocalLeader>r <Plug>(TsuquyomiReferences)
-    nmap <buffer> <LocalLeader>R <Plug>(TsuquyomiRenameSymbolC)
-    if exists('&ballooneval')
-      setlocal ballooneval
-      setlocal balloonexpr=tsuquyomi#balloonexpr()
-    endif
-  endfunction
-  augroup my-tsuquyomi
-    autocmd! *
-    autocmd FileType typescript call s:tsuquyomi_configure()
-  augroup END
+function! s:tsuquyomi_configure() abort
+  nmap <buffer> <LocalLeader>d <Plug>(TsuquyomiDefinition)
+  nmap <buffer> <LocalLeader>b <Plug>(TsuquyomiGoBack)
+  nmap <buffer> <LocalLeader>r <Plug>(TsuquyomiReferences)
+  nmap <buffer> <LocalLeader>R <Plug>(TsuquyomiRenameSymbolC)
+  if exists('&ballooneval')
+    setlocal ballooneval
+    setlocal balloonexpr=tsuquyomi#balloonexpr()
+  endif
+endfunction
+autocmd MyAutoCmd FileType typescript call s:tsuquyomi_configure()
 '''
+# }}}
+
+# Vimscript development {{{
+[[plugins]]
+repo = 'thinca/vim-themis'
+rtp = ''
 
 [[plugins]]
-repo = 'vim-pandoc/vim-pandoc'
-on_ft = 'pandoc'
+repo = 'Kuniwak/vint'
+rtp = ''
 
 [[plugins]]
-repo = 'kannokanno/previm'
-depends = 'open-browser.vim'
-on_cmd = 'PrevimOpen'
-hook_source = 'let g:previm_show_header = 0'
+repo = 'thinca/vim-prettyprint'
+on_cmd = ['PP', 'PrettyPrint']
 
 [[plugins]]
-if = "executable('cargo')"
-repo = 'rust-lang/rust.vim'
-build = 'cargo install rustfmt'
-hook_add = '''
-  let g:rustfmt_autosave = 1
-  let g:rustfmt_command = expand('~/.cargo/bin/rustfmt')
-'''
-on_ft = 'rust'
+repo = 'tyru/capture.vim'
+on_cmd = 'Capture'
 
 [[plugins]]
-if = "executable('cargo')"
-repo = 'phildawes/racer'
-build = 'cargo build --release'
-hook_add = '''
-  let g:racer_cmd = expand('~/.cargo/bin/racer')
-  let $RUST_SRC_PATH = expand('~/Code/github.com/rust-lang/rust/src')
-'''
-on_ft = 'rust'
+repo = 'Shougo/junkfile.vim'
+on_cmd = 'JunkfileOpen'
 
-[[plugins]]
-if = "executable('cargo')"
-repo = 'rhysd/rust-doc.vim'
-on_ft = 'rust'
-
-
-# Misc ------------------------------------------------------------------------
-[[plugins]]
-repo = 'cocopon/colorswatch.vim'
-on_cmd = 'ColorSwatchGenerate'
-
-
-# Vimscript development -------------------------------------------------------
 [[plugins]]
 repo = 'vim-jp/vital.vim'
 on_cmd = 'Vitalize'
 
 [[plugins]]
 repo = 'vim-jp/vital-complete'
-on_ft = ['vim', 'vimspec']
 hook_add = '''
-  autocmd MyAutoCmd FileType vim,vimspec setlocal omnifunc=vital_complete#complete
+autocmd MyAutoCmd FileType vim,vimspec setlocal omnifunc=vital_complete#complete
 '''
+# }}}
 
+# External Vital modules {{{
 [[plugins]]
 repo = 'lambdalisue/vital-Argument'
 on_source = 'vital.vim'
@@ -1518,6 +1161,10 @@ repo = 'lambdalisue/vital-Vim-Validate'
 on_source = 'vital.vim'
 
 [[plugins]]
+repo = 'lambdalisue/vital-Vim-Lua-String'
+on_source = 'vital.vim'
+
+[[plugins]]
 repo = 'lambdalisue/vital-Data-List-Chunker'
 on_source = 'vital.vim'
 
@@ -1529,34 +1176,6 @@ on_source = 'vital.vim'
 repo = 'lambdalisue/vital-Data-String-Formatter'
 on_source = 'vital.vim'
 
-[[plugins]]
-repo = 'lambdalisue/vital-Vim-Lua-String'
-on_source = 'vital.vim'
+# }}}
 
-[[plugins]]
-repo = 'haya14busa/vital-vimlcompiler'
-on_source = 'vital.vim'
-
-[[plugins]]
-repo = 'haya14busa/vital-power-assert'
-depends = 'vital-vimlcompiler'
-
-[[plugins]]
-repo = 'thinca/vim-prettyprint'
-on_cmd  = ['PP', 'PrettyPrint']
-
-[[plugins]]
-repo = 'syngan/vim-vimlint'
-depends = 'vim-vimlparser'
-
-[[plugins]]
-repo = 'LeafCage/laptime.vim'
-#lazy = 1
-
-[[plugins]]
-# non vim plugin
-repo = 'thinca/vim-themis'
-
-[[plugins]]
-# non vim plugin
-repo = 'Kuniwak/vint'
+# vim: foldmethod=marker

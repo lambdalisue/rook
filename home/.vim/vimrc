@@ -1,25 +1,26 @@
-"
-" Vim configuration
-" Author:   Alisue <lambdalisue@hashnote.net>
-" URI:      http://hashnote.net/
-" Platform: Linux, Mac OS X
-"
-let s:is_windows = has('win16') || has('win32') || has('win64')
-let s:is_darwin  = has('mac') || has('macunix') || has('gui_macvim')
-
+" Prelude {{{
 if has('vim_starting')
-  if has('multi_byte')
-    set ambiwidth=double
-    set encoding=utf-8
-    scriptencoding utf-8
-  endif
-  set history=10000
+  " Use defaults.vim
+  source $VIMRUNTIME/defaults.vim
+  " Sets the character encoding inside Vim.
+  set encoding=utf-8
+  scriptencoding utf-8
 endif
+" }}}
+
+" Revert defaults.vim {{{
+" The following options are configured in default.vim
+if has('vim_starting')
+  set history=10000     " increate n of command line history
+endif
+set noruler             " [slow] do not show the cursor position.
+
+" Do not highlight string inside C comments.
+unlet c_comment_strings
+" }}}
 
 " Disable unnecessary features {{{
-set noswapfile
-set nobackup
-set nowritebackup
+set belloff=all
 set noerrorbells
 set novisualbell t_vb=
 
@@ -41,7 +42,6 @@ let g:loaded_netrwSettings     = 1
 let g:loaded_netrwFileHandlers = 1
 let g:loaded_logipat           = 1
 let g:loaded_matchparen        = 1
-" neovim
 let g:loaded_man               = 1
 " }}}
 
@@ -105,15 +105,6 @@ endif
 
 " }}}
 
-set modeline      " use modeline
-" K to search the help with the cursor word
-set keywordprg=:help
-" every wrapped line will continue visually indented
-if exists('+breakindent')
-  set breakindent
-endif
-set showbreak=\ +
-
 " Language {{{
 
 " prefer English interface
@@ -133,37 +124,32 @@ set fileformats=unix,dos,mac
 " Interface {{{
 set hidden              " hide the buffer instead of close
 set switchbuf=useopen   " use an existing buffer instaed of creating a new one
-set autoread            " automatically read the changed contents
 
 set showmatch           " highlight a partner of cursor character
 set matchtime=1         " highlight a partner ASAP
-set updatetime=1000     " increase speed of CursorHold autocommand
+set updatetime=500      " increase speed of CursorHold autocommand
 set nostartofline       " let C-D, C-U,... to keep same column
 set smartcase           " override the ignorecase if the search pattern contains
-                              " upper case characters
-set incsearch           " use incremental search
-set wrapscan            " wrap scan
+                        " upper case characters
 set hlsearch            " highlight found terms
 
-set foldenable
-set foldmethod=manual
 set foldlevelstart=99
 set foldnestmax=3       " maximum fold nesting level
 set foldcolumn=3        " show fold guide
 
-set nonumber              " do not show line numbers
-set list                  " show invisible characters
-set laststatus=2          " always shows statusline
-set scrolloff=4           " minimum number of screen lines to keep in scroll
-set sidescrolloff=4       " minimum number of screen columns to keep in scroll
-set cmdheight=2           " the number of screen lines to use for command line
-set showcmd               " show command on statusline
-set nolazyredraw          " do not redraw while command execution
-set nosplitbelow          " split to top
-set splitright            " vsplit to right
-set report=0              " report any changes
-set display=lastline      " display last line in a window AMAP
-set showtabline=2         " display tabline always
+
+set laststatus=2        " always shows statusline
+set showtabline=2       " always shows tabline
+set report=0            " reports any changes
+set cmdheight=2
+set lazyredraw          " do not redraw while command execution
+
+set splitright          " vsplit to right
+
+set sessionoptions-=options
+
+" https://ddrscott.github.io/blog/2016/sidescroll/
+set sidescroll=1
 
 " vertically split buffers for vimdiff
 set diffopt& diffopt+=vertical
@@ -176,15 +162,12 @@ set whichwrap=b,s,<,>,~,[,]
 set viewoptions=cursor,folds,slash,unix
 
 " use rich completion system in command line
-set wildmenu
 set wildmode=list:longest,full
 set wildoptions=tagfile
 
-" do not display cursorline/column (it makes Vim really slow)
-set nocursorline
-set nocursorcolumn
 
-if has('multi_byte') && $LANG !=# 'C'
+set list          " show invisible characters
+if $LANG !=# 'C'
   set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%
 else
   set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%
@@ -195,25 +178,17 @@ endif
 " Editing {{{
 set smarttab        " insert blanks according to shiftwidth
 set expandtab       " use spaces instead of TAB
-set tabstop=8       " the number of spaces that a TAB counts for
-set softtabstop=4   " the number of spaces that a TAB counts for
-set shiftwidth=4    " the number of spaces of an indent
+set softtabstop=-1  " the number of spaces that a TAB counts for
+set shiftwidth=2    " the number of spaces of an indent
 set shiftround      " round indent to multiple of shiftwidth with > and <
 
 set autoindent      " copy indent from current line when starting a new line
 set copyindent      " copy the structure of the existing lines indent when
-                          " autoindenting a new line
+                    " autoindenting a new line
+set preserveindent  " Use :retab to clean up whitespace
+
 set undofile        " keep undo history on undofile
 set virtualedit=all " allow virtual editing in all modes
-
-set wrap            " wrap long text
-set textwidth=0     " do not automatically break
-
-" characters which might cause a line break
-set breakat& breakat-=-
-
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
 
 " Remove a comment leader when joining lines (j)
 set formatoptions& formatoptions+=j
@@ -221,34 +196,38 @@ set formatoptions& formatoptions+=j
 " use clipboard register
 " - unnamed     : 'selection' in X11; clipboard in Mac OS X and Windows
 " - unnamedplus : 'clipboard' in X11, Mac OS X, and Windows (but yank)
-if s:is_windows || s:is_darwin
-  set clipboard=unnamed
-else
-  set clipboard=unnamed,unnamedplus
+set clipboard=unnamed,unnamedplus
+if has('win32') || has('win64') || has('mac')
+  set clipboard-=unnamedplus
 endif
 
 " completion settings
-set complete&
-set complete-=i,d
-set complete+=.,w,b,u,k,s,t
+set complete& complete-=i,d
 set completeopt&
 set completeopt-=preview
-set completeopt+=menu,longest
-if has('patch-7.4.775')
-  set completeopt+=noselect
-endif
+set completeopt+=menu,longest,noselect
 set pumheight=20        " height of popup menu
 set showfulltag         " show both the tag name and the search pattern
+
+" K to search the help with the cursor word
+set keywordprg=:help
+" every wrapped line will continue visually indented
+set breakindent
+set showbreak=\ +
 " }}}
 
 " Mapping {{{
+nnoremap <nowait> ; :
+nnoremap <nowait> : ;
+vnoremap <nowait> ; :
+vnoremap <nowait> : ;
 
 " define <Leader> and <LocalLeader>
-let g:mapleader = ';'
-let g:maplocalleader = ','
+let mapleader = ','
+let maplocalleader = ','
 
 " remove any existing keymap for leader and localleader
-noremap <Leader> <Nop>
+noremap <Leader>      <Nop>
 noremap <LocalLeader> <Nop>
 
 " disable dengerous mappings (ZZ: save and close, ZQ close)
@@ -259,15 +238,6 @@ noremap <4-MiddleMouse> <Nop>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 
-" disable EX mode and assign it into gq
-" gq{motion} : format the lines that {motion} moves over
-nnoremap Q gq
-
-" remove highlight with pressing ESC twice
-nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
-
-" Select last paste (like gv)
-nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " Improve cursor operation
 nnoremap <silent><expr> j  v:count == 0 ? 'gj' : 'j'
@@ -275,12 +245,14 @@ nnoremap <silent><expr> k  v:count == 0 ? 'gk' : 'k'
 nnoremap <silent><expr> gj v:count == 0 ? 'j' : 'gj'
 nnoremap <silent><expr> gk v:count == 0 ? 'k' : 'gk'
 
-xnoremap <silent><expr> <C-k> mode() ==# 'V'
-      \ ? ':<C-u>execute printf("move -1-%d", v:count1)<CR>gv'
-      \ : '<C-k>'
-xnoremap <silent><expr> <C-j> mode() ==# 'V'
-      \ ? ':<C-u>execute printf("move +%d", v:count1)<CR>gv'
-      \ : '<C-k>'
+
+" <Home> goes to the beginning of the text on first press and the
+" beginning of the line on second.
+noremap <silent><expr> <Home>
+      \ virtcol('.') - 1 <= indent('.') && col('.') > 1 ? '0' : '_'
+
+" Clear the highlight with <C-l>
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
 " Emacs like binding in Insert mode
 inoremap <C-a> <Home>
@@ -295,13 +267,10 @@ nnoremap Y y$
 " vv to select the line, like yy, dd
 nnoremap vv 0v$
 
-" <C-p> to paste from 0 register
-nnoremap <Leader>p "0p
-
 " Better <C-n>/<C-p> in command mode
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
-cnoremap <Up> <C-p>
+cnoremap <Up>   <C-p>
 cnoremap <Down> <C-n>
 
 " simple window resize navigation
@@ -310,43 +279,34 @@ nnoremap <S-Right> <C-w>><CR>
 nnoremap <S-Up>    <C-w>-<CR>
 nnoremap <S-Down>  <C-w>+<CR>
 
-" simple window navigation
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
-
 " tag navigation
-nnoremap [t  :<C-u>tprevious<CR>
-nnoremap ]t  :<C-u>tnext<CR>
-nnoremap g[t :<C-u>tfirst<CR>
-nnoremap g]t :<C-u>tlast<CR>
+nnoremap <silent> [t  :<C-u>tprevious<CR>
+nnoremap <silent> ]t  :<C-u>tnext<CR>
+nnoremap <silent> g[t :<C-u>tfirst<CR>
+nnoremap <silent> g]t :<C-u>tlast<CR>
 
 " quickfix navigation
-nnoremap [q  :<C-u>cprevious<CR>
-nnoremap ]q  :<C-u>cnext<CR>
-nnoremap g[q :<C-u>cfirst<CR>
-nnoremap g]q :<C-u>clast<CR>
-nnoremap [l  :<C-u>lprevious<CR>
-nnoremap ]l  :<C-u>lnext<CR>
-nnoremap g[l :<C-u>lfirst<CR>
-nnoremap g]l :<C-u>llast<CR>
+nnoremap <silent> [q  :<C-u>cprevious<CR>
+nnoremap <silent> ]q  :<C-u>cnext<CR>
+nnoremap <silent> g[q :<C-u>cfirst<CR>
+nnoremap <silent> g]q :<C-u>clast<CR>
+nnoremap <silent> [l  :<C-u>lprevious<CR>
+nnoremap <silent> ]l  :<C-u>lnext<CR>
+nnoremap <silent> g[l :<C-u>lfirst<CR>
+nnoremap <silent> g]l :<C-u>llast<CR>
 
 " file navigation
-nnoremap {f  :<C-u>previous<CR>
-nnoremap }f  :<C-u>next<CR>
-nnoremap g{f :<C-u>first<CR>
-nnoremap g}f :<C-u>last<CR>
+nnoremap <silent> {f  :<C-u>previous<CR>
+nnoremap <silent> }f  :<C-u>next<CR>
+nnoremap <silent> g{f :<C-u>first<CR>
+nnoremap <silent> g}f :<C-u>last<CR>
 
 " tab operation (make similar mapping with window operation)
 " ref.
-nnoremap <silent> <Plug>(my-tab-new)  :<C-u>tabnew<CR>
-nnoremap <silent> <Plug>(my-tab-next) :<C-u>tabnext<CR>
-nnoremap <silent> <Plug>(my-tab-prev) :<C-u>tabprevious<CR>
-nmap <C-n> <Plug>(my-tab-next)
-nmap <C-p> <Plug>(my-tab-prev)
-nmap <C-t>t <Plug>(my-tab-new)
-nmap <C-t><C-t> <Plug>(my-tab-new)
+nnoremap <silent> <C-t>t     :<C-u>tabnew<CR>
+nnoremap <silent> <C-t><C-t> :<C-u>tabnew<CR>
+nnoremap <silent> <C-n> :<C-u>tabnext<CR>
+nnoremap <silent> <C-p> :<C-u>tabprevious<CR>
 
 " switch options
 nnoremap <Plug>(my-switch) <Nop>
@@ -378,12 +338,6 @@ cnoreabbrev ++x ++ff=unix
 cnoreabbrev ++d ++ff=dos
 cnoreabbrev ++m ++ff=mac
 
-" Allow misspellings
-cnoreabbrev Wq :wq
-cnoreabbrev qw :wq
-cnoreabbrev Qa :qa
-cnoreabbrev q: :q
-
 " I often mis-type...
 nnoremap cie <Nop>
 nnoremap cae <Nop>
@@ -398,6 +352,19 @@ nnoremap yae <Nop>
 augroup MyAutoCmd
   autocmd!
 augroup END
+
+" Automatically open a file in readonly mode when a corresponding swap file
+" exists
+autocmd MyAutoCmd SwapExists * let v:swapchoice = 'o'
+
+
+" Automatically move cursor at eol when paste
+if &virtualedit =~# '\<all\>'
+  " http://vim-jp.org/vim-users-jp/2011/01/16/Hack-195.html
+  nnoremap <silent><expr> p
+        \ (col('.') >= col('$') ? '$' : '') . 'p'
+endif
+
 
 " Improve mkview/loadview {{{
 function! s:checkview() abort
@@ -440,7 +407,7 @@ if !exists('*s:reload_vimrc')
 endif
 nnoremap <silent> <Plug>(my-reload-vimrc)
       \ :<C-u>call <SID>reload_vimrc()<CR>
-nmap <Leader><Leader>r <Plug>(my-reload-vimrc)
+nmap <F4> <Plug>(my-reload-vimrc)
 " }}}
 
 " source/reload current vimscript file " {{{
@@ -462,7 +429,7 @@ if !exists('*s:source_current_path')
   endfunction
 endif
 nmap <silent> <Plug>(my-source) :<C-u>call <SID>source_current_path()<CR>
-nmap <LocalLeader><LocalLeader>s <Plug>(my-source)
+nmap <F5> <Plug>(my-source)
 " }}}
 
 " automatically create missing directories {{{

@@ -15,7 +15,6 @@ let g:lightline = {
       \     [ 'qfstatusline' ],
       \     [ 'lineinfo' ],
       \     [ 'fileformat', 'fileencoding', 'filetype' ],
-      \     [ 'highlight' ],
       \   ],
       \ },
       \ 'inactive': {
@@ -56,7 +55,6 @@ let g:lightline = {
       \   'gita_traffic': 'g:lightline.my.gita_traffic',
       \   'gita_status': 'g:lightline.my.gita_status',
       \   'pyenv': 'g:lightline.my.pyenv',
-      \   'highlight': 'g:lightline.my.highlight',
       \ },
       \}
 
@@ -145,11 +143,6 @@ endfunction
 function! g:lightline.my.pyenv() abort
   return dein#is_sourced('vim-pyenv')
         \ ? pyenv#info#preset('long') : ''
-endfunction
-
-function! g:lightline.my.highlight() abort
-  let [nline, ncol] = getpos('.')[1:2]
-  return synIDattr(synID(nline, ncol, 1), 'name')
 endfunction
 
 function! g:lightline.my.qfstatusline() abort
