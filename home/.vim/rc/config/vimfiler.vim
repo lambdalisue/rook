@@ -7,7 +7,6 @@ let g:vimfiler_ignore_pattern = printf('\%%(%s\)', join([
       \], '\|'))
 
 call vimfiler#custom#profile('default', 'context', {
-      \ 'auto_cd': 1,
       \ 'parent': 1,
       \ 'safe': 0,
       \ })
