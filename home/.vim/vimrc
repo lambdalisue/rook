@@ -217,13 +217,8 @@ set showbreak=\ +
 " }}}
 
 " Mapping {{{
-nnoremap <nowait> ; :
-nnoremap <nowait> : ;
-vnoremap <nowait> ; :
-vnoremap <nowait> : ;
-
 " define <Leader> and <LocalLeader>
-let mapleader = ','
+let mapleader = ';'
 let maplocalleader = ','
 
 " remove any existing keymap for leader and localleader
