@@ -382,11 +382,9 @@ autocmd MyAutoCmd SwapExists * let v:swapchoice = 'o'
 
 
 " Automatically move cursor at eol when paste
-if &virtualedit =~# '\<all\>'
-  " http://vim-jp.org/vim-users-jp/2011/01/16/Hack-195.html
-  nnoremap <silent><expr> p
-        \ (col('.') >= col('$') ? '$' : '') . 'p'
-endif
+" http://vim-jp.org/vim-users-jp/2011/01/16/Hack-195.html
+nnoremap <silent><expr> p
+      \ (col('.') >= col('$') ? '$' : '') . 'p'
 
 
 " Improve mkview/loadview {{{
@@ -576,6 +574,7 @@ endfunction
 command! AddRuntimePath call s:add_runtimepath()
 " }}}
 
+" Switch colorscheme {{{
 function! s:switch_colorscheme() abort
   set background=dark
   if get(g:, 'colors_name', '') ==# 'hybrid'
@@ -586,6 +585,7 @@ function! s:switch_colorscheme() abort
   redraw | echo g:colors_name
 endfunction
 nnoremap <silent><F3> :<C-u>call <SID>switch_colorscheme()<CR>
+" }}}
 
 " }}}
 
