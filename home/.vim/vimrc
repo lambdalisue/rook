@@ -191,8 +191,26 @@ set preserveindent  " Use :retab to clean up whitespace
 set undofile        " keep undo history on undofile
 set virtualedit=all " allow virtual editing in all modes
 
-" Remove a comment leader when joining lines (j)
-set formatoptions& formatoptions+=j
+" t - auto-wrap text using textwidth
+" c - auto-wrap comments using textwidth, inserting the
+"     current comment leader automatically
+" r - automatically insert the current comment leader after
+"     hitting <Enter> in Insert mode
+" o - automatically insert the current comment leader after
+"     hitting o in Insert mode
+" n - when formatting text, recognize numbered lists
+" l - long lines are not broken in insert mode
+" m - also break at a multi-byte character above 255.
+" B - when joining lines, don't insert a space between two
+"     multi-byte characters
+" j - where it make sense, remove a comment leader when
+"     joining lines
+set formatoptions+=r
+set formatoptions+=o
+set formatoptions+=n
+set formatoptions+=m
+set formatoptions+=B
+set formatoptions+=j
 
 " use clipboard register
 " - unnamed     : 'selection' in X11; clipboard in Mac OS X and Windows
@@ -239,6 +257,10 @@ noremap <4-MiddleMouse> <Nop>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 
+nmap <C-Space> <Return>
+vmap <C-Space> <Return>
+cmap <C-Space> <Return>
+imap <C-Space> <Return>
 
 " Improve cursor operation
 nnoremap <silent><expr> j  v:count == 0 ? 'gj' : 'j'
@@ -425,11 +447,11 @@ if !exists('*s:source_current_path')
       echohl None
       return
     endif
-    call vimrc#source_path(expand('%'), 0)
+    call vimrc#source_path(resolve(expand('%:p')), 0)
     redraw | echo printf('"%s" has sourced (%s).', expand('%:t'), strftime('%c'))
   endfunction
 endif
-nmap <silent> <Plug>(my-source) :<C-u>call <SID>source_current_path()<CR>
+nnoremap <silent> <Plug>(my-source) :<C-u>call <SID>source_current_path()<CR>
 nmap <Leader><Leader>s <Plug>(my-source)
 " }}}
 

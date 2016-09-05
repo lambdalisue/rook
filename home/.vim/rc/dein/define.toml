@@ -19,6 +19,50 @@ merged = 0
 [[plugins]]
 repo = 'vim-jp/vimdoc-ja'
 
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+on_i = 1
+
+[[plugins]]
+repo = 'tyru/caw.vim'
+depends = [
+  'vim-operator-user',
+  'vim-repeat',
+  'context_filetype.vim',
+]
+on_map = '<Plug>'
+hook_add = '''
+let g:caw_no_default_keymappings = 1
+nmap gc   <Plug>(caw:prefix)
+nmap gcc  <Plug>(caw:hatpos:toggle)
+nmap gci  <Plug>(caw:hatpos:comment)
+nmap gcui <Plug>(caw:hatpos:uncomment)
+nmap gcI  <Plug>(caw:zeropos:comment)
+nmap gcuI <Plug>(caw:zeropos:uncomment)
+nmap gca  <Plug>(caw:dollarpos:comment)
+nmap gcua <Plug>(caw:dollarpos:uncomment)
+nmap gcw  <Plug>(caw:wrap:toggle)
+nmap gcb  <Plug>(caw:box:comment)
+xmap gc   <Plug>(caw:prefix)
+xmap gcc  <Plug>(caw:hatpos:toggle)
+xmap gci  <Plug>(caw:hatpos:comment)
+xmap gcui <Plug>(caw:hatpos:uncomment)
+xmap gcI  <Plug>(caw:zeropos:comment)
+xmap gcuI <Plug>(caw:zeropos:uncomment)
+xmap gca  <Plug>(caw:dollarpos:comment)
+xmap gcua <Plug>(caw:dollarpos:uncomment)
+xmap gcw  <Plug>(caw:wrap:toggle)
+xmap gcb  <Plug>(caw:box:comment)
+nmap gco  <Plug>(caw:jump:comment-next)
+nmap gcO  <Plug>(caw:jump:comment-prev)
+'''
+
+[[plugins]]
+repo = 'cocopon/colorswatch.vim'
+on_cmd = 'ColorSwatchGenerate'
+
+
 [[plugins]]
 repo = 'sudo.vim'
 on_path = 'sudo:*'
