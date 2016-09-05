@@ -13,7 +13,6 @@ let g:lightline = {
       \   ],
       \   'right': [
       \     [ 'qfstatusline' ],
-      \     [ 'lineinfo' ],
       \     [ 'fileformat', 'fileencoding', 'filetype' ],
       \   ],
       \ },
@@ -30,12 +29,9 @@ let g:lightline = {
       \     [ 'tabs' ],
       \   ],
       \   'right': [
-      \     [ 'close' ],
-      \     [ 'pyenv', 'gita_branch', 'gita_traffic', 'gita_status', 'cwd' ],
+      \     [ 'cwd' ],
+      \     [ 'pyenv', 'gita_branch', 'gita_traffic', 'gita_status' ],
       \   ],
-      \ },
-      \ 'component_visible_condition': {
-      \   'lineinfo': '(winwidth(0) >= 70)',
       \ },
       \ 'component_expand': {
       \   'qfstatusline': 'g:lightline.my.qfstatusline',
@@ -95,12 +91,16 @@ function! g:lightline.my.filename() abort
   if &filetype =~# '\v%(unite|vimfiler|vimshell)'
     return {&filetype}#get_status_string()
   elseif &filetype =~# '\v%(gita-blame-navi)'
-    let fname = winwidth(0) > 79 ? expand('%') : get(split(expand('%'), ':'), 2, 'NAVI')
+    let fname = winwidth(0) > 79
+          \ ? expand('%:~:.')
+          \ : get(split(expand('%:~:.'), ':'), 2, 'NAVI')
     return fname
   elseif &filetype ==# 'gista-list'
     return gista#command#list#get_status_string()
   else
-    let fname = winwidth(0) > 79 ? expand('%') : pathshorten(expand('%'))
+    let fname = winwidth(0) > 79
+          \ ? expand('%:~:.')
+          \ : pathshorten(expand('%:~:.'))
     let readonly = g:lightline.my.readonly()
     let modified = g:lightline.my.modified()
     let nomodifiable = g:lightline.my.nomodifiable()

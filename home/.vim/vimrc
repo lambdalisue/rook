@@ -5,18 +5,19 @@ if has('vim_starting')
   " Sets the character encoding inside Vim.
   set encoding=utf-8
   scriptencoding utf-8
-endif
-" }}}
 
-" Revert defaults.vim {{{
-" The following options are configured in default.vim
-if has('vim_starting')
-  set history=10000     " increate n of command line history
-endif
-set noruler             " [slow] do not show the cursor position.
+  " Revert defaults.vim {{{
+  " The following options are configured in default.vim
+  if has('vim_starting')
+    set history=10000     " increate n of command line history
+  endif
+  set noruler             " [slow] do not show the cursor position.
 
-" Do not highlight string inside C comments.
-unlet c_comment_strings
+  " Do not highlight string inside C comments.
+  unlet c_comment_strings
+  " }}}
+
+endif
 " }}}
 
 " Disable unnecessary features {{{
@@ -217,8 +218,13 @@ set showbreak=\ +
 " }}}
 
 " Mapping {{{
+nnoremap ; :
+nnoremap : ;
+vnoremap ; :
+vnoremap : ;
+
 " define <Leader> and <LocalLeader>
-let mapleader = ';'
+let mapleader = ','
 let maplocalleader = ','
 
 " remove any existing keymap for leader and localleader
@@ -402,7 +408,7 @@ if !exists('*s:reload_vimrc')
 endif
 nnoremap <silent> <Plug>(my-reload-vimrc)
       \ :<C-u>call <SID>reload_vimrc()<CR>
-nmap <F4> <Plug>(my-reload-vimrc)
+nmap <Leader><Leader>r <Plug>(my-reload-vimrc)
 " }}}
 
 " source/reload current vimscript file " {{{
@@ -424,7 +430,7 @@ if !exists('*s:source_current_path')
   endfunction
 endif
 nmap <silent> <Plug>(my-source) :<C-u>call <SID>source_current_path()<CR>
-nmap <F5> <Plug>(my-source)
+nmap <Leader><Leader>s <Plug>(my-source)
 " }}}
 
 " automatically create missing directories {{{

@@ -68,3 +68,5 @@ else
   set antialias
   set guifont=RictyForPowerline\ 8
 endif
+
+call vimrc#source_path('~/.gvimrc.local')
