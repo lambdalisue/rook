@@ -1147,7 +1147,6 @@ autocmd MyAutoCmd FileType typescript call s:tsuquyomi_configure()
 # Vimscript development {{{
 [[plugins]]
 repo = 'thinca/vim-themis'
-rtp = ''
 
 [[plugins]]
 repo = 'Kuniwak/vint'
