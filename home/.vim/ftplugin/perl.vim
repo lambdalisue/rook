@@ -9,6 +9,12 @@ let g:perl_fold = 0
 "let g:perl_fold_anonymous_subs = 1
 "let g:perl_nofold_packages = 1
 
+setl tabstop=8        " width of TAB should be 8 characters
+setl softtabstop=4    " 4 continuous spaces are assumed as Soft tab
+setl shiftwidth=4     " width of Indent
+setl smarttab         " use 'shiftwidth' and 'softtabstop' for indentation
+setl expandtab        " use continuous spaces as TAB
+
 " check if the package name and file name are mismached {{{ 
 function! s:get_package_name()
     let mx = '^\s*package\s\+\([^ ;]\+\)'
