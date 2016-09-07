@@ -1,7 +1,581 @@
+# Fundemental {{{
 [[plugins]]
 repo = 'Shougo/dein.vim'
-merged = 0
+rtp  = ''
 
-[[plugin]]
+[[plugins]]
 repo = 'haya14busa/dein-command.vim'
 on_cmd = 'Dein'
+
+[[plugins]]
+repo = 'lambdalisue/vim-marron'
+on_map = [['n', '<Plug>']]
+hook_add = '''
+nmap <Leader><Leader>r <Plug>(marron-reload-vimrc)<Plug>(marron-reload-gvimrc)
+'''
+
+[[plugins]]
+repo = 'sudo.vim'
+on_path = 'sudo:*'
+hook_add = 'cnoreabbrev w!! :w sudo:%'
+
+[[plugins]]
+repo = 'lambdalisue/vim-manpager'
+on_cmd = ['MANPAGER', 'Man']
+hook_add = '''
+let g:loaded_man = 1  " Disable Neovim builtin 'Man'
+'''
+
+[[plugins]]
+repo = 'lambdalisue/vim-fullscreen'
+on_map = [['n', '<Plug>']]
+hook_add = '''
+nmap <C-CR> <Plug>(fullscreen-toggle)
+'''
+
+[[plugins]]
+repo = 'thinca/vim-fontzoom'
+on_map = [['n', '<Plug>']]
+on_cmd = 'Fontzoom'
+hook_add = '''
+let g:fontzoom_no_default_key_mappings = 1
+nmap <C-ScrollWheelUp>   <Plug>(fontzoom-larger)
+nmap <C-ScrollWheelDown> <Plug>(fontzoom-smaller)
+nmap <C-S-Up>            <Plug>(fontzoom-larger)
+nmap <C-S-Down>          <Plug>(fontzoom-smaller)
+'''
+
+# }}}
+
+# Dependency {{{
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+build = 'make'
+merged = 0
+
+# }}}
+
+# Editing {{{
+[[plugins]]
+repo = 'cohama/lexima.vim'
+on_i = 1
+hook_source = '''
+execute 'source' fnameescape(expand('~/.vim/rc/lexima.vim'))
+'''
+
+[[plugins]]
+repo = 'tyru/caw.vim'
+depends = [
+  'vim-operator-user',
+  'vim-repeat',
+  'context_filetype.vim',
+]
+on_map = [['nx', '<Plug>']]
+hook_add = '''
+let g:caw_no_default_keymappings = 1
+nmap gc   <Plug>(caw:prefix)
+nmap gcc  <Plug>(caw:hatpos:toggle)
+nmap gci  <Plug>(caw:hatpos:comment)
+nmap gcui <Plug>(caw:hatpos:uncomment)
+nmap gcI  <Plug>(caw:zeropos:comment)
+nmap gcuI <Plug>(caw:zeropos:uncomment)
+nmap gca  <Plug>(caw:dollarpos:comment)
+nmap gcua <Plug>(caw:dollarpos:uncomment)
+nmap gcw  <Plug>(caw:wrap:toggle)
+nmap gcb  <Plug>(caw:box:comment)
+xmap gc   <Plug>(caw:prefix)
+xmap gcc  <Plug>(caw:hatpos:toggle)
+xmap gci  <Plug>(caw:hatpos:comment)
+xmap gcui <Plug>(caw:hatpos:uncomment)
+xmap gcI  <Plug>(caw:zeropos:comment)
+xmap gcuI <Plug>(caw:zeropos:uncomment)
+xmap gca  <Plug>(caw:dollarpos:comment)
+xmap gcua <Plug>(caw:dollarpos:uncomment)
+xmap gcw  <Plug>(caw:wrap:toggle)
+xmap gcb  <Plug>(caw:box:comment)
+nmap gco  <Plug>(caw:jump:comment-next)
+nmap gcO  <Plug>(caw:jump:comment-prev)
+'''
+
+# }}}
+
+# Filetype {{{
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+[[plugins]]
+repo = 'hail2u/vim-css3-syntax'
+
+[[plugins]]
+repo = 'othree/html5.vim'
+
+[[plugins]]
+repo = 'groenewege/vim-less'
+
+[[plugins]]
+repo = 'cakebaker/scss-syntax.vim'
+
+[[plugins]]
+repo = 'kchmck/vim-coffee-script'
+
+[[plugins]]
+repo = 'elzr/vim-json'
+
+[[plugins]]
+repo = 'jQuery'
+
+[[plugins]]
+repo = 'jelera/vim-javascript-syntax'
+
+[[plugins]]
+repo = 'jason0x43/vim-js-indent'
+
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+hook_source = '''
+let g:typescript_indent_disable = 1
+let g:typescript_compiler_options = '-sourcemap'
+'''
+
+[[plugins]]
+repo = 'thinca/vim-ft-help_fold'
+
+[[plugins]]
+repo = 'applescript.vim'
+
+[[plugins]]
+repo = 'indentpython.vim'
+
+[[plugins]]
+repo = 'python_match.vim'
+
+[[plugins]]
+repo = 'tmhedberg/SimpylFold'
+
+[[plugins]]
+repo = 'vim-perl/vim-perl'
+
+[[plugins]]
+#repo = 'motemen/xslate-vim'
+repo = 'lambdalisue/xslate-vim'
+
+[[plugins]]
+repo = 'lambdalisue/vim-cython-syntax'
+
+[[plugins]]
+repo = 'lambdalisue/vim-ledi'
+on_ft = ['python', 'python3']
+
+[[plugins]]
+if = "executable('pyenv')"
+repo = 'lambdalisue/vim-pyenv'
+on_source = 'vim-ledi'
+hook_post_source = '''
+function! s:ledi_auto_set_python_major_version() abort
+  let major_version = pyenv#python#get_internal_major_version()
+  call ledi#python#init(major_version)
+endfunction
+autocmd MyAutoCmd User vim-pyenv-activate-post   call s:ledi_auto_set_python_major_version()
+autocmd MyAutoCmd User vim-pyenv-deactivate-post call s:ledi_auto_set_python_major_version()
+'''
+
+[[plugins]]
+repo = 'hotchpotch/perldoc-vim'
+on_ft = 'perl'
+
+[[plugins]]
+repo = 'c9s/perlomni.vim'
+on_ft = 'perl'
+
+[[plugins]]
+repo = 'Quramy/tsuquyomi'
+depends = 'vimproc.vim'
+build = 'npm install -g typescript'
+on_ft = 'typescript'
+hook_add = '''
+function! s:tsuquyomi_configure() abort
+  nmap <buffer> <LocalLeader>d <Plug>(TsuquyomiDefinition)
+  nmap <buffer> <LocalLeader>b <Plug>(TsuquyomiGoBack)
+  nmap <buffer> <LocalLeader>r <Plug>(TsuquyomiReferences)
+  nmap <buffer> <LocalLeader>R <Plug>(TsuquyomiRenameSymbolC)
+  if exists('&ballooneval')
+    setlocal ballooneval
+    setlocal balloonexpr=tsuquyomi#balloonexpr()
+  endif
+endfunction
+autocmd MyAutoCmd FileType typescript call s:tsuquyomi_configure()
+'''
+
+# }}}
+
+# Colorscheme {{{
+[[plugins]]
+repo = 'cocopon/iceberg.vim'
+
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
+
+[[plugins]]
+repo = 'cocopon/lightline-hybrid.vim'
+# }}}
+
+# Textobj {{{
+[[plugins]]
+repo = 'kana/vim-textobj-entire'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap ae <Plug>(textobj-entire-a)
+omap ie <Plug>(textobj-entire-i)
+xmap ae <Plug>(textobj-entire-a)
+xmap ie <Plug>(textobj-entire-i)
+'''
+
+[[plugins]]
+repo = 'kana/vim-textobj-line'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap al <Plug>(textobj-line-a)
+omap il <Plug>(textobj-line-i)
+xmap al <Plug>(textobj-line-a)
+xmap il <Plug>(textobj-line-i)
+'''
+
+[[plugins]]
+repo = 'kana/vim-textobj-syntax'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap ay <Plug>(textobj-syntax-a)
+omap iy <Plug>(textobj-syntax-i)
+xmap ay <Plug>(textobj-syntax-a)
+xmap iy <Plug>(textobj-syntax-i)
+'''
+
+[[plugins]]
+repo = 'kana/vim-textobj-indent'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap ai <Plug>(textobj-indent-a)
+omap ii <Plug>(textobj-indent-i)
+xmap ai <Plug>(textobj-indent-a)
+xmap ii <Plug>(textobj-indent-i)
+omap aI <Plug>(textobj-indent-same-a)
+omap iI <Plug>(textobj-indent-same-i)
+xmap aI <Plug>(textobj-indent-same-a)
+xmap iI <Plug>(textobj-indent-same-i)
+'''
+
+[[plugins]]
+repo = 'kana/vim-textobj-datetime'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap ada <Plug>(textobj-datetime-auto)
+omap add <Plug>(textobj-datetime-date)
+omap adf <Plug>(textobj-datetime-full)
+omap adt <Plug>(textobj-datetime-time)
+omap adz <Plug>(textobj-datetime-tz)
+omap ida <Plug>(textobj-datetime-auto)
+omap idd <Plug>(textobj-datetime-date)
+omap idf <Plug>(textobj-datetime-full)
+omap idt <Plug>(textobj-datetime-time)
+omap idz <Plug>(textobj-datetime-tz)
+xmap ada <Plug>(textobj-datetime-auto)
+xmap add <Plug>(textobj-datetime-date)
+xmap adf <Plug>(textobj-datetime-full)
+xmap adt <Plug>(textobj-datetime-time)
+xmap adz <Plug>(textobj-datetime-tz)
+xmap ida <Plug>(textobj-datetime-auto)
+xmap idd <Plug>(textobj-datetime-date)
+xmap idf <Plug>(textobj-datetime-full)
+xmap idt <Plug>(textobj-datetime-time)
+xmap idz <Plug>(textobj-datetime-tz)
+'''
+
+[[plugins]]
+repo = 'thinca/vim-textobj-comment'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap ac <Plug>(textobj-comment-a)
+omap ic <Plug>(textobj-comment-i)
+xmap ac <Plug>(textobj-comment-a)
+xmap ic <Plug>(textobj-comment-i)
+'''
+
+[[plugins]]
+repo = 'saihoooooooo/vim-textobj-space'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap a<Space> <Plug>(textobj-space-a)
+omap i<Space> <Plug>(textobj-space-i)
+xmap a<Space> <Plug>(textobj-space-a)
+xmap i<Space> <Plug>(textobj-space-i)
+'''
+
+[[plugins]]
+repo = 'kana/vim-textobj-fold'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap az <Plug>(textobj-fold-a)
+omap iz <Plug>(textobj-fold-i)
+xmap az <Plug>(textobj-fold-a)
+xmap iz <Plug>(textobj-fold-i)
+'''
+
+[[plugins]]
+repo = 'kana/vim-textobj-underscore'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap a_ <Plug>(textobj-underscore-a)
+omap i_ <Plug>(textobj-underscore-i)
+xmap a_ <Plug>(textobj-underscore-a)
+xmap i_ <Plug>(textobj-underscore-i)
+'''
+
+[[plugins]]
+repo = 'RyanMcG/vim-textobj-dash'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap a- <Plug>(textobj-quoted-a)
+omap i- <Plug>(textobj-quoted-i)
+xmap a- <Plug>(textobj-quoted-a)
+xmap i- <Plug>(textobj-quoted-i)
+'''
+
+[[plugins]]
+repo = 'mattn/vim-textobj-url'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap au <Plug>(textobj-url-a)
+omap iu <Plug>(textobj-url-i)
+xmap au <Plug>(textobj-url-a)
+xmap iu <Plug>(textobj-url-i)
+'''
+
+[[plugins]]
+repo = 'sgur/vim-textobj-parameter'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap aP <Plug>(textobj-parameter-a)
+omap iP <Plug>(textobj-parameter-i)
+xmap aP <Plug>(textobj-parameter-a)
+xmap iP <Plug>(textobj-parameter-i)
+'''
+
+[[plugins]]
+repo = 'osyo-manga/vim-textobj-multiblock'
+depends = 'vim-textobj-user'
+on_map = [['ox', '<Plug>']]
+hook_add = '''
+omap ab <Plug>(textobj-multiblock-a)
+omap ib <Plug>(textobj-multiblock-i)
+xmap ab <Plug>(textobj-multiblock-a)
+xmap ib <Plug>(textobj-multiblock-i)
+'''
+
+[[plugins]]
+repo = 'rhysd/vim-textobj-word-column'
+depends = 'vim-textobj-user'
+on_map = [
+  ['ox', '<Plug>(textobj-wordcolumn-W-i)'],
+  ['ox', '<Plug>(textobj-wordcolumn-w-i)'],
+  ['ox', '<Plug>(textobj-wordcolumn-W-a)'],
+  ['ox', '<Plug>(textobj-wordcolumn-w-a)'],
+]
+hook_add = '''
+omap av <Plug>(textobj-wordcolumn-w-a)
+omap iv <Plug>(textobj-wordcolumn-w-i)
+xmap av <Plug>(textobj-wordcolumn-w-a)
+xmap iv <Plug>(textobj-wordcolumn-w-i)
+
+omap aV <Plug>(textobj-wordcolumn-W-a)
+omap iV <Plug>(textobj-wordcolumn-W-i)
+xmap aV <Plug>(textobj-wordcolumn-W-a)
+xmap iV <Plug>(textobj-wordcolumn-W-i)
+'''
+# }}}
+
+# Operator {{{
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+depends = 'vim-operator-user'
+on_map = [['nx', '<Plug>']]
+hook_add = '''
+nmap -r <Plug>(operator-replace)
+xmap -r <Plug>(operator-replace)
+'''
+
+[[plugins]]
+repo = 'sgur/vim-operator-openbrowser'
+depends = 'vim-operator-user'
+on_map = [['nx', '<Plug>']]
+hook_add = '''
+nmap -o <Plug>(operator-openbrowser)
+xmap -o <Plug>(operator-openbrowser)
+'''
+
+[[plugins]]
+repo = 'rhysd/vim-operator-trailingspace-killer'
+depends = 'vim-operator-user'
+on_map = [['nx', '<Plug>']]
+hook_add = '''
+nmap -k <Plug>(operator-trailingspace-killer)
+xmap -k <Plug>(operator-trailingspace-killer)
+'''
+
+[[plugins]]
+repo = 'machakann/vim-sandwich'
+depends = 'vim-operator-user'
+on_map = [
+  ['nox', '<Plug>(operator-sandwich'],
+  ['nox', '<Plug>(textobj-sandwich'],
+]
+hook_add = '''
+let g:operator_sandwich_no_default_key_mappings = 1
+
+nmap sd <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+nmap sr <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+nmap sdb <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+nmap srb <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+
+omap ib <Plug>(textobj-sandwich-auto-i)
+xmap ib <Plug>(textobj-sandwich-auto-i)
+omap ab <Plug>(textobj-sandwich-auto-a)
+xmap ab <Plug>(textobj-sandwich-auto-a)
+
+omap is <Plug>(textobj-sandwich-query-i)
+xmap is <Plug>(textobj-sandwich-query-i)
+omap as <Plug>(textobj-sandwich-query-a)
+xmap as <Plug>(textobj-sandwich-query-a)
+
+nmap sa <Plug>(operator-sandwich-add)
+xmap sa <Plug>(operator-sandwich-add)
+xmap sd <Plug>(operator-sandwich-delete)
+xmap sr <Plug>(operator-sandwich-replace)
+'''
+
+[[plugins]]
+repo = 'lambdalisue/vim-operator-breakline'
+depends = 'vim-operator-user'
+on_map = [['nx', '<Plug>']]
+hook_add = '''
+nmap -b <Plug>(operator-breakline-manual)
+nmap -B <Plug>(operator-breakline-textwidth)
+xmap -b <Plug>(operator-breakline-manual)
+xmap -B <Plug>(operator-breakline-textwidth)
+'''
+
+[[plugins]]
+repo = 'dalance/vseq.vim'
+depends = 'vim-operator-user'
+on_map = [
+  ['nx', '<Plug>(operator-vseq-incr-dec)'],
+  ['nx', '<Plug>(operator-vseq-decr-dec)'],
+]
+hook_add = '''
+nmap <C-a> <Plug>(operator-vseq-incr-dec)
+nmap <C-x> <Plug>(operator-vseq-decr-dec)
+xmap <C-a> <Plug>(operator-vseq-incr-dec)
+xmap <C-x> <Plug>(operator-vseq-decr-dec)
+'''
+
+# }}}
+
+# Vimscript development {{{
+[[plugins]]
+repo = 'thinca/vim-themis'
+
+[[plugins]]
+repo = 'Kuniwak/vint'
+rtp = ''
+
+[[plugins]]
+repo = 'thinca/vim-prettyprint'
+on_cmd = ['PP', 'PrettyPrint']
+
+[[plugins]]
+repo = 'tyru/capture.vim'
+on_cmd = 'Capture'
+
+[[plugins]]
+repo = 'Shougo/junkfile.vim'
+on_cmd = 'JunkfileOpen'
+
+[[plugins]]
+repo = 'vim-jp/vital.vim'
+on_cmd = 'Vitalize'
+
+[[plugins]]
+repo = 'vim-jp/vital-complete'
+hook_add = '''
+autocmd MyAutoCmd FileType vim,vimspec setlocal omnifunc=vital_complete#complete
+'''
+# }}}
+
+# External Vital modules {{{
+[[plugins]]
+repo = 'lambdalisue/vital-Argument'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-ArgumentParser'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-ProgressBar'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Vim-Buffer-Opener'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Vim-Buffer-Anchor'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Vim-Prompt'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Vim-Validate'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Vim-Lua-String'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Data-List-Chunker'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Data-Dict-Option'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Data-String-Formatter'
+on_source = 'vital.vim'
+
+# }}}
+
+# vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker

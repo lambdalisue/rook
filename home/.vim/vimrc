@@ -524,7 +524,7 @@ if isdirectory(s:bundle_dein)
     call dein#begin(s:bundle_root, [
           \ expand('~/.vim/vimrc'),
           \ expand('~/.vim/gvimrc'),
-          \ expand('~/.vim/rc/dein/define.toml'),
+          \ expand('~/.vim/rc/dein.toml'),
           \])
     call dein#load_toml(expand('~/.vim/rc/dein.toml'))
     call dein#end()
