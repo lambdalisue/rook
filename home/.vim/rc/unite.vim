@@ -97,9 +97,56 @@ let g:unite_source_alias_aliases = {
       \}
 
 " File menu
-let g:unite_source_menu_menus.shortcut.file_candidates = [
-      \ '~/.vim/vimrc',
-      \ '~/.vim/gvimrc',
-      \ '~/.vim/rc/dein.toml',
-      \ '~/.vim/rc/unite.vim',
-      \]
+function! s:register_filemenu(name, description, precursors) abort
+  let t_string = type('')
+  let candidates = []
+  for precursor in a:precursors
+    if type(precursor) == t_string
+      call add(candidates, {
+            \ 'word': '',
+            \ 'abbr': '--- ' . precursor,
+            \ 'kind': 'common',
+            \ 'is_dummy': 1,
+            \})
+    else
+      let path = expand(precursor[0])
+      let desc = get(precursor, 1, '')
+      let kind = isdirectory(path) ? 'directory' : 'file'
+      let directory = isdirectory(path) ? path : fnamemodify(path, ':h')
+      call add(candidates, {
+            \ 'word': fnamemodify(path, ':~') . ' ' . desc,
+            \ 'kind': kind,
+            \ 'action__path': path,
+            \ 'action__directory': directory,
+            \})
+    endif
+  endfor
+  let g:unite_source_menu_menus = get(g:, 'unite_source_menu_menus', {})
+  let g:unite_source_menu_menus[a:name] = {
+        \ 'description': a:description,
+        \ 'candidates': candidates,
+        \}
+endfunction
+
+call s:register_filemenu('shortcut', 'Shortcut menu', [
+      \ 'rook',
+      \ ['~/.homesick/repos/rook'],
+      \ 'Vim',
+      \ ['~/.vimrc.local'],
+      \ ['~/.gvimrc.local'],
+      \ ['~/.vim/vimrc'],
+      \ ['~/.vim/gvimrc'],
+      \ ['~/.vim/vimrc.min'],
+      \ ['~/.vim/filetype.min'],
+      \ ['~/.vim/rc/dein.toml'],
+      \ ['~/.vim/rc/unite.vim'],
+      \ ['~/.vim/rc/vimfiler.vim'],
+      \ ['~/.vim/rc/vimshell.vim'],
+      \ ['~/.vim/rc/lightline.vim'],
+      \ ['~/.vim/ftplugin/'],
+      \ ['~/.vim/syntax/'],
+      \ ['~/.vim/template/'],
+      \ 'Neovim',
+      \ ['~/.vim/init.vim'],
+      \ ['~/.vim/ginit.vim'],
+      \])

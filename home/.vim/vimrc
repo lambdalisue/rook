@@ -324,14 +324,14 @@ nnoremap <silent> <Plug>(my-toggle-quickfix)
 nmap <C-q> <Plug>(my-toggle-quickfix)
 " }}}
 
-" Switch options with <Leader>s {{{
+" Switch options with <C-s> {{{
 let s:switch_allowed_options = [
       \ 'spell',
-      \ 'paste',
       \ 'wrap',
       \ 'expandtab',
       \ 'list',
       \ 'scrollbind',
+      \ 'paste',
       \]
 function! s:switch_option() abort
   echohl Question
@@ -362,7 +362,7 @@ function! s:switch_option_complete(arglead, cmdline, cursorpos) abort
 endfunction
 
 nnoremap <silent> <Plug>(my-switch-option) :<C-u>call <SID>switch_option()<CR>
-nmap <Leader>s <Plug>(my-switch-option)
+nmap <C-s> <Plug>(my-switch-option)
 " }}}
 
 " Source Vim script file with <Leader><Leader>s {{{
