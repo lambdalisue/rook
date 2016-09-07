@@ -2,6 +2,15 @@
 repo = 'Shougo/dein.vim'
 rtp = ''
 
+
+
+[[plugins]]
+repo = 'lambdalisue/vim-marron'
+hook_add = '''
+nmap <Leader><Leader>r <Plug>(marron-reload-vimrc)<Plug>(marron-reload-gvimrc)
+'''
+
+
 [[plugins]]
 repo = 'kana/vim-operator-user'
 
@@ -336,7 +345,7 @@ nnoremap <silent> <Plug>(my-unite)mm
       \ -buffer-name=search<CR>
 '''
 hook_source = '''
-call vimrc#source_path('$MYVIM_HOME/rc/config/unite.vim')
+execute 'source' fnameescape(expand('~/.vim/rc/config/unite.vim'))
 '''
 
 [[plugins]]
@@ -347,7 +356,7 @@ on_cmd = [
   'VimShellPop',
 ]
 hook_source = '''
-call vimrc#source_path('$MYVIM_HOME/rc/config/vimshell.vim')
+execute 'source' fnameescape(expand('~/.vim/rc/config/vimshell.vim'))
 '''
 hook_post_source = '''
 highlight! vimshellError gui=NONE cterm=NONE guifg='#cc6666' ctermfg=9
@@ -373,7 +382,7 @@ nnoremap <silent> <Plug>(my-vimfiler)e :<C-u>VimFilerExplorer<CR>
 nnoremap <silent> <Plug>(my-vimfiler)E :<C-u>VimFiler<CR>
 '''
 hook_source = '''
-call vimrc#source_path('$MYVIM_HOME/rc/config/vimfiler.vim')
+execute 'source' fnameescape(expand('~/.vim/rc/config/vimfiler.vim'))
 '''
 
 [[plugins]]
@@ -744,7 +753,7 @@ repo = 'lambdalisue/vim-gista-unite'
 repo = 'itchyny/lightline.vim'
 depends = 'lightline-hybrid.vim'
 hook_add = '''
-call vimrc#source_path('$MYVIM_HOME/rc/config/lightline.vim')
+execute 'source' fnameescape(expand('~/.vim/rc/config/lightline.vim'))
 '''
 
 # Colorscheme {{{
@@ -1092,12 +1101,6 @@ repo = 'lambdalisue/xslate-vim'
 
 [[plugins]]
 repo = 'lambdalisue/vim-cython-syntax'
-
-[[plugins]]
-build = 'pip install -q --disable-pip-version-check autopep8'
-repo = 'tell-k/vim-autopep8'
-on_ft = ['python', 'python3']
-hook_source = 'let g:autopep8_disable_show_diff = 1'
 
 [[plugins]]
 repo = 'lambdalisue/vim-ledi'

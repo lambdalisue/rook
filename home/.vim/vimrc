@@ -1,13 +1,12 @@
+"-----------------------------------------------------------------------------
 " Prelude {{{
 if has('vim_starting')
-  " Use defaults.vim
-  source $VIMRUNTIME/defaults.vim
   " Sets the character encoding inside Vim.
   set encoding=utf-8
   scriptencoding utf-8
 
-  " Revert defaults.vim {{{
-  " The following options are configured in default.vim
+  " Use defaults.vim and revert several settings
+  source $VIMRUNTIME/defaults.vim
   if has('vim_starting')
     set history=10000     " increate n of command line history
   endif
@@ -15,46 +14,62 @@ if has('vim_starting')
 
   " Do not highlight string inside C comments.
   unlet c_comment_strings
-  " }}}
 
+  " Disable annoying bells
+  set belloff=all
+  set noerrorbells
+  set novisualbell t_vb=
+
+  " Disable unnecessary default plugins
+  let g:loaded_gzip              = 1
+  let g:loaded_tar               = 1
+  let g:loaded_tarPlugin         = 1
+  let g:loaded_zip               = 1
+  let g:loaded_zipPlugin         = 1
+  let g:loaded_rrhelper          = 1
+  let g:loaded_2html_plugin      = 1
+  let g:loaded_vimball           = 1
+  let g:loaded_vimballPlugin     = 1
+  let g:loaded_getscript         = 1
+  let g:loaded_getscriptPlugin   = 1
+  let g:loaded_netrw             = 1
+  let g:loaded_netrwPlugin       = 1
+  let g:loaded_netrwSettings     = 1
+  let g:loaded_netrwFileHandlers = 1
+  let g:loaded_logipat           = 1
+  let g:loaded_matchparen        = 1
+  let g:loaded_man               = 1
 endif
 " }}}
 
-" Disable unnecessary features {{{
-set belloff=all
-set noerrorbells
-set novisualbell t_vb=
+" Utility {{{
+function! s:join(...) abort
+  let items = map(copy(a:000), 'matchstr(v:val, ''.\{-}/\?$'')')
+  return join(items, '/')
+endfunction
 
-" disable unnecessary default plugins
-let g:loaded_gzip              = 1
-let g:loaded_tar               = 1
-let g:loaded_tarPlugin         = 1
-let g:loaded_zip               = 1
-let g:loaded_zipPlugin         = 1
-let g:loaded_rrhelper          = 1
-let g:loaded_2html_plugin      = 1
-let g:loaded_vimball           = 1
-let g:loaded_vimballPlugin     = 1
-let g:loaded_getscript         = 1
-let g:loaded_getscriptPlugin   = 1
-let g:loaded_netrw             = 1
-let g:loaded_netrwPlugin       = 1
-let g:loaded_netrwSettings     = 1
-let g:loaded_netrwFileHandlers = 1
-let g:loaded_logipat           = 1
-let g:loaded_matchparen        = 1
-let g:loaded_man               = 1
+function! s:configure_path(name, pathlist) abort
+  let pathlist = split(eval(a:name), ':')
+  for path in map(filter(a:pathlist, '!empty(v:val)'), 'expand(v:val)')
+    if isdirectory(path) && index(pathlist, path) == -1
+      call insert(pathlist, path, 0)
+    endif
+  endfor
+  execute printf('let %s = join(pathlist, '':'')', a:name)
+endfunction
+
+function! s:pick_path(pathlist, ...) abort
+  for path in map(filter(a:pathlist, '!empty(v:val)'), 'resolve(expand(v:val))')
+    if isdirectory(path)
+      return path
+    endif
+  endfor
+  return ''
+endfunction
 " }}}
 
-" Environmental configure {{{
-set shell=/bin/bash
-let $MYVIM_HOME   = expand('~/.vim')
-let $MYVIM_DATA   = expand('~/Dropbox/Apps/Vim')
-let $MYVIM_VIMRC  = resolve(expand('$MYVIM_HOME/vimrc'))
-let $MYVIM_GVIMRC = resolve(expand('$MYVIM_HOME/gvimrc'))
-
-" Add several required path to $PATH
-call vimrc#prepend_envpath('$PATH', [
+" Environment {{{
+call s:configure_path('$PATH', [
       \ '/usr/local/bin',
       \ '/usr/local/texlive/2013/bin/x86_64-linux',
       \ '/usr/local/texlive/2013/bin/x86_64-darwin',
@@ -75,35 +90,19 @@ call vimrc#prepend_envpath('$PATH', [
       \ '~/.anyenv/envs/rbenv/shims',
       \ '~/.anyenv/envs/ndenv/shims',
       \ '~/.cabal/bin',
-      \ '$MYVIM_HOME/bundle/repos/github.com/thinca/vim-themis/bin',
-      \ '$MYVIM_HOME/bundle/repos/github.com/syngan/vim-vimlint/bin',
-      \ '$MYVIM_HOME/bundle/repos/github.com/Kuniwak/vint/bin',
+      \ '~/.cache/dein/repos/github.com/thinca/vim-themis/bin',
+      \ '~/.cache/dein/repos/github.com/Kuniwak/vint/bin',
       \])
-call vimrc#prepend_envpath('$MANPATH', [
+call s:configure_path('$MANPATH', [
       \ '/usr/local/share/man/',
       \])
-let $PYENV_ROOT = vimrc#pick_path([
+let $PYENV_ROOT = s:pick_path([
       \ '~/.anyenv/envs/pyenv',
       \ '~/.pyenv',
       \])
-set viewdir=$MYVIM_HOME/.view
-set undodir=$MYVIM_HOME/.undo
-set spellfile=$MYVIM_DATA/system/spellfile.utf-8.add
-call vimrc#ensure_path(&viewdir)
-call vimrc#ensure_path(&undodir)
-call vimrc#ensure_path(fnamemodify(&spellfile, ':p:h'))
-
-if has('gui_running') || has('nvim')
-  set timeout timeoutlen=1000 ttimeoutlen=100
-else
-  set t_Co=256     " use 256 colors
-  set ttyfast      " enable fast terminal connection
-  set ttyscroll=3  " the maximum number of lines for scrolling.
-                         " use small value here to prefer redraw the screen
-                         " instead of scrolling
-  set notimeout ttimeout ttimeoutlen=100
-endif
-
+set viewdir=~/.view
+set undodir=~/.undo
+set spellfile=~/Dropbox/Vim/system/spellfile.utf-8.add
 " }}}
 
 " Language {{{
@@ -168,10 +167,13 @@ set wildoptions=tagfile
 
 
 set list          " show invisible characters
+set breakindent   " every wrapped line will continue visually indented
 if $LANG !=# 'C'
-  set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%
+  set listchars=tab:»-,trail:˽,extends:»,precedes:«,nbsp:%,eol:↵
+  set showbreak=\ +
 else
-  set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%
+  set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%,eol:$
+  set showbreak=\ +
 endif
 
 " }}}
@@ -230,175 +232,68 @@ set showfulltag         " show both the tag name and the search pattern
 
 " K to search the help with the cursor word
 set keywordprg=:help
-" every wrapped line will continue visually indented
-set breakindent
-set showbreak=\ +
 " }}}
 
 " Mapping {{{
-nnoremap ; :
-nnoremap : ;
-vnoremap ; :
-vnoremap : ;
+" :help insert-index
 
 " define <Leader> and <LocalLeader>
-let mapleader = ','
-let maplocalleader = ','
-
-" remove any existing keymap for leader and localleader
+let g:mapleader = ','
+let g:maplocalleader = ','
 noremap <Leader>      <Nop>
 noremap <LocalLeader> <Nop>
 
-" disable dengerous mappings (ZZ: save and close, ZQ close)
+" Disable dengerous/annoying mappings
+" ZZ - save and close Vim
+" ZQ - close Vim
+nnoremap ZZ <Nop>
+nnoremap ZQ <Nop>
 noremap <MiddleMouse>   <Nop>
 noremap <2-MiddleMouse> <Nop>
 noremap <3-MiddleMouse> <Nop>
 noremap <4-MiddleMouse> <Nop>
-nnoremap ZZ <Nop>
-nnoremap ZQ <Nop>
 
-nmap <C-Space> <Return>
-vmap <C-Space> <Return>
-cmap <C-Space> <Return>
-imap <C-Space> <Return>
+" Swap ; and : in Normal and Visual mode [US keyboard]
+noremap ; :
+noremap : ;
 
-" Improve cursor operation
-nnoremap <silent><expr> j  v:count == 0 ? 'gj' : 'j'
-nnoremap <silent><expr> k  v:count == 0 ? 'gk' : 'k'
-nnoremap <silent><expr> gj v:count == 0 ? 'j' : 'gj'
-nnoremap <silent><expr> gk v:count == 0 ? 'k' : 'gk'
+" Emacs like movement in Insert/Command
+noremap! <C-a> <Home>
+noremap! <C-e> <End>
+noremap! <C-f> <C-o>h
+noremap! <C-b> <C-o>l
 
-
-" <Home> goes to the beginning of the text on first press and the
-" beginning of the line on second.
-noremap <silent><expr> <Home>
-      \ virtcol('.') - 1 <= indent('.') && col('.') > 1 ? '0' : '_'
-
-" Clear the highlight with <C-l>
-nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
-
-" Emacs like binding in Insert mode
-inoremap <C-a> <Home>
-inoremap <C-e> <End>
-inoremap <C-f> <C-o>w
-inoremap <C-b> <C-o>b
-inoremap <C-d> <C-o>x
-
-" Y to yank the end of line
-nnoremap Y y$
-
-" vv to select the line, like yy, dd
-nnoremap vv 0v$
-
-" Better <C-n>/<C-p> in command mode
+" Better <C-n>/<C-p> in Command
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <Up>   <C-p>
 cnoremap <Down> <C-n>
 
-" simple window resize navigation
+" Fix unreasonable mappings by historical reason
+nnoremap vv 0v$
+nnoremap Y y$
+
+" Cursor movement for Japanese
+nnoremap <silent><expr> j  v:count == 0 ? 'gj' : 'j'
+nnoremap <silent><expr> k  v:count == 0 ? 'gk' : 'k'
+nnoremap <silent><expr> gj v:count == 0 ? 'j' : 'gj'
+nnoremap <silent><expr> gk v:count == 0 ? 'k' : 'gk'
+
+" Tab navigations
+nnoremap <silent> <C-n> :<C-u>tabnext<CR>
+nnoremap <silent> <C-p> :<C-u>tabprevious<CR>
+nnoremap <silent> <C-t>n :<C-u>tabnew<CR>
+
+" Window resize operations with <S-Arrow>
 nnoremap <S-Left>  <C-w><<CR>
 nnoremap <S-Right> <C-w>><CR>
 nnoremap <S-Up>    <C-w>-<CR>
 nnoremap <S-Down>  <C-w>+<CR>
 
-" tag navigation
-nnoremap <silent> [t  :<C-u>tprevious<CR>
-nnoremap <silent> ]t  :<C-u>tnext<CR>
-nnoremap <silent> g[t :<C-u>tfirst<CR>
-nnoremap <silent> g]t :<C-u>tlast<CR>
+" Clear highlight with <C-l>
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
-" quickfix navigation
-nnoremap <silent> [q  :<C-u>cprevious<CR>
-nnoremap <silent> ]q  :<C-u>cnext<CR>
-nnoremap <silent> g[q :<C-u>cfirst<CR>
-nnoremap <silent> g]q :<C-u>clast<CR>
-nnoremap <silent> [l  :<C-u>lprevious<CR>
-nnoremap <silent> ]l  :<C-u>lnext<CR>
-nnoremap <silent> g[l :<C-u>lfirst<CR>
-nnoremap <silent> g]l :<C-u>llast<CR>
-
-" file navigation
-nnoremap <silent> {f  :<C-u>previous<CR>
-nnoremap <silent> }f  :<C-u>next<CR>
-nnoremap <silent> g{f :<C-u>first<CR>
-nnoremap <silent> g}f :<C-u>last<CR>
-
-" tab operation (make similar mapping with window operation)
-" ref.
-nnoremap <silent> <C-t>t     :<C-u>tabnew<CR>
-nnoremap <silent> <C-t><C-t> :<C-u>tabnew<CR>
-nnoremap <silent> <C-n> :<C-u>tabnext<CR>
-nnoremap <silent> <C-p> :<C-u>tabprevious<CR>
-
-" switch options
-nnoremap <Plug>(my-switch) <Nop>
-nmap <Leader>s <Plug>(my-switch)
-nnoremap <silent> <Plug>(my-switch)s :<C-u>setl spell! spell?<CR>
-nnoremap <silent> <Plug>(my-switch)l :<C-u>setl list! list?<CR>
-nnoremap <silent> <Plug>(my-switch)t :<C-u>setl expandtab! expandtab?<CR>
-nnoremap <silent> <Plug>(my-switch)w :<C-u>setl wrap! wrap?<CR>
-nnoremap <silent> <Plug>(my-switch)p :<C-u>setl paste! paste?<CR>
-nnoremap <silent> <Plug>(my-switch)b :<C-u>setl scrollbind! scrollbind?<CR>
-nnoremap <silent> <Plug>(my-switch)y :<C-u>call <SID>toggle_syntax()<CR>
-function! s:toggle_syntax() abort
-  if exists('g:syntax_on')
-    syntax off
-    redraw
-    echo 'syntax off'
-  else
-    syntax on
-    redraw
-    echo 'syntax on'
-  endif
-endfunction
-
-" alias for :e ++enc= | :e ++ff=
-cnoreabbrev ++u ++enc=utf8
-cnoreabbrev ++s ++enc=cp932
-cnoreabbrev ++e ++enc=euc-jp
-cnoreabbrev ++x ++ff=unix
-cnoreabbrev ++d ++ff=dos
-cnoreabbrev ++m ++ff=mac
-
-" I often mis-type...
-nnoremap cie <Nop>
-nnoremap cae <Nop>
-nnoremap die <Nop>
-nnoremap dae <Nop>
-nnoremap yie <Nop>
-nnoremap yae <Nop>
-
-" }}}
-
-" Macro {{{
-augroup MyAutoCmd
-  autocmd!
-augroup END
-
-" Automatically open a file in readonly mode when a corresponding swap file
-" exists
-autocmd MyAutoCmd SwapExists * let v:swapchoice = 'o'
-
-
-" Automatically move cursor at eol when paste
-" http://vim-jp.org/vim-users-jp/2011/01/16/Hack-195.html
-nnoremap <silent><expr> p
-      \ (col('.') >= col('$') ? '$' : '') . 'p'
-
-
-" Improve mkview/loadview {{{
-function! s:checkview() abort
-  if !&buflisted || &buftype =~# '^\%(nofile\|help\|quickfix\|terminal\)$'
-    return 0
-  endif
-  return 1
-endfunction
-autocmd MyAutoCmd BufWinLeave * if s:checkview() | silent! mkview   | endif
-autocmd MyAutoCmd BufWinEnter * if s:checkview() | silent! loadview | endif
-" }}}
-
-" Seemless substitution {{{
+" Seemless substitution with :s<Space> {{{
 cnoreabbrev <silent><expr>s getcmdtype() ==# ':' && getcmdline() =~# '^s'
       \ ? "<C-u>%s/<C-r>=get([], getchar(0), '')<CR>"
       \ : 's'
@@ -407,77 +302,167 @@ cnoreabbrev <silent><expr>'<,'>s getcmdtype() ==# ':' && getcmdline() =~# "^'<,'
       \ : "'<,'>s"
 " }}}
 
-" Reload vimrc with <Leader><Leader>r {{{
-if !exists('*s:reload_vimrc')
-  function! s:reload_vimrc() abort
-    call vimrc#source_path($MYVIM_VIMRC)
-    if has('gui_running')
-      call vimrc#source_path($MYVIM_GVIMRC)
-      redraw | echo printf('"%s" and "%s" has sourced (%s).',
-            \ fnamemodify($MYVIM_VIMRC, ':t'),
-            \ fnamemodify($MYVIM_GVIMRC, ':t'),
-            \ strftime('%c')
-            \)
-    else
-      redraw | echo printf('"%s" has sourced (%s).',
-            \ fnamemodify($MYVIM_VIMRC, ':t'),
-            \ strftime('%c')
-            \)
-    endif
-  endfunction
-endif
-nnoremap <silent> <Plug>(my-reload-vimrc)
-      \ :<C-u>call <SID>reload_vimrc()<CR>
-nmap <Leader><Leader>r <Plug>(my-reload-vimrc)
+" Execute a macro over a visual range with @ {{{
+function! s:execute_macro_over_visual_range() abort
+  execute ":'<,'>normal @" . nr2char(getchar())
+endfunction
+xnoremap <silent> <Plug>(my-execute-macro)
+      \ :<C-u>call <SID>execute_macro_over_visual_range()<CR>
+xmap @ <Plug>(my-execute-macro)
 " }}}
 
-" source/reload current vimscript file " {{{
-if !exists('*s:source_current_path')
-  function! s:source_current_path() abort
-    let abspath = resolve(expand('%:p'))
-    if &filetype !=# 'vim'
-      redraw
+" Toggle quickfix window with <C-q> {{{
+function! s:toggle_qf() abort
+  let nwin = winnr('$')
+  cclose
+  if nwin == winnr('$')
+    cwindow
+  endif
+endfunction
+nnoremap <silent> <Plug>(my-toggle-quickfix)
+      \ :<C-u>call <SID>toggle_qf()<CR>
+nmap <C-q> <Plug>(my-toggle-quickfix)
+" }}}
+
+" Switch options with <Leader>s {{{
+let s:switch_allowed_options = [
+      \ 'spell',
+      \ 'paste',
+      \ 'wrap',
+      \ 'expandtab',
+      \ 'list',
+      \ 'scrollbind',
+      \]
+function! s:switch_option() abort
+  echohl Question
+  call inputsave()
+  try
+    redraw
+    let fname = get(function('s:switch_option_complete'), 'name')
+    let candidates = s:switch_option_complete(
+          \ input('Switch: ', '', 'customlist,' . fname), '', 0
+          \)
+    if empty(candidates)
       echohl WarningMsg
-      echo printf(
-            \ 'The filetype of the current buffer is "%s" but it must be "vim" for source.',
-            \ &filetype,
-            \)
-      echohl None
+      echo 'Canceled.'
+    endif
+    let option = candidates[0]
+    execute printf('setlocal %s! %s?', option, option)
+  finally
+    echohl None
+    call inputrestore()
+  endtry
+endfunction
+
+function! s:switch_option_complete(arglead, cmdline, cursorpos) abort
+  return filter(
+        \ copy(s:switch_allowed_options),
+        \ 'v:val =~# ''^'' . a:arglead'
+        \)
+endfunction
+
+nnoremap <silent> <Plug>(my-switch-option) :<C-u>call <SID>switch_option()<CR>
+nmap <Leader>s <Plug>(my-switch-option)
+" }}}
+
+" Source Vim script file with <Leader><Leader>s {{{
+if !exists('*s:source_script')
+  function s:source_script(path) abort
+    let path = expand(a:path)
+    if !filereadable(path)
       return
     endif
-    call vimrc#source_path(resolve(expand('%:p')), 0)
-    redraw | echo printf('"%s" has sourced (%s).', expand('%:t'), strftime('%c'))
+    execute 'source' fnameescape(path)
+    echo printf(
+          \ '"%s" has sourced (%s)',
+          \ simplify(fnamemodify(path, ':~:.')),
+          \ strftime('%c'),
+          \)
   endfunction
 endif
-nnoremap <silent> <Plug>(my-source) :<C-u>call <SID>source_current_path()<CR>
-nmap <Leader><Leader>s <Plug>(my-source)
+nnoremap <silent> <Plug>(my-source-script)
+      \ :<C-u>call <SID>source_script('%')<CR>
+nmap <Leader><Leader>s <Plug>(my-source-script)
 " }}}
 
-" automatically create missing directories {{{
-function! s:makedirs(dir, force) abort
-  if a:dir =~# '^.\{-}://'
-      " Non local file, ignore
+" Switch colorscheme with <F3> {{{
+function! s:switch_colorscheme() abort
+  set background=dark
+  if get(g:, 'colors_name', '') ==# 'hybrid'
+    colorscheme iceberg
+  else
+    colorscheme hybrid
+  endif
+  redraw | echo g:colors_name
+endfunction
+nnoremap <silent> <Plug>(my-switch-colorscheme)
+      \ :<C-u>call <SID>switch_colorscheme()<CR>
+nmap <F3> <Plug>(my-switch-colorscheme)
+" }}}
+
+" }}}
+
+" Macro {{{
+" NOTE: Vim 7.4.1842 is required for get(Fn, 'name')
+augroup MyAutoCmd
+  autocmd!
+augroup END
+
+" Improve mkview/loadview {{{
+function! s:checkview() abort
+  if !&buflisted || &buftype =~# '^\%(nofile\|help\|quickfix\|terminal\)$' || &previewwindow
+    return 0
+  endif
+  return 1
+endfunction
+autocmd MyAutoCmd BufWinLeave * if s:checkview() | silent! mkview   | endif
+autocmd MyAutoCmd BufWinEnter * if s:checkview() | silent! loadview | endif
+" }}}
+
+" Automatically re-assign filetype {{{
+autocmd MyAutoCmd BufWritePost *
+      \ if &filetype ==# '' || exists('b:ftdetect') |
+      \  unlet! b:ftdetect |
+      \  filetype detect |
+      \ endif
+"}}}
+
+" Automatically create missing directories {{{
+function! s:auto_mkdir(dir, force) abort
+  if empty(a:dir) || a:dir =~# '^\w\+://' || isdirectory(a:dir)
       return
   endif
-  if !isdirectory(a:dir)
-    if a:force || input(printf('"%s" does not exist. Create? [y/N]', a:dir)) =~? '^y\%[es]$'
-      call mkdir(a:dir, 'p')
-    endif
+  if !a:force
+    echohl Question
+    call inputsave()
+    try
+      let result = input(
+            \ printf('"%s" does not exist. Create? [y/N]', a:dir),
+            \ '',
+            \ 'custom,' . get(function('s:auto_mkdir_complete'), 'name')
+            \)
+      if empty(result)
+        echohl WarningMsg
+        echo 'Canceled'
+        return
+      endif
+    finally
+      call inputrestore()
+      echohl None
+    endtry
   endif
+  call mkdir(a:dir, 'p')
 endfunction
-autocmd MyAutoCmd BufWritePre * call s:makedirs(expand('<afile>:p:h'), v:cmdbang)
+
+function! s:auto_makedir_complete(...) abort
+  return "yes\nno"
+endfunction
+
+autocmd MyAutoCmd BufWritePre *
+      \ call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
 " }}}
 
-" Show runtimepath {{{
-function! s:echo_runtimepath() abort
-  for path in split(&runtimepath, ',')
-    echo path
-  endfor
-endfunction
-command! EchoRuntimePath call s:echo_runtimepath()
-" }}}
-
-" automatically change working directory on vim enter {{{
+" Automatically change working directory on vim enter {{{
 function! s:workon(dir, bang) abort
   let dir = (a:dir ==# '' ? expand('%') : a:dir)
   " convert filename to directory if required
@@ -503,63 +488,6 @@ autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
 command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
 " }}}
 
-" toggle quickfix window {{{
-function! s:toggle_qf() abort
-  let nwin = winnr('$')
-  cclose
-  if nwin == winnr('$')
-    cwindow
-  endif
-endfunction
-nnoremap <silent> <Leader>q :call <SID>toggle_qf()<CR>
-" }}}
-
-" Automatically re-assign filetype {{{
-autocmd MyAutoCmd BufWritePost *
-      \ if &filetype ==# '' || exists('b:ftdetect') |
-      \  unlet! b:ftdetect |
-      \  filetype detect |
-      \ endif
-"}}}
-
-" Profiling a command {{{
-function! s:timeit(q_args) abort
-  let q_args = a:q_args
-  let q_args = substitute(q_args, '^[\t :]\+', '', '')
-  let q_args = substitute(q_args, '\s\+$', '', '')
-  let args = substitute(q_args, '^[ :]*!', '', '')
-  let start = reltime()
-  try
-    if q_args !=# '' && q_args[0] ==# '!'
-      echo system(args)
-    else
-      execute q_args
-    endif
-  finally
-    echomsg printf('Timeit: %s s [%s]', reltimestr(reltime(start)), a:q_args)
-  endtry
-endfunction
-command! -nargs=+ -bang -complete=command Timeit call s:timeit(<q-args>)
-" }}}
-
-" Clear messages {{{
-function! s:message_clear() abort
-  for i in range(201)
-    echomsg ''
-  endfor
-endfunction
-command! -nargs=0 MessageClear call s:message_clear()
-" }}}
-
-" Better macro {{{
-function! s:execute_macro_over_visual_range() abort
-  execute ":'<,'>normal @" . nr2char(getchar())
-endfunction
-xnoremap <silent> <Plug>(my-execute-macro)
-      \ :<C-u>call <SID>execute_macro_over_visual_range()<CR>
-xmap @ <Plug>(my-execute-macro)
-" }}}
-
 " Add runtimepath {{{
 function! s:add_runtimepath() abort
   let path = getcwd()
@@ -574,23 +502,66 @@ endfunction
 command! AddRuntimePath call s:add_runtimepath()
 " }}}
 
-" Switch colorscheme {{{
-function! s:switch_colorscheme() abort
-  set background=dark
-  if get(g:, 'colors_name', '') ==# 'hybrid'
-    colorscheme iceberg
-  else
-    colorscheme hybrid
-  endif
-  redraw | echo g:colors_name
+" Show runtimepath {{{
+function! s:echo_runtimepath() abort
+  for path in split(&runtimepath, ',')
+    echo path
+  endfor
 endfunction
-nnoremap <silent><F3> :<C-u>call <SID>switch_colorscheme()<CR>
+command! EchoRuntimePath call s:echo_runtimepath()
 " }}}
 
 " }}}
 
-call vimrc#source_path('$MYVIM_HOME/rc/dein.vim')
+" Plugin {{{
+let s:bundle_root = expand('~/.cache/vim/dein')
+let s:bundle_dein = s:join(s:bundle_root, 'repos/github.com/Shougo/dein.vim')
+if isdirectory(s:bundle_dein)
+  if has('vim_starting')
+    execute 'set runtimepath^=' . fnameescape(s:bundle_dein)
+  endif
+  if dein#load_state(s:bundle_root)
+    call dein#begin(s:bundle_root, [
+          \ expand('~/.vim/vimrc'),
+          \ expand('~/.vim/gvimrc'),
+          \ expand('~/.vim/rc/dein/define.toml'),
+          \])
+    call dein#load_toml(expand('~/.vim/rc/dein.toml'))
+    call dein#end()
+    call dein#save_state()
+  endif
+  if !has('vim_starting')
+    call dein#call_hook('source')
+    call dein#call_hook('post_source')
+  endif
+else
+  function! s:install() abort
+    if !executable('git')
+      echohl ErrorMsg
+      echo '"git" is not executable. You need to install "git" first.'
+      echohl None
+      return 1
+    endif
+  
+    echo 'Installing Shougo/dein.vim ...'
+    " Check if a parent directory is available and make if not
+    let parent_directory = fnamemodify(s:bundle_dein, ':h')
+    if !isdirectory(parent_directory)
+      call mkdir(parent_directory, 'p')
+    endif
+    call system(printf(
+          \ 'git clone %s %s',
+          \ 'https://github.com/Shougo/dein.vim',
+          \ fnameescape(s:bundle_dein),
+          \))
+    echo 'Shougo/dein.vim has installed. Restart your Vim.'
+  endfunction
+  command! Install call s:install()
+  echo 'Use ":Install" to install "Shougo/dein.vim"'
+endif
+" }}}
 
+" Postludium {{{
 filetype indent plugin on
 syntax on
 try
@@ -599,6 +570,15 @@ catch
   colorscheme desert
 endtry
 
-call vimrc#source_path('~/.vimrc.local')
+" Make sure required directories exist
+call s:auto_mkdir(&viewdir, 1)
+call s:auto_mkdir(&undodir, 1)
+call s:auto_mkdir(fnamemodify(&spellfile, ':p:h'), 1)
+
+" Source '~/.vimrc.local' only when exists
+silent call s:source_script('~/.vimrc.local')
+
 set secure
+" }}}
+"-----------------------------------------------------------------------------
 " vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker

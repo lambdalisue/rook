@@ -185,19 +185,19 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \ ['vim'],
       \ [
       \   'vimrc',
-      \   fnamemodify(resolve($MYVIM_VIMRC), ':~'),
+      \   fnamemodify(resolve('~/.vim/vimrc'), ':~'),
       \ ],
       \ [
       \   'gvimrc',
-      \   fnamemodify(resolve($MYVIM_GVIMRC), ':~'),
+      \   fnamemodify(resolve('~/.vim/gvimrc'), ':~'),
       \ ],
       \ [
       \   'init.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/init.vim'), ':~'),
+      \   fnamemodify(expand('~/.vim/init.vim'), ':~'),
       \ ],
       \ [
       \   'ginit.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/ginit.vim'), ':~'),
+      \   fnamemodify(expand('~/.vim/ginit.vim'), ':~'),
       \ ],
       \ [
       \   'vimrc.min',
@@ -213,51 +213,51 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \ ],
       \ [
       \   'filetype.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/filetype.vim'), ':~'),
+      \   fnamemodify(expand('~/.vim/filetype.vim'), ':~'),
       \ ],
       \ [
       \   'autoload/vimrc.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/autoload/vimrc.vim'), ':~'),
+      \   fnamemodify(expand('~/.vim/autoload/vimrc.vim'), ':~'),
       \ ],
       \ [
       \   'rc/dein.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/dein.vim'), ':~'),
+      \   fnamemodify(expand('~/.vim/rc/dein.vim'), ':~'),
       \ ],
       \ [
       \   'rc/dein/define.toml',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/dein/define.toml'), ':~'),
+      \   fnamemodify(expand('~/.vim/rc/dein/define.toml'), ':~'),
       \ ],
       \ [
       \   'rc/dein/config.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/dein/config.vim'), ':~'),
+      \   fnamemodify(expand('~/.vim/rc/dein/config.vim'), ':~'),
       \ ],
       \ [
       \   'rc/config/unite.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/config/unite.vim'), ':~'),
+      \   fnamemodify(expand('~/.vim/rc/config/unite.vim'), ':~'),
       \ ],
       \ [
       \   'rc/config/vimfiler.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/config/vimfiler.vim'), ':~'),
+      \   fnamemodify(expand('~/.vim/rc/config/vimfiler.vim'), ':~'),
       \ ],
       \ [
       \   'rc/config/vimshell.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/config/vimshell.vim'), ':~'),
+      \   fnamemodify(expand('~/.vim/rc/config/vimshell.vim'), ':~'),
       \ ],
       \ [
       \   'rc/config/lightline.vim',
-      \   fnamemodify(expand('$MYVIM_HOME/rc/config/lightline.vim'), ':~'),
+      \   fnamemodify(expand('~/.vim/rc/config/lightline.vim'), ':~'),
       \ ],
       \ [
       \   'vim',
-      \   fnamemodify(expand('$MYVIM_HOME'), ':~'),
+      \   fnamemodify(expand('~/.vim'), ':~'),
       \ ],
       \ [
       \   'bundle',
-      \   fnamemodify(expand('$MYVIM_HOME/bundle'), ':~'),
+      \   fnamemodify(expand('~/.vim/bundle'), ':~'),
       \ ],
       \ [
       \   'ftplugin',
-      \   fnamemodify(expand('$MYVIM_HOME/ftplugin'), ':~'),
+      \   fnamemodify(expand('~/.vim/ftplugin'), ':~'),
       \ ],
       \ [
       \   'vintrc.yaml',
@@ -265,7 +265,7 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \ ],
       \ [
       \   'vimshrc',
-      \   fnamemodify(expand('$MYVIM_HOME/vimshrc'), ':~'),
+      \   fnamemodify(expand('~/.vim/vimshrc'), ':~'),
       \ ],
       \ ['zsh'],
       \ [
