@@ -18,3 +18,9 @@ setl textwidth=0
 if exists('&colorcolumn')
   setl colorcolumn=79
 endif
+
+" Automatically insert / for second line
+nnoremap <buffer><expr><silent> o
+      \ getline('.') =~# '^\s*\\\s*.*' ? 'yypC\ ' : 'o'
+inoremap <buffer><expr><silent> <CR>
+      \ getline('.') =~# '^\s*\\\s*.*' ? "\<Esc>yypC\\ " : "\<CR>"

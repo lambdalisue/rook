@@ -104,6 +104,8 @@ nmap <C-S-Up>            <Plug>(fontzoom-larger)
 nmap <C-S-Down>          <Plug>(fontzoom-smaller)
 '''
 
+
+
 [[plugins]]
 repo = 'vim-pandoc/vim-pandoc'
 on_ft = 'pandoc'
@@ -345,7 +347,7 @@ nnoremap <silent> <Plug>(my-unite)mm
       \ -buffer-name=search<CR>
 '''
 hook_source = '''
-execute 'source' fnameescape(expand('~/.vim/rc/config/unite.vim'))
+execute 'source' fnameescape(expand('~/.vim/rc/unite.vim'))
 '''
 
 [[plugins]]
