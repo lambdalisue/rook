@@ -69,4 +69,6 @@ else
   set guifont=RictyForPowerline\ 8
 endif
 
-call vimrc#source_path('~/.gvimrc.local')
+if filereadable(expand('~/.gvimrc.local'))
+  execute 'source' fnameescape(expand('~/.gvimrc.local'))
+endif
