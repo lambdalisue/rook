@@ -1,9 +1,32 @@
-" Note:
-"   gvim is aliased in my zshrc in Mac OS X
-set editor='zsh -lc "gvim -f \$*" gvim '
+" Swap ; and : for US keyboard
+nnoremap ; :
+nnoremap : ;
+vnoremap ; :
+vnoremap : ;
+
+noremap <Space> <Leader>
 
 " Use <A-i> to launch the external editor
 inoremap <A-i> <C-i>
+
+nnoremap <C-n> gt
+nnoremap <C-p> gT
+nnoremap <C-t> :<C-u>tabnew<CR>
+
+cnoremap <C-n> <Tab>
+cnoremap <C-p> <S-Tab>
+
+nnoremap <C-e> 5<C-e>
+nnoremap <C-y> 5<C-y>
+
+nnoremap <Leader><leader>r :<C-u>source ~/.vimperatorrc<CR>
+
+set ignorecase
+set smartcase
+
+set hintchars=abcdefghijklmnopqrstuvwxyz
+
+
 
 ignorekeys clear
 ignorekeys add localhost:9999
@@ -12,3 +35,6 @@ ignorekeys add localhost:8000
 ignorekeys add lambdalisue.github.io/rehighlight
 ignorekeys add nup-lpmns
 ignorekeys add karyo-lpmns
+
+source! ~/.vimperatorrc.local
+echomsg '~/.vimperatorrc has loaded.'

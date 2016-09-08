@@ -1,68 +1,27 @@
 require([
-  'base/js/namespace',
-  'notebook/js/cell',
-  'codemirror/addon/edit/trailingspace'
-], function(ns, cell) {
-  var cm_config = cell.Cell.options_default.cm_config;
-  cm_config.showTrailingSpace = true;
-
-  ns.notebook.get_cells().map(function(cell) {
-    var cm = cell.code_mirror;
-    if (cm) {
-      cm.setOption('showTrailingSpace', true);
-    }
-  });
-});
-
-require([
   'codemirror/keymap/vim',
   'nbextensions/vim_binding/vim_binding'
 ], function() {
+  // Use ; as : in normal/visual mode
+  CodeMirror.Vim.map(";", ":", "normal");
+  CodeMirror.Vim.map(";", ":", "visual");
+
   // Use gj/gk instead of j/k
   CodeMirror.Vim.map("j", "<Plug>(vim-binding-gj)", "normal");
   CodeMirror.Vim.map("k", "<Plug>(vim-binding-gk)", "normal");
   CodeMirror.Vim.map("gj", "<Plug>(vim-binding-j)", "normal");
   CodeMirror.Vim.map("gk", "<Plug>(vim-binding-k)", "normal");
 
-  // Use Ctrl-h/l/j/k to move around in Insert mode
-  CodeMirror.Vim.defineAction('[i]<C-h>', function(cm) {
-    var head = cm.getCursor();
-    CodeMirror.Vim.handleKey(cm, '<Esc>');
-    if (head.ch <= 1) {
-      CodeMirror.Vim.handleKey(cm, 'i');
-    } else {
-      CodeMirror.Vim.handleKey(cm, 'h');
-      CodeMirror.Vim.handleKey(cm, 'a');
-    }
-  });
-  CodeMirror.Vim.defineAction('[i]<C-l>', function(cm) {
-    var head = cm.getCursor();
-    CodeMirror.Vim.handleKey(cm, '<Esc>');
-    if (head.ch === 0) {
-      CodeMirror.Vim.handleKey(cm, 'a');
-    } else {
-      CodeMirror.Vim.handleKey(cm, 'l');
-      CodeMirror.Vim.handleKey(cm, 'a');
-    }
-  });
-  CodeMirror.Vim.mapCommand("<C-h>", "action", "[i]<C-h>", {}, { "context": "insert" });
-  CodeMirror.Vim.mapCommand("<C-l>", "action", "[i]<C-l>", {}, { "context": "insert" });
-  CodeMirror.Vim.map("<C-j>", "<Esc>ja", "insert");
-  CodeMirror.Vim.map("<C-k>", "<Esc>ka", "insert");
-
   // Emacs like binding
   CodeMirror.Vim.map("<C-a>", "<Esc>^i", "insert");
   CodeMirror.Vim.map("<C-e>", "<Esc>$a", "insert");
-  CodeMirror.Vim.map("<C-f>", "<Esc>lwi", "insert");
-  CodeMirror.Vim.map("<C-b>", "<Esc>lbi", "insert");
-  CodeMirror.Vim.map("<C-d>", "<Esc>lxi", "insert");
+  CodeMirror.Vim.map("<C-f>", "<Esc>2li", "insert");
+  CodeMirror.Vim.map("<C-b>", "<Esc>i", "insert");
 
   // Map <Nop> otherwise it would trigger browser shortcuts
   CodeMirror.Vim.map("<C-h>", "<Nop>", "normal");
   CodeMirror.Vim.map("<C-l>", "<Nop>", "normal");
   CodeMirror.Vim.map("<C-w>", "<Nop>", "normal");
   CodeMirror.Vim.map("<C-t>", "<Nop>", "normal");
-  CodeMirror.Vim.map("<C-n>", "<Nop>", "normal");
-
   console.log('Custom keymaps are applied.');
 });

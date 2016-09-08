@@ -282,7 +282,7 @@ nnoremap <silent><expr> gk v:count == 0 ? 'k' : 'gk'
 " Tab navigations
 nnoremap <silent> <C-n> :<C-u>tabnext<CR>
 nnoremap <silent> <C-p> :<C-u>tabprevious<CR>
-nnoremap <silent> <C-t>n :<C-u>tabnew<CR>
+nnoremap <silent> <C-t> :<C-u>tabnew<CR>
 
 " Window resize operations with <S-Arrow>
 nnoremap <S-Left>  <C-w><<CR>
