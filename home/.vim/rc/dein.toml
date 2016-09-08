@@ -269,6 +269,9 @@ nnoremap <silent> <Plug>(my-tagbar) :<C-u>TagbarToggle<CR>
 
 # Visualize {{{
 [[plugins]]
+repo = 'kshenoy/vim-signature'
+
+[[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
 execute 'source' fnameescape(expand('~/.vim/rc/lightline.vim'))
@@ -338,29 +341,6 @@ repo = 't9md/vim-choosewin'
 on_map = '<Plug>'
 hook_add = 'nmap <C-w><C-w> <Plug>(choosewin)'
 
-
-[[plugins]]
-repo = 'MattesGroeger/vim-bookmarks'
-on_map = '<Plug>'
-on_source = 'unite.vim'
-hook_add = '''
-nnoremap <Plug>(my-bookmark) <Nop>
-nmap M <Plug>(my-bookmark)
-vmap M <Plug>(my-bookmark)
-nmap <Plug>(my-bookmark)m <Plug>BookmarkToggle
-nmap <Plug>(my-bookmark)i <Plug>BookmarkAnnotate
-vmap <Plug>(my-bookmark)m <Plug>BookmarkToggle
-vmap <Plug>(my-bookmark)i <Plug>BookmarkAnnotate
-nmap <Plug>(my-bookmark)a <Plug>BookmarkShowAll
-nmap <Plug>(my-bookmark)c <Plug>BookmarkClear
-nmap <Plug>(my-bookmark)x <Plug>BookmarkClearAll
-nmap ]m <Plug>BookmarkNext
-nmap [m <Plug>BookmarkPrev
-'''
-hook_source = '''
-let g:bookmark_no_default_keymappings = 1
-'''
-
 # }}}
 
 # Editing {{{
@@ -369,9 +349,9 @@ repo = 'thinca/vim-template'
 hook_add = '''
 autocmd User plugin-template-loaded call s:template_keywords()
 function! s:template_keywords()
-  %s/<+FILE NAME+>/\=expand('%:t')/g
-  %s/<+DATE+>/\=strftime('%Y-%m-%d')/g
-  silent %s/<%=\(.\{-}\)%>/\=eval(submatch(1))/ge
+  silent! %s/<+FILE NAME+>/\=expand('%:t')/g
+  silent! %s/<+DATE+>/\=strftime('%Y-%m-%d')/g
+  silent! %s/<%=\(.\{-}\)%>/\=eval(submatch(1))/ge
   if search('<+CURSOR+>')
     execute 'normal! "_da>'
   endif
@@ -653,12 +633,6 @@ nnoremap <silent> <Plug>(my-unite)o
       \ :<C-u>Unite outline
       \ -no-quit -keep-focus -no-start-insert
       \ -vertical -direction=botright -winwidth=30<CR>
-
-" vim-bookmarks
-nnoremap <silent> <Plug>(my-unite)b
-      \ :<C-u>Unite vim_bookmarks
-      \ -no-quit -keep-focus -no-start-insert
-      \ -buffer-name=search<CR>
 '''
 hook_source = '''
 execute 'source' fnameescape(expand('~/.vim/rc/unite.vim'))
