@@ -1083,6 +1083,9 @@ repo = 'Kuniwak/vint'
 rtp = ''
 
 [[plugins]]
+repo = 'lambdalisue/vim-slashindent'
+
+[[plugins]]
 repo = 'thinca/vim-prettyprint'
 on_cmd = ['PP', 'PrettyPrint']
 
