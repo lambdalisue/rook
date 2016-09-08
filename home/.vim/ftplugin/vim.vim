@@ -19,8 +19,39 @@ if exists('&colorcolumn')
   setl colorcolumn=79
 endif
 
-" Automatically insert / for second line
-nnoremap <buffer><expr><silent> o
-      \ getline('.') =~# '^\s*\\\s*.*' ? 'yypC\ ' : 'o'
-inoremap <buffer><expr><silent> <CR>
-      \ getline('.') =~# '^\s*\\\s*.*' ? "\<Esc>yypC\\ " : "\<CR>"
+
+" Automatically insert \ when required {{{
+function! s:smart_o() abort
+  let line = getline('.')
+  if line =~# '^\s*\\\s*$'
+    " Remove leading indent and \ if the line only contains spaces and \
+    let indent = repeat(' ', get(g:, 'vim_indent_cont', 6))
+    let pattern = printf('\%%(%s\)\?\\\s*$', indent)
+    let leading = substitute(line, pattern, '', '')
+    call setline('.', leading)
+    call setpos('.', [0, line('.'), len(leading), !empty(leading)])
+    startinsert
+  else
+    let leading = matchstr(line, '^\s*\\\?\s*')
+    call append(line('.'), leading)
+    call setpos('.', [0, line('.')+1, len(leading), !empty(leading)])
+    startinsert
+  endif
+endfunction
+nnoremap <silent><buffer> o :<C-u>call <SID>smart_o()<CR>
+
+function! s:smart_CR_i() abort
+  let line = getline('.')
+  if line =~# '^\s*\\\s*$'
+    return s:smart_o()
+  endif
+  let leading = matchstr(line, '^\s*\\\?\s*')
+  let prefix = line[:col('.')-1]
+  let suffix = line[col('.'):]
+  call setline('.', prefix)
+  call append(line('.'), leading . suffix)
+  call setpos('.', [0, line('.')+1, len(leading), !empty(leading)])
+  startinsert
+endfunction
+inoremap <silent><buffer> <CR> <Esc>:<C-u>call <SID>smart_CR_i()<CR>
+" }}}

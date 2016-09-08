@@ -212,77 +212,6 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 '''
 
-[[plugins]]
-repo = 'Shougo/unite.vim'
-on_cmd = [
-  'Unite',
-  'UniteWithCursorWord',
-  'UniteBookmarkAdd',
-]
-hook_add = '''
-nnoremap <Plug>(my-unite) <Nop>
-nmap <Leader>u <Plug>(my-unite)
-vmap <Leader>u <Plug>(my-unite)
-
-nnoremap <silent> <Plug>(my-unite)u :<C-u>UniteResume -no-start-insert<CR>
-nnoremap <silent> <Plug>(my-unite)w :<C-u>Unite buffer<CR>
-nnoremap <silent> <Plug>(my-unite)k :<C-u>Unite bookmark<CR>
-nnoremap <silent> <Plug>(my-unite)l :<C-u>Unite line -buffer-name=search<CR>
-nnoremap <silent> <Plug>(my-unite)m :<C-u>Unite map -buffer-name=search<CR>
-nnoremap <silent> <Plug>(my-unite)s :<C-u>Unite menu:shortcut<CR>
-
-" unite-file
-nnoremap <Plug>(my-unite-file) <Nop>
-nmap <Plug>(my-unite)f <Plug>(my-unite-file)
-nnoremap <silent> <Plug>(my-unite-file)f :<C-u>Unite file_rec/git file_rec/async<CR>
-nnoremap <silent> <Plug>(my-unite-file)i :<C-u>Unite file<CR>
-nnoremap <silent> <Plug>(my-unite-file)m :<C-u>Unite file_mru<CR>
-nnoremap <silent> <Plug>(my-unite-file)r :<C-u>Unite file_rec/async<CR>
-nnoremap <silent> <Plug>(my-unite-file)g :<C-u>Unite file_rec/git<CR>
-
-" unite-directory
-nnoremap <Plug>(my-unite-directory) <Nop>
-nmap <Plug>(my-unite)d <Plug>(my-unite-directory)
-nnoremap <silent> <Plug>(my-unite-directory)d :<C-u>Unite directory_rec/async<CR>
-nnoremap <silent> <Plug>(my-unite-directory)i :<C-u>Unite directory<CR>
-nnoremap <silent> <Plug>(my-unite-directory)m :<C-u>Unite directory_mru<CR>
-nnoremap <silent> <Plug>(my-unite-directory)r :<C-u>Unite directory_rec/async<CR>
-
-" unite-grep
-nnoremap <Plug>(my-unite-grep) <Nop>
-nmap <Plug>(my-unite)g <Plug>(my-unite-grep)
-vmap <Plug>(my-unite)g <Plug>(my-unite-grep)
-nnoremap <silent> <Plug>(my-unite-grep)* :<C-u>UniteWithCursorWord grep:. -buffer-name=search -no-empty<CR>
-vnoremap <silent> <Plug>(my-unite-grep)* :UniteWithCursorWord grep:. -buffer-name=search -no-empty<CR>
-nnoremap <silent> <Plug>(my-unite-grep)g :<C-u>Unite grep:. -buffer-name=search -no-empty<CR>
-vnoremap <silent> <Plug>(my-unite-grep)g :Unite grep:. -buffer-name=search -no-empty<CR>
-nnoremap <silent> <Plug>(my-unite-grep)i :<C-u>Unite grep/git:/ -buffer-name=search -no-empty<CR>
-vnoremap <silent> <Plug>(my-unite-grep)i :Unite grep/git:/ -buffer-name=search -no-empty<CR>
-
-" unite-gista
-nnoremap <silent> <Plug>(my-unite-git)t :<C-u>Unite gista:lambdalisue<CR>
-
-" unite-linephrase
-nnoremap <silent> <Plug>(my-unite)p
-      \ :<C-u>Unite linephrase
-      \ -no-quit -keep-focus -no-start-insert
-      \ -buffer-name=search<CR>
-
-" unite-outline
-nnoremap <silent> <Plug>(my-unite)o
-      \ :<C-u>Unite outline
-      \ -no-quit -keep-focus -no-start-insert
-      \ -vertical -direction=botright -winwidth=30<CR>
-
-" vim-bookmarks
-nnoremap <silent> <Plug>(my-unite)b
-      \ :<C-u>Unite vim_bookmarks
-      \ -no-quit -keep-focus -no-start-insert
-      \ -buffer-name=search<CR>
-'''
-hook_source = '''
-execute 'source' fnameescape(expand('~/.vim/rc/unite.vim'))
-'''
 
 [[plugins]]
 repo = 'Shougo/vimshell.vim'
@@ -663,6 +592,77 @@ call watchdogs#setup(g:quickrun_config)
 # }}}
 
 # Unite {{{
+[[plugins]]
+repo = 'Shougo/unite.vim'
+on_cmd = [
+  'Unite',
+  'UniteWithCursorWord',
+  'UniteBookmarkAdd',
+]
+hook_add = '''
+nnoremap <Plug>(my-unite) <Nop>
+nmap <Leader>u <Plug>(my-unite)
+vmap <Leader>u <Plug>(my-unite)
+
+nnoremap <silent> <Plug>(my-unite)u :<C-u>UniteResume -no-start-insert<CR>
+nnoremap <silent> <Plug>(my-unite)w :<C-u>Unite buffer<CR>
+nnoremap <silent> <Plug>(my-unite)k :<C-u>Unite bookmark<CR>
+nnoremap <silent> <Plug>(my-unite)l :<C-u>Unite line -buffer-name=search<CR>
+nnoremap <silent> <Plug>(my-unite)m :<C-u>Unite map -buffer-name=search<CR>
+nnoremap <silent> <Plug>(my-unite)s :<C-u>Unite menu:shortcut<CR>
+
+" unite-file
+nnoremap <Plug>(my-unite-file) <Nop>
+nmap <Plug>(my-unite)f <Plug>(my-unite-file)
+nnoremap <silent> <Plug>(my-unite-file)f :<C-u>Unite file_rec/git file_rec/async<CR>
+nnoremap <silent> <Plug>(my-unite-file)i :<C-u>Unite file<CR>
+nnoremap <silent> <Plug>(my-unite-file)m :<C-u>Unite file_mru<CR>
+nnoremap <silent> <Plug>(my-unite-file)r :<C-u>Unite file_rec/async<CR>
+nnoremap <silent> <Plug>(my-unite-file)g :<C-u>Unite file_rec/git<CR>
+
+" unite-directory
+nnoremap <Plug>(my-unite-directory) <Nop>
+nmap <Plug>(my-unite)d <Plug>(my-unite-directory)
+nnoremap <silent> <Plug>(my-unite-directory)d :<C-u>Unite directory_rec/async<CR>
+nnoremap <silent> <Plug>(my-unite-directory)i :<C-u>Unite directory<CR>
+nnoremap <silent> <Plug>(my-unite-directory)m :<C-u>Unite directory_mru<CR>
+nnoremap <silent> <Plug>(my-unite-directory)r :<C-u>Unite directory_rec/async<CR>
+
+" unite-grep
+nnoremap <Plug>(my-unite-grep) <Nop>
+nmap <Plug>(my-unite)g <Plug>(my-unite-grep)
+vmap <Plug>(my-unite)g <Plug>(my-unite-grep)
+nnoremap <silent> <Plug>(my-unite-grep)* :<C-u>UniteWithCursorWord grep:. -buffer-name=search -no-empty<CR>
+vnoremap <silent> <Plug>(my-unite-grep)* :UniteWithCursorWord grep:. -buffer-name=search -no-empty<CR>
+nnoremap <silent> <Plug>(my-unite-grep)g :<C-u>Unite grep:. -buffer-name=search -no-empty<CR>
+vnoremap <silent> <Plug>(my-unite-grep)g :Unite grep:. -buffer-name=search -no-empty<CR>
+nnoremap <silent> <Plug>(my-unite-grep)i :<C-u>Unite grep/git:/ -buffer-name=search -no-empty<CR>
+vnoremap <silent> <Plug>(my-unite-grep)i :Unite grep/git:/ -buffer-name=search -no-empty<CR>
+
+" unite-gista
+nnoremap <silent> <Plug>(my-unite-git)t :<C-u>Unite gista:lambdalisue<CR>
+
+" unite-linephrase
+nnoremap <silent> <Plug>(my-unite)p
+      \ :<C-u>Unite linephrase
+      \ -no-quit -keep-focus -no-start-insert
+      \ -buffer-name=search<CR>
+
+" unite-outline
+nnoremap <silent> <Plug>(my-unite)o
+      \ :<C-u>Unite outline
+      \ -no-quit -keep-focus -no-start-insert
+      \ -vertical -direction=botright -winwidth=30<CR>
+
+" vim-bookmarks
+nnoremap <silent> <Plug>(my-unite)b
+      \ :<C-u>Unite vim_bookmarks
+      \ -no-quit -keep-focus -no-start-insert
+      \ -buffer-name=search<CR>
+'''
+hook_source = '''
+execute 'source' fnameescape(expand('~/.vim/rc/unite.vim'))
+'''
 [[plugins]]
 repo = 'Shougo/unite-outline'
 
