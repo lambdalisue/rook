@@ -567,7 +567,6 @@ if executable('vint')
         \ 'type': 'watchdogs_checker/vint',
         \}
 endif
-call watchdogs#setup(g:quickrun_config)
 '''
 # }}}
 
