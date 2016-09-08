@@ -18,10 +18,10 @@ require([
   CodeMirror.Vim.map("<C-f>", "<Esc>2li", "insert");
   CodeMirror.Vim.map("<C-b>", "<Esc>i", "insert");
 
-  // Map <Nop> otherwise it would trigger browser shortcuts
-  CodeMirror.Vim.map("<C-h>", "<Nop>", "normal");
-  CodeMirror.Vim.map("<C-l>", "<Nop>", "normal");
-  CodeMirror.Vim.map("<C-w>", "<Nop>", "normal");
-  CodeMirror.Vim.map("<C-t>", "<Nop>", "normal");
+  CodeMirror.Vim.map("<C-h>", "<BS>", "normal");
+  CodeMirror.Vim.map("<C-m>", "<CR>", "normal");
+  CodeMirror.Vim.map("<C-i>", "<Tab>", "insert");
+  CodeMirror.Vim.map("<C-d>", "<S-Tab>", "insert");
+
   console.log('Custom keymaps are applied.');
 });
