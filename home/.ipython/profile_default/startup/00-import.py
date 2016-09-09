@@ -7,12 +7,12 @@ import matplotlib.pyplot as pl
 from IPython.display import display, HTML
 #from bokeh.plotting import output_notebook; output_notebook()
 
-## Overwrite default config
-#mpl.rcParams['font.size'] = 16
-#mpl.rcParams['axes.labelsize'] = 'medium'
-#mpl.rcParams['axes.titlesize'] = 'medium'
-#mpl.rcParams['xtick.labelsize'] = 'medium'
-#mpl.rcParams['ytick.labelsize'] = 'medium'
-#mpl.rcParams['legend.fontsize'] = 'medium'
-#mpl.rcParams['figure.figsize'] = (16, 9)
-#mpl.rcParams['savefig.dpi'] = 300
+# Overwrite default config
+mpl.rcParams['font.size'] = 16
+mpl.rcParams['axes.labelsize'] = 'medium'
+mpl.rcParams['axes.titlesize'] = 'medium'
+mpl.rcParams['xtick.labelsize'] = 'medium'
+mpl.rcParams['ytick.labelsize'] = 'medium'
+mpl.rcParams['legend.fontsize'] = 'medium'
+mpl.rcParams['figure.figsize'] = (16, 9)
+mpl.rcParams['savefig.dpi'] = 300
