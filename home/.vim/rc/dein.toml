@@ -1083,7 +1083,7 @@ repo = 'Kuniwak/vint'
 rtp = ''
 
 [[plugins]]
-repo = 'lambdalisue/vim-slashindent'
+repo = 'lambdalisue/vim-backslash'
 
 [[plugins]]
 repo = 'thinca/vim-prettyprint'
