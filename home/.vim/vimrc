@@ -6,14 +6,16 @@ if has('vim_starting')
   scriptencoding utf-8
 
   " Use defaults.vim and revert several settings
-  source $VIMRUNTIME/defaults.vim
+  if filereadable(expand("$VIMRUNTIME/defaults.vim"))
+    source $VIMRUNTIME/defaults.vim
+  endif
   if has('vim_starting')
     set history=10000     " increate n of command line history
   endif
   set noruler             " [slow] do not show the cursor position.
 
   " Do not highlight string inside C comments.
-  unlet c_comment_strings
+  silent! unlet c_comment_strings
 
   " Disable annoying bells
   set belloff=all
@@ -486,6 +488,29 @@ function! s:workon(dir, bang) abort
 endfunction
 autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
 command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
+" }}}
+
+" Automatically disable IM in normal mode {{{
+if has('osx')
+  " NOTE: 102/104 = Eisu/Kana
+  " https://github.com/emacs-jp/issues/issues/10#issuecomment-36477448
+  function! s:disable_im() abort
+    call system('osascript -e ''tell application "System Events" to key code 102'' &')
+  endfunction
+elseif executable('fcitx-remote')
+  " http://qiita.com/sgur/items/aa443bc2aed6fe0eb138
+  function! s:disable_im() abort
+    call system('fcitx-remote -c &')
+  endfunction
+else
+  function! s:disable_im() abort
+    " Dummy
+  endfunction
+endif
+noremap <silent> <Esc> <Esc>:<C-u>call <SID>disable_im()<CR>
+noremap <silent> <C-]> <Esc>:<C-u>call <SID>disable_im()<CR>
+autocmd MyAutoCmd InsertLeave * call s:disable_im()
+autocmd MyAutoCmd InsertEnter * call s:disable_im()
 " }}}
 
 " Add runtimepath {{{
