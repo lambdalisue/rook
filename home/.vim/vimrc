@@ -238,7 +238,7 @@ set keywordprg=:help
 " :help insert-index
 
 " define <Leader> and <LocalLeader>
-let g:mapleader = ' '
+let g:mapleader = ','
 let g:maplocalleader = ','
 noremap <Leader>      <Nop>
 noremap <LocalLeader> <Nop>

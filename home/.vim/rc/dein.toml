@@ -584,8 +584,8 @@ on_cmd = [
 ]
 hook_add = '''
 nnoremap <Plug>(my-unite) <Nop>
-nmap <Leader>u <Plug>(my-unite)
-vmap <Leader>u <Plug>(my-unite)
+nmap <Space> <Plug>(my-unite)
+vmap <Space> <Plug>(my-unite)
 
 nnoremap <silent> <Plug>(my-unite)u :<C-u>UniteResume -no-start-insert<CR>
 nnoremap <silent> <Plug>(my-unite)w :<C-u>Unite buffer<CR>
