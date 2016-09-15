@@ -490,29 +490,6 @@ autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
 command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
 " }}}
 
-" Automatically disable IM in normal mode {{{
-if has('osx')
-  " NOTE: 102/104 = Eisu/Kana
-  " https://github.com/emacs-jp/issues/issues/10#issuecomment-36477448
-  function! s:disable_im() abort
-    call system('osascript -e ''tell application "System Events" to key code 102'' &')
-  endfunction
-elseif executable('fcitx-remote')
-  " http://qiita.com/sgur/items/aa443bc2aed6fe0eb138
-  function! s:disable_im() abort
-    call system('fcitx-remote -c &')
-  endfunction
-else
-  function! s:disable_im() abort
-    " Dummy
-  endfunction
-endif
-noremap <silent> <Esc> <Esc>:<C-u>call <SID>disable_im()<CR>
-noremap <silent> <C-]> <Esc>:<C-u>call <SID>disable_im()<CR>
-autocmd MyAutoCmd InsertLeave * call s:disable_im()
-autocmd MyAutoCmd InsertEnter * call s:disable_im()
-" }}}
-
 " Add runtimepath {{{
 function! s:add_runtimepath() abort
   let path = getcwd()

@@ -623,7 +623,7 @@ nnoremap <silent> <Plug>(my-unite-grep)i :<C-u>Unite grep/git:/ -buffer-name=sea
 vnoremap <silent> <Plug>(my-unite-grep)i :Unite grep/git:/ -buffer-name=search -no-empty<CR>
 
 " unite-gista
-nnoremap <silent> <Plug>(my-unite-git)t :<C-u>Unite gista:lambdalisue<CR>
+nnoremap <silent> <Plug>(my-unite)t :<C-u>Unite gista:lambdalisue<CR>
 
 " unite-linephrase
 nnoremap <silent> <Plug>(my-unite)p
