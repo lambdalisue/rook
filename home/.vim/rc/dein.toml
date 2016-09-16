@@ -235,7 +235,7 @@ on_cmd = [
 on_path = '\h\w*:'
 hook_add = '''
 nnoremap <Plug>(my-vimfiler) <Nop>
-nmap <Leader>e <Plug>(my-vimfiler)
+nmap <Space>e <Plug>(my-vimfiler)
 nnoremap <silent> <Plug>(my-vimfiler)e :<C-u>VimFilerExplorer<CR>
 nnoremap <silent> <Plug>(my-vimfiler)E :<C-u>VimFiler<CR>
 '''
