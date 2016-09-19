@@ -754,15 +754,18 @@ repo = 'lambdalisue/vim-cython-syntax'
 [[plugins]]
 repo = 'lambdalisue/vim-ledi'
 on_ft = ['python', 'python3']
+hook_source = '''
+let g:ledi#signature#enable_on_startup = 0
+'''
 
 [[plugins]]
-if = "executable('pyenv')"
 repo = 'lambdalisue/vim-pyenv'
 on_source = 'vim-ledi'
-hook_post_source = '''
+hook_source = '''
 function! s:ledi_auto_set_python_major_version() abort
   let major_version = pyenv#python#get_internal_major_version()
   call ledi#python#init(major_version)
+  call ledi#signature#enable()
 endfunction
 autocmd MyAutoCmd User vim-pyenv-activate-post   call s:ledi_auto_set_python_major_version()
 autocmd MyAutoCmd User vim-pyenv-deactivate-post call s:ledi_auto_set_python_major_version()
