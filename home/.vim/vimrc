@@ -345,7 +345,7 @@ function! s:switch_option() abort
   call inputsave()
   try
     redraw
-    let fname = get(function('s:switch_option_complete'), 'name')
+    let fname = s:get_function_name(function('s:switch_option_complete'))
     let candidates = s:switch_option_complete(
           \ input('Switch: ', '', 'customlist,' . fname), '', 0
           \)
@@ -367,6 +367,16 @@ function! s:switch_option_complete(arglead, cmdline, cursorpos) abort
         \ 'v:val =~# ''^'' . a:arglead'
         \)
 endfunction
+
+if has('patch-7.4.1842')
+  function! s:get_function_name(fn) abort
+    return get(a:fn, 'name')
+  endfunction
+else
+  function! s:get_function_name(fn) abort
+    return matchstr(string(a:fn), 'function(''\zs.*\ze''')
+  endfunction
+endif
 
 nnoremap <silent> <Plug>(my-switch-option) :<C-u>call <SID>switch_option()<CR>
 nmap <C-s> <Plug>(my-switch-option)
