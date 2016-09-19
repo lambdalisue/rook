@@ -499,6 +499,21 @@ nmap <C-f>b     <Plug>(foldround-backward)
 nmap <C-f><C-b> <Plug>(foldround-backward)
 '''
 
+[[plugins]]
+repo = 'Shougo/neocomplete.vim'
+on_i = 1
+hook_source = '''
+let g:neocomplete#enable_at_startup = !has('nvim')
+'''
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+on_i = 1
+hook_source = '''
+let g:deoplete#enable_at_startup = has('nvim')
+'''
+
+
 # }}}
 
 # Execution {{{
@@ -575,6 +590,11 @@ endif
 # }}}
 
 # Unite {{{
+[[plugins]]
+if = "has('nvim')"
+repo = 'Shougo/denite.nvim'
+on_cmd = 'Denite'
+
 [[plugins]]
 repo = 'Shougo/unite.vim'
 on_cmd = [
@@ -682,121 +702,6 @@ repo = 'rafi/vim-unite-issue'
 
 [[plugins]]
 repo = 'lambdalisue/vim-gista-unite'
-
-# }}}
-
-# Filetype {{{
-[[plugins]]
-repo = 'vimperator/vimperator.vim'
-
-[[plugins]]
-repo = 'cespare/vim-toml'
-
-[[plugins]]
-repo = 'hail2u/vim-css3-syntax'
-
-[[plugins]]
-repo = 'othree/html5.vim'
-
-[[plugins]]
-repo = 'groenewege/vim-less'
-
-[[plugins]]
-repo = 'cakebaker/scss-syntax.vim'
-
-[[plugins]]
-repo = 'kchmck/vim-coffee-script'
-
-[[plugins]]
-repo = 'elzr/vim-json'
-
-[[plugins]]
-repo = 'jQuery'
-
-[[plugins]]
-repo = 'jelera/vim-javascript-syntax'
-
-[[plugins]]
-repo = 'jason0x43/vim-js-indent'
-
-[[plugins]]
-repo = 'leafgarland/typescript-vim'
-hook_source = '''
-let g:typescript_indent_disable = 1
-let g:typescript_compiler_options = '-sourcemap'
-'''
-
-[[plugins]]
-repo = 'thinca/vim-ft-help_fold'
-
-[[plugins]]
-repo = 'applescript.vim'
-
-[[plugins]]
-repo = 'indentpython.vim'
-
-[[plugins]]
-repo = 'python_match.vim'
-
-[[plugins]]
-repo = 'tmhedberg/SimpylFold'
-
-[[plugins]]
-repo = 'vim-perl/vim-perl'
-
-[[plugins]]
-#repo = 'motemen/xslate-vim'
-repo = 'lambdalisue/xslate-vim'
-
-[[plugins]]
-repo = 'lambdalisue/vim-cython-syntax'
-
-[[plugins]]
-repo = 'lambdalisue/vim-ledi'
-on_ft = ['python', 'python3']
-hook_source = '''
-let g:ledi#signature#enable_on_startup = 0
-'''
-
-[[plugins]]
-repo = 'lambdalisue/vim-pyenv'
-on_source = 'vim-ledi'
-hook_source = '''
-function! s:ledi_auto_set_python_major_version() abort
-  let major_version = pyenv#python#get_internal_major_version()
-  call ledi#python#init(major_version)
-  call ledi#signature#enable()
-endfunction
-autocmd MyAutoCmd User vim-pyenv-activate-post   call s:ledi_auto_set_python_major_version()
-autocmd MyAutoCmd User vim-pyenv-deactivate-post call s:ledi_auto_set_python_major_version()
-'''
-
-[[plugins]]
-repo = 'hotchpotch/perldoc-vim'
-on_ft = 'perl'
-
-[[plugins]]
-repo = 'c9s/perlomni.vim'
-on_ft = 'perl'
-
-[[plugins]]
-repo = 'Quramy/tsuquyomi'
-depends = 'vimproc.vim'
-build = 'npm install -g typescript'
-on_ft = 'typescript'
-hook_add = '''
-function! s:tsuquyomi_configure() abort
-  nmap <buffer> <LocalLeader>d <Plug>(TsuquyomiDefinition)
-  nmap <buffer> <LocalLeader>b <Plug>(TsuquyomiGoBack)
-  nmap <buffer> <LocalLeader>r <Plug>(TsuquyomiReferences)
-  nmap <buffer> <LocalLeader>R <Plug>(TsuquyomiRenameSymbolC)
-  if exists('&ballooneval')
-    setlocal ballooneval
-    setlocal balloonexpr=tsuquyomi#balloonexpr()
-  endif
-endfunction
-autocmd MyAutoCmd FileType typescript call s:tsuquyomi_configure()
-'''
 
 # }}}
 
@@ -1077,6 +982,147 @@ repo = 'cocopon/iceberg.vim'
 repo = 'w0ng/vim-hybrid'
 # }}}
 
+# Filetype {{{
+[[plugins]]
+repo = 'vimperator/vimperator.vim'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+[[plugins]]
+repo = 'hail2u/vim-css3-syntax'
+
+[[plugins]]
+repo = 'othree/html5.vim'
+
+[[plugins]]
+repo = 'groenewege/vim-less'
+
+[[plugins]]
+repo = 'cakebaker/scss-syntax.vim'
+
+[[plugins]]
+repo = 'kchmck/vim-coffee-script'
+
+[[plugins]]
+repo = 'elzr/vim-json'
+
+[[plugins]]
+repo = 'jQuery'
+
+[[plugins]]
+repo = 'jelera/vim-javascript-syntax'
+
+[[plugins]]
+repo = 'jason0x43/vim-js-indent'
+
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+hook_source = '''
+let g:typescript_indent_disable = 1
+let g:typescript_compiler_options = '-sourcemap'
+'''
+
+[[plugins]]
+repo = 'thinca/vim-ft-help_fold'
+
+[[plugins]]
+repo = 'applescript.vim'
+
+[[plugins]]
+repo = 'vim-perl/vim-perl'
+
+[[plugins]]
+#repo = 'motemen/xslate-vim'
+repo = 'lambdalisue/xslate-vim'
+
+[[plugins]]
+repo = 'lambdalisue/vim-cython-syntax'
+
+[[plugins]]
+repo = 'hotchpotch/perldoc-vim'
+on_ft = 'perl'
+
+[[plugins]]
+repo = 'c9s/perlomni.vim'
+on_ft = 'perl'
+
+[[plugins]]
+repo = 'Quramy/tsuquyomi'
+depends = 'vimproc.vim'
+build = 'npm install -g typescript'
+on_ft = 'typescript'
+hook_add = '''
+function! s:tsuquyomi_configure() abort
+  nmap <buffer> <LocalLeader>d <Plug>(TsuquyomiDefinition)
+  nmap <buffer> <LocalLeader>b <Plug>(TsuquyomiGoBack)
+  nmap <buffer> <LocalLeader>r <Plug>(TsuquyomiReferences)
+  nmap <buffer> <LocalLeader>R <Plug>(TsuquyomiRenameSymbolC)
+  if exists('&ballooneval')
+    setlocal ballooneval
+    setlocal balloonexpr=tsuquyomi#balloonexpr()
+  endif
+endfunction
+autocmd MyAutoCmd FileType typescript call s:tsuquyomi_configure()
+'''
+
+# }}}
+#
+# Python development {{{
+[[plugins]]
+repo = 'python_match.vim'
+
+[[plugins]]
+repo = 'tmhedberg/SimpylFold'
+
+[[plugins]]
+repo = 'indentpython.vim'
+
+[[plugins]]
+repo = 'tweekmonster/impsort.vim'
+on_cmd = 'ImpSort'
+
+[[plugins]]
+if = "has('nvim')"
+repo = 'zchee/deoplete-jedi'
+on_ft = ['python', 'python3']
+
+[[plugins]]
+repo = 'lambdalisue/vim-ledi'
+on_ft = ['python', 'python3']
+hook_source = '''
+let g:ledi#force_py_version = 3
+let g:ledi#signature#enable_on_startup = 0
+'''
+
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+on_ft = ['python', 'python3']
+hook_source = '''
+let g:jedi#force_py_version = 3
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#completions_enabled = 0
+let g:jedi#show_call_signatures = 0
+let g:jedi#rename_command = '<Leader>R'
+'''
+
+[[plugins]]
+repo = 'lambdalisue/vim-pyenv'
+on_cmd = ['PyenvActivate', 'PyenvDeactivate']
+on_source = ['vim-ledi', 'jedi-vim']
+hook_source = '''
+function! s:auto_set_python_major_version() abort
+  let major_version = pyenv#python#get_internal_major_version()
+  call jedi#force_py_version(major_version)
+  call ledi#python#init(major_version)
+  call ledi#signature#enable()
+endfunction
+autocmd MyAutoCmd User vim-pyenv-activate-post   call s:auto_set_python_major_version()
+autocmd MyAutoCmd User vim-pyenv-deactivate-post call s:auto_set_python_major_version()
+'''
+
+# }}}
+
 # Vimscript development {{{
 [[plugins]]
 repo = 'thinca/vim-themis'
@@ -1087,6 +1133,10 @@ rtp = ''
 
 [[plugins]]
 repo = 'lambdalisue/vim-backslash'
+
+[[plugins]]
+repo = 'tweekmonster/helpful.vim'
+on_cmd = 'HelpfulVersion'
 
 [[plugins]]
 repo = 'thinca/vim-prettyprint'
@@ -1109,7 +1159,6 @@ repo = 'vim-jp/vital-complete'
 hook_add = '''
 autocmd MyAutoCmd FileType vim,vimspec setlocal omnifunc=vital_complete#complete
 '''
-# }}}
 
 # External Vital modules {{{
 [[plugins]]
@@ -1155,6 +1204,7 @@ on_source = 'vital.vim'
 [[plugins]]
 repo = 'lambdalisue/vital-Data-String-Formatter'
 on_source = 'vital.vim'
+# }}}
 
 # }}}
 

@@ -17,7 +17,7 @@ endif
 
 augroup nvim_gui_fontset
   autocmd! *
-  autocmd User GUIEnter GuiFont! Ricty for Powerline:h8
+  autocmd User GUIEnter GuiFont! Ricty\ for\ Powerline:h9
 augroup END
 
 let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
