@@ -265,6 +265,17 @@ nmap <Leader>t <Plug>(my-tagbar)
 nnoremap <silent> <Plug>(my-tagbar) :<C-u>TagbarToggle<CR>
 '''
 
+[[plugins]]
+repo = 'lambdalisue/vim-lista'
+on_cmd = 'Lista'
+hook_add = '''
+nnoremap <Space>l :<C-u>Lista<CR>
+'''
+
+[[plugins]]
+repo = 'osyo-manga/vim-hopping'
+on_cmd = 'HoppingStart'
+
 # }}}
 
 # Visualize {{{
@@ -591,9 +602,20 @@ endif
 
 # Unite {{{
 [[plugins]]
-if = "has('nvim')"
 repo = 'Shougo/denite.nvim'
-on_cmd = 'Denite'
+on_cmd = [
+  'Denite',
+  'DeniteCursorWord',
+]
+hook_add = '''
+nnoremap <Plug>(my-unite) <Nop>
+nmap <Space> <Plug>(my-unite)
+vmap <Space> <Plug>(my-unite)
+
+nnoremap <silent> <Plug>(my-unite)f :<C-u>Denite file_rec<CR>
+nnoremap <silent> <Plug>(my-unite)j :<C-u>Denite jump_point<CR>
+nnoremap <silent> <Plug>(my-unite)g :<C-u>Denite grep<CR>
+'''
 
 [[plugins]]
 repo = 'Shougo/unite.vim'
