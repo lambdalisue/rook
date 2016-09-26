@@ -380,7 +380,11 @@ repo = 'cohama/lexima.vim'
 on_i = 1
 hook_source = '''
 " Do not put ), ], } automatically when the cursor is at the middle of the line
-call lexima#add_rule({'char': '(', 'at': '\%#\S\+$', 'except': '\%#[\]})]\+$'})
+call lexima#add_rule({'char': '(', 'at': '\%#\s*\S\+', 'priority': 1})
+call lexima#add_rule({'char': '{', 'at': '\%#\s*\S\+', 'priority': 1})
+call lexima#add_rule({'char': '[', 'at': '\%#\s*\S\+', 'priority': 1})
+call lexima#add_rule({'char': '"', 'at': '\%#\s*\S\+', 'priority': 1})
+call lexima#add_rule({'char': "'", 'at': '\%#\s*\S\+', 'priority': 1})
 '''
 
 [[plugins]]
