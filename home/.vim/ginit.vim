@@ -15,10 +15,17 @@ if !exists('g:_nvim_qt_GUIEnter')
 endif
 " }}}
 
-augroup nvim_gui_fontset
-  autocmd! *
-  autocmd User GUIEnter GuiFont! Ricty\ for\ Powerline:h9
-augroup END
+if has('mac')
+  augroup nvim_gui_fontset
+    autocmd! *
+    autocmd User GUIEnter GuiFont! Ricty\ for\ Powerline:h11
+  augroup END
+else
+  augroup nvim_gui_fontset
+    autocmd! *
+    autocmd User GUIEnter GuiFont! Ricty\ for\ Powerline:h9
+  augroup END
+endif
 
 let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
 let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
