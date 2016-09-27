@@ -303,10 +303,13 @@ hook_source = 'let g:previm_show_header = 0'
 repo = 'osyo-manga/vim-precious'
 hook_add = '''
 let g:context_filetype#search_offset = 50
+let g:textobj_precious_no_default_key_mappings = 1
+let g:precious_enable_switch_CursorHold = { '*': 0 }
+let g:precious_enable_switch_CursorHold_i = { '*': 0 }
 let g:precious_enable_switch_CursorMoved = { '*': 0 }
 let g:precious_enable_switch_CursorMoved_i = { '*': 0 }
-autocmd MyAutoCmd InsertEnter * :PreciousSwitchAutcmd
-autocmd MyAutoCmd InsertLeave * :PreciousSwitchAutcmd
+autocmd MyAutoCmd InsertEnter * :PreciousSwitch
+autocmd MyAutoCmd InsertLeave * :PreciousReset
 autocmd MyAutoCmd User PreviousFileType_vim 
       \ :PreciousSetContextLocal foldlevel=0
 '''
@@ -378,14 +381,6 @@ on_source = ['unite.vim', 'vimfiler.vim']
 [[plugins]]
 repo = 'cohama/lexima.vim'
 on_i = 1
-hook_source = '''
-" Do not put ), ], } automatically when the cursor is at the middle of the line
-call lexima#add_rule({'char': '(', 'at': '\%#\s*\S\+', 'priority': 1})
-call lexima#add_rule({'char': '{', 'at': '\%#\s*\S\+', 'priority': 1})
-call lexima#add_rule({'char': '[', 'at': '\%#\s*\S\+', 'priority': 1})
-call lexima#add_rule({'char': '"', 'at': '\%#\s*\S\+', 'priority': 1})
-call lexima#add_rule({'char': "'", 'at': '\%#\s*\S\+', 'priority': 1})
-'''
 
 [[plugins]]
 repo = 'tyru/caw.vim'

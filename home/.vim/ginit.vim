@@ -30,3 +30,24 @@ endif
 let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
 let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
 
+
+" Set GUI font
+function! GuiFont(fname, ...) abort
+  let force = get(a:000, 0, 0)
+  call rpcnotify(0, 'Gui', 'Font', a:fname, force)
+endfunction
+
+" The GuiFont command. For compatibility there is also Guifont
+function s:GuiFontCommand(fname, bang) abort
+  if a:fname ==# ''
+    if exists('g:GuiFont')
+      echo g:GuiFont
+    else
+      echo 'No GuiFont is set'
+    endif
+  else
+    call GuiFont(a:fname, a:bang ==# '!')
+  endif
+endfunction
+command! -nargs=? -bang Guifont call s:GuiFontCommand("<args>", "<bang>")
+command! -nargs=? -bang GuiFont call s:GuiFontCommand("<args>", "<bang>")
