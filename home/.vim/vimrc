@@ -6,7 +6,7 @@ if has('vim_starting')
   scriptencoding utf-8
 
   " Use defaults.vim and revert several settings
-  if filereadable(expand("$VIMRUNTIME/defaults.vim"))
+  if filereadable(expand('$VIMRUNTIME/defaults.vim'))
     source $VIMRUNTIME/defaults.vim
   endif
   if has('vim_starting')
@@ -167,7 +167,6 @@ set viewoptions=cursor,folds,slash,unix
 set wildmode=list:longest,full
 set wildoptions=tagfile
 
-
 set list          " show invisible characters
 set breakindent   " every wrapped line will continue visually indented
 if $LANG !=# 'C'
@@ -228,7 +227,7 @@ endif
 set complete& complete-=i,d
 set completeopt&
 set completeopt-=preview
-set completeopt+=menu,longest,noselect
+set completeopt+=menu,longest
 set pumheight=20        " height of popup menu
 set showfulltag         " show both the tag name and the search pattern
 
@@ -339,6 +338,7 @@ let s:switch_allowed_options = [
       \ 'list',
       \ 'scrollbind',
       \ 'paste',
+      \ 'preview',
       \]
 function! s:switch_option() abort
   echohl Question
@@ -353,12 +353,25 @@ function! s:switch_option() abort
       echohl WarningMsg
       echo 'Canceled.'
     endif
-    let option = candidates[0]
-    execute printf('setlocal %s! %s?', option, option)
+    call s:switch_option_handle(candidates[0])
   finally
     echohl None
     call inputrestore()
   endtry
+endfunction
+
+function! s:switch_option_handle(name) abort
+  if a:name ==# 'preview'
+    if &completeopt =~# 'preview'
+      setlocal completeopt-=preview
+      redraw | echo '-preview'
+    else
+      setlocal completeopt+=preview
+      redraw | echo '+preview'
+    endif
+  else
+    execute printf('setlocal %s! %s?', a:name, a:name)
+  endif
 endfunction
 
 function! s:switch_option_complete(arglead, cmdline, cursorpos) abort
@@ -532,7 +545,7 @@ command! EchoRuntimePath call s:echo_runtimepath()
 function! s:getchar() abort
   redraw | echo 'Press any key: '
   let c = getchar()
-  while c == "\<CursorHold>"
+  while c ==# "\<CursorHold>"
     redraw | echo 'Press any key: '
     let c = getchar()
   endwhile
