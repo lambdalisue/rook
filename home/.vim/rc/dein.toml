@@ -111,6 +111,15 @@ merged = 0
 
 # }}}
 
+# Nyaovim {{{
+[[plugins]]
+repo = 'rhysd/nyaovim-markdown-preview'
+
+[[plugins]]
+repo = 'rhysd/nyaovim-popup-tooltip'
+
+# }}}
+
 # App {{{
 [[plugins]]
 repo = 'cocopon/colorswatch.vim'
