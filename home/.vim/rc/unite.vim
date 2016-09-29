@@ -149,6 +149,8 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \ 'Neovim',
       \ ['~/.vim/init.vim'],
       \ ['~/.vim/ginit.vim'],
+      \ 'Nyaovim',
+      \ ['~/.config/nyaovim/nyaovimrc.html'],
       \ 'Reference',
       \ ['https://raw.githubusercontent.com/codemirror/CodeMirror/HEAD/keymap/vim.js'], 
       \])
