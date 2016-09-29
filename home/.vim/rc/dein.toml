@@ -265,13 +265,13 @@ nmap <Leader>t <Plug>(my-tagbar)
 nnoremap <silent> <Plug>(my-tagbar) :<C-u>TagbarToggle<CR>
 '''
 
-[[plugins]]
-repo = 'lambdalisue/vim-lista'
-on_cmd = 'Lista'
-hook_add = '''
-nnoremap # :<C-u>Lista<CR>
-nnoremap g# :<C-u>ListaCursorWord<CR>
-'''
+#[[plugins]]
+#repo = 'lambdalisue/vim-lista'
+#on_cmd = 'Lista'
+#hook_add = '''
+#nnoremap # :<C-u>Lista<CR>
+#nnoremap g# :<C-u>ListaCursorWord<CR>
+#'''
 
 [[plugins]]
 repo = 'osyo-manga/vim-hopping'
@@ -1085,9 +1085,6 @@ repo = 'python_match.vim'
 
 [[plugins]]
 repo = 'tmhedberg/SimpylFold'
-
-[[plugins]]
-repo = 'indentpython.vim'
 
 [[plugins]]
 repo = 'tweekmonster/impsort.vim'
