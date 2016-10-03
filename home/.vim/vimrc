@@ -22,6 +22,11 @@ if has('vim_starting')
   set noerrorbells
   set novisualbell t_vb=
 
+  " Do not wait more than 100 ms for keys
+  set timeout
+  set ttimeout
+  set ttimeoutlen=100
+
   " Disable unnecessary default plugins
   let g:loaded_gzip              = 1
   let g:loaded_tar               = 1
