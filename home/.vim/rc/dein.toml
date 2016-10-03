@@ -79,13 +79,9 @@ repo = 'haya14busa/vim-asterisk'
 on_map = '<Plug>'
 hook_add = '''
 map *   <Plug>(asterisk-*)
-map #   <Plug>(asterisk-#)
 map g*  <Plug>(asterisk-g*)
-map g#  <Plug>(asterisk-g#)
 map z*  <Plug>(asterisk-z*)
 map gz* <Plug>(asterisk-gz*)
-map z#  <Plug>(asterisk-z#)
-map gz# <Plug>(asterisk-gz#)
 '''
 
 
@@ -107,6 +103,13 @@ repo = 'osyo-manga/shabadou.vim'
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
 build = 'make'
+merged = 0
+
+[[plugins]]
+repo = 'lambdalisue/vim-rplugin'
+
+[[plugins]]
+repo = 'lambdalisue/prompt.nvim'
 merged = 0
 
 # }}}
@@ -274,13 +277,14 @@ nmap <Leader>t <Plug>(my-tagbar)
 nnoremap <silent> <Plug>(my-tagbar) :<C-u>TagbarToggle<CR>
 '''
 
-#[[plugins]]
-#repo = 'lambdalisue/vim-lista'
-#on_cmd = 'Lista'
-#hook_add = '''
-#nnoremap # :<C-u>Lista<CR>
-#nnoremap g# :<C-u>ListaCursorWord<CR>
-#'''
+[[plugins]]
+repo = 'lambdalisue/lista.nvim'
+depends = 'prompt.nvim'
+on_cmd = 'Lista'
+hook_add = '''
+nnoremap #  :<C-u>Lista<CR>
+nnoremap g# :<C-u>ListaCursorWord<CR>
+'''
 
 [[plugins]]
 repo = 'osyo-manga/vim-hopping'
