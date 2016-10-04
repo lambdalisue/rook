@@ -392,10 +392,6 @@ on_cmd = 'Qfreplace'
 on_source = ['unite.vim', 'vimfiler.vim']
 
 [[plugins]]
-repo = 'cohama/lexima.vim'
-on_i = 1
-
-[[plugins]]
 repo = 'tyru/caw.vim'
 depends = [
   'vim-operator-user',
