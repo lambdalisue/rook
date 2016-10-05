@@ -84,6 +84,10 @@ map z*  <Plug>(asterisk-z*)
 map gz* <Plug>(asterisk-gz*)
 '''
 
+[[plugins]]
+repo = 'cohama/lexima.vim'
+hook_add = '''
+'''
 
 # }}}
 
@@ -1034,7 +1038,7 @@ repo = 'jQuery'
 repo = 'jelera/vim-javascript-syntax'
 
 [[plugins]]
-repo = 'jason0x43/vim-js-indent'
+repo = 'lambdalisue/vim-js-indent'
 
 [[plugins]]
 repo = 'leafgarland/typescript-vim'
