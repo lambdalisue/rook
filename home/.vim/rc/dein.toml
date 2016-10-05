@@ -86,7 +86,9 @@ map gz* <Plug>(asterisk-gz*)
 
 [[plugins]]
 repo = 'cohama/lexima.vim'
-hook_add = '''
+on_i = 1
+hook_source = '''
+execute 'source' fnameescape(expand('~/.vim/rc/lexima.vim'))
 '''
 
 # }}}

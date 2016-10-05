@@ -140,6 +140,7 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \ ['~/.vim/filetype.min'],
       \ ['~/.vim/rc/dein.toml'],
       \ ['~/.vim/rc/unite.vim'],
+      \ ['~/.vim/rc/lexima.vim'],
       \ ['~/.vim/rc/vimfiler.vim'],
       \ ['~/.vim/rc/vimshell.vim'],
       \ ['~/.vim/rc/lightline.vim'],
