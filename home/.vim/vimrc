@@ -341,7 +341,7 @@ xnoremap <silent> <Plug>(my-execute-macro)
 xmap @ <Plug>(my-execute-macro)
 " }}}
 
-" Toggle quickfix window with <C-q> {{{
+" Toggle quickfix window with Q {{{
 function! s:toggle_qf() abort
   let nwin = winnr('$')
   cclose
@@ -351,7 +351,7 @@ function! s:toggle_qf() abort
 endfunction
 nnoremap <silent> <Plug>(my-toggle-quickfix)
       \ :<C-u>call <SID>toggle_qf()<CR>
-nmap <Space>q <Plug>(my-toggle-quickfix)
+nmap Q <Plug>(my-toggle-quickfix)
 " }}}
 
 " Switch options with <C-s> {{{
@@ -565,7 +565,7 @@ endfunction
 command! EchoRuntimePath call s:echo_runtimepath()
 " }}}
 
-" Check keycode
+" Check keycode {{{
 function! s:getchar() abort
   redraw | echo 'Press any key: '
   let c = getchar()
@@ -576,6 +576,7 @@ function! s:getchar() abort
   redraw | echo printf('Raw: %s | Char: %s', c, nr2char(c))
 endfunction
 command! GetChar call s:getchar()
+" }}}
 
 " }}}
 
