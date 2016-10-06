@@ -35,7 +35,6 @@ function! s:configure_vimshell() abort
   call vimshell#set_execute_file('js', 'node')
   call vimshell#set_execute_file('coffee', 'coffee')
 
-  nmap <buffer><silent> q :<C-u>close<CR>
   imap <buffer> ^^ cd ..<CR>
   imap <buffer> [[ popd<CR>
   nmap <buffer> <Up>   <Plug>(vimshell_previous_prompt)
@@ -43,7 +42,7 @@ function! s:configure_vimshell() abort
   nmap <buffer> <C-p>  <Plug>(vimshell_insert_head)<Plug>(vimshell_history_neocomplete)
   nmap <buffer> <C-n>  <Plug>(vimshell_insert_head)<Plug>(vimshell_history_neocomplete)
 
-  inoremap <buffer><silent><C-r> <Esc>:<C-u>Unite
+  inoremap <buffer><silent><C-x><C-r> <Esc>:<C-u>Unite
         \ -buffer-name=history
         \ -default-action=append
         \ -no-split

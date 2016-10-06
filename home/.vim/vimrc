@@ -588,6 +588,23 @@ endfunction
 command! GetChar call s:getchar()
 " }}}
 
+" Open terminal window {{{
+if has('nvim')
+  function! s:open_terminal_window() abort
+    topleft 15 new
+    terminal
+    nnoremap <buffer><silent> q :<C-u>quit<CR>
+  endfunction
+else
+  function! s:open_terminal_window() abort
+    topleft 15 new
+    VimShell
+    nmap <buffer><silent> q <Plug>(vimshell_exit)
+  endfunction
+endif
+nnoremap <silent> T :<C-u>call <SID>open_terminal_window()<CR>
+" }}}
+
 " }}}
 
 " Plugin {{{
