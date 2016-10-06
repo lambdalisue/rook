@@ -3,6 +3,8 @@ if exists('b:did_ftplugin')
 endif
 let b:did_ftplugin = 1
 
+setlocal cursorline
+
 " Ref:http://d.hatena.ne.jp/thinca/20130708/1373210009 
 " preview with p
 nnoremap <buffer> p <CR>zz<C-w>p

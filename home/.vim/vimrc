@@ -319,6 +319,10 @@ nnoremap <S-Down>  <C-w>+<CR>
 " Clear highlight with <C-l>
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
+" Jump to next/previous errors
+nnoremap <silent> ]c :<C-u>cnext<CR>
+nnoremap <silent> [c :<C-u>cprevious<CR>
+
 " Seemless substitution with :s<Space> {{{
 cnoreabbrev <silent><expr>s getcmdtype() ==# ':' && getcmdline() =~# '^s'
       \ ? "<C-u>%s/<C-r>=get([], getchar(0), '')<CR>"
@@ -342,12 +346,12 @@ function! s:toggle_qf() abort
   let nwin = winnr('$')
   cclose
   if nwin == winnr('$')
-    cwindow
+    copen
   endif
 endfunction
 nnoremap <silent> <Plug>(my-toggle-quickfix)
       \ :<C-u>call <SID>toggle_qf()<CR>
-nmap <C-q> <Plug>(my-toggle-quickfix)
+nmap <Space>q <Plug>(my-toggle-quickfix)
 " }}}
 
 " Switch options with <C-s> {{{
