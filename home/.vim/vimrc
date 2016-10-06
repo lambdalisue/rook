@@ -341,7 +341,7 @@ xnoremap <silent> <Plug>(my-execute-macro)
 xmap @ <Plug>(my-execute-macro)
 " }}}
 
-" Toggle quickfix window with <C-q> {{{
+" Toggle quickfix window with Q {{{
 function! s:toggle_qf() abort
   let nwin = winnr('$')
   cclose
@@ -351,7 +351,7 @@ function! s:toggle_qf() abort
 endfunction
 nnoremap <silent> <Plug>(my-toggle-quickfix)
       \ :<C-u>call <SID>toggle_qf()<CR>
-nmap <Space>q <Plug>(my-toggle-quickfix)
+nmap Q <Plug>(my-toggle-quickfix)
 " }}}
 
 " Switch options with <C-s> {{{
@@ -542,6 +542,16 @@ autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
 command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
 " }}}
 
+" Automatically open a file with readonly mode when a swapfile exists {{{
+function! s:open_readonly() abort
+  let v:swapchoice = 'o'
+  echohl WarningMsg
+  echo 'A swap file is found. The file has opened in read-only mode.'
+  echohl None
+endfunction
+autocmd MyAutoCmd SwapExists * call s:open_readonly()
+" }}}
+
 " Add runtimepath {{{
 function! s:add_runtimepath() abort
   let path = getcwd()
@@ -565,7 +575,7 @@ endfunction
 command! EchoRuntimePath call s:echo_runtimepath()
 " }}}
 
-" Check keycode
+" Check keycode {{{
 function! s:getchar() abort
   redraw | echo 'Press any key: '
   let c = getchar()
@@ -576,6 +586,7 @@ function! s:getchar() abort
   redraw | echo printf('Raw: %s | Char: %s', c, nr2char(c))
 endfunction
 command! GetChar call s:getchar()
+" }}}
 
 " }}}
 
