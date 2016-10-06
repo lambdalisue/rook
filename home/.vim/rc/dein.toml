@@ -114,9 +114,9 @@ merged = 0
 [[plugins]]
 repo = 'lambdalisue/vim-rplugin'
 
-[[plugins]]
-repo = 'lambdalisue/prompt.nvim'
-merged = 0
+#[[plugins]]
+#repo = 'lambdalisue/prompt.nvim'
+#merged = 0
 
 # }}}
 
@@ -1097,6 +1097,9 @@ autocmd MyAutoCmd FileType typescript call s:tsuquyomi_configure()
 # Python development {{{
 [[plugins]]
 repo = 'python_match.vim'
+
+[[plugins]]
+repo = 'hynek/vim-python-pep8-indent'
 
 [[plugins]]
 repo = 'tmhedberg/SimpylFold'
