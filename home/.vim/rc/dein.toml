@@ -114,9 +114,9 @@ merged = 0
 [[plugins]]
 repo = 'lambdalisue/vim-rplugin'
 
-#[[plugins]]
-#repo = 'lambdalisue/prompt.nvim'
-#merged = 0
+[[plugins]]
+repo = 'lambdalisue/prompt.nvim'
+merged = 0
 
 # }}}
 
