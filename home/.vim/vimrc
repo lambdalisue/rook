@@ -320,8 +320,8 @@ nnoremap <S-Down>  <C-w>+<CR>
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
 " Jump to next/previous errors
-nnoremap <silent> ]c :<C-u>cnext<CR>
-nnoremap <silent> [c :<C-u>cprevious<CR>
+nnoremap <silent><expr> ]c &diff ? ']c' : ":\<C-u>cnext\<CR>"
+nnoremap <silent><expr> [c &diff ? ']c' : ":\<C-u>cprevious\<CR>"
 
 " Seemless substitution with :s<Space> {{{
 cnoreabbrev <silent><expr>s getcmdtype() ==# ':' && getcmdline() =~# '^s'
