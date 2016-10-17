@@ -346,7 +346,7 @@ function! s:toggle_qf() abort
   let nwin = winnr('$')
   cclose
   if nwin == winnr('$')
-    copen
+    botright copen
   endif
 endfunction
 nnoremap <silent> <Plug>(my-toggle-quickfix)
