@@ -114,10 +114,6 @@ merged = 0
 [[plugins]]
 repo = 'lambdalisue/vim-rplugin'
 
-[[plugins]]
-repo = 'lambdalisue/prompt.nvim'
-merged = 0
-
 # }}}
 
 # Nyaovim {{{
@@ -285,7 +281,7 @@ nnoremap <silent> <Plug>(my-tagbar) :<C-u>TagbarToggle<CR>
 
 [[plugins]]
 repo = 'lambdalisue/lista.nvim'
-depends = 'prompt.nvim'
+build = 'pip install --upgrade neovim-prompt'
 on_cmd = 'Lista'
 hook_add = '''
 nnoremap #  :<C-u>Lista<CR>
