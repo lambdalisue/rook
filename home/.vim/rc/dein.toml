@@ -118,9 +118,6 @@ repo = 'lambdalisue/vim-rplugin'
 
 # Nyaovim {{{
 [[plugins]]
-repo = 'rhysd/nyaovim-markdown-preview'
-
-[[plugins]]
 repo = 'rhysd/nyaovim-popup-tooltip'
 
 # }}}
@@ -295,14 +292,6 @@ on_cmd = 'HoppingStart'
 # }}}
 
 # Visualize {{{
-[[plugins]]
-repo = 'ryanoasis/vim-devicons'
-hook_add = '''
-let g:webdevicons_enable_unite = 1
-let g:webdevicons_enable_vimfiler = 1
-let g:WebDevIconsOS = 'Darwin'
-'''
-
 [[plugins]]
 repo = 'kshenoy/vim-signature'
 

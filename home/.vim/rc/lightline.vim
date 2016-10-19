@@ -31,6 +31,7 @@ let g:lightline = {
       \     [ 'tabs' ],
       \   ],
       \   'right': [
+      \     [ 'datetime' ],
       \     [ 'cwd' ],
       \     [ 'pyenv', 'gita_branch', 'gita_traffic', 'gita_status' ],
       \   ],
@@ -46,9 +47,8 @@ let g:lightline = {
       \   'cwd': 'g:lightline.my.cwd',
       \   'filename': 'g:lightline.my.filename',
       \   'fileinfo': 'g:lightline.my.fileinfo',
-      \   'fileformat': 'g:lightline.my.fileformat',
-      \   'fileencoding': 'g:lightline.my.fileencoding',
       \   'filetype': 'g:lightline.my.filetype',
+      \   'datetime': 'g:lightline.my.datetime',
       \   'git_branch': 'g:lightline.my.git_branch',
       \   'gita_branch': 'g:lightline.my.gita_branch',
       \   'gita_traffic': 'g:lightline.my.gita_traffic',
@@ -113,36 +113,29 @@ function! g:lightline.my.filename() abort
           \ (empty(readonly) ? '' : readonly . ' ') .
           \ (empty(fname) ? '[No name]' : fname) .
           \ (empty(nomodifiable) ? '' : ' ' . nomodifiable) .
-          \ (empty(modified) ? '' : ' ' . modified) .
-          \ ' ' . WebDevIconsGetFileTypeSymbol()
+          \ (empty(modified) ? '' : ' ' . modified)
   endif
   return ''
 endfunction
 
 function! g:lightline.my.fileinfo() abort
   let encoding = (strlen(&fileencoding) ? &fileencoding : &encoding)
-  return encoding . ' ' . WebDevIconsGetFileFormatSymbol()
-endfunction
-
-function! g:lightline.my.fileformat() abort
-  return WebDevIconsGetFileFormatSymbol()
+  let fileformat = &fileformat == 'unix'
+        \ ? g:Symbols.unix
+        \ : g:Symbols.dos
+  return encoding . ' ' . fileformat
 endfunction
 
 function! g:lightline.my.filetype() abort
   return &filetype
 endfunction
 
-function! g:lightline.my.fileencoding() abort
-  let encoding = (strlen(&fileencoding) ? &fileencoding : &encoding)
-  if encoding ==# 'utf-8'
+function! g:lightline.my.gita_branch() abort
+  if !dein#is_sourced('vim-gita')
     return ''
   endif
-  return encoding
-endfunction
-
-function! g:lightline.my.gita_branch() abort
-  return dein#is_sourced('vim-gita')
-        \ ? gita#statusline#preset('branch_short_fancy') : ''
+  let branch = gita#statusline#preset('branch_short')
+  return empty(branch) ? '' : g:Symbols.branch . branch
 endfunction
 
 function! g:lightline.my.gita_traffic() abort
@@ -178,3 +171,14 @@ function! g:lightline.my.qfstatusline() abort
     return ''
   endif
 endfunction
+
+function! g:lightline.my.datetime() abort
+  return g:Symbols.time . strftime('%a %m/%d %H:%M')
+endfunction
+
+function! s:refresh_tabline(...) abort
+  let &tabline = &tabline
+endfunction
+call timer_start(30000, function('s:refresh_tabline'), {
+      \ 'repeat': -1,
+      \})

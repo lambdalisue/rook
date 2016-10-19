@@ -680,17 +680,23 @@ if !has('multi_byte') || $LANG ==# 'C'
         \ 'nomodifiable': '#',
         \ 'error': '!!! ',
         \ 'python': '# ',
+        \ 'unix': 'unix',
+        \ 'dos': 'dos',
+        \ 'time': '',
         \ 'separator_left': '',
         \ 'separator_right': '',
         \}
 else
   let g:Symbols = {
-        \ 'branch': '⭠',
-        \ 'readonly': '⭤',
+        \ 'branch': ' ',
+        \ 'readonly': ' ',
         \ 'modified': ' ',
         \ 'nomodifiable': ' ',
         \ 'error': ' ',
         \ 'python': ' ',
+        \ 'unix': ' ',
+        \ 'dos': ' ',
+        \ 'time': ' ',
         \ 'separator_left': '',
         \ 'separator_right': '',
         \}
