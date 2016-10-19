@@ -11,15 +11,13 @@ tnoremap <Esc> <C-\><C-n>
 
 if exists('g:nyaovim_version')
   function! SetFullscreen(flag) abort
-    call nyaovim#execute_javascript(join([
-          \ '(function(){',
-          \ '  const win = require("electron").remote.getCurrentWindow();',
-          \ '  win.setFullScreen(' . a:flag . ');',
-          \ '})()',
-          \], '\n'))
+    call nyaovim#call_javascript_function(
+          \ 'toggleWindowFullScreen',
+          \ [a:flag]
+          \)
   endfunction
   let fullscreen#start_command =
         \ 'call SetFullscreen(v:true)'
   let fullscreen#stop_command =
-        \ 'call SetFullscreen(v:true)'
+        \ 'call SetFullscreen(v:false)'
 endif
