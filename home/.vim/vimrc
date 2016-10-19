@@ -17,6 +17,10 @@ if has('vim_starting')
   " Do not highlight string inside C comments.
   silent! unlet c_comment_strings
 
+  " Use as many color as possible
+  set t_Co=256
+  set termguicolors       " use truecolor in term
+
   " Disable annoying bells
   set belloff=all
   set noerrorbells
@@ -275,14 +279,16 @@ noremap <3-MiddleMouse> <Nop>
 noremap <4-MiddleMouse> <Nop>
 
 " Swap ; and : in Normal and Visual mode [US keyboard]
-noremap ; :
-noremap : ;
+nnoremap ; :
+nnoremap : ;
+vnoremap ; :
+vnoremap : ;
 
 " Emacs like movement in Insert/Command
-noremap! <C-a> <Home>
-noremap! <C-e> <End>
-noremap! <C-f> <C-o>h
-noremap! <C-b> <C-o>l
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
+inoremap <C-f> <C-o>h
+inoremap <C-b> <C-o>l
 
 " Better <C-n>/<C-p> in Command
 cnoremap <C-p> <Up>
@@ -440,17 +446,26 @@ nmap <Leader><Leader>s <Plug>(my-source-script)
 " }}}
 
 " Switch colorscheme with <F3> {{{
-function! s:switch_colorscheme() abort
-  set background=dark
-  if get(g:, 'colors_name', '') ==# 'hybrid'
-    colorscheme iceberg
-  else
-    colorscheme hybrid
-  endif
-  redraw | echo g:colors_name
+let s:colorschemes = [
+      \ 'tender',
+      \ 'lucius',
+      \ 'molokai',
+      \ 'atom-dark',
+      \ 'lucario',
+      \ 'material-theme',
+      \ 'iceberg',
+      \ 'hybrid',
+      \]
+let s:colorscheme_index = 0
+function! s:switch_colorscheme(offset) abort
+  let s:colorscheme_index += a:offset
+  let s:colorscheme_index = s:colorscheme_index % len(s:colorschemes)
+  let colorscheme_name = s:colorschemes[s:colorscheme_index]
+  execute 'colorscheme' colorscheme_name
+  redraw | echo colorscheme_name
 endfunction
 nnoremap <silent> <Plug>(my-switch-colorscheme)
-      \ :<C-u>call <SID>switch_colorscheme()<CR>
+      \ :<C-u>call <SID>switch_colorscheme(1)<CR>
 nmap <F3> <Plug>(my-switch-colorscheme)
 " }}}
 
@@ -471,6 +486,52 @@ function! s:checkview() abort
 endfunction
 autocmd MyAutoCmd BufWinLeave * if s:checkview() | silent! mkview   | endif
 autocmd MyAutoCmd BufWinEnter * if s:checkview() | silent! loadview | endif
+" }}}
+
+" Sticky shift in English keyboard."{{{
+" Sticky key.
+let s:sticky_table = {
+      \',' : '<', '.' : '>', '/' : '?',
+      \'1' : '!', '2' : '@', '3' : '#', '4' : '$', '5' : '%',
+      \'6' : '^', '7' : '&', '8' : '*', '9' : '(', '0' : ')', '-' : '_', '=' : '+',
+      \';' : ':', '[' : '{', ']' : '}', '`' : '~', "'" : "\"", '\' : '|',
+      \}
+let s:special_table = {
+      \"\<ESC>" : "\<ESC>", "\<Space>" : ';', "\<CR>" : ";\<CR>"
+      \}
+function! s:sticky_func() abort
+  if mode() !~# '^c'
+    redraw | echo 'SHIFT: '
+  endif
+  let char = nr2char(getchar())
+  if mode() !~# '^c'
+    redraw | echo ''
+  endif
+
+  if char =~? '\l'
+    return toupper(char)
+  elseif has_key(s:sticky_table, char)
+    return s:sticky_table[char]
+  elseif has_key(s:special_table, char)
+    return s:special_table[char]
+  else
+    return ''
+  endif
+endfunction
+inoremap <expr> ; <SID>sticky_func()
+cnoremap <expr> ; <SID>sticky_func()
+snoremap <expr> ; <SID>sticky_func()
+"}}}
+
+" Automatically remove trailing spaces {{{
+function! s:remove_trailing_spaces_automatically() abort
+  augroup remove_trailing_spaces_automatically
+    autocmd! * <buffer>
+    autocmd BufWritePre <buffer> %s/\s\+$//e
+  augroup END
+endfunction
+autocmd FileType perl,python,vim,vimspec,javascript,typescript
+      \ call s:remove_trailing_spaces_automatically()
 " }}}
 
 " Automatically re-assign filetype {{{
@@ -591,13 +652,13 @@ command! GetChar call s:getchar()
 " Open terminal window {{{
 if has('nvim')
   function! s:open_terminal_window() abort
-    topleft 15 new
+    topleft 25 new
     terminal
     nnoremap <buffer><silent> q :<C-u>quit<CR>
   endfunction
 else
   function! s:open_terminal_window() abort
-    topleft 15 new
+    topleft 25 new
     VimShell
     nmap <buffer><silent> q <Plug>(vimshell_exit)
   endfunction
@@ -605,6 +666,35 @@ endif
 nnoremap <silent> T :<C-u>call <SID>open_terminal_window()<CR>
 " }}}
 
+" }}}
+
+" Symbols {{{
+" NOTE:
+" Most of the following symobls are defined in "Nerd Fonts"
+" Install from https://github.com/ryanoasis/nerd-fonts#font-installation
+if !has('multi_byte') || $LANG ==# 'C'
+  let g:Symbols = {
+        \ 'branch': '',
+        \ 'readonly': '!',
+        \ 'modified': '*',
+        \ 'nomodifiable': '#',
+        \ 'error': '!!! ',
+        \ 'python': '# ',
+        \ 'separator_left': '',
+        \ 'separator_right': '',
+        \}
+else
+  let g:Symbols = {
+        \ 'branch': '⭠',
+        \ 'readonly': '⭤',
+        \ 'modified': ' ',
+        \ 'nomodifiable': ' ',
+        \ 'error': ' ',
+        \ 'python': ' ',
+        \ 'separator_left': '',
+        \ 'separator_right': '',
+        \}
+endif
 " }}}
 
 " Plugin {{{
@@ -636,7 +726,7 @@ else
       echohl None
       return 1
     endif
-  
+
     echo 'Installing Shougo/dein.vim ...'
     " Check if a parent directory is available and make if not
     let parent_directory = fnamemodify(s:bundle_dein, ':h')
@@ -658,8 +748,9 @@ endif
 " Postludium {{{
 filetype indent plugin on
 syntax on
+set background=dark
 try
-  colorscheme iceberg
+  silent call s:switch_colorscheme(0)
 catch
   colorscheme desert
 endtry

@@ -296,6 +296,14 @@ on_cmd = 'HoppingStart'
 
 # Visualize {{{
 [[plugins]]
+repo = 'ryanoasis/vim-devicons'
+hook_add = '''
+let g:webdevicons_enable_unite = 1
+let g:webdevicons_enable_vimfiler = 1
+let g:WebDevIconsOS = 'Darwin'
+'''
+
+[[plugins]]
 repo = 'kshenoy/vim-signature'
 
 [[plugins]]
@@ -325,7 +333,7 @@ let g:precious_enable_switch_CursorMoved = { '*': 0 }
 let g:precious_enable_switch_CursorMoved_i = { '*': 0 }
 autocmd MyAutoCmd InsertEnter * :PreciousSwitch
 autocmd MyAutoCmd InsertLeave * :PreciousReset
-autocmd MyAutoCmd User PreviousFileType_vim 
+autocmd MyAutoCmd User PreviousFileType_vim
       \ :PreciousSetContextLocal foldlevel=0
 '''
 
@@ -999,6 +1007,24 @@ repo = 'cocopon/iceberg.vim'
 
 [[plugins]]
 repo = 'w0ng/vim-hybrid'
+
+[[plugins]]
+repo = 'jacoborus/tender.vim'
+
+[[plugins]]
+repo = 'jonathanfilip/vim-lucius'
+
+[[plugins]]
+repo = 'tomasr/molokai'
+
+[[plugins]]
+repo = 'gosukiwi/vim-atom-dark'
+
+[[plugins]]
+repo = 'raphamorim/lucario'
+
+[[plugins]]
+repo = 'jdkanani/vim-material-theme'
 # }}}
 
 # Filetype {{{

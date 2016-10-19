@@ -17,6 +17,8 @@ if [ -z $TMUX_POWERLINE_LEFT_STATUS_SEGMENTS ]; then
 		"hostname 65 235" \
 		"now_playing 235 102" \
 		"np_itunes 235 102" \
+		"battery 235 127" \
+		"weather 235 72" \
 	)
 fi
 
@@ -25,8 +27,6 @@ if [ -z $TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS ]; then
 		"lan_ip 235 60" \
 		"wan_ip 235 66" \
 		"ifstat_sys 235 64" \
-		"battery 235 127" \
-		"weather 235 72" \
 		"date 235 75" \
 		"time 235 75" \
 	)

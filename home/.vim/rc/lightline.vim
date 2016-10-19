@@ -5,7 +5,7 @@ function! s:is_filelike() abort
 endfunction
 
 let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
+      \ 'colorscheme': 'tender',
       \ 'active': {
       \   'left': [
       \     [ 'mode', 'paste' ],
@@ -13,7 +13,8 @@ let g:lightline = {
       \   ],
       \   'right': [
       \     [ 'qfstatusline' ],
-      \     [ 'fileformat', 'fileencoding', 'filetype' ],
+      \     [ 'fileinfo' ],
+      \     [ 'filetype' ],
       \   ],
       \ },
       \ 'inactive': {
@@ -21,7 +22,8 @@ let g:lightline = {
       \     [ 'filename' ],
       \   ],
       \   'right': [
-      \     [ 'fileformat', 'fileencoding', 'filetype' ],
+      \     [ 'fileinfo' ],
+      \     [ 'filetype' ],
       \   ],
       \ },
       \ 'tabline': {
@@ -43,6 +45,7 @@ let g:lightline = {
       \   'mode': 'lightline#mode',
       \   'cwd': 'g:lightline.my.cwd',
       \   'filename': 'g:lightline.my.filename',
+      \   'fileinfo': 'g:lightline.my.fileinfo',
       \   'fileformat': 'g:lightline.my.fileformat',
       \   'fileencoding': 'g:lightline.my.fileencoding',
       \   'filetype': 'g:lightline.my.filetype',
@@ -52,6 +55,14 @@ let g:lightline = {
       \   'gita_status': 'g:lightline.my.gita_status',
       \   'pyenv': 'g:lightline.my.pyenv',
       \ },
+      \ 'separator': {
+      \   'left': g:Symbols.separator_left,
+      \   'right': g:Symbols.separator_right,
+      \ },
+      \ 'tabline_separator': {
+      \   'left': g:Symbols.separator_left,
+      \   'right': g:Symbols.separator_right,
+      \ },
       \}
 
 " Note:
@@ -59,32 +70,26 @@ let g:lightline = {
 "   g:lightline.my namespace instead of s:
 let g:lightline.my = {}
 
-if !has('multi_byte') || $LANG ==# 'C'
-  let g:lightline.my.symbol_branch = ''
-  let g:lightline.my.symbol_readonly = '!'
-  let g:lightline.my.symbol_modified = '*'
-  let g:lightline.my.symbol_nomodifiable = '#'
-else
-  let g:lightline.my.symbol_branch = '⭠'
-  let g:lightline.my.symbol_readonly = '⭤'
-  let g:lightline.my.symbol_modified = '*'
-  let g:lightline.my.symbol_nomodifiable = '#'
-endif
-
 function! g:lightline.my.cwd() abort
   return fnamemodify(getcwd(), ':~')
 endfunction
 
 function! g:lightline.my.readonly() abort
-  return s:is_filelike() && &readonly ? g:lightline.my.symbol_readonly : ''
+  return s:is_filelike() && &readonly
+        \ ? g:Symbols.readonly
+        \ : ''
 endfunction
 
 function! g:lightline.my.modified() abort
-  return s:is_filelike() && &modified ? g:lightline.my.symbol_modified : ''
+  return s:is_filelike() && &modified
+        \ ? g:Symbols.modified
+        \ : ''
 endfunction
 
 function! g:lightline.my.nomodifiable() abort
-  return s:is_filelike() && !&modifiable ? g:lightline.my.symbol_nomodifiable : ''
+  return s:is_filelike() && !&modifiable
+        \ ? g:Symbols.nomodifiable
+        \ : ''
 endfunction
 
 function! g:lightline.my.filename() abort
@@ -108,21 +113,31 @@ function! g:lightline.my.filename() abort
           \ (empty(readonly) ? '' : readonly . ' ') .
           \ (empty(fname) ? '[No name]' : fname) .
           \ (empty(nomodifiable) ? '' : ' ' . nomodifiable) .
-          \ (empty(modified) ? '' : ' ' . modified)
+          \ (empty(modified) ? '' : ' ' . modified) .
+          \ ' ' . WebDevIconsGetFileTypeSymbol()
   endif
   return ''
 endfunction
 
+function! g:lightline.my.fileinfo() abort
+  let encoding = (strlen(&fileencoding) ? &fileencoding : &encoding)
+  return encoding . ' ' . WebDevIconsGetFileFormatSymbol()
+endfunction
+
 function! g:lightline.my.fileformat() abort
-    return winwidth(0) > 70 ? &fileformat : ''
+  return WebDevIconsGetFileFormatSymbol()
 endfunction
 
 function! g:lightline.my.filetype() abort
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+  return &filetype
 endfunction
 
 function! g:lightline.my.fileencoding() abort
-  return winwidth(0) > 70 ? (strlen(&fileencoding) ? &fileencoding : &encoding) : ''
+  let encoding = (strlen(&fileencoding) ? &fileencoding : &encoding)
+  if encoding ==# 'utf-8'
+    return ''
+  endif
+  return encoding
 endfunction
 
 function! g:lightline.my.gita_branch() abort
@@ -141,8 +156,10 @@ function! g:lightline.my.gita_status() abort
 endfunction
 
 function! g:lightline.my.pyenv() abort
-  return dein#is_sourced('vim-pyenv')
-        \ ? pyenv#info#preset('long') : ''
+  if !dein#is_sourced('vim-pyenv')
+    return ''
+  endif
+  return pyenv#info#format(g:Symbols.python . '%av(%iv/%ev)')
 endfunction
 
 function! g:lightline.my.qfstatusline() abort
@@ -153,7 +170,10 @@ function! g:lightline.my.qfstatusline() abort
           \ '(@INC contains: .*)',
           \ '', ''
           \)
-    return winwidth(0) > 79 ? message[ : winwidth(0) ] : ''
+    let prefix = len(message) ? g:Symbols.error : ''
+    return winwidth(0) > 79
+          \ ? prefix . message[ : winwidth(0) ]
+          \ : prefix
   else
     return ''
   endif

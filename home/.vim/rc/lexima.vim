@@ -33,20 +33,6 @@ call lexima#add_rule({
       \ 'priority': 1,
       \})
 
-" Replace ;\s to :\s
-call lexima#add_rule({
-      \ 'at': ';\%#',
-      \ 'char': '<Space>',
-      \ 'input': '<BS>: ',
-      \})
-
-" Replace ;; to ::
-call lexima#add_rule({
-      \ 'at': ';\%#',
-      \ 'char': ';',
-      \ 'input': '<BS>::',
-      \})
-
 " Insert -> by >>
 call lexima#add_rule({
       \ 'at': '>\%#',

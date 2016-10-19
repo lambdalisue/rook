@@ -28,16 +28,16 @@ REPORTTIME=3
 # enable completion in --prefix=~/local or whatever
 setopt magic_equal_subst
 
-# enable 256 colors in terminal
-if [ -n "$DISPLAY" -a "$TERM" = "xterm" ]; then
-    export TERM="xterm-256color"
-elif [ -n "$DISPLAY" -a "$TERM" = "rxvt" ]; then
-    export TERM="rxvt-256color"
-elif [ -n "$DISPLAY" -a "$TERM" = "rxvt-unicode" ]; then
-    export TERM="rxvt-unicode-256color"
-elif [ -n "$DISPLAY" -a "$TERM" = "screen" ]; then
-    export TERM="screen-256color"
-fi
+## enable 256 colors in terminal
+#if [ -n "$DISPLAY" -a "$TERM" = "xterm" ]; then
+#    export TERM="xterm-256color"
+#elif [ -n "$DISPLAY" -a "$TERM" = "rxvt" ]; then
+#    export TERM="rxvt-256color"
+#elif [ -n "$DISPLAY" -a "$TERM" = "rxvt-unicode" ]; then
+#    export TERM="rxvt-unicode-256color"
+#elif [ -n "$DISPLAY" -a "$TERM" = "screen" ]; then
+#    export TERM="screen-256color"
+#fi
 
 # Movement {{{
 WORDCHARS=${WORDCHARS:s,/,,} # Exclude / so you can delete path with ^W

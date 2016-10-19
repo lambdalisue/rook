@@ -30,10 +30,10 @@
 " 'b'	Bottom (horizontal) scrollbar is present.  Its size depends on
 " 		the longest visible line, or on the cursor line if the 'h'
 " 		flag is included. |gui-horiz-scroll|
-" 
+"
 " 'h'	Limit horizontal scrollbar size to the length of the cursor
 " 		line.  Reduces computations. |gui-horiz-scroll|
-" 
+"
 set guioptions&
       \ guioptions-=m
       \ guioptions-=e
@@ -57,16 +57,18 @@ set visualbell t_vb=
 
 " Disable cursor blinking in any mode
 set guicursor+=a:blinkon0
+set antialias
 
-"colorscheme hybrid
-
+" http://d.hatena.ne.jp/yascentur/20120221/1329756132
+" http://d.hatena.ne.jp/yascentur/20110621/1308650962
 if has('gui_macvim')
-  set transparency=3
-  set antialias
+  " Font size should be 2.0x
   set guifont=Ricty\ for\ Powerline:h11
 else
-  set antialias
-  set guifont=RictyForPowerline\ 8
+  " Font size should be 1.5x
+  "set guifont=RictyForPowerline\ 8
+
+  set guifont=DejaVuSansMonoForPowerline\ Nerd\ Font\ Book\ 9
 endif
 
 if filereadable(expand('~/.gvimrc.local'))
