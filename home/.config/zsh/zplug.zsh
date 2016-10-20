@@ -57,7 +57,3 @@ zplug "~/.config/zsh/plugin/serve", \
 zplug "~/.config/zsh/plugin/perldig", \
   from:local, \
   use:init.zsh
-
-zplug "~/.config/zsh/plugin/dight", \
-  from:local, \
-  use:init.zsh
