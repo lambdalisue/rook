@@ -9,8 +9,7 @@ zplug "mrowa44/emojify", \
 
 zplug "monochromegane/the_platinum_searcher", \
   as:command, \
-  from:gh-r, \
-  rename-to:"pt"
+  from:gh-r
 
 zplug "stedolan/jq", \
   as:command, \
@@ -30,10 +29,6 @@ zplug "b4b4r07/ls.zsh", \
   use:bin/ls
 
 zplug "github/hub", \
-  as:command, \
-  from:gh-r
-
-zplug "tkengo/highway", \
   as:command, \
   from:gh-r
 
