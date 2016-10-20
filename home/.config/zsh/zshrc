@@ -1,4 +1,5 @@
 ZDOTDIR=${XDG_CONFIG_HOME}/zsh
+PLATFORM="$(uname)"
 #-----------------------------------------------------------------------------
 # Prelude {{{
 # disable promptcr to display last line without newline
@@ -68,8 +69,10 @@ setopt no_flow_control       # do not use C-s/C-q
 
 # Completion {{{
 # NOTE: https://carlosbecker.com/posts/speeding-up-zsh/
-autoload -Uz compinit 
-if [[ $(date +'%j') > $(date +'%j' -r "${ZDOTDIR}/.zcompdump") ]]; then
+autoload -Uz compinit
+if [[ "$PLATFORM" = "Linux" ]] && [[ $(date +'%j') > $(date +'%j' -r "${ZDOTDIR}/.zcompdump") ]]; then
+  compinit
+elif [[ "$PLATFORM" = "Linux" ]] && [[ $(date +'%j') > $(stat -f '%Sm' -t '%j' "${ZDOTDIR}/.zcompdump") ]]; then
   compinit
 else
   compinit -C
