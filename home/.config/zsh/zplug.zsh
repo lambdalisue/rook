@@ -60,7 +60,3 @@ zplug "~/.config/zsh/plugin/serve", \
 zplug "~/.config/zsh/plugin/perldig", \
   from:local, \
   use:init.zsh
-
-zplug "~/.config/zsh/plugin/colon", \
-  from:local, \
-  use:thtmes/colon.zsh-theme

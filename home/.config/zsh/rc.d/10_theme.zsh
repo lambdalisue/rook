@@ -176,7 +176,7 @@ __colon::configure_vcsstyles() {
                 if [[ ! "${hook_com[misc]}" =~ '^[ ]*$' ]]; then
                    hook_com[misc]+=" "
                 fi
-                hook_com[misc]+="%{%B%F{magenta}%}>${ahead}%{%b%f%}"
+                hook_com[misc]+="%{%B%F{green}%}⋀%{%b%f%}"
             fi
         }
 
@@ -194,7 +194,7 @@ __colon::configure_vcsstyles() {
                 if [[ ! "${hook_com[misc]}" =~ '^[ ]*$' ]]; then
                     hook_com[misc]+=" "
                 fi
-                hook_com[misc]+="%{%B%F{cyan}%}${behind}<%{%b%f%}"
+                hook_com[misc]+="%{%B%F{green}%}⋁%{%b%f%}"
             fi
         }
     fi
