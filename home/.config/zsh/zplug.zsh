@@ -2,11 +2,11 @@ zplug "zplug/zplug"
 
 zplug "~/.config/zsh/plugin/serve", \
   from:local, \
-  use:init.sh
+  use:init.zsh
 
 zplug "~/.config/zsh/plugin/perldig", \
   from:local, \
-  use:init.sh
+  use:init.zsh
 
 zplug "b4b4r07/zsh-gomi", \
   as:command, \
