@@ -29,6 +29,14 @@ zplug "b4b4r07/ls.zsh", \
   as:command, \
   use:bin/ls
 
+zplug "github/hub", \
+  as:command, \
+  from:gh-r
+
+zplug "tkengo/highway", \
+  as:command, \
+  from:gh-r
+
 zplug "plugins/extract", \
   from:oh-my-zsh
 

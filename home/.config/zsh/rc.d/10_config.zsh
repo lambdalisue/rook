@@ -63,7 +63,7 @@ alias vimm="vim -u ~/.vim/vimrc.min -i NONE"
 if __rook::has 'hub'; then
   hub() {
     eval "$(command hub alias -s)"
-    hub "$@"
+    command hub "$@"
   }
 fi
 
@@ -77,22 +77,48 @@ fi
 # anyenv
 if __rook::has 'anyenv'; then
   anyenv() {
+    unset -f anyenv
+    unset -f pyenv
+    unset -f ndenv
     eval "$(command anyenv init - zsh)"
-    anyenv "$@"
+    command anyenv "$@"
   }
-elif __rook::has 'pyenv'; then
   pyenv() {
-    eval "$(command pyenv init - zsh)"
-    eval "$(command pyenv virtualenv-init - zsh)"
-    pyenv "$@"
+    unset -f anyenv
+    unset -f pyenv
+    unset -f ndenv
+    eval "$(command anyenv init - zsh)"
+    command pyenv "$@"
   }
+  ndenv() {
+    unset -f anyenv
+    unset -f pyenv
+    unset -f ndenv
+    eval "$(command anyenv init - zsh)"
+    command ndenv "$@"
+  }
+else
+  if __rook::has 'pyenv'; then
+    pyenv() {
+      eval "$(command pyenv init - zsh)"
+      eval "$(command pyenv virtualenv-init - zsh)"
+      command pyenv "$@"
+    }
+  fi
+  if __rook::has 'ndenv'; then
+    ndenv() {
+      eval "$(command ndenv init - zsh)"
+      command ndenv "$@"
+    }
+  fi
 fi
 
 # gulp
 if __rook::has 'gulp'; then
   gulp() {
+    unset -f gulp
     eval "$(command gulp --completion=zsh)"
-    gulp "$@"
+    command gulp "$@"
   }
 fi
 
@@ -116,21 +142,24 @@ fi
 # pip
 if __rook::has 'pip'; then
   pip() {
+    unset -f pip
     eval "$(command pip completion --zsh)"
-    pip "$@"
+    command pip "$@"
   }
 fi
 
 if __rook::has 'pip2'; then
   pip2() {
+    unset -f pip2
     eval "$(command pip2 completion --zsh)"
-    pip2 "$@"
+    command pip2 "$@"
   }
 fi
 
 if __rook::has 'pip3'; then
   pip3() {
+    unset -f pip3
     eval "$(command pip3 completion --zsh)"
-    pip3 "$@"
+    command pip3 "$@"
   }
 fi
