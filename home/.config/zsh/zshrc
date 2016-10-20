@@ -14,10 +14,10 @@ setopt print_eight_bit
 
 # use ASCII in linux server
 if [[ "${TERM}" = "linux" ]]; then
-    export LANG=C
+  export LANG=C
 else
-    export LANG="en_US.UTF-8"
-    export LANGUAGE="en_US:en"
+  export LANG="en_US.UTF-8"
+  export LANGUAGE="en_US:en"
 fi
 
 # report time when the process takes over 3 seconds
@@ -37,18 +37,18 @@ setopt auto_pushd            # Automatically push previous directory to stack
 setopt pushd_ignore_dups     # Ignore duplicate directory in pushd
 
 if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]]; then
-    autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
-    add-zsh-hook chpwd chpwd_recent_dirs
-    zstyle ':completion:*:*:cdr:*:*' menu selection
-    zstyle ':completion:*' recent-dirs-insert both
-    zstyle ':chpwd:*' recent-dirs-max 500
-    zstyle ':chpwd:*' recent-dirs-default true
-    zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME}/zsh/chpwd-recent-dirs"
-    zstyle ':chpwd:*' recent-dirs-pushd true
+  autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+  add-zsh-hook chpwd chpwd_recent_dirs
+  zstyle ':completion:*:*:cdr:*:*' menu selection
+  zstyle ':completion:*' recent-dirs-insert both
+  zstyle ':chpwd:*' recent-dirs-max 500
+  zstyle ':chpwd:*' recent-dirs-default true
+  zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME}/zsh/chpwd-recent-dirs"
+  zstyle ':chpwd:*' recent-dirs-pushd true
 
-    if [[ ! -d "${XDG_CACHE_HOME}/zsh/" ]]; then
-        mkdir -p "${XDG_CACHE_HOME}/zsh/"
-    fi
+  if [[ ! -d "${XDG_CACHE_HOME}/zsh/" ]]; then
+    mkdir -p "${XDG_CACHE_HOME}/zsh/"
+  fi
 fi
 #}}}
 
@@ -67,7 +67,13 @@ setopt no_flow_control       # do not use C-s/C-q
 #}}}
 
 # Completion {{{
-autoload -Uz compinit && compinit -u
+# NOTE: https://carlosbecker.com/posts/speeding-up-zsh/
+autoload -Uz compinit 
+if [[ $(date +'%j') > $(date +'%j' -r "${ZDOTDIR}/.zcompdump") ]]; then
+  compinit
+else
+  compinit -C
+fi
 
 setopt complete_in_word      # complete at carret position
 setopt glob_complete         # complete without expanding glob
@@ -128,10 +134,10 @@ if [[ -f $HOME/.zplug/init.zsh ]]; then
 
   # Install plugins if there are plugins that have not been installed
   if ! zplug check --verbose; then
-      printf "Install? [y/N]: "
-      if read -q; then
-          echo; zplug install
-      fi
+    printf "Install? [y/N]: "
+    if read -q; then
+      echo; zplug install
+    fi
   fi
 
   # Then, source plugins and add commands to $PATH
@@ -148,18 +154,18 @@ fi
 
 # source external settings
 for filename in ${ZDOTDIR}/rc.d/*.zsh; do
-    if [ ! -f ${filename}.zwc -o ${filename} -nt ${filename}.zwc ]; then
-        zcompile ${filename}
-    fi
-    source ${filename}
+  if [ ! -f ${filename}.zwc -o ${filename} -nt ${filename}.zwc ]; then
+    zcompile ${filename}
+  fi
+  source ${filename}
 done
 
 # compile zshenv/zshrc
-if [ ! -f ${ZDOTDIR}/.zshenv.zwc -o ${ZDOTDIR}/.zshenv -nt ${ZDOTDIR}/.zshenv.zwc ]; then
-    zcompile ${ZDOTDIR}/.zshenv
+if [ ! -f ${ZDOTDIR}/zshenv.zwc -o ${ZDOTDIR}/zshenv -nt ${ZDOTDIR}/zshenv.zwc ]; then
+  zcompile ${ZDOTDIR}/zshenv
 fi
-if [ ! -f ${ZDOTDIR}/.zshrc.zwc -o ${ZDOTDIR}/.zshrc -nt ${ZDOTDIR}/.zshrc.zwc ]; then
-    zcompile ${ZDOTDIR}/.zshrc
+if [ ! -f ${ZDOTDIR}/zshrc.zwc -o ${ZDOTDIR}/zshrc -nt ${ZDOTDIR}/zshrc.zwc ]; then
+  zcompile ${ZDOTDIR}/zshrc
 fi
 # }}}
 #-----------------------------------------------------------------------------

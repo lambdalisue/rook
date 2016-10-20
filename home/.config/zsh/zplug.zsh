@@ -1,13 +1,5 @@
 zplug "zplug/zplug"
 
-zplug "~/.config/zsh/plugin/serve", \
-  from:local, \
-  use:init.zsh
-
-zplug "~/.config/zsh/plugin/perldig", \
-  from:local, \
-  use:init.zsh
-
 zplug "b4b4r07/zsh-gomi", \
   as:command, \
   use:bin/gomi
@@ -57,3 +49,15 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-history-substring-search"
 
 zplug "zsh-users/zsh-syntax-highlighting"
+
+zplug "~/.config/zsh/plugin/serve", \
+  from:local, \
+  use:init.zsh
+
+zplug "~/.config/zsh/plugin/perldig", \
+  from:local, \
+  use:init.zsh
+
+zplug "~/.config/zsh/plugin/dight", \
+  from:local, \
+  use:init.zsh

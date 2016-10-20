@@ -1,8 +1,8 @@
-function rsync_push() {
+rsync::push() {
     local PWD=$(pwd)
     local HOST=$1; shift
     if [[ -z $HOST ]]; then
-        echo "Usage: rsync_push {host} [{rsync options}]"
+        echo "Usage: rsync::push {host} [{rsync options}]"
         echo "  Push contents in the current working directory to {host}"
         return 1
     fi
@@ -13,11 +13,11 @@ function rsync_push() {
     rsync -e 'ssh -c arcfour' --rsync-path="mkdir -p ${PWD} && rsync" -az ${PWD}/ ${HOST}:${PWD}/ $@
 }
 
-function rsync_pull() {
+rsync::pull() {
     local PWD=$(pwd)
     local HOST=$1; shift
     if [[ -z $HOST ]]; then
-        echo "Usage: rsync_pull {host} [{rsync options}]"
+        echo "Usage: rsync::pull {host} [{rsync options}]"
         echo "  Pull contents in the current working directory to {host}"
         return 1
     fi

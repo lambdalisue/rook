@@ -31,7 +31,7 @@ __serve::main() {
       __serve::python $port
     else
         echo "'$0' requires python, python2 or python3 but none is found."
-        exit 1
+        return 1
     fi
 }
 

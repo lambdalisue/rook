@@ -9,14 +9,15 @@ __perldig::find_installed_modules() {
 }
 
 __perldig::main() {
-  local commad=shift
+  local progname=shift
+  local command=shift
   if [ -z $command ]; then
     echo "Usage: perldig <command> <options>"
     echo
     echo "COMMAND"
     echo "  version - Find a installed module version"
     echo "  list    - List installed modules"
-    exit 1
+    return 1
   fi
   if [[ "$command" = "version" ]]; then
     __perldig::find_module_version $@
