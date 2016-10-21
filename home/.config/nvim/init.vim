@@ -472,6 +472,10 @@ function! s:switch_colorscheme(offset) abort
   let s:colorscheme_index = s:colorscheme_index % len(s:colorschemes)
   let colorscheme_name = s:colorschemes[s:colorscheme_index]
   execute 'colorscheme' colorscheme_name
+  if colorscheme_name =~# '\%(tender\|hybrid\)'
+    highlight Cursor guifg=white guibg=black
+    highlight iCursor guifg=white guibg=steelblue
+  endif
   redraw | echo colorscheme_name
 endfunction
 nnoremap <silent> <Plug>(my-switch-colorscheme)
