@@ -61,10 +61,7 @@ alias vimm="vim -u ~/.vim/vimrc.min -i NONE"
 
 # hub
 if __rook::has 'hub'; then
-  hub() {
-    eval "$(command hub alias -s)"
-    command hub "$@"
-  }
+  eval "$(command hub alias -s)"
 fi
 
 # xdg-open
@@ -76,40 +73,14 @@ fi
 
 # anyenv
 if __rook::has 'anyenv'; then
-  anyenv() {
-    unset -f anyenv
-    unset -f pyenv
-    unset -f ndenv
-    eval "$(command anyenv init - zsh)"
-    command anyenv "$@"
-  }
-  pyenv() {
-    unset -f anyenv
-    unset -f pyenv
-    unset -f ndenv
-    eval "$(command anyenv init - zsh)"
-    command pyenv "$@"
-  }
-  ndenv() {
-    unset -f anyenv
-    unset -f pyenv
-    unset -f ndenv
-    eval "$(command anyenv init - zsh)"
-    command ndenv "$@"
-  }
+  eval "$(command anyenv init - zsh)"
 else
   if __rook::has 'pyenv'; then
-    pyenv() {
-      eval "$(command pyenv init - zsh)"
-      eval "$(command pyenv virtualenv-init - zsh)"
-      command pyenv "$@"
-    }
+    eval "$(command pyenv init - zsh)"
+    eval "$(command pyenv virtualenv-init - zsh)"
   fi
   if __rook::has 'ndenv'; then
-    ndenv() {
-      eval "$(command ndenv init - zsh)"
-      command ndenv "$@"
-    }
+    eval "$(command ndenv init - zsh)"
   fi
 fi
 

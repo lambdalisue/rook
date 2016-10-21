@@ -49,7 +49,7 @@ zle -N __fzf::history::zle
 bindkey '^R' __fzf::history::zle
 # }}}
 
-# ^X^J: CDR {{{
+# ^D: CDR {{{
 fzf::cdr() {
   print -z $(__fzf::cdr $1)
 }
@@ -67,7 +67,7 @@ __fzf::cdr::zle() {
 }
 
 zle -N __fzf::cdr::zle
-bindkey '^X^J' __fzf::cdr::zle
+bindkey '^D' __fzf::cdr::zle
 # }}}
 
 # ^X^K: Kill {{{
@@ -119,8 +119,8 @@ fzf::ghq() {
 
 __fzf::ghq() {
   local query=$(__str::tail $1)
-  local s="$(ghq list | fzf --query "$query")"
-  [[ -n $s ]] && print "ghq look $(echo $s | awk '{print $1}')"
+  local s="$(ghq list --full-path | fzf --query "$query")"
+  [[ -n $s ]] && print "cd $(echo $s | awk '{print $1}')"
 }
 
 __fzf::ghq::zle() {
