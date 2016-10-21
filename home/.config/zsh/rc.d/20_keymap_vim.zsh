@@ -1,27 +1,27 @@
 ## Ensures that $terminfo values are valid and updates editor information when
 ## the keymap changes.
-zle-line-init zle-line-finish() {
-    # The terminal must be in application mode when ZLE is active for $terminfo
-    # values to be valid.
-    if (( ${+terminfo[smkx]} )); then
-        # enable terminal application mode
-        echoti smkx
-    elif (( ${+terminfo[rmkx]} )); then
-        # disable terminal application mode
-        echoti rmkx
-    fi
-    zle reset-prompt
-    zle -R
-}
-
-# Ensure that the prompt is redrawn when the terminal size changes.
-TRAPWINCH() {
-    zle && { zle reset-prompt; zle -R }
-}
-
-zle -N zle-line-init
-zle -N zle-line-finish
-zle -N edit-command-line
+#zle-line-init zle-line-finish() {
+#    # The terminal must be in application mode when ZLE is active for $terminfo
+#    # values to be valid.
+#    if (( ${+terminfo[smkx]} )); then
+#        # enable terminal application mode
+#        echoti smkx
+#    elif (( ${+terminfo[rmkx]} )); then
+#        # disable terminal application mode
+#        echoti rmkx
+#    fi
+#    zle reset-prompt
+#    zle -R
+#}
+#
+## Ensure that the prompt is redrawn when the terminal size changes.
+#TRAPWINCH() {
+#    zle && { zle reset-prompt; zle -R }
+#}
+#
+#zle -N zle-line-init
+#zle -N zle-line-finish
+#zle -N edit-command-line
 
 ## allow v to edit the command line (standard behaviour)
 #autoload -Uz edit-command-line
