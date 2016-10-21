@@ -1,44 +1,46 @@
 zplug "zplug/zplug"
 
-zplug "b4b4r07/zsh-gomi", \
-  as:command, \
-  use:bin/gomi
-
+# Emoji input support tool
 zplug "mrowa44/emojify", \
   as:command
 
+# The platinum searcher: pt
 zplug "monochromegane/the_platinum_searcher", \
   as:command, \
   from:gh-r
 
+# Command-line JSON processor
 zplug "stedolan/jq", \
   as:command, \
   from:gh-r
 
-zplug "peco/peco", \
-  as:command, \
-  from:gh-r
-
+# Remote repository management tool
 zplug "motemen/ghq", \
   as:command, \
   from:gh-r, \
   rename-to:ghq
 
-zplug "b4b4r07/ls.zsh", \
-  as:command, \
-  use:bin/ls
-
+# GitHub integration CLI tool
 zplug "github/hub", \
   as:command, \
   from:gh-r
 
+# Command-line fuzzy finder
+zplug "junegunn/fzf-bin", \
+    as:command, \
+    from:gh-r, \
+    rename-to:fzf
+
+# Command-line Trash-box interface
+zplug "b4b4r07/gomi", \
+  as:command, \
+  from:gh-r
+
+# Extract any archive with 'extract' command
 zplug "plugins/extract", \
   from:oh-my-zsh
 
-zplug "b4b4r07/emoji-cli", \
-  if:'(( $+commands[jq] ))', \
-  on:"peco/peco"
-
+# Improve 'cd' interface
 zplug "b4b4r07/enhancd", \
   use:init.sh
 

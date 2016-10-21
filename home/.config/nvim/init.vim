@@ -339,7 +339,6 @@ if has('nvim')
   tnoremap <Esc> <C-\><C-n>
 endif
 
-
 " Seemless substitution with :s<Space> {{{
 cnoreabbrev <silent><expr>s getcmdtype() ==# ':' && getcmdline() =~# '^s'
       \ ? "<C-u>%s/<C-r>=get([], getchar(0), '')<CR>"
@@ -529,9 +528,9 @@ function! s:sticky_func() abort
     return ''
   endif
 endfunction
-inoremap <expr> ; <SID>sticky_func()
-cnoremap <expr> ; <SID>sticky_func()
-snoremap <expr> ; <SID>sticky_func()
+"inoremap <expr> ; <SID>sticky_func()
+"cnoremap <expr> ; <SID>sticky_func()
+"snoremap <expr> ; <SID>sticky_func()
 "}}}
 
 " Automatically remove trailing spaces {{{

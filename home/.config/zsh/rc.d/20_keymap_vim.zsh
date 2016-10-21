@@ -1,5 +1,5 @@
-# Ensures that $terminfo values are valid and updates editor information when
-# the keymap changes.
+## Ensures that $terminfo values are valid and updates editor information when
+## the keymap changes.
 zle-line-init zle-line-finish() {
     # The terminal must be in application mode when ZLE is active for $terminfo
     # values to be valid.
@@ -23,9 +23,9 @@ zle -N zle-line-init
 zle -N zle-line-finish
 zle -N edit-command-line
 
-# allow v to edit the command line (standard behaviour)
-autoload -Uz edit-command-line
-bindkey -M vicmd 'v' edit-command-line
+## allow v to edit the command line (standard behaviour)
+#autoload -Uz edit-command-line
+#bindkey -M vicmd 'v' edit-command-line
 
 # cycle history with C-p/C-n
 autoload history-search-end
@@ -52,4 +52,3 @@ bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
-

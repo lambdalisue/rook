@@ -1145,6 +1145,7 @@ let g:impsort_method_imports = ['alpha', 'length']
 '''
 
 [[plugins]]
+rev = 'vim-dev'
 if = "has('nvim')"
 repo = 'zchee/deoplete-jedi'
 on_ft = ['python', 'python3']

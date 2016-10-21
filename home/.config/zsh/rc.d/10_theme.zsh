@@ -200,42 +200,66 @@ __colon::configure_vcsstyles() {
     fi
 }
 
-__colon::configure_prompt() {
-    __colon::prompt_precmd() {
-        local exitstatus=$?
-        __colon_prompt_1st_bits=(
-            "$(__colon::get_root)"
-            "$(__colon::get_time)"
-            "$(__colon::get_exitstatus $exitstatus)"
-            "$(__colon::get_symbol $exitstatus)"
-        )
-        __colon_prompt_2nd_bits=(
-            "$(__colon::get_vcs)"
-            "$(__colon::get_cwd)"
-        )
-        # Remove empty elements
-        __colon_prompt_1st_bits=${(M)__colon_prompt_1st_bits:#?*}
-        __colon_prompt_2nd_bits=${(M)__colon_prompt_2nd_bits:#?*}
-        # Array to String
-        __colon_prompt_1st_bits=${(j: :)__colon_prompt_1st_bits}
-        __colon_prompt_2nd_bits=${(j: :)__colon_prompt_2nd_bits}
-    }
-    add-zsh-hook precmd __colon::prompt_precmd
+__colon::configure_vimode() {
+  function zle-keymap-select zle-line-init zle-line-finish {
+    case $KEYMAP in
+      main|viins)
+        __colon_mode="%{%F{yellow}%}-- INSERT --%{%f%}"
+        ;;
+      vicmd)
+        __colon_mode="%{%F{blue}%}-- NORMAL --%{%f%}"
+        ;;
+      vivis|vivli)
+        __colon_mode="%{%F{orange}%}-- VISUAL --%{%f%}"
+        ;;
+    esac
+    zle reset-prompt
+    zle -R
+  }
+  zle -N zle-line-init
+  zle -N zle-line-finish
+  zle -N zle-keymap-select
+  zle -N edit-command-line
+  __colon_mode="%{%F{yellow}%}-- INSERT --%{%f%}"
+}
 
-    PROMPT="\$__colon_prompt_1st_bits "
-    RPROMPT=" \$__colon_prompt_2nd_bits"
+__colon::configure_prompt() {
+  __colon::prompt_precmd() {
+    local exitstatus=$?
+    __colon_prompt_1st_bits=(
+      "$(__colon::get_root)"
+      "$(__colon::get_time)"
+      "$(__colon::get_exitstatus $exitstatus)"
+      "$(__colon::get_symbol $exitstatus)"
+    )
+    __colon_prompt_2nd_bits=(
+      "$(__colon::get_vcs)"
+      "$(__colon::get_cwd)"
+    )
+    # Remove empty elements
+    __colon_prompt_1st_bits=${(M)__colon_prompt_1st_bits:#?*}
+    __colon_prompt_2nd_bits=${(M)__colon_prompt_2nd_bits:#?*}
+    # Array to String
+    __colon_prompt_1st_bits=${(j: :)__colon_prompt_1st_bits}
+    __colon_prompt_2nd_bits=${(j: :)__colon_prompt_2nd_bits}
+  }
+  add-zsh-hook precmd __colon::prompt_precmd
+
+  terminfo_down_sc=$terminfo[cud1]$terminfo[cuu1]$terminfo[sc]$terminfo[cud1]
+  PROMPT="%{$terminfo_down_sc\$__colon_mode$terminfo[rc]%}\$__colon_prompt_1st_bits "
+  RPROMPT=" \$__colon_prompt_2nd_bits"
 }
 
 {
-    # load required modules
-    autoload -Uz is-at-least
-    autoload -Uz add-zsh-hook
-    autoload -Uz colors && colors
-    # enable variable extraction in prompt
-    setopt prompt_subst
-    # configure VCS
-    __colon::configure_vcsstyles
-    # configure PROMPT
-    __colon::configure_prompt
+  # load required modules
+  autoload -Uz terminfo
+  autoload -Uz is-at-least
+  autoload -Uz add-zsh-hook
+  autoload -Uz colors && colors
+  # enable variable extraction in prompt
+  setopt prompt_subst
+  __colon::configure_vimode
+  __colon::configure_prompt
+  __colon::configure_vcsstyles
 }
 # vim: ft=zsh

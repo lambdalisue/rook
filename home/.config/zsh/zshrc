@@ -1,6 +1,25 @@
 ZDOTDIR=${XDG_CONFIG_HOME}/zsh
-PLATFORM="$(uname)"
+case $(uname) in
+  'Darwin') export PLATFORM='darwin';;
+  'Linux') export PLATFORM='linux';;
+esac
+
 #-----------------------------------------------------------------------------
+# Utility {{{
+__rook::has() {
+  which "$1" >/dev/null 2>&1
+  return $?
+}
+
+__rook::is_osx() {
+  [[ $PLATFORM = "darwin" ]]
+}
+
+__rook::is_linux() {
+  [[ $PLATFORM = "linux" ]]
+}
+# }}}
+
 # Prelude {{{
 # disable promptcr to display last line without newline
 unsetopt promptcr
@@ -70,9 +89,9 @@ setopt no_flow_control       # do not use C-s/C-q
 # Completion {{{
 # NOTE: https://carlosbecker.com/posts/speeding-up-zsh/
 autoload -Uz compinit
-if [[ "$PLATFORM" = "Linux" ]] && [[ $(date +'%j') > $(date +'%j' -r "${ZDOTDIR}/.zcompdump") ]]; then
+if __rook::is_linux && [[ $(date +'%j') > $(date +'%j' -r "${ZDOTDIR}/.zcompdump") ]]; then
   compinit
-elif [[ "$PLATFORM" = "Linux" ]] && [[ $(date +'%j') > $(stat -f '%Sm' -t '%j' "${ZDOTDIR}/.zcompdump") ]]; then
+elif __rook::is_osx && [[ $(date +'%j') > $(stat -f '%Sm' -t '%j' "${ZDOTDIR}/.zcompdump") ]]; then
   compinit
 else
   compinit -C
