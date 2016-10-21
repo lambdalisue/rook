@@ -501,23 +501,17 @@ autocmd MyAutoCmd BufWinEnter * if s:checkview() | silent! loadview | endif
 " Sticky shift in English keyboard."{{{
 " Sticky key.
 let s:sticky_table = {
-      \',' : '<', '.' : '>', '/' : '?',
-      \'1' : '!', '2' : '@', '3' : '#', '4' : '$', '5' : '%',
-      \'6' : '^', '7' : '&', '8' : '*', '9' : '(', '0' : ')', '-' : '_', '=' : '+',
-      \';' : ':', '[' : '{', ']' : '}', '`' : '~', "'" : "\"", '\' : '|',
+      \ ';': ';',
+      \ '1': '!', '2': '@', '3': '#', '4': '$', '5': '%',
+      \ '6': '^', '7': '&', '8': '*', '9': '(', '0': ')',
+      \ ',': '<', '.': '>', '/': '?', '-': '_', '=': '+',
+      \ '[': '{', ']': '}', '`': '~', "'": "\"", '\': '|',
       \}
 let s:special_table = {
-      \"\<ESC>" : "\<ESC>", "\<Space>" : ';', "\<CR>" : ";\<CR>"
+      \"\<ESC>" : "\<ESC>", "\<Space>" : '; ', "\<CR>" : ";\<CR>"
       \}
 function! s:sticky_func() abort
-  if mode() !~# '^c'
-    redraw | echo 'SHIFT: '
-  endif
   let char = nr2char(getchar())
-  if mode() !~# '^c'
-    redraw | echo ''
-  endif
-
   if char =~? '\l'
     return toupper(char)
   elseif has_key(s:sticky_table, char)
@@ -528,9 +522,9 @@ function! s:sticky_func() abort
     return ''
   endif
 endfunction
-"inoremap <expr> ; <SID>sticky_func()
-"cnoremap <expr> ; <SID>sticky_func()
-"snoremap <expr> ; <SID>sticky_func()
+inoremap <expr> ; <SID>sticky_func()
+cnoremap <expr> ; <SID>sticky_func()
+snoremap <expr> ; <SID>sticky_func()
 "}}}
 
 " Automatically remove trailing spaces {{{
