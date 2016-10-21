@@ -62,3 +62,10 @@ zplug "~/.config/zsh/plugin/serve", \
 zplug "~/.config/zsh/plugin/perldig", \
   from:local, \
   use:init.zsh
+
+# Install battery via go
+if __rook::has 'go'; then
+  if ! __rook::has 'battery'; then
+    go get -u -v github.com/Code-Hex/battery/cmd/battery
+  fi
+fi

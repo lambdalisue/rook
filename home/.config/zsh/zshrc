@@ -20,6 +20,14 @@ __rook::is_linux() {
 }
 # }}}
 
+# Tmux {{{
+if __rook::has 'tmux'; then
+  # Attach tmux session first.
+  . $ZDOTDIR/tmux.zsh
+fi
+# }}}
+
+
 # Prelude {{{
 # disable promptcr to display last line without newline
 unsetopt promptcr

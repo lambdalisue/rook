@@ -1,29 +1,20 @@
-__tmuxx::is_tmux_running() {
+__tmux::is_tmux_running() {
   [ ! -z "$TMUX" ]
 }
 
-__tmuxx::has_shell_started_interactively() {
+__tmux::has_shell_started_interactively() {
   [ ! -z "$PS1" ]
 }
 
-__tmuxx::is_ssh_running() {
+__tmux::is_ssh_running() {
   [ ! -z "$SSH_CONECTION" ]
 }
 
-__tmuxx::main() {
+__tmux::main() {
   if __tmuxx::is_tmux_running; then
-    echo "${fg_bold[red]} _____ __  __ _   ___  __ ${reset_color}"
-    echo "${fg_bold[red]}|_   _|  \/  | | | \ \/ / ${reset_color}"
-    echo "${fg_bold[red]}  | | | |\/| | | | |\  /  ${reset_color}"
-    echo "${fg_bold[red]}  | | | |  | | |_| |/  \  ${reset_color}"
-    echo "${fg_bold[red]}  |_| |_|  |_|\___//_/\_\ ${reset_color}"
+    return 1
   else
     if __tmuxx::has_shell_started_interactively && ! __tmuxx::is_ssh_running; then
-      if ! __rook::has 'tmux'; then
-        echo 'Error: tmux command not found' 2>&1
-        return 1
-      fi
-
       if tmux has-session >/dev/null 2>&1 && tmux list-sessions | grep -qE '.*]$'; then
         # detached session exists
         tmux list-sessions
@@ -56,4 +47,4 @@ __tmuxx::main() {
   fi
 }
 
-__tmuxx::main
+__tmux::main
