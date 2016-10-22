@@ -26,6 +26,7 @@ unsetopt promptcr
 
 # Disable Ctrl-D logout
 setopt IGNOREEOF
+
 # Disable Ctrl-S susspend (Ctrl-Q to back)
 stty stop undef
 
@@ -89,7 +90,9 @@ setopt no_flow_control       # do not use C-s/C-q
 # Completion {{{
 # NOTE: https://carlosbecker.com/posts/speeding-up-zsh/
 autoload -Uz compinit
-if __rook::is_linux && [[ $(date +'%j') > $(date +'%j' -r "${ZDOTDIR}/.zcompdump") ]]; then
+if [ ! -f "${ZDOTDIR}/.zcompdump" ]; then
+  compinit
+elif __rook::is_linux && [[ $(date +'%j') > $(date +'%j' -r "${ZDOTDIR}/.zcompdump") ]]; then
   compinit
 elif __rook::is_osx && [[ $(date +'%j') > $(stat -f '%Sm' -t '%j' "${ZDOTDIR}/.zcompdump") ]]; then
   compinit
@@ -169,6 +172,9 @@ fi
 
 # Tmux {{{
 if __rook::has 'tmux'; then
+  if [ ! -f ${ZDOTDIR}/tmux.zsh.zwc -o ${ZDOTDIR}/tmux.zsh -nt ${ZDOTDIR}/tmux.zsh.zwc ]; then
+    zcompile ${ZDOTDIR}/tmux.zsh
+  fi
   # Attach tmux session first.
   . $ZDOTDIR/tmux.zsh
 fi

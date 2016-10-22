@@ -133,7 +133,7 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \ ['~/.config/zsh/zplug.zsh'],
       \ ['~/.config/zsh/rc.d/10_config.zsh'],
       \ ['~/.config/zsh/rc.d/10_theme.zsh'],
-      \ ['~/.config/zsh/rc.d/20_keymap_vim.zsh'],
+      \ ['~/.config/zsh/rc.d/20_keymap.zsh'],
       \ ['~/.config/zsh/rc.d/50_config_fzf.zsh'],
       \ ['~/.config/zsh/rc.d/50_extend_rsync.zsh'],
       \ 'tmux',
