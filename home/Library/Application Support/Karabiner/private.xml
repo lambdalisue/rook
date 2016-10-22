@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<root>
+  <item>
+    <name>Private</name>
+    <item>
+      <name>Change Keyboard Layout</name>
+      <item>
+        <name style="important">The following extra configurations are required.</name>
+        <appendix>
+          <![CDATA[ * Assign "No Action" to Capslock by in Keyboard > Modifier keys... > Caps Lock ]]>
+        </appendix>
+        <appendix>
+          <![CDATA[ * Assign "62" (CONTROL_R: 0x3E) to Capslock in "Seil". ]]>
+        </appendix>
+        <appendix>&#8594; https://pqrs.org/osx/karabiner/seil.html</appendix>
+      </item>
+      <item>
+        <name>Use Japanese Keyboard as US keyboard (for Modifiers)</name>
+        <appendix><![CDATA[  * Capslock	-> Fn ]]></appendix>
+        <appendix><![CDATA[  * Option	-> Control_L ]]></appendix>
+        <appendix><![CDATA[  * Command	-> Option_L ]]></appendix>
+        <appendix><![CDATA[  * Eisu		-> Command_L ]]></appendix>
+        <appendix><![CDATA[  * Kana		-> Space ]]></appendix>
+        <appendix><![CDATA[  * Fn		-> Option_R ]]></appendix>
+        <identifier>private.use_jis_as_us_modifiers</identifier>
+        <autogen>__KeyToKey__ KeyCode::CONTROL_R, KeyCode::FN</autogen>
+        <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::CONTROL_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::OPTION_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::JIS_EISUU, KeyCode::COMMAND_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::JIS_KANA, KeyCode::SPACE</autogen>
+        <autogen>__KeyToKey__ KeyCode::FN, KeyCode::OPTION_R</autogen>
+      </item>
+    </item>
+  </item>
+</root>
