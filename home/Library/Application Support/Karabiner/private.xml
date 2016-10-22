@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
+<!-- https://github.com/tekezo/Karabiner/blob/master/src/bridge/generator/keycode/data/KeyCode.data -->
 <root>
   <item>
     <name>Private</name>
     <item>
-      <name>Change Keyboard Layout</name>
+      <name>For Japanese Keyboard (MacBook Pro)</name>
       <item>
         <name style="important">The following extra configurations are required.</name>
         <appendix>
@@ -15,13 +16,13 @@
         <appendix>&#8594; https://pqrs.org/osx/karabiner/seil.html</appendix>
       </item>
       <item>
-        <name>Use Japanese Keyboard as US keyboard (for Modifiers)</name>
-        <appendix><![CDATA[  * Capslock	-> Fn ]]></appendix>
-        <appendix><![CDATA[  * Option	-> Control_L ]]></appendix>
-        <appendix><![CDATA[  * Command	-> Option_L ]]></appendix>
-        <appendix><![CDATA[  * Eisu		-> Command_L ]]></appendix>
-        <appendix><![CDATA[  * Kana		-> Space ]]></appendix>
-        <appendix><![CDATA[  * Fn		-> Option_R ]]></appendix>
+        <name>Use Japanese Keyboard as US keyboard for Modifiers</name>
+        <appendix><![CDATA[  * Capslock		-> Fn ]]></appendix>
+        <appendix><![CDATA[  * Option_L		-> Control_L ]]></appendix>
+        <appendix><![CDATA[  * Command_L	-> Option_L ]]></appendix>
+        <appendix><![CDATA[  * Eisuu			-> Command_L ]]></appendix>
+        <appendix><![CDATA[  * Kana			-> Space ]]></appendix>
+        <appendix><![CDATA[  * Fn (Control_R)	-> Option_R ]]></appendix>
         <identifier>private.use_jis_as_us_modifiers</identifier>
         <autogen>__KeyToKey__ KeyCode::CONTROL_R, KeyCode::FN</autogen>
         <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::CONTROL_L</autogen>
@@ -29,6 +30,49 @@
         <autogen>__KeyToKey__ KeyCode::JIS_EISUU, KeyCode::COMMAND_L</autogen>
         <autogen>__KeyToKey__ KeyCode::JIS_KANA, KeyCode::SPACE</autogen>
         <autogen>__KeyToKey__ KeyCode::FN, KeyCode::OPTION_R</autogen>
+      </item>
+      <item>
+        <name>Use Japanese Keyboard as US keyboard for Modifiers with SHIFT/OPTION IME</name>
+        <appendix><![CDATA[  * Capslock		-> Fn ]]></appendix>
+        <appendix><![CDATA[  * Option_L		-> Control_L ]]></appendix>
+        <appendix><![CDATA[  * Command_L	-> Option_L ]]></appendix>
+        <appendix><![CDATA[  * Eisuu			-> Command_L ]]></appendix>
+        <appendix><![CDATA[  * Kana			-> Space ]]></appendix>
+        <appendix><![CDATA[  * Shift_R		-> Kana ]]></appendix>
+        <appendix><![CDATA[  * Fn (Control_R)	-> Eisuu ]]></appendix>
+        <identifier>private.use_jis_as_us_modifiers_with_shift_option_ime</identifier>
+        <autogen>__KeyToKey__ KeyCode::CONTROL_R, KeyCode::FN</autogen>
+        <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::CONTROL_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::OPTION_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::JIS_EISUU, KeyCode::COMMAND_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::JIS_KANA, KeyCode::SPACE</autogen>
+        <autogen>__KeyToKey__ KeyCode::SHIFT_R, KeyCode::JIS_KANA</autogen>
+        <autogen>__KeyToKey__ KeyCode::FN, KeyCode::JIS_EISUU</autogen>
+      </item>
+    </item>
+    <item>
+      <name>For US Keyboard</name>
+      <item>
+        <name>Use SHIFT/OPTION IME</name>
+        <appendix><![CDATA[  * Shift_R		-> Kana ]]></appendix>
+        <appendix><![CDATA[  * Option_R		-> Eisuu ]]></appendix>
+        <identifier>private.use_shift_option_ime</identifier>
+        <autogen>__KeyToKey__ KeyCode::SHIFT_R, KeyCode::JIS_KANA</autogen>
+        <autogen>__KeyToKey__ KeyCode::OPTION_R, KeyCode::JIS_EISUU</autogen>
+      </item>
+    </item>
+    <item>
+      <name>For Japanese Vimmer</name>
+      <item>
+        <name>Send ESCAPE instead of Ctrl-[ when Ctrl-[ is pressed.</name>
+        <appendix>This configuration is mainly to enable IME deactivation of Google IME.</appendix>
+        <appendix>Add "precomposition: Escape -> Cancel and deactivate IME" to Google IME custom mapping.</appendix>
+        <identifier>private.send_escape_instead_of_ctrl_branket_left</identifier>
+        <autogen>
+          __KeyToKey__
+          KeyCode::BRACKET_LEFT, VK_CONTROL,
+          KeyCode::ESCAPE
+        </autogen>
       </item>
     </item>
   </item>

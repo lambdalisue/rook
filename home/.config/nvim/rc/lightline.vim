@@ -32,7 +32,7 @@ let g:lightline = {
       \   ],
       \   'right': [
       \     [ 'datetime' ],
-      \     [ 'wifi', 'battery' ],
+      \     [ 'battery' ],
       \     [ 'pyenv', 'gita_branch', 'gita_traffic', 'gita_status' ],
       \   ],
       \ },
