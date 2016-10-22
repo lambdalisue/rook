@@ -484,6 +484,23 @@ nnoremap <silent> <Plug>(my-switch-colorscheme)
 nmap <F3> <Plug>(my-switch-colorscheme)
 " }}}
 
+" Zoom widnow temporary with <C-w>o {{{
+function! s:toggle_window_zoom() abort
+    if exists('t:zoom_winrestcmd')
+        execute t:zoom_winrestcmd
+        unlet t:zoom_winrestcmd
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+    endif
+endfunction
+nnoremap <silent> <Plug>(my-zoom-window)
+      \ :<C-u>call <SID>toggle_window_zoom()<CR>
+nmap <C-w>o <Plug>(my-zoom-window)
+nmap <C-w><C-o> <Plug>(my-zoom-window)
+"}}}
+
 " }}}
 
 " Macro {{{

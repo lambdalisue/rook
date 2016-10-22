@@ -18,7 +18,7 @@ __tmux::main() {
       if tmux has-session >/dev/null 2>&1 && tmux list-sessions | grep -qE '.*]$'; then
         # detached session exists
         tmux list-sessions
-        echo -n "Tmux: attach? (y/N/num) "
+        echo -n "Tmux: attach? (Y/n/{num}) "
         read
         if [[ "$REPLY" =~ ^[Yy]$ ]] || [[ "$REPLY" == '' ]]; then
           tmux attach-session

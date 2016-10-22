@@ -75,3 +75,8 @@ zplug "~/.config/zsh/plugin/serve", \
 zplug "~/.config/zsh/plugin/perldig", \
   from:local, \
   use:init.zsh
+
+# Connect kill-buffer and system clipboard
+zplug "~/.config/zsh/plugin/zsh-system-clipboard", \
+  from:local, \
+  use:init.zsh

@@ -49,7 +49,7 @@ zle -N __fzf::history::zle
 bindkey '^R' __fzf::history::zle
 # }}}
 
-# ^D: CDR {{{
+# ^X^D: CDR {{{
 fzf::cdr() {
   print -z $(__fzf::cdr $1)
 }
@@ -67,7 +67,7 @@ __fzf::cdr::zle() {
 }
 
 zle -N __fzf::cdr::zle
-bindkey '^D' __fzf::cdr::zle
+bindkey '^X^D' __fzf::cdr::zle
 # }}}
 
 # ^X^L: List keymap {{{

@@ -60,6 +60,11 @@ REPORTTIME=3
 # enable completion in --prefix=~/local or whatever
 setopt magic_equal_subst
 
+# Ensure that the prompt is redrawn when the terminal size changes.
+TRAPWINCH() {
+    zle && { zle reset-prompt; zle -R }
+}
+
 # }}}
 
 # Movement {{{
