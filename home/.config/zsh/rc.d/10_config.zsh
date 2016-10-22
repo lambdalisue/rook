@@ -44,11 +44,6 @@ if __rook::has 'gtimeout'; then
     alias timeout=gtimeout
 fi
 
-# disable rm if 'gomi' is available
-if __rook::has 'gomi'; then
-  alias rm="echo 'Use gomi <path> instead or \\\\rm <path>.'; false"
-fi
-
 # vim
 export EDITOR=vim
 export MANPAGER="vim -c MANPAGER -"
@@ -192,6 +187,6 @@ if [[ -f "$HOME/.homesick/repos/homeshick/homeshick.sh" ]]; then
   homeshick() {
     unset -f homeshick
     source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-    command homeshick "$@"
+    homeshick "$@"
   }
 fi
