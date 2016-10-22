@@ -19,6 +19,10 @@ function zle-line-init zle-line-finish {
 # Use Vi like binding
 bindkey -v
 
+# Decrease timeout to 0.1 seconds
+# http://www.johnhawthorn.com/2012/09/vi-escape-delays/
+export KEYTIMEOUT=1
+
 # Cycle history search with C-p/C-n
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end

@@ -1,17 +1,22 @@
 # Colon
 # Author:  lambdalisue
 # License: MIT
-
-__colon::util::timeout() {
-  command perl -e 'alarm shift; exec @ARGV' "$@"
-}
+if __rook::has 'timeout'; then
+  __colon::util::timeout() { timeout "$@" }
+elif __rook::has 'gtimeout'; then
+  __colon::util::timeout() { gtimeout "$@" }
+else
+  __colon::util::timeout() {
+    command perl -e 'alarm shift; exec @ARGV' "$@"
+  }
+fi
 
 __colon::util::git() {
   __colon::util::timeout 1 command git "$@" 2>/dev/null
 }
 
 __colon::util::is_git_worktree() {
-  [[ $(__colon::util::git rev-parse --is-inside-work-tree) == 'true' ]]
+  __colon::util::git rev-parse --is-inside-work-tree >/dev/null 2>&1
 }
 
 __colon::util::eliminate_empty_elements() {
@@ -49,6 +54,19 @@ __colon::get_time() {
   local kcolor=''
   local date="%D{%H:%M}"
   __colon::get_segment "$date" $fcolor $kcolor
+}
+
+__colon::get_vimode() {
+  local fcolor_insert='yellow'
+  local kcolor_insert=''
+  local fcolor_normal='blue'
+  local kcolor_normal=''
+  # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html
+  # http://qiita.com/b4b4r07/items/8db0257d2e6f6b19ecb9
+  case $KEYMAP in
+    vicmd) __colon::get_segment "NORMAL" $fcolor_normal $kcolor_normal;;
+    *)     __colon::get_segment "INSERT" $fcolor_insert $kcolor_insert;;
+  esac
 }
 
 __colon::get_symbol() {
@@ -120,8 +138,8 @@ __colon::configure_vcsstyles() {
     zstyle ':vcs_info:*:colon:*' max-exports 3
 
     zstyle ':vcs_info:*:colon:*' enable git svn hg bzr
-    zstyle ':vcs_info:*:colon:*' formats "%s $branchfmt"
-    zstyle ':vcs_info:*:colon:*' actionformats "%s $branchfmt" '%m' '<!%a>'
+    zstyle ':vcs_info:*:colon:*' formats "%s$branchfmt"
+    zstyle ':vcs_info:*:colon:*' actionformats "%s$branchfmt" '%m' '<!%a>'
 
     if is-at-least 4.3.10; then
         zstyle ':vcs_info:git:colon:*' formats "$branchfmt" '%m'
@@ -148,7 +166,7 @@ __colon::configure_vcsstyles() {
             if [[ "$1" != "1" ]]; then
                 return 0
             fi
-            local gitstatus="$(__colon::util::git status --ignore-submodules=all --porcelain)"
+            local gitstatus="$(__colon::util::git status --ignore-submodules --porcelain)"
             if [[ $? == 0 ]]; then
                 local staged="$(command echo $gitstatus | grep -E '^([MARC][ MD]|D[ M])' | wc -l | tr -d ' ')"
                 local unstaged="$(command echo $gitstatus | grep -E '^([ MARC][MD]|DM)' | wc -l | tr -d ' ')"
@@ -173,9 +191,6 @@ __colon::configure_vcsstyles() {
             ahead=$(__colon::util::git log --oneline @{upstream}.. | wc -l | tr -d ' ')
 
             if [[ "$ahead" -gt 0 ]]; then
-                if [[ ! "${hook_com[misc]}" =~ '^[ ]*$' ]]; then
-                   hook_com[misc]+=" "
-                fi
                 hook_com[misc]+="%{%B%F{green}%}⋀%{%b%f%}"
             fi
         }
@@ -191,13 +206,24 @@ __colon::configure_vcsstyles() {
             behind=$(__colon::util::git log --oneline ..@{upstream} | wc -l | tr -d ' ')
 
             if [[ "$behind" -gt 0 ]]; then
-                if [[ ! "${hook_com[misc]}" =~ '^[ ]*$' ]]; then
-                    hook_com[misc]+=" "
-                fi
                 hook_com[misc]+="%{%B%F{green}%}⋁%{%b%f%}"
             fi
         }
     fi
+}
+
+__colon::configure_vimode() {
+  # NOTE: 'visual' keymap could not be detected.
+  # http://www.zsh.org/mla/users/2016/msg00188.html
+  __colon::overwrite_prompt_with_vimode() {
+  }
+  function zle-line-init zle-line-finish zle-keymap-select {
+    __colon_vimode=$(__colon::get_vimode)
+    zle reset-prompt
+  }
+  zle -N zle-line-init
+  zle -N zle-line-finish
+  zle -N zle-keymap-select
 }
 
 __colon::configure_prompt() {
@@ -219,10 +245,11 @@ __colon::configure_prompt() {
     # Array to String
     __colon_prompt_1st_bits=${(j: :)__colon_prompt_1st_bits}
     __colon_prompt_2nd_bits=${(j: :)__colon_prompt_2nd_bits}
+    __colon_vimode=$(__colon::get_vimode)
   }
   add-zsh-hook precmd __colon::prompt_precmd
 
-  PROMPT="\$__colon_prompt_1st_bits "
+  PROMPT="\$__colon_vimode \$__colon_prompt_1st_bits "
   RPROMPT=" \$__colon_prompt_2nd_bits"
 }
 
@@ -235,6 +262,7 @@ __colon::configure_prompt() {
   # enable variable extraction in prompt
   setopt prompt_subst
   __colon::configure_prompt
+  __colon::configure_vimode
   __colon::configure_vcsstyles
 }
 # vim: ft=zsh

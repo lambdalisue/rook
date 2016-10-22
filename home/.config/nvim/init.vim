@@ -544,9 +544,9 @@ function! s:sticky_func() abort
     return ''
   endif
 endfunction
-inoremap <expr> ; <SID>sticky_func()
-cnoremap <expr> ; <SID>sticky_func()
-snoremap <expr> ; <SID>sticky_func()
+"inoremap <expr> ; <SID>sticky_func()
+"cnoremap <expr> ; <SID>sticky_func()
+"snoremap <expr> ; <SID>sticky_func()
 "}}}
 
 " Automatically remove trailing spaces {{{
