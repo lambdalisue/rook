@@ -306,6 +306,18 @@ on_cmd = 'HoppingStart'
 
 # Visualize {{{
 [[plugins]]
+repo = 'lambdalisue/battery.vim'
+hook_add = '''
+let g:battery#update_tabline = 1
+'''
+
+[[plugins]]
+repo = 'lambdalisue/wifi.vim'
+hook_add = '''
+let g:wifi#update_tabline = 1
+'''
+
+[[plugins]]
 repo = 'kshenoy/vim-signature'
 
 [[plugins]]
