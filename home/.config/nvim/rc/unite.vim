@@ -132,6 +132,7 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \ ['~/.config/zsh/zshrc'],
       \ ['~/.config/zsh/tmux.zsh'],
       \ ['~/.config/zsh/zplug.zsh'],
+      \ ['~/.config/zsh/bookmark.txt'],
       \ ['~/.config/zsh/rc.d/10_config.zsh'],
       \ ['~/.config/zsh/rc.d/10_theme.zsh'],
       \ ['~/.config/zsh/rc.d/20_keymap.zsh'],

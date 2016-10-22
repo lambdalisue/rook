@@ -69,6 +69,27 @@ __fzf::cdr::zle() {
 zle -N __fzf::cdr::zle
 bindkey '^X^D' __fzf::cdr::zle
 # }}}
+#
+# ^X^B: Bookmark {{{
+fzf::bookmark() {
+  print -z $(__fzf::bookmark $1)
+}
+
+__fzf::bookmark() {
+  local query=$(__str::tail $1)
+  local s="$(cat ~/.config/zsh/bookmark.txt | fzf --query "$query")"
+  [[ -n $s ]] && print "cd $s"
+}
+
+__fzf::bookmark::zle() {
+  BUFFER=$(__fzf::bookmark $BUFFER)
+  [[ -n $BUFFER ]] && zle accept-line
+  zle clear-screen
+}
+
+zle -N __fzf::bookmark::zle
+bindkey '^X^B' __fzf::bookmark::zle
+# }}}
 
 # ^X^L: List keymap {{{
 fzf::list_keymap() {
