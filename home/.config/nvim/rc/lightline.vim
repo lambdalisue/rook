@@ -31,14 +31,16 @@ let g:lightline = {
       \     [ 'tabs' ],
       \   ],
       \   'right': [
-      \     [ 'datetime' ],
+      \     [
+      \       'wifi',
+      \       'battery',
+      \       'datetime',
+      \     ],
       \     [
       \       'pyenv',
       \       'gita_branch',
       \       'gita_traffic',
       \       'gita_status',
-      \       'wifi',
-      \       'battery',
       \     ],
       \   ],
       \ },
