@@ -25,3 +25,35 @@ zplug_remove_cache() {
     command rm -f $filename
   done
 }
+
+homeshick_unlink() {
+  if __rook::has 'tac'; then
+    homeshick -v link \
+      | sed 's/  */ /g;/ignored/d' \
+      | cut -d' ' -f 3 \
+      | tac \
+      | while read file; do
+        if [ -d $file ]; then
+          # non empty directories (ones with temp files) are not deleted and
+          # display an error for clean up after.
+          rmdir $file
+        else
+          rm $file
+        fi
+      done
+  else
+    homeshick -v link \
+      | sed 's/  */ /g;/ignored/d' \
+      | cut -d' ' -f 3 \
+      | tail -r \
+      | while read file; do
+        if [ -d $file ]; then
+          # non empty directories (ones with temp files) are not deleted and
+          # display an error for clean up after.
+          rmdir $file
+        else
+          rm $file
+        fi
+      done
+  fi
+}

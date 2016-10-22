@@ -7,9 +7,7 @@ esac
 #-----------------------------------------------------------------------------
 # Utility {{{
 __rook::has() {
-  # http://stackoverflow.com/questions/85880/determine-if-a-function-exists-in-bash
-  declare -f "$1" > /dev/null
-  #which "$1" >/dev/null 2>&1
+  which "$1" >/dev/null 2>&1
 }
 
 __rook::is_osx() {

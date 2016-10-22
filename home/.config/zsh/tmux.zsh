@@ -46,5 +46,4 @@ __tmux::main() {
     fi
   fi
 }
-
 __tmux::main
