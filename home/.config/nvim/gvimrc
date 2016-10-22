@@ -63,11 +63,9 @@ set antialias
 " http://d.hatena.ne.jp/yascentur/20110621/1308650962
 if has('gui_macvim')
   " Font size should be 2.0x
-  set guifont=Ricty\ for\ Powerline:h11
+  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete:h12
 else
   " Font size should be 1.5x
-  "set guifont=RictyForPowerline\ 8
-
   set guifont=DejaVuSansMonoForPowerline\ Nerd\ Font\ Book\ 9
 endif
 
