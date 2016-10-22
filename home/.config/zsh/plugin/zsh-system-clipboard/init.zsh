@@ -7,9 +7,9 @@
 
 # Reference {{{
 #
-# bindkey -e : emacs
-# bindkey -a : vicmd
-# bindkey -v : viins
+# bindkey -M emacs : emacs
+# bindkey -M vicmd : vicmd
+# bindkey -M viins : viins
 #
 # mapping-name (emacs) (vicmd) (viins)
 #     Description
@@ -86,39 +86,39 @@ x-backward-kill-word() {
   print -rn $CUTBUFFER | __clipboard_copy
 }
 zle -N x-backward-kill-word
-bindkey -e "^W"   x-backward-kill-word
-bindkey -e "\e^H" x-backward-kill-word
-bindkey -e "\e^?" x-backward-kill-word
+bindkey -M emacs "^W"   x-backward-kill-word
+bindkey -M emacs "\e^H" x-backward-kill-word
+bindkey -M emacs "\e^?" x-backward-kill-word
 
 x-copy-region-as-kill () {
   zle copy-region-as-kill
   print -rn $CUTBUFFER | __clipboard_copy
 }
 zle -N x-copy-region-as-kill
-bindkey -e '\eW' x-copy-region-as-kill
-bindkey -e '\ew' x-copy-region-as-kill
+bindkey -M emacs '\eW' x-copy-region-as-kill
+bindkey -M emacs '\ew' x-copy-region-as-kill
 
 x-copy-prev-word () {
   zle copy-prev-word
   print -rn $CUTBUFFER | __clipboard_copy
 }
 zle -N x-copy-prev-word
-bindkey -e '\e^_' x-copy-prev-word
+bindkey -M emacs '\e^_' x-copy-prev-word
 
 x-kill-word() {
   zle kill-word
   print -rn $CUTBUFFER | __clipboard_copy
 }
 zle -N x-kill-word
-bindkey -e "\eD" x-kill-word
-bindkey -e "\ed" x-kill-word
+bindkey -M emacs "\eD" x-kill-word
+bindkey -M emacs "\ed" x-kill-word
 
 x-kill-line() {
   zle kill-line
   print -rn $CUTBUFFER | __clipboard_copy
 }
 zle -N x-kill-line
-bindkey -e "^K" x-kill-line
+bindkey -M emacs "^K" x-kill-line
 
 x-kill-region() {
   zle kill-region
@@ -131,21 +131,21 @@ x-kill-buffer() {
   print -rn $CUTBUFFER | __clipboard_copy
 }
 zle -N x-kill-buffer
-bindkey -e "^X^K" x-kill-line
+bindkey -M emacs "^X^K" x-kill-line
 
 x-kill-whole-line() {
   zle kill-whole-line
   print -rn $CUTBUFFER | __clipboard_copy
 }
 zle -N x-kill-whole-line
-bindkey -e "^U" x-kill-whole-line
+bindkey -M emacs "^U" x-kill-whole-line
 
 x-yank () {
   CUTBUFFER=$(__clipboard_paste)
   zle yank
 }
 zle -N x-yank
-bindkey -e "^Y" x-yank
+bindkey -M emacs "^Y" x-yank
 # }}}
 
 # Vi {{{
@@ -154,49 +154,49 @@ x-vi-backward-kill-word() {
   print -rn $CUTBUFFER | __clipboard_copy
 }
 zle -N x-vi-backward-kill-word
-bindkey -v "^W" x-vi-backward-kill-word
+bindkey -M viins "^W" x-vi-backward-kill-word
 
 x-vi-kill-line() {
   zle vi-kill-line
   print -rn $CUTBUFFER | __clipboard_copy
 }
 zle -N x-vi-kill-line
-bindkey -v "^U" x-vi-kill-line
+bindkey -M viins "^U" x-vi-kill-line
 
 x-vi-kill-eol() {
   zle vi-kill-eol
   print -rn $CUTBUFFER | __clipboard_copy
 }
 zle -N x-vi-kill-eol
-bindkey -a "D" x-vi-kill-eol
+bindkey -M vicmd "D" x-vi-kill-eol
 
 x-vi-put-before() {
   CUTBUFFER=$(__clipboard_paste)
   zle vi-put-before
 }
 zle -N x-vi-put-before
-bindkey -a 'P' x-vi-put-before
+bindkey -M vicmd 'P' x-vi-put-before
 
 x-vi-put-after() {
   CUTBUFFER=$(__clipboard_paste)
   zle vi-put-after
 }
 zle -N x-vi-put-after
-bindkey -a 'p' x-vi-put-after
+bindkey -M vicmd 'p' x-vi-put-after
 
 x-vi-yank() {
   zle vi-yank
   print -rn $CUTBUFFER | __clipboard_copy
 }
 zle -N x-vi-yank
-bindkey -a 'y' x-vi-yank
+bindkey -M vicmd 'y' x-vi-yank
 
 x-vi-yank-whole-line() {
   zle vi-yank-whole-line
   print -rn $CUTBUFFER | __clipboard_copy
 }
 zle -N x-vi-yank-whole-line
-bindkey -a 'Y' x-vi-yank-whole-line
+bindkey -M vicmd 'Y' x-vi-yank-whole-line
 
 x-vi-yank-eol() {
   zle vi-yank-eol

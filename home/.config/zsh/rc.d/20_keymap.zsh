@@ -40,15 +40,15 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 
 # Make viins like emacs
-bindkey -v '^?'  backward-delete-char
-bindkey -v '^A'  beginning-of-line
-bindkey -v '^B'  backward-char
-bindkey -v '^D'  delete-char-or-list
-bindkey -v '^E'  end-of-line
-bindkey -v '^F'  forward-char
-bindkey -v '^G'  send-break
-bindkey -v '^H'  backward-delete-char
-bindkey -v '^K'  x-kill-line
-bindkey -v '^U'  x-backward-kill-line
-bindkey -v '^W'  x-backward-kill-word
-bindkey -v '^Y'  x-yank
+bindkey -M viins '^?'  backward-delete-char
+bindkey -M viins '^A'  beginning-of-line
+bindkey -M viins '^B'  backward-char
+bindkey -M viins '^D'  delete-char-or-list
+bindkey -M viins '^E'  end-of-line
+bindkey -M viins '^F'  forward-char
+bindkey -M viins '^G'  send-break
+bindkey -M viins '^H'  backward-delete-char
+bindkey -M viins '^K'  x-kill-line
+bindkey -M viins '^U'  x-backward-kill-line
+bindkey -M viins '^W'  x-backward-kill-word
+bindkey -M viins '^Y'  x-yank
