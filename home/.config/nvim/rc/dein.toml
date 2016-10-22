@@ -1149,6 +1149,9 @@ rev = 'vim-dev'
 if = "has('nvim')"
 repo = 'zchee/deoplete-jedi'
 on_ft = ['python', 'python3']
+hook_source = '''
+let g:deoplete#sources#jedi#extra_path = ['$HOME/Code/github.com/lambdalisue/lista.nvim/rplugin/python3']
+'''
 
 [[plugins]]
 repo = 'lambdalisue/vim-ledi'

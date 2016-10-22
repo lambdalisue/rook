@@ -20,14 +20,6 @@ __rook::is_linux() {
 }
 # }}}
 
-# Tmux {{{
-if __rook::has 'tmux'; then
-  # Attach tmux session first.
-  . $ZDOTDIR/tmux.zsh
-fi
-# }}}
-
-
 # Prelude {{{
 # disable promptcr to display last line without newline
 unsetopt promptcr
@@ -157,6 +149,31 @@ zstyle ':completion:*' completer \
     _prefix
 #}}}
 
+# Postludium {{{
+# source external settings
+for filename in ${ZDOTDIR}/rc.d/*.zsh; do
+  if [ ! -f ${filename}.zwc -o ${filename} -nt ${filename}.zwc ]; then
+    zcompile ${filename}
+  fi
+  source ${filename}
+done
+
+# compile zshenv/zshrc
+if [ ! -f ${ZDOTDIR}/zshenv.zwc -o ${ZDOTDIR}/zshenv -nt ${ZDOTDIR}/zshenv.zwc ]; then
+  zcompile ${ZDOTDIR}/zshenv
+fi
+if [ ! -f ${ZDOTDIR}/zshrc.zwc -o ${ZDOTDIR}/zshrc -nt ${ZDOTDIR}/zshrc.zwc ]; then
+  zcompile ${ZDOTDIR}/zshrc
+fi
+# }}}
+
+# Tmux {{{
+if __rook::has 'tmux'; then
+  # Attach tmux session first.
+  . $ZDOTDIR/tmux.zsh
+fi
+# }}}
+
 # Plugin {{{
 if [[ -f $HOME/.zplug/init.zsh ]]; then
   export ZPLUG_LOADFILE="${ZDOTDIR}/zplug.zsh"
@@ -177,25 +194,6 @@ else
   echo
   echo "  $ curl -sL zplug.sh/installer | zsh"
   echo
-fi
-# }}}
-
-# Postludium {{{
-
-# source external settings
-for filename in ${ZDOTDIR}/rc.d/*.zsh; do
-  if [ ! -f ${filename}.zwc -o ${filename} -nt ${filename}.zwc ]; then
-    zcompile ${filename}
-  fi
-  source ${filename}
-done
-
-# compile zshenv/zshrc
-if [ ! -f ${ZDOTDIR}/zshenv.zwc -o ${ZDOTDIR}/zshenv -nt ${ZDOTDIR}/zshenv.zwc ]; then
-  zcompile ${ZDOTDIR}/zshenv
-fi
-if [ ! -f ${ZDOTDIR}/zshrc.zwc -o ${ZDOTDIR}/zshrc -nt ${ZDOTDIR}/zshrc.zwc ]; then
-  zcompile ${ZDOTDIR}/zshrc
 fi
 # }}}
 #-----------------------------------------------------------------------------

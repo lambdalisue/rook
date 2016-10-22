@@ -11,10 +11,10 @@ __tmux::is_ssh_running() {
 }
 
 __tmux::main() {
-  if __tmuxx::is_tmux_running; then
+  if __tmux::is_tmux_running; then
     return 1
   else
-    if __tmuxx::has_shell_started_interactively && ! __tmuxx::is_ssh_running; then
+    if __tmux::has_shell_started_interactively && ! __tmux::is_ssh_running; then
       if tmux has-session >/dev/null 2>&1 && tmux list-sessions | grep -qE '.*]$'; then
         # detached session exists
         tmux list-sessions

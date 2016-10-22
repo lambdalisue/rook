@@ -200,29 +200,6 @@ __colon::configure_vcsstyles() {
     fi
 }
 
-__colon::configure_vimode() {
-  function zle-keymap-select zle-line-init zle-line-finish {
-    case $KEYMAP in
-      main|viins)
-        __colon_mode="%{%F{yellow}%}-- INSERT --%{%f%}"
-        ;;
-      vicmd)
-        __colon_mode="%{%F{blue}%}-- NORMAL --%{%f%}"
-        ;;
-      vivis|vivli)
-        __colon_mode="%{%F{orange}%}-- VISUAL --%{%f%}"
-        ;;
-    esac
-    zle reset-prompt
-    zle -R
-  }
-  zle -N zle-line-init
-  zle -N zle-line-finish
-  zle -N zle-keymap-select
-  zle -N edit-command-line
-  __colon_mode="%{%F{yellow}%}-- INSERT --%{%f%}"
-}
-
 __colon::configure_prompt() {
   __colon::prompt_precmd() {
     local exitstatus=$?
@@ -245,8 +222,7 @@ __colon::configure_prompt() {
   }
   add-zsh-hook precmd __colon::prompt_precmd
 
-  terminfo_down_sc=$terminfo[cud1]$terminfo[cuu1]$terminfo[sc]$terminfo[cud1]
-  PROMPT="%{$terminfo_down_sc\$__colon_mode$terminfo[rc]%}\$__colon_prompt_1st_bits "
+  PROMPT="\$__colon_prompt_1st_bits "
   RPROMPT=" \$__colon_prompt_2nd_bits"
 }
 
@@ -258,7 +234,6 @@ __colon::configure_prompt() {
   autoload -Uz colors && colors
   # enable variable extraction in prompt
   setopt prompt_subst
-  __colon::configure_vimode
   __colon::configure_prompt
   __colon::configure_vcsstyles
 }

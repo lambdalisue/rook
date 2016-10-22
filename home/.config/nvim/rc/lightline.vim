@@ -32,7 +32,7 @@ let g:lightline = {
       \   ],
       \   'right': [
       \     [ 'datetime' ],
-      \     [ 'cwd' ],
+      \     [ 'wifi', 'battery' ],
       \     [ 'pyenv', 'gita_branch', 'gita_traffic', 'gita_status' ],
       \   ],
       \ },
@@ -45,6 +45,8 @@ let g:lightline = {
       \ 'component_function': {
       \   'mode': 'lightline#mode',
       \   'cwd': 'g:lightline.my.cwd',
+      \   'wifi': 'wifi#component',
+      \   'battery': 'battery#component',
       \   'filename': 'g:lightline.my.filename',
       \   'fileinfo': 'g:lightline.my.fileinfo',
       \   'filetype': 'g:lightline.my.filetype',
@@ -173,12 +175,5 @@ function! g:lightline.my.qfstatusline() abort
 endfunction
 
 function! g:lightline.my.datetime() abort
-  return g:Symbols.time . strftime('%a %m/%d %H:%M')
+  return strftime('%a %m/%d %H:%M')
 endfunction
-
-function! s:refresh_tabline(...) abort
-  let &tabline = &tabline
-endfunction
-call timer_start(30000, function('s:refresh_tabline'), {
-      \ 'repeat': -1,
-      \})
