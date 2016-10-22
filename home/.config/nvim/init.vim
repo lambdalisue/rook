@@ -334,6 +334,7 @@ nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 nnoremap <silent><expr> ]c &diff ? ']c' : ":\<C-u>cnext\<CR>"
 nnoremap <silent><expr> [c &diff ? ']c' : ":\<C-u>cprevious\<CR>"
 
+
 if has('nvim')
   " Use <ESC> to escape from terminal mode
   tnoremap <Esc> <C-\><C-n>

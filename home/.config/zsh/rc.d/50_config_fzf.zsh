@@ -70,6 +70,27 @@ zle -N __fzf::cdr::zle
 bindkey '^D' __fzf::cdr::zle
 # }}}
 
+# ^X^L: List keymap {{{
+fzf::list_keymap() {
+  print -z $(__fzf::list_keymap $1)
+}
+
+__fzf::list_keymap() {
+  local query=$(__str::tail $1)
+  local s="$(bindkey -L | fzf --query "$query")"
+  [[ -n $s ]] && print "$(echo $s | awk '{print $2}')"
+}
+
+__fzf::list_keymap::zle() {
+  BUFFER=$(__fzf::list_keymap $BUFFER)
+  [[ -n $BUFFER ]] && zle accept-line
+  zle clear-screen
+}
+
+zle -N __fzf::list_keymap::zle
+bindkey '^X^L' __fzf::list_keymap::zle
+# }}}
+
 # ^X^K: Kill {{{
 fzf::kill() {
   print -z $(__fzf::kill $1)

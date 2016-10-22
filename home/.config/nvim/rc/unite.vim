@@ -136,6 +136,7 @@ call s:register_filemenu('shortcut', 'Shortcut menu', [
       \ ['~/.config/zsh/rc.d/20_keymap.zsh'],
       \ ['~/.config/zsh/rc.d/50_config_fzf.zsh'],
       \ ['~/.config/zsh/rc.d/50_extend_rsync.zsh'],
+      \ ['~/.config/zsh/rc.d/90_functions.zsh'],
       \ 'tmux',
       \ ['~/.config/tmux/'],
       \ ['~/.tmux.conf'],
