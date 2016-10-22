@@ -7,3 +7,21 @@ zsh_remove_cache() {
   command rm ${ZDOTDIR}/*.zwc
   command rm ${ZDOTDIR}/rc.d/*.zwc
 }
+
+# https://carlosbecker.com/posts/speeding-up-zsh/
+zsh_profile_rc() {
+  local n=$1
+  for i in $(seq 1 ${n:-5}); do /usr/bin/time zsh -i -c exit; done
+}
+
+zplug_build_cache() {
+  for filename in $(find "$HOME/.zplug" -regex ".*\.zsh$"); do
+    zcompile $filename
+  done
+}
+
+zplug_remove_cache() {
+  for filename in $(find "$HOME/.zplug" -regex ".*\.zwc$"); do
+    command rm -f $filename
+  done
+}

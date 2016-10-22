@@ -61,7 +61,12 @@ alias vimm="vim -u ~/.vim/vimrc.min -i NONE"
 
 # hub
 if __rook::has 'hub'; then
-  eval "$(command hub alias -s)"
+  hub() {
+    unset -f hub
+    eval "$(command hub alias -s)"
+    command hub "$@"
+  }
+  alias git=hub
 fi
 
 # xdg-open
@@ -73,14 +78,61 @@ fi
 
 # anyenv
 if __rook::has 'anyenv'; then
-  eval "$(command anyenv init - zsh)"
-else
-  if __rook::has 'pyenv'; then
+  anyenv() {
+    unset -f anyenv
+    eval "$(command anyenv init - zsh)"
+    command anyenv "$@"
+  }
+  pyenv() {
+    unset -f pyenv
     eval "$(command pyenv init - zsh)"
     eval "$(command pyenv virtualenv-init - zsh)"
+    command pyenv "$@"
+  }
+  ndenv() {
+    unset -f ndenv
+    eval "$(command ndenv init - zsh)"
+    command ndenv "$@"
+  }
+  plenv() {
+    unset -f plenv
+    eval "$(command plenv init - zsh)"
+    command plenv "$@"
+  }
+  rbenv() {
+    unset -f rbenv
+    eval "$(command rbenv init - zsh)"
+    command rbenv "$@"
+  }
+else
+  if __rook::has 'pyenv'; then
+    pyenv() {
+      unset -f pyenv
+      eval "$(command pyenv init - zsh)"
+      eval "$(command pyenv virtualenv-init - zsh)"
+      command pyenv "$@"
+    }
   fi
   if __rook::has 'ndenv'; then
-    eval "$(command ndenv init - zsh)"
+    ndenv() {
+      unset -f ndenv
+      eval "$(command ndenv init - zsh)"
+      command ndenv "$@"
+    }
+  fi
+  if __rook::has 'plenv'; then
+    plenv() {
+      unset -f plenv
+      eval "$(command plenv init - zsh)"
+      command plenv "$@"
+    }
+  fi
+  if __rook::has 'rbenv'; then
+    rbenv() {
+      unset -f rbenv
+      eval "$(command rbenv init - zsh)"
+      command rbenv "$@"
+    }
   fi
 fi
 
@@ -132,5 +184,14 @@ if __rook::has 'pip3'; then
     unset -f pip3
     eval "$(command pip3 completion --zsh)"
     command pip3 "$@"
+  }
+fi
+
+# Homeshick
+if [[ -f "$HOME/.homesick/repos/homeshick/homeshick.sh" ]]; then
+  homeshick() {
+    unset -f homeshick
+    source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+    command homeshick "$@"
   }
 fi

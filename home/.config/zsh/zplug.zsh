@@ -1,13 +1,10 @@
 zplug "zplug/zplug"
 
-# Emoji input support tool
-zplug "mrowa44/emojify", \
-  as:command
-
 # The platinum searcher: pt
 zplug "monochromegane/the_platinum_searcher", \
   as:command, \
-  from:gh-r
+  from:gh-r, \
+  rename-to:pt
 
 # Command-line JSON processor
 zplug "stedolan/jq", \
@@ -25,11 +22,14 @@ zplug "github/hub", \
   as:command, \
   from:gh-r
 
+zplug "glidenote/hub-zsh-completion", \
+  on:"github/hub"
+
 # Command-line fuzzy finder
 zplug "junegunn/fzf-bin", \
-    as:command, \
-    from:gh-r, \
-    rename-to:fzf
+  as:command, \
+  from:gh-r, \
+  rename-to:fzf
 
 # Command-line Trash-box interface
 zplug "b4b4r07/gomi", \
@@ -44,28 +44,34 @@ zplug "plugins/extract", \
 zplug "b4b4r07/enhancd", \
   use:init.sh
 
-zplug "glidenote/hub-zsh-completion"
+# Closs-platform clipboard
+# - clipcopy
+# - clippaste
+zplug "lib/clipboard", \
+  from:oh-my-zsh
 
-zplug "b4b4r07/zsh-vimode-visual", \
-  use:"*.sh"
-
+# Add extra zsh-completions
 zplug "zsh-users/zsh-completions"
 
-zplug "zsh-users/zsh-history-substring-search"
+# zsh-syntax-highlighting requires to be loaded AFTER
+# 'compinit' command and sourcing other plugins
+# Plugins with nice >= 10 are loaded AFTER 'compinit'
+zplug "zsh-users/zsh-syntax-highlighting", \
+  nice:10
 
-zplug "zsh-users/zsh-syntax-highlighting"
+# zsh-history-substring-search requires to be loaded
+# AFTER zsh-syntax-highlighting
+zplug "zsh-users/zsh-history-substring-search", \
+  nice:11
 
+# Add static HTTP serve command
+# - serve
 zplug "~/.config/zsh/plugin/serve", \
   from:local, \
   use:init.zsh
 
+# Add perl dignostic command
+# - perldig
 zplug "~/.config/zsh/plugin/perldig", \
   from:local, \
   use:init.zsh
-
-# Install battery via go
-if __rook::has 'go'; then
-  if ! __rook::has 'battery'; then
-    go get -u -v github.com/Code-Hex/battery/cmd/battery
-  fi
-fi

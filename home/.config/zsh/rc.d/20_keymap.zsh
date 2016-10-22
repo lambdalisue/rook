@@ -8,6 +8,12 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
+# Enable substring search by Up/Down
+if [[ -d $HOME/.zplug/repos/zsh-users/zsh-history-substring-search ]]; then
+  bindkey "[A" history-substring-search-up
+  bindkey "[B" history-substring-search-down
+fi
+
 # Select completion menu with hjkl
 zmodload zsh/complist
 bindkey -M menuselect 'h' vi-backward-char

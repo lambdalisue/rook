@@ -22,13 +22,13 @@ __colon::util::eliminate_empty_elements() {
 
 __colon::get_segment() {
   local text="$1"
-  local fcolor="$2"
-  local kcolor="$3"
-  if [ -n "$fcolor" -a -n "$kcolor" ]; then
+  local fcolor=$2
+  local kcolor=$3
+  if [ -n $fcolor -a -n $kcolor ]; then
     echo -n "%{%K{$kcolor}%F{$fcolor}%}$text%{%k%f%}"
-  elif [ -n "$fcolor" ]; then
+  elif [ -n $fcolor ]; then
     echo -n "%{%F{$fcolor}%}$text%{%f%}"
-  elif [ -n "$kcolor" ]; then
+  elif [ -n $kcolor ]; then
     echo -n "%{%K{$kcolor}%}$text%{%k%}"
   else
     echo -n "$text"

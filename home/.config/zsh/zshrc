@@ -18,6 +18,19 @@ __rook::is_osx() {
 __rook::is_linux() {
   [[ $PLATFORM = "linux" ]]
 }
+
+__rook::compile() {
+  local filename="$1"
+  if [ ! -f "${filename}.zwc" -o "${filename}" -nt "${filename}.zwc" ]; then
+    zcompile "${filename}"
+  fi
+}
+
+__rook::source() {
+  __rook::compile "$1"
+  source "$1"
+}
+
 # }}}
 
 # Prelude {{{
@@ -92,12 +105,16 @@ setopt no_flow_control       # do not use C-s/C-q
 autoload -Uz compinit
 if [ ! -f "${ZDOTDIR}/.zcompdump" ]; then
   compinit
+  __rook::compile ${ZDOTDIR}/.zcompdump
 elif __rook::is_linux && [[ $(date +'%j') > $(date +'%j' -r "${ZDOTDIR}/.zcompdump") ]]; then
   compinit
+  __rook::compile ${ZDOTDIR}/.zcompdump
 elif __rook::is_osx && [[ $(date +'%j') > $(stat -f '%Sm' -t '%j' "${ZDOTDIR}/.zcompdump") ]]; then
   compinit
+  __rook::compile ${ZDOTDIR}/.zcompdump
 else
   compinit -C
+  __rook::compile ${ZDOTDIR}/.zcompdump
 fi
 
 setopt complete_in_word      # complete at carret position
@@ -152,49 +169,28 @@ zstyle ':completion:*' completer \
     _prefix
 #}}}
 
-# Postludium {{{
-# source external settings
-for filename in ${ZDOTDIR}/rc.d/*.zsh; do
-  if [ ! -f ${filename}.zwc -o ${filename} -nt ${filename}.zwc ]; then
-    zcompile ${filename}
-  fi
-  source ${filename}
-done
-
-# compile zshenv/zshrc
-if [ ! -f ${ZDOTDIR}/zshenv.zwc -o ${ZDOTDIR}/zshenv -nt ${ZDOTDIR}/zshenv.zwc ]; then
-  zcompile ${ZDOTDIR}/zshenv
-fi
-if [ ! -f ${ZDOTDIR}/zshrc.zwc -o ${ZDOTDIR}/zshrc -nt ${ZDOTDIR}/zshrc.zwc ]; then
-  zcompile ${ZDOTDIR}/zshrc
-fi
-# }}}
-
 # Tmux {{{
 if __rook::has 'tmux'; then
-  if [ ! -f ${ZDOTDIR}/tmux.zsh.zwc -o ${ZDOTDIR}/tmux.zsh -nt ${ZDOTDIR}/tmux.zsh.zwc ]; then
-    zcompile ${ZDOTDIR}/tmux.zsh
-  fi
   # Attach tmux session first.
-  . $ZDOTDIR/tmux.zsh
+  __rook::source ${ZDOTDIR}/tmux.zsh
 fi
 # }}}
 
 # Plugin {{{
 if [[ -f $HOME/.zplug/init.zsh ]]; then
   export ZPLUG_LOADFILE="${ZDOTDIR}/zplug.zsh"
-  source $HOME/.zplug/init.zsh
+  __rook::source ${HOME}/.zplug/init.zsh
 
   # Install plugins if there are plugins that have not been installed
   if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-      echo; zplug install
-    fi
+      printf "Install? [y/N]: "
+      if read -q; then
+          echo; zplug install
+      fi
   fi
 
   # Then, source plugins and add commands to $PATH
-  zplug load --verbose
+  zplug load
 else
   echo "A zplug has not installed yet. Execute the following to install it."
   echo
@@ -202,5 +198,15 @@ else
   echo
 fi
 # }}}
+
+# Load rc.d {{{
+for filename in ${ZDOTDIR}/rc.d/*.zsh; do
+  __rook::source ${filename}
+done
+# }}}
+
+# compile zshenv/zshrc
+__rook::compile ${ZDOTDIR}/zshenv
+__rook::compile ${ZDOTDIR}/zshrc
 #-----------------------------------------------------------------------------
 # vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
