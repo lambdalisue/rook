@@ -101,7 +101,41 @@ map gz* <Plug>(asterisk-gz*)
 repo = 'cohama/lexima.vim'
 on_i = 1
 hook_source = '''
-execute 'source' fnameescape(expand('~/.vim/rc/lexima.vim'))
+execute 'source' fnameescape(expand('~/.config/nvim/rc.d/lexima.vim'))
+'''
+
+[[plugins]]
+repo = 'kana/vim-submode'
+hook_add = '''
+let g:submode_timeout = 0
+let g:submode_keep_leaving_key = 1
+
+call submode#enter_with('undo/redo', 'n', '', 'g-', 'g-')
+call submode#enter_with('undo/redo', 'n', '', 'g+', 'g+')
+call submode#leave_with('undo/redo', 'n', '', '<Esc>')
+call submode#map('undo/redo', 'n', '', '-', 'g-')
+call submode#map('undo/redo', 'n', '', '+', 'g+')
+
+call submode#enter_with('tab', 'n', '', '<Space>n', 'gt')
+call submode#enter_with('tab', 'n', '', '<Space>p', 'gT')
+call submode#map('tab', 'n', '', 'n', 'gt')
+call submode#map('tab', 'n', '', 'p', 'gT')
+
+call submode#enter_with('indent', 'n', '', '<Space>,', '<<')
+call submode#enter_with('indent', 'n', '', '<Space>.', '>>')
+call submode#map('indent', 'n', '', ',', '<<')
+call submode#map('indent', 'n', '', '.', '>>')
+
+call submode#enter_with('scroll', 'n', '', '<Space>u', '<C-u>')
+call submode#enter_with('scroll', 'n', '', '<Space>d', '<C-d>')
+call submode#enter_with('scroll', 'n', '', '<Space>f', '<C-f>')
+call submode#enter_with('scroll', 'n', '', '<Space>b', '<C-b>')
+call submode#map('scroll', 'n', '', 'y', '<C-y>')
+call submode#map('scroll', 'n', '', 'e', '<C-e>')
+call submode#map('scroll', 'n', '', 'u', '<C-u>')
+call submode#map('scroll', 'n', '', 'd', '<C-d>')
+call submode#map('scroll', 'n', '', 'f', '<C-f>')
+call submode#map('scroll', 'n', '', 'b', '<C-b>')
 '''
 
 # }}}
@@ -246,7 +280,7 @@ on_cmd = [
 ]
 hook_source = '''
 highlight! vimshellError gui=NONE cterm=NONE guifg='#cc6666' ctermfg=9
-execute 'source' fnameescape(expand('~/.vim/rc/vimshell.vim'))
+execute 'source' fnameescape(expand('~/.config/nvim/rc.d/vimshell.vim'))
 '''
 
 [[plugins]]
@@ -264,7 +298,7 @@ nnoremap <silent> <Plug>(my-vimfiler)e :<C-u>VimFilerExplorer<CR>
 nnoremap <silent> <Plug>(my-vimfiler)E :<C-u>VimFiler<CR>
 '''
 hook_source = '''
-execute 'source' fnameescape(expand('~/.vim/rc/vimfiler.vim'))
+execute 'source' fnameescape(expand('~/.config/nvim/rc.d/vimfiler.vim'))
 '''
 
 [[plugins]]
@@ -294,8 +328,19 @@ repo = 'lambdalisue/lista.nvim'
 build = 'pip install neovim-prompt --upgrade'
 on_cmd = 'Lista'
 hook_add = '''
+let g:lista#custom_mappings = [
+      \ ['<C-t>', '<PageUp>'],
+      \ ['<C-g>', '<PageDown>'],
+      \ ['<C-f>', '<Left>'],
+      \ ['<C-b>', '<Right>'],
+      \ ['<C-a>', '<Home>'],
+      \ ['<C-e>', '<End>'],
+      \ ['<C-d>', '<Del>'],
+      \]
 nnoremap #  :<C-u>Lista<CR>
 nnoremap g# :<C-u>ListaCursorWord<CR>
+nnoremap <Space>3  :<C-u>Lista<CR>
+nnoremap g<Space>3 :<C-u>ListaCursorWord<CR>
 '''
 
 [[plugins]]
@@ -323,7 +368,7 @@ repo = 'kshenoy/vim-signature'
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
-execute 'source' fnameescape(expand('~/.vim/rc/lightline.vim'))
+execute 'source' fnameescape(expand('~/.config/nvim/rc.d/lightline.vim'))
 '''
 
 [[plugins]]
@@ -346,7 +391,7 @@ let g:precious_enable_switch_CursorHold_i = { '*': 0 }
 let g:precious_enable_switch_CursorMoved = { '*': 0 }
 let g:precious_enable_switch_CursorMoved_i = { '*': 0 }
 autocmd MyAutoCmd InsertEnter * :PreciousSwitch
-autocmd MyAutoCmd InsertLeave * :PreciousReset
+autocmd MyAutoCmd InsertLeave,BufLeave,WinLeave * :PreciousReset
 autocmd MyAutoCmd User PreviousFileType_vim
       \ :PreciousSetContextLocal foldlevel=0
 '''
@@ -392,6 +437,7 @@ let g:Qfstatusline#UpdateCmd = function('lightline#update')
 repo = 't9md/vim-choosewin'
 on_map = '<Plug>'
 hook_add = 'nmap <C-w><C-w> <Plug>(choosewin)'
+hook_add = 'nmap <Space>ww  <Plug>(choosewin)'
 
 # }}}
 
@@ -400,7 +446,7 @@ hook_add = 'nmap <C-w><C-w> <Plug>(choosewin)'
 repo = 'thinca/vim-template'
 hook_add = '''
 autocmd User plugin-template-loaded call s:template_keywords()
-function! s:template_keywords()
+function! s:template_keywords() abort
   silent! %s/<+FILE NAME+>/\=expand('%:t')/g
   silent! %s/<+DATE+>/\=strftime('%Y-%m-%d')/g
   silent! %s/<%=\(.\{-}\)%>/\=eval(submatch(1))/ge
@@ -447,14 +493,6 @@ xmap gcw  <Plug>(caw:wrap:toggle)
 xmap gcb  <Plug>(caw:box:comment)
 nmap gco  <Plug>(caw:jump:comment-next)
 nmap gcO  <Plug>(caw:jump:comment-prev)
-'''
-
-[[plugins]]
-repo = 'osyo-manga/vim-trip'
-on_map = '<Plug>'
-hook_add = '''
-nmap <C-a> <Plug>(trip-increment)
-nmap <C-x> <Plug>(trip-decrement)
 '''
 
 [[plugins]]
@@ -556,8 +594,6 @@ on_i = 1
 hook_source = '''
 let g:deoplete#enable_at_startup = has('nvim')
 '''
-
-
 # }}}
 
 # Execution {{{
@@ -631,10 +667,9 @@ if executable('vint')
         \ 'type': 'watchdogs_checker/vint',
         \}
 endif
-try
+if dein#is_sourced('vim-watchdogs')
   call watchdogs#setup(g:quickrun_config)
-catch /^Vim\%((\a\+)\)\=:E117/
-endtry
+endif
 '''
 # }}}
 
@@ -646,22 +681,20 @@ on_cmd = [
   'DeniteCursorWord',
 ]
 hook_add = '''
-nnoremap <Plug>(my-unite) <Nop>
-nmap <Space> <Plug>(my-unite)
-vmap <Space> <Plug>(my-unite)
+nnoremap <Plug>(my-denite) <Nop>
+nmap <Space><Space> <Plug>(my-denite)
+vmap <Space><Space> <Plug>(my-denite)
 
-vnoremap <silent> <Plug>(my-unite)ff :Denite file_rec<CR>
-nnoremap <silent> <Plug>(my-unite)ff :<C-u>Denite file_rec<CR>
-nnoremap <silent> <Plug>(my-unite)f* :<C-u>DeniteCursorWord file_rec<CR>
-vnoremap <silent> <Plug>(my-unite)gg :Denite grep<CR>
-nnoremap <silent> <Plug>(my-unite)gg :<C-u>Denite grep<CR>
-nnoremap <silent> <Plug>(my-unite)g* :<C-u>DeniteCursorWord grep<CR>
-vnoremap <silent> <Plug>(my-unite)jj :Denite jump_point<CR>
-nnoremap <silent> <Plug>(my-unite)jj :<C-u>Denite jump_point<CR>
-nnoremap <silent> <Plug>(my-unite)j* :<C-u>DeniteCursorWord jump_point<CR>
+nnoremap <silent> <Plug>(my-denite)f :<C-u>Denite file_rec<CR>
+nnoremap <silent> <Plug>(my-denite)d :<C-u>Denite directory_rec<CR>
+nnoremap <silent> <Plug>(my-denite)h :<C-u>Denite help<CR>
+nnoremap <silent> <Plug>(my-denite)g :<C-u>Denite grep<CR>
+nnoremap <silent> <Plug>(my-denite)j :<C-u>Denite jump_point<CR>
+nnoremap <silent> <Plug>(my-denite)s :<C-u>Denite menu:shortcut<CR>
+nnoremap <silent> <Plug>(my-denite)w :<C-u>Denite buffer<CR>
 '''
 hook_source = '''
-execute 'source' fnameescape(expand('~/.vim/rc/denite.vim'))
+execute 'source' fnameescape(expand('~/.config/nvim/rc.d/denite.vim'))
 '''
 
 [[plugins]]
@@ -669,81 +702,31 @@ repo = 'Shougo/unite.vim'
 on_cmd = [
   'Unite',
   'UniteWithCursorWord',
-  'UniteBookmarkAdd',
 ]
 hook_add = '''
-nnoremap <Plug>(my-unite) <Nop>
-nmap <Space> <Plug>(my-unite)
-vmap <Space> <Plug>(my-unite)
-
-nnoremap <silent> <Plug>(my-unite)<Space> :<C-u>UniteResume -no-start-insert<CR>
-nnoremap <silent> <Plug>(my-unite)w :<C-u>Unite buffer<CR>
-nnoremap <silent> <Plug>(my-unite)k :<C-u>Unite bookmark<CR>
-nnoremap <silent> <Plug>(my-unite)m :<C-u>Unite map -buffer-name=search<CR>
-nnoremap <silent> <Plug>(my-unite)s :<C-u>Unite menu:shortcut<CR>
-
-" unite-grep
-nnoremap <silent> <Plug>(my-unite)i :<C-u>Unite grep/git:/ -buffer-name=search -no-empty<CR>
-vnoremap <silent> <Plug>(my-unite)i :Unite grep/git:/ -buffer-name=search -no-empty<CR>
+nnoremap <silent> <Plug>(my-denite)m :<C-u>Unite map -buffer-name=search<CR>
 
 " unite-gista
-nnoremap <silent> <Plug>(my-unite)t :<C-u>Unite gista:lambdalisue<CR>
+nnoremap <silent> <Plug>(my-denite)t :<C-u>Unite gista:lambdalisue<CR>
 
 " unite-linephrase
-nnoremap <silent> <Plug>(my-unite)p
+nnoremap <silent> <Plug>(my-denite)p
       \ :<C-u>Unite linephrase
       \ -no-quit -keep-focus -no-start-insert
       \ -buffer-name=search<CR>
-
-" unite-outline
-nnoremap <silent> <Plug>(my-unite)o
-      \ :<C-u>Unite outline
-      \ -no-quit -keep-focus -no-start-insert
-      \ -vertical -direction=botright -winwidth=30<CR>
 '''
 hook_source = '''
-execute 'source' fnameescape(expand('~/.vim/rc/unite.vim'))
+execute 'source' fnameescape(expand('~/.config/nvim/rc.d/unite.vim'))
 '''
 
 [[plugins]]
 repo = 'Shougo/unite-outline'
 
 [[plugins]]
-repo = 'osyo-manga/unite-quickfix'
-
-[[plugins]]
-repo = 'ujihisa/unite-font'
-
-[[plugins]]
-repo = 'ujihisa/unite-colorscheme'
-
-[[plugins]]
-repo = 'rhysd/unite-codic.vim'
-
-[[plugins]]
-repo = 'pasela/unite-webcolorname'
-
-[[plugins]]
 repo = 'lambdalisue/unite-linephrase'
 hook_source = '''
 let g:linephrase#directory = expand('~/Dropbox/Apps/Vim/linephrase')
 '''
-
-[[plugins]]
-repo = 'joker1007/unite-pull-request'
-
-[[plugins]]
-repo = 'dameninngenn/unite-perldoc'
-
-[[plugins]]
-repo = 'naquad/unite-digraphs'
-
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-on_source = 'unite.vim'
-
-[[plugins]]
-repo = 'rafi/vim-unite-issue'
 
 [[plugins]]
 repo = 'lambdalisue/vim-gista-unite'
@@ -1161,9 +1144,6 @@ rev = 'vim-dev'
 if = "has('nvim')"
 repo = 'zchee/deoplete-jedi'
 on_ft = ['python', 'python3']
-hook_source = '''
-let g:deoplete#sources#jedi#extra_path = ['$HOME/Code/github.com/lambdalisue/lista.nvim/rplugin/python3']
-'''
 
 [[plugins]]
 repo = 'lambdalisue/vim-ledi'

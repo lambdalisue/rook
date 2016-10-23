@@ -3,32 +3,32 @@ call lexima#set_default_rules()
 
 " Do not automatically input pair character when cursor is not at the eol.
 call lexima#add_rule({
-      \ 'at': '\%#[^)}\]"''`]',
+      \ 'at': '\%#\s*[^)}\]"''`]',
       \ 'char': '(',
       \ 'priority': 1,
       \})
 call lexima#add_rule({
-      \ 'at': '\%#[^)}\]"''`]',
+      \ 'at': '\%#\s*[^)}\]"''`]',
       \ 'char': '{',
       \ 'priority': 1,
       \})
 call lexima#add_rule({
-      \ 'at': '\%#[^)}\]"''`]',
+      \ 'at': '\%#\s*[^)}\]"''`]',
       \ 'char': '[',
       \ 'priority': 1,
       \})
 call lexima#add_rule({
-      \ 'at': '\%#[^)}\]"''`]',
+      \ 'at': '\%#\s*[^)}\]"''`]',
       \ 'char': '"',
       \ 'priority': 1,
       \})
 call lexima#add_rule({
-      \ 'at': '\%#[^)}\]"''`]',
+      \ 'at': '\%#\s*[^)}\]"''`]',
       \ 'char': '''',
       \ 'priority': 1,
       \})
 call lexima#add_rule({
-      \ 'at': '\%#[^)}\]"''`]',
+      \ 'at': '\%#\s*[^)}\]"''`]',
       \ 'char': '`',
       \ 'priority': 1,
       \})
@@ -71,6 +71,12 @@ call lexima#add_rule({
       \ 'delete': 1,
       \ 'filetype': 'help',
       \})
+call lexima#add_rule({
+      \ 'at': '\%#\s*[*|^)}\]"''`]',
+      \ 'char': '*',
+      \ 'priority': 1,
+      \ 'filetype': 'help',
+      \})
 
 " Vim help ref (|)
 call lexima#add_rule({
@@ -93,5 +99,11 @@ call lexima#add_rule({
       \ 'at': '|\%#|',
       \ 'char': '<BS>',
       \ 'delete': 1,
+      \ 'filetype': 'help',
+      \})
+call lexima#add_rule({
+      \ 'at': '\%#\s*[*|^)}\]"''`]',
+      \ 'char': '<BAR>',
+      \ 'priority': 1,
       \ 'filetype': 'help',
       \})

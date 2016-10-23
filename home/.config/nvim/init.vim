@@ -91,6 +91,7 @@ call s:configure_path('$PATH', [
       \ '/usr/local/bin',
       \ '/usr/local/texlive/2013/bin/x86_64-linux',
       \ '/usr/local/texlive/2013/bin/x86_64-darwin',
+      \ '~/.zplug/bin',
       \ '~/.pyenv/bin',
       \ '~/.plenv/bin',
       \ '~/.rbenv/bin',
@@ -290,10 +291,11 @@ vnoremap ; :
 vnoremap : ;
 
 " Emacs like movement in Insert/Command
-inoremap <C-a> <Home>
-inoremap <C-e> <End>
-inoremap <C-f> <C-o>h
-inoremap <C-b> <C-o>l
+noremap! <C-a> <Home>
+noremap! <C-e> <End>
+noremap! <C-f> <Left>
+noremap! <C-b> <Right>
+noremap! <C-d> <Del>
 
 " Better <C-n>/<C-p> in Command
 cnoremap <C-p> <Up>
@@ -334,6 +336,40 @@ nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 nnoremap <silent><expr> ]c &diff ? ']c' : ":\<C-u>cnext\<CR>"
 nnoremap <silent><expr> [c &diff ? ']c' : ":\<C-u>cprevious\<CR>"
 
+" Baby finger
+nnoremap <Space>a A
+nnoremap <Space>c C
+nnoremap <Space>d D
+nnoremap <Space>j J
+nnoremap <Space>y Y
+nnoremap <Space>v V
+nnoremap <Space>p P
+nnoremap <Space>r R
+nnoremap <Space>f F
+nnoremap <Space>e E
+nnoremap <Space>n N
+nnoremap <Space>b B
+nnoremap <Space>x X
+nnoremap <Space>k K
+nnoremap <Space>o O
+nnoremap <Space>u <C-u>
+nnoremap <Space>d <C-d>
+nnoremap <Space>tt :<C-u>tabnew<CR>
+nnoremap <Space>tn gt
+nnoremap <Space>tp gT
+nnoremap <Space>wh <C-w>h
+nnoremap <Space>wj <C-w>j
+nnoremap <Space>wk <C-w>k
+nnoremap <Space>wl <C-w>l
+nnoremap <Space>w<Left> <C-w>H
+nnoremap <Space>w<Down> <C-w>J
+nnoremap <Space>w<Up> <C-w>K
+nnoremap <Space>w<Right> <C-w>L
+nmap     <Space>wo <Plug>(my-zoom-window)
+nnoremap <Space>, <<
+nnoremap <Space>. >>
+vnoremap , <<
+vnoremap . >>
 
 if has('nvim')
   " Use <ESC> to escape from terminal mode
@@ -523,14 +559,14 @@ autocmd MyAutoCmd BufWinEnter * if s:checkview() | silent! loadview | endif
 " Sticky shift in English keyboard."{{{
 " Sticky key.
 let s:sticky_table = {
-      \ ';': ';',
+      \ ';': ':',
       \ '1': '!', '2': '@', '3': '#', '4': '$', '5': '%',
       \ '6': '^', '7': '&', '8': '*', '9': '(', '0': ')',
       \ ',': '<', '.': '>', '/': '?', '-': '_', '=': '+',
       \ '[': '{', ']': '}', '`': '~', "'": "\"", '\': '|',
       \}
 let s:special_table = {
-      \"\<ESC>" : "\<ESC>", "\<Space>" : '; ', "\<CR>" : ";\<CR>"
+      \"\<ESC>" : "\<ESC>", "\<Space>" : ';', "\<CR>" : ";\<CR>"
       \}
 function! s:sticky_func() abort
   let char = nr2char(getchar())
@@ -544,9 +580,22 @@ function! s:sticky_func() abort
     return ''
   endif
 endfunction
-"inoremap <expr> ; <SID>sticky_func()
-"cnoremap <expr> ; <SID>sticky_func()
-"snoremap <expr> ; <SID>sticky_func()
+function! s:sticky_replace() abort
+  let char = nr2char(getchar())
+  if char ==# ';'
+    let char = s:sticky_func()
+  endif
+  let line = getline('.')
+  let col = col('.')
+  call setline('.', line[:col-2] . char . line[col:])
+endfunction
+nnoremap <silent> r :<C-u>call <SID>sticky_replace()<CR>
+inoremap <expr> ; <SID>sticky_func()
+cnoremap <expr> ; <SID>sticky_func()
+snoremap <expr> ; <SID>sticky_func()
+inoremap <C-;> ;
+cnoremap <C-;> ;
+snoremap <C-;> ;
 "}}}
 
 " Automatically remove trailing spaces {{{
@@ -708,7 +757,6 @@ if !has('multi_byte') || $LANG ==# 'C'
         \ 'python': '# ',
         \ 'unix': 'unix',
         \ 'dos': 'dos',
-        \ 'time': '',
         \ 'separator_left': '',
         \ 'separator_right': '',
         \}
@@ -722,7 +770,6 @@ else
         \ 'python': ' ',
         \ 'unix': ' ',
         \ 'dos': ' ',
-        \ 'time': ' ',
         \ 'separator_left': '',
         \ 'separator_right': '',
         \}
@@ -739,9 +786,9 @@ if isdirectory(s:bundle_dein)
   if dein#load_state(s:bundle_root)
     call dein#begin(s:bundle_root, [
           \ expand('~/.config/nvim/init.vim'),
-          \ expand('~/.config/nvim/rc/dein.toml'),
+          \ expand('~/.config/nvim/rc.d/dein.toml'),
           \])
-    call dein#load_toml(expand('~/.config/nvim/rc/dein.toml'))
+    call dein#load_toml(expand('~/.config/nvim/rc.d/dein.toml'))
     call dein#end()
     call dein#save_state()
   endif
