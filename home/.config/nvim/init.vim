@@ -109,8 +109,8 @@ call s:configure_path('$PATH', [
       \ '~/.anyenv/envs/rbenv/shims',
       \ '~/.anyenv/envs/ndenv/shims',
       \ '~/.cabal/bin',
-      \ '~/.cache/dein/repos/github.com/thinca/vim-themis/bin',
-      \ '~/.cache/dein/repos/github.com/Kuniwak/vint/bin',
+      \ '~/.cache/nvim/dein/repos/github.com/thinca/vim-themis/bin',
+      \ '~/.cache/nvim/dein/repos/github.com/Kuniwak/vint/bin',
       \])
 call s:configure_path('$MANPATH', [
       \ '/usr/local/share/man/',
@@ -555,48 +555,6 @@ endfunction
 autocmd MyAutoCmd BufWinLeave * if s:checkview() | silent! mkview   | endif
 autocmd MyAutoCmd BufWinEnter * if s:checkview() | silent! loadview | endif
 " }}}
-
-" Sticky shift in English keyboard."{{{
-" Sticky key.
-let s:sticky_table = {
-      \ ';': ':',
-      \ '1': '!', '2': '@', '3': '#', '4': '$', '5': '%',
-      \ '6': '^', '7': '&', '8': '*', '9': '(', '0': ')',
-      \ ',': '<', '.': '>', '/': '?', '-': '_', '=': '+',
-      \ '[': '{', ']': '}', '`': '~', "'": "\"", '\': '|',
-      \}
-let s:special_table = {
-      \"\<ESC>" : "\<ESC>", "\<Space>" : ';', "\<CR>" : ";\<CR>"
-      \}
-function! s:sticky_func() abort
-  let char = nr2char(getchar())
-  if char =~? '\l'
-    return toupper(char)
-  elseif has_key(s:sticky_table, char)
-    return s:sticky_table[char]
-  elseif has_key(s:special_table, char)
-    return s:special_table[char]
-  else
-    return ''
-  endif
-endfunction
-function! s:sticky_replace() abort
-  let char = nr2char(getchar())
-  if char ==# ';'
-    let char = s:sticky_func()
-  endif
-  let line = getline('.')
-  let col = col('.')
-  call setline('.', line[:col-2] . char . line[col:])
-endfunction
-nnoremap <silent> r :<C-u>call <SID>sticky_replace()<CR>
-inoremap <expr> ; <SID>sticky_func()
-cnoremap <expr> ; <SID>sticky_func()
-snoremap <expr> ; <SID>sticky_func()
-inoremap <C-;> ;
-cnoremap <C-;> ;
-snoremap <C-;> ;
-"}}}
 
 " Automatically remove trailing spaces {{{
 function! s:remove_trailing_spaces_automatically() abort

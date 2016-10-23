@@ -2,7 +2,7 @@
 # ps - display processes related to the user
 if __rook::is_osx; then
   if __rook::has 'gnuls'; then
-      alias ls="gnuls --color=auto"
+      alias ls="gnuls --color=always"
       alias la="ls -lhAF"
   else
       alias ls="ls -G -w"
@@ -10,9 +10,10 @@ if __rook::is_osx; then
   fi
   alias ps="ps -fU$(whoami)"
 else
-  alias ls="ls --color=auto"
+  alias ls="ls --color=always"
   alias la="ls -lhAF"
   alias ps="ps -fU$(whoami) --forest"
+  alias ll="ls -lhAF --color=always | less -iMRS"
 fi
 
 # less

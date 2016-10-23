@@ -8,6 +8,9 @@ repo = 'haya14busa/dein-command.vim'
 on_cmd = 'Dein'
 
 [[plugins]]
+repo = 'lambdalisue/pinkyless.vim'
+
+[[plugins]]
 repo = 'lambdalisue/vim-protocol'
 on_path = '\%(^https\?://\|\.zip$\)'
 
