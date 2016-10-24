@@ -29,11 +29,11 @@ __colon::get_segment() {
   local text="$1"
   local fcolor=$2
   local kcolor=$3
-  if [ -n $fcolor -a -n $kcolor ]; then
+  if [ -n "$fcolor" -a -n "$kcolor" ]; then
     echo -n "%{%K{$kcolor}%F{$fcolor}%}$text%{%k%f%}"
-  elif [ -n $fcolor ]; then
+  elif [ -n "$fcolor" ]; then
     echo -n "%{%F{$fcolor}%}$text%{%f%}"
-  elif [ -n $kcolor ]; then
+  elif [ -n "$kolor" ]; then
     echo -n "%{%K{$kcolor}%}$text%{%k%}"
   else
     echo -n "$text"
@@ -51,48 +51,41 @@ __colon::get_root() {
 
 __colon::get_time() {
   local fcolor=245
-  local kcolor=''
   local date="%D{%H:%M}"
-  __colon::get_segment "$date" $fcolor $kcolor
+  __colon::get_segment "$date" $fcolor
 }
 
 __colon::get_vimode() {
   local fcolor_insert='yellow'
-  local kcolor_insert=''
   local fcolor_normal='blue'
-  local kcolor_normal=''
   # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html
   # http://qiita.com/b4b4r07/items/8db0257d2e6f6b19ecb9
   case $KEYMAP in
-    vicmd) __colon::get_segment "NORMAL" $fcolor_normal $kcolor_normal;;
-    *)     __colon::get_segment "INSERT" $fcolor_insert $kcolor_insert;;
+    vicmd) __colon::get_segment "NORMAL" $fcolor_normal;;
+    *)     __colon::get_segment "INSERT" $fcolor_insert;;
   esac
 }
 
 __colon::get_symbol() {
   local fcolor_normal='blue'
-  local kcolor_normal=''
   local fcolor_error='red'
-  local kcolor_error=''
   if [[ $1 > 0 ]]; then
-    __colon::get_segment "%{%B%}:%{%b%}" $fcolor_error $kcolor_error
+    __colon::get_segment "%{%B%}:%{%b%}" $fcolor_error
   else
-    __colon::get_segment "%{%B%}:%{%b%}" $fcolor_normal $kcolor_normal
+    __colon::get_segment "%{%B%}:%{%b%}" $fcolor_normal
   fi
 }
 
 __colon::get_exitstatus() {
   local fcolor='red'
-  local kcolor=''
   if [[ $1 > 0 ]]; then
-    __colon::get_segment " $1" $fcolor $kcolor
+    __colon::get_segment " $1" $fcolor
     #__colon::get_segment "(!)$1" $fcolor $kcolor
   fi
 }
 
 __colon::get_cwd() {
     local fcolor='blue'
-    local kcolor=''
     local lock='⭤'
     local PWD="$(pwd)"
     # current path state
@@ -110,20 +103,18 @@ __colon::get_cwd() {
         pwd_state="%{%F{red}%}$lock "
     fi
     local pwd_path="%50<...<%~"
-    __colon::get_segment "%{%B%}$pwd_state$pwd_path%{%f%b%}" $fcolor $kcolor
+    __colon::get_segment "%{%B%}$pwd_state$pwd_path%{%f%b%}" $fcolor
 }
 
 __colon::get_vcs() {
     local fcolor_normal='green'
     local fcolor_error='red'
-    local kcolor_normal=''
-    local kcolor_error=''
     vcs_info 'colon'
 
     local -a messages
-    [[ ! "$vcs_info_msg_0_" =~ "^[ ]*$" ]] && messages+=( $(__colon::get_segment "$vcs_info_msg_0_" $fcolor_normal  $kcolor_normal ) )
+    [[ ! "$vcs_info_msg_0_" =~ "^[ ]*$" ]] && messages+=( $(__colon::get_segment "$vcs_info_msg_0_" $fcolor_normal ) )
     [[ ! "$vcs_info_msg_1_" =~ "^[ ]*$" ]] && messages+=( $(__colon::get_segment " %{%B%}$vcs_info_msg_1_%{%b%}" ) )
-    [[ ! "$vcs_info_msg_2_" =~ "^[ ]*$" ]] && messages+=( $(__colon::get_segment " $vcs_info_msg_2_" $fcolor_error   $kcolor_error ) )
+    [[ ! "$vcs_info_msg_2_" =~ "^[ ]*$" ]] && messages+=( $(__colon::get_segment " $vcs_info_msg_2_" $fcolor_error ) )
     echo -n "${(j: :)messages}"
 }
 
