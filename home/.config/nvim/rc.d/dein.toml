@@ -425,13 +425,11 @@ repo = 'itchyny/vim-parenmatch'
 [[plugins]]
 repo = 'itchyny/vim-cursorword'
 hook_add = '''
-  augroup cursorword-disable
-    autocmd! *
-    autocmd WinEnter,BufEnter *
-          \ if &buftype =~# '^\%(nofile\|quickfix\|help\)$' |
-          \   let b:cursorword = 0 |
-          \ endif
-  augroup END
+let g:cursorword = 0
+nnoremap <silent> <Plug>(my-toggle-cursorword)
+      \ :<C-u>let g:cursorword = g:cursorword ? 0 : 1<CR>
+nmap <C-g>c <Plug>(my-toggle-cursorword)
+nmap <C-g><C-c> <Plug>(my-toggle-cursorword)
 '''
 
 [[plugins]]
