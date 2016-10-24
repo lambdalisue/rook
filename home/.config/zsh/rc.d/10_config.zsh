@@ -76,29 +76,49 @@ fi
 if __rook::has 'anyenv'; then
   anyenv() {
     unset -f anyenv
-    eval "$(command anyenv init - zsh)"
-    command anyenv "$@"
+    unset -f pyenv
+    unset -f ndenv
+    unset -f plenv
+    unset -f rbenv
+    eval "$(anyenv init - zsh)"
+    anyenv "$@"
   }
   pyenv() {
+    unset -f anyenv
     unset -f pyenv
-    eval "$(command pyenv init - zsh)"
-    eval "$(command pyenv virtualenv-init - zsh)"
-    command pyenv "$@"
+    unset -f ndenv
+    unset -f plenv
+    unset -f rbenv
+    eval "$(anyenv init - zsh)"
+    eval "$(pyenv virtualenv-init - zsh)"
+    pyenv "$@"
   }
   ndenv() {
+    unset -f anyenv
+    unset -f pyenv
     unset -f ndenv
-    eval "$(command ndenv init - zsh)"
-    command ndenv "$@"
+    unset -f plenv
+    unset -f rbenv
+    eval "$(anyenv init - zsh)"
+    ndenv "$@"
   }
   plenv() {
+    unset -f anyenv
+    unset -f pyenv
+    unset -f ndenv
     unset -f plenv
-    eval "$(command plenv init - zsh)"
-    command plenv "$@"
+    unset -f rbenv
+    eval "$(anyenv init - zsh)"
+    plenv "$@"
   }
   rbenv() {
+    unset -f anyenv
+    unset -f pyenv
+    unset -f ndenv
+    unset -f plenv
     unset -f rbenv
-    eval "$(command rbenv init - zsh)"
-    command rbenv "$@"
+    eval "$(anyenv init - zsh)"
+    rbenv "$@"
   }
 else
   if __rook::has 'pyenv'; then
