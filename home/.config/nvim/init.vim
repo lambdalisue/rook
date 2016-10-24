@@ -318,6 +318,8 @@ nnoremap <silent> <C-n> gt
 nnoremap <silent> <C-p> gT
 nnoremap <silent> <C-t>t     :<C-u>tabnew<CR>
 nnoremap <silent> <C-t><C-t> :<C-u>tabnew<CR>
+nnoremap <silent> <C-t>q     :<C-u>tabclose<CR>
+nnoremap <silent> <C-t><C-q> :<C-u>tabclose<CR>
 nnoremap <silent> <C-t>n     gt
 nnoremap <silent> <C-t><C-n> gt
 nnoremap <silent> <C-t>p     gT
@@ -355,6 +357,7 @@ nnoremap <Space>o O
 nnoremap <Space>u <C-u>
 nnoremap <Space>d <C-d>
 nnoremap <Space>tt :<C-u>tabnew<CR>
+nnoremap <Space>tq :<C-u>tabclose<CR>
 nnoremap <Space>tn gt
 nnoremap <Space>tp gT
 nnoremap <Space>wh <C-w>h
