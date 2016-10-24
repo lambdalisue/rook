@@ -43,4 +43,7 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead md*.in        setfiletype fortran
   autocmd BufNewFile,BufRead mdin          setfiletype fortran
   autocmd BufNewFile,BufRead mdin.*        setfiletype fortran
+
+  " python stub file
+  autocmd BufNewFile,BufRead *.pyi setfiletype python
 augroup END
