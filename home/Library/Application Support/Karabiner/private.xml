@@ -4,64 +4,6 @@
   <item>
     <name>Private</name>
     <item>
-      <name>For Japanese Keyboard (MacBook Pro)</name>
-      <item>
-        <name style="important">The following extra configurations are required.</name>
-        <appendix>
-          <![CDATA[ * Assign "No Action" to Capslock by in Keyboard > Modifier keys... > Caps Lock ]]>
-        </appendix>
-        <appendix>
-          <![CDATA[ * Assign "62" (CONTROL_R: 0x3E) to Capslock in "Seil". ]]>
-        </appendix>
-        <appendix>&#8594; https://pqrs.org/osx/karabiner/seil.html</appendix>
-      </item>
-      <item>
-        <name>Use Japanese Keyboard as US keyboard for Modifiers</name>
-        <appendix><![CDATA[  * Capslock		-> Fn ]]></appendix>
-        <appendix><![CDATA[  * Option_L		-> Control_L ]]></appendix>
-        <appendix><![CDATA[  * Command_L	-> Option_L ]]></appendix>
-        <appendix><![CDATA[  * Eisuu			-> Command_L ]]></appendix>
-        <appendix><![CDATA[  * Kana			-> Space ]]></appendix>
-        <appendix><![CDATA[  * Fn (Control_R)	-> Option_R ]]></appendix>
-        <identifier>private.use_jis_as_us_modifiers</identifier>
-        <autogen>__KeyToKey__ KeyCode::CONTROL_R, KeyCode::FN</autogen>
-        <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::CONTROL_L</autogen>
-        <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::OPTION_L</autogen>
-        <autogen>__KeyToKey__ KeyCode::JIS_EISUU, KeyCode::COMMAND_L</autogen>
-        <autogen>__KeyToKey__ KeyCode::JIS_KANA, KeyCode::SPACE</autogen>
-        <autogen>__KeyToKey__ KeyCode::FN, KeyCode::OPTION_R</autogen>
-      </item>
-      <item>
-        <name>Use Japanese Keyboard as US keyboard for Modifiers with SHIFT/OPTION IME</name>
-        <appendix><![CDATA[  * Capslock		-> Fn ]]></appendix>
-        <appendix><![CDATA[  * Option_L		-> Control_L ]]></appendix>
-        <appendix><![CDATA[  * Command_L	-> Option_L ]]></appendix>
-        <appendix><![CDATA[  * Eisuu			-> Command_L ]]></appendix>
-        <appendix><![CDATA[  * Kana			-> Space ]]></appendix>
-        <appendix><![CDATA[  * Shift_R		-> Kana ]]></appendix>
-        <appendix><![CDATA[  * Fn (Control_R)	-> Eisuu ]]></appendix>
-        <identifier>private.use_jis_as_us_modifiers_with_shift_option_ime</identifier>
-        <autogen>__KeyToKey__ KeyCode::CONTROL_R, KeyCode::FN</autogen>
-        <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::CONTROL_L</autogen>
-        <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::OPTION_L</autogen>
-        <autogen>__KeyToKey__ KeyCode::JIS_EISUU, KeyCode::COMMAND_L</autogen>
-        <autogen>__KeyToKey__ KeyCode::JIS_KANA, KeyCode::SPACE</autogen>
-        <autogen>__KeyToKey__ KeyCode::SHIFT_R, KeyCode::JIS_KANA</autogen>
-        <autogen>__KeyToKey__ KeyCode::FN, KeyCode::JIS_EISUU</autogen>
-      </item>
-    </item>
-    <item>
-      <name>For US Keyboard</name>
-      <item>
-        <name>Use SHIFT/OPTION IME</name>
-        <appendix><![CDATA[  * Shift_R		-> Kana ]]></appendix>
-        <appendix><![CDATA[  * Option_R		-> Eisuu ]]></appendix>
-        <identifier>private.use_shift_option_ime</identifier>
-        <autogen>__KeyToKey__ KeyCode::SHIFT_R, KeyCode::JIS_KANA</autogen>
-        <autogen>__KeyToKey__ KeyCode::OPTION_R, KeyCode::JIS_EISUU</autogen>
-      </item>
-    </item>
-    <item>
       <name>For Japanese Vimmer</name>
       <item>
         <name>Send ESCAPE instead of Ctrl-[ when Ctrl-[ is pressed.</name>
@@ -73,6 +15,90 @@
           KeyCode::BRACKET_LEFT, VK_CONTROL,
           KeyCode::ESCAPE
         </autogen>
+      </item>
+    </item>
+    <item>
+      <name>For Mac JIS Keyboard</name>
+      <item>
+        <name style="important">The following extra configurations are required.</name>
+        <appendix>
+          <![CDATA[ * Assign "No Action" to Capslock by in Keyboard > Modifier keys... > Caps Lock ]]>
+        </appendix>
+        <appendix>
+          <![CDATA[ * Assign "62" (CONTROL_R: 0x3E) to Capslock in "Seil". ]]>
+        </appendix>
+        <appendix>&#8594; https://pqrs.org/osx/karabiner/seil.html</appendix>
+      </item>
+      <item>
+        <name>JIS Keyboard (Mac) to US Keyboard (Mac)</name>
+        <appendix><![CDATA[  * Capslock (Control_R)	-> Fn ]]></appendix>
+        <appendix><![CDATA[  * Option_L				-> Control_L ]]></appendix>
+        <appendix><![CDATA[  * Command_L			-> Option_L ]]></appendix>
+        <appendix><![CDATA[  * Eisuu					-> Command_L ]]></appendix>
+        <appendix><![CDATA[  * Kana					-> Space ]]></appendix>
+        <appendix><![CDATA[  * Fn					-> Option_R ]]></appendix>
+        <identifier>private.macjis_to_macus</identifier>
+        <autogen>__KeyToKey__ KeyCode::CONTROL_R, KeyCode::FN</autogen>
+        <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::CONTROL_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::OPTION_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::JIS_EISUU, KeyCode::COMMAND_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::JIS_KANA, KeyCode::SPACE</autogen>
+        <autogen>__KeyToKey__ KeyCode::FN, KeyCode::OPTION_R</autogen>
+      </item>
+      <item>
+        <name>JIS Keyboard (Mac) to US Keyboard (Mac) with JIS like</name>
+        <appendix><![CDATA[  * Capslock (Control_R)	-> Fn ]]></appendix>
+        <appendix><![CDATA[  * Option_L				-> Control_L ]]></appendix>
+        <appendix><![CDATA[  * Command_L			-> Command_L ]]></appendix>
+        <appendix><![CDATA[  * Eisuu					-> Eisuu ]]></appendix>
+        <appendix><![CDATA[  * Kana					-> Space ]]></appendix>
+        <appendix><![CDATA[  * Command_R			-> Kana ]]></appendix>
+        <appendix><![CDATA[  * Fn					-> Option_R ]]></appendix>
+        <identifier>private.macjis_to_macus_with_jislike</identifier>
+        <autogen>__KeyToKey__ KeyCode::CONTROL_R, KeyCode::FN</autogen>
+        <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::CONTROL_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::JIS_KANA, KeyCode::SPACE</autogen>
+        <autogen>__KeyToKey__ KeyCode::COMMAND_R, KeyCode::JIS_KANA</autogen>
+        <autogen>__KeyToKey__ KeyCode::FN, KeyCode::OPTION_R</autogen>
+      </item>
+    </item>
+    <item>
+      <name>For Mac US Keyboard</name>
+      <item>
+        <name>With JIS like</name>
+        <appendix><![CDATA[  * Option_L		-> Command_L ]]></appendix>
+        <appendix><![CDATA[  * Command_L		-> Eisuu ]]></appendix>
+        <appendix><![CDATA[  * Command_R		-> Kana ]]></appendix>
+        <identifier>private.macus_with_jis_like</identifier>
+        <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::JIS_EISUU</autogen>
+        <autogen>__KeyToKey__ KeyCode::OPTION_R, KeyCode::JIS_KANA</autogen>
+        <autogen>__KeyToKey__ KeyCode::CONTROL_R, KeyCode::OPTION_R</autogen>
+      </item>
+    </item>
+    <item>
+      <name>For PC US Keyboard</name>
+      <item>
+        <name>US Keyboard (PC) to US Keyboard (Mac)</name>
+        <appendix><![CDATA[  * Command_L		-> Option_L ]]></appendix>
+        <appendix><![CDATA[  * Option_L		-> Command_L ]]></appendix>
+        <appendix><![CDATA[  * Option_R		-> Command_R ]]></appendix>
+        <appendix><![CDATA[  * Control_R		-> Option_R ]]></appendix>
+        <identifier>private.pcus_to_macus</identifier>
+        <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::OPTION_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::COMMAND_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::OPTION_R, KeyCode::COMMAND_R</autogen>
+        <autogen>__KeyToKey__ KeyCode::CONTROL_R, KeyCode::OPTION_R</autogen>
+      </item>
+      <item>
+        <name>US Keyboard (PC) to US Keyboard (Mac) with JIS like</name>
+        <appendix><![CDATA[  * Command_L		-> Command_L ]]></appendix>
+        <appendix><![CDATA[  * Option_L		-> Eisuu ]]></appendix>
+        <appendix><![CDATA[  * Option_R		-> Kana ]]></appendix>
+        <appendix><![CDATA[  * Control_R		-> Option_R ]]></appendix>
+        <identifier>private.pcus_to_macus_with_jislike</identifier>
+        <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::JIS_EISUU</autogen>
+        <autogen>__KeyToKey__ KeyCode::OPTION_R, KeyCode::JIS_KANA</autogen>
+        <autogen>__KeyToKey__ KeyCode::CONTROL_R, KeyCode::OPTION_R</autogen>
       </item>
     </item>
   </item>
