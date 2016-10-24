@@ -15,8 +15,8 @@ setl shiftwidth=4     " width of Indent
 setl smarttab         " use 'shiftwidth' and 'softtabstop' for indentation
 setl expandtab        " use continuous spaces as TAB
 
-" check if the package name and file name are mismached {{{ 
-function! s:get_package_name()
+" check if the package name and file name are mismached {{{
+function! s:get_package_name() abort
     let mx = '^\s*package\s\+\([^ ;]\+\)'
     for line in getline(1, 5)
         if line =~ mx
@@ -25,7 +25,8 @@ function! s:get_package_name()
     endfor
     return ''
 endfunction
-function! s:check_package_name()
+
+function! s:check_package_name() abort
     let path = substitute(expand('%:p'), '\\', '/', 'g')
     let name = substitute(s:get_package_name(), '::', '/', 'g') . '.pm'
     if path[-len(name):] != name
@@ -40,7 +41,28 @@ function! s:check_package_name()
       echohl None
     endif
 endfunction
+
 autocmd! MyAutoCmd BufWritePost *.pm call s:check_package_name()
+
+" http://this.aereal.org/entry/2014/04/05/221218
+let g:quickrun_config['prove/carton'] = {
+      \ 'exec'    : 'carton exec -- %c %o %s',
+      \ 'command' : 'prove',
+      \ }
+let g:quickrun_config['prove/carton/contextual'] = extend(
+      \ g:quickrun_config['prove/carton'], {
+      \   'exec' : 'TEST_METHOD=%a ' . g:quickrun_config['prove/carton'].exec,
+      \ })
+function! s:prove_this()
+  let func_name = cfi#format('%s', '')
+  if func_name == ''
+    QuickRun prove/carton
+  else
+    execute 'QuickRun prove/carton/contextual -args ' . func_name
+  endif
+endfunction
+command! ProveThis call s:prove_this()
+
 
 if executable('perltidy')
   nnoremap <buffer> <Plug>(my-perltidy) <Nop>
