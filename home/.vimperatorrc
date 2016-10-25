@@ -4,10 +4,11 @@ nnoremap : ;
 vnoremap ; :
 vnoremap : ;
 
-noremap <Space> <Leader>
-
 " Use <A-i> to launch the external editor
 inoremap <A-i> <C-i>
+
+" Use mvim
+set editor=/usr/local/bin/mvim
 
 nnoremap <C-n> gt
 nnoremap <C-p> gT
@@ -19,14 +20,13 @@ cnoremap <C-p> <S-Tab>
 nnoremap <C-e> 5<C-e>
 nnoremap <C-y> 5<C-y>
 
-nnoremap <Leader><leader>r :<C-u>source ~/.vimperatorrc<CR>
+nnoremap ,,r :<C-u>source ~/.vimperatorrc<CR>
 
 set ignorecase
 set smartcase
 
 set hintchars=abcdefghijklmnopqrstuvwxyz
-
-
+highlight Hint -append font-size:20px;
 
 ignorekeys clear
 ignorekeys add localhost:9999
