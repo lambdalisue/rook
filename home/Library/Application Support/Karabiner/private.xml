@@ -2,9 +2,9 @@
 <!-- https://github.com/tekezo/Karabiner/blob/master/src/bridge/generator/keycode/data/KeyCode.data -->
 <root>
   <item>
-    <name>Private</name>
+    <name>For Japanese</name>
     <item>
-      <name>For Japanese Vimmer</name>
+      <name>For Vimmer</name>
       <item>
         <name>Send ESCAPE instead of Ctrl-[ when Ctrl-[ is pressed.</name>
         <appendix>This configuration is mainly to enable IME deactivation of Google IME.</appendix>
@@ -46,7 +46,7 @@
         <autogen>__KeyToKey__ KeyCode::FN, KeyCode::OPTION_R</autogen>
       </item>
       <item>
-        <name>JIS Keyboard (Mac) to US Keyboard (Mac) with JIS like</name>
+        <name>JIS Keyboard (Mac) to US Keyboard (Mac) with AltJIS</name>
         <appendix><![CDATA[  * Capslock (Control_R)	-> Fn ]]></appendix>
         <appendix><![CDATA[  * Option_L				-> Control_L ]]></appendix>
         <appendix><![CDATA[  * Command_L			-> Command_L ]]></appendix>
@@ -55,7 +55,7 @@
         <appendix><![CDATA[  * Command_R			-> Kana ]]></appendix>
         <appendix><![CDATA[  * Fn					-> Option_R ]]></appendix>
         <appendix><![CDATA[  * Shift_R				-> Option_R ]]></appendix>
-        <identifier>private.macjis_to_macus_with_jislike</identifier>
+        <identifier>private.macjis_to_macus_with_altjis</identifier>
         <autogen>__KeyToKey__ KeyCode::CONTROL_R, KeyCode::FN</autogen>
         <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::CONTROL_L</autogen>
         <autogen>__KeyToKey__ KeyCode::JIS_KANA, KeyCode::SPACE</autogen>
@@ -67,15 +67,15 @@
     <item>
       <name>For Mac US Keyboard</name>
       <item>
-        <name>With JIS like</name>
+        <name>With AltJIS</name>
         <appendix><![CDATA[  * Option_L		-> Command_L ]]></appendix>
         <appendix><![CDATA[  * Command_L	-> Eisuu ]]></appendix>
         <appendix><![CDATA[  * Command_R	-> Kana ]]></appendix>
         <appendix><![CDATA[  * Shift_R		-> Optiona_R ]]></appendix>
-        <identifier>private.macus_with_jis_like</identifier>
-        <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::JIS_EISUU</autogen>
-        <autogen>__KeyToKey__ KeyCode::OPTION_R, KeyCode::JIS_KANA</autogen>
-        <autogen>__KeyToKey__ KeyCode::CONTROL_R, KeyCode::OPTION_R</autogen>
+        <identifier>private.macus_with_altjis</identifier>
+        <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::COMMAND_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::JIS_EISUU</autogen>
+        <autogen>__KeyToKey__ KeyCode::COMMAND_R, KeyCode::JIS_KANA</autogen>
         <autogen>__KeyToKey__ KeyCode::SHIFT_R, KeyCode::OPTION_R</autogen>
       </item>
     </item>
@@ -107,7 +107,7 @@
         <autogen>__KeyToKey__ KeyCode::PC_APPLICATION, KeyCode::OPTION_R</autogen>
       </item>
       <item>
-        <name>JIS Keyboard (PC) to US Keyboard (Mac) with JIS like</name>
+        <name>JIS Keyboard (PC) to US Keyboard (Mac) with AltJIS</name>
         <appendix><![CDATA[  * Command_L			-> Command_L ]]></appendix>
         <appendix><![CDATA[  * Option_L				-> Eisuu ]]></appendix>
         <appendix><![CDATA[  * Eisuu					-> Space ]]></appendix>
@@ -115,7 +115,7 @@
         <appendix><![CDATA[  * Option_R				-> Kana ]]></appendix>
         <appendix><![CDATA[  * Application			-> Option_R ]]></appendix>
         <appendix><![CDATA[  * Shift_R				-> Option_R ]]></appendix>
-        <identifier>private.pcjis_to_macus_with_jislike</identifier>
+        <identifier>private.pcjis_to_macus_with_altjis</identifier>
         <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::JIS_EISUU</autogen>
         <autogen>__KeyToKey__ KeyCode::JIS_EISUU, KeyCode::SPACE</autogen>
         <autogen>__KeyToKey__ KeyCode::JIS_KANA, KeyCode::SPACE</autogen>
@@ -139,12 +139,12 @@
         <autogen>__KeyToKey__ KeyCode::CONTROL_R, KeyCode::OPTION_R</autogen>
       </item>
       <item>
-        <name>US Keyboard (PC) to US Keyboard (Mac) with JIS like</name>
+        <name>US Keyboard (PC) to US Keyboard (Mac) with AltJIS</name>
         <appendix><![CDATA[  * Command_L	-> Command_L ]]></appendix>
         <appendix><![CDATA[  * Option_L		-> Eisuu ]]></appendix>
         <appendix><![CDATA[  * Option_R		-> Kana ]]></appendix>
         <appendix><![CDATA[  * Application	-> Option_R ]]></appendix>
-        <identifier>private.pcus_to_macus_with_jislike</identifier>
+        <identifier>private.pcus_to_macus_with_altjis</identifier>
         <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::JIS_EISUU</autogen>
         <autogen>__KeyToKey__ KeyCode::OPTION_R, KeyCode::JIS_KANA</autogen>
         <autogen>__KeyToKey__ KeyCode::PC_APPLICATION, KeyCode::OPTION_R</autogen>
