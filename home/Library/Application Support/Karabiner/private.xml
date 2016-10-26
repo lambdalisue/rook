@@ -63,6 +63,22 @@
         <autogen>__KeyToKey__ KeyCode::FN, KeyCode::OPTION_R</autogen>
         <autogen>__KeyToKey__ KeyCode::SHIFT_R, KeyCode::OPTION_R</autogen>
       </item>
+      <item>
+        <name>JIS Keyboard (Mac) to US Keyboard (Mac) with SCtrl/SShift</name>
+        <appendix><![CDATA[  * Capslock (Control_R)	-> Fn ]]></appendix>
+        <appendix><![CDATA[  * Eisuu					-> Control_L ]]></appendix>
+        <appendix><![CDATA[  * Kana					-> Shift_R ]]></appendix>
+        <appendix><![CDATA[  * Fn					-> Option_R ]]></appendix>
+        <appendix><![CDATA[  * Shift_L					-> Eisuu ]]></appendix>
+        <appendix><![CDATA[  * Shift_R					-> Kana ]]></appendix>
+        <identifier>private.macjis_to_macus_with_sctrl_sshift</identifier>
+        <autogen>__KeyToKey__ KeyCode::CONTROL_R, KeyCode::FN</autogen>
+        <autogen>__KeyToKey__ KeyCode::JIS_EISUU, KeyCode::CONTROL_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::JIS_KANA, KeyCode::SHIFT_R</autogen>
+        <autogen>__KeyToKey__ KeyCode::FN, KeyCode::OPTION_R</autogen>
+        <autogen>__KeyToKey__ KeyCode::SHIFT_L, KeyCode::JIS_EISUU</autogen>
+        <autogen>__KeyToKey__ KeyCode::SHIFT_R, KeyCode::JIS_KANA</autogen>
+      </item>
     </item>
     <item>
       <name>For Mac US Keyboard</name>
