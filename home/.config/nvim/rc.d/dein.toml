@@ -1,7 +1,6 @@
 # Fundemental {{{
 [[plugins]]
 repo = 'Shougo/dein.vim'
-rtp  = ''
 
 [[plugins]]
 repo = 'haya14busa/dein-command.vim'
@@ -718,7 +717,7 @@ nnoremap <silent> <Plug>(my-denite)d :<C-u>Denite directory_rec<CR>
 nnoremap <silent> <Plug>(my-denite)h :<C-u>Denite help<CR>
 nnoremap <silent> <Plug>(my-denite)g :<C-u>Denite grep<CR>
 nnoremap <silent> <Plug>(my-denite)j :<C-u>Denite jump_point<CR>
-nnoremap <silent> <Plug>(my-denite)s :<C-u>Denite menu:shortcut<CR>
+"nnoremap <silent> <Plug>(my-denite)s :<C-u>Denite menu:shortcut<CR>
 nnoremap <silent> <Plug>(my-denite)w :<C-u>Denite buffer<CR>
 '''
 hook_source = '''
@@ -732,7 +731,8 @@ on_cmd = [
   'UniteWithCursorWord',
 ]
 hook_add = '''
-nnoremap <silent> <Plug>(my-denite)m :<C-u>Unite map -buffer-name=search<CR>
+nnoremap <silent> <Plug>(my-denite)m :<C-u>Unite map<CR>
+nnoremap <silent> <Plug>(my-denite)s :<C-u>Unite menu:shortcut<CR>
 
 " unite-gista
 nnoremap <silent> <Plug>(my-denite)t :<C-u>Unite gista:lambdalisue<CR>

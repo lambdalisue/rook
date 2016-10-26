@@ -72,6 +72,9 @@ elif __has 'xsel'; then
 elif __has 'xclip'; then
   alias __clipboard_copy='xclip -in -selection clipboard'
   alias __clipboard_paste='xclip -out -selection clipboard'
+else
+  __clipboard_copy() {}
+  __clipboard_paste() {}
 fi
 
 # Emacs {{{
