@@ -11,7 +11,7 @@ zsh_remove_cache() {
 # https://carlosbecker.com/posts/speeding-up-zsh/
 zsh_profile_rc() {
   local n=$1
-  for i in $(seq 1 ${n:-5}); do /usr/bin/time zsh -i -c exit; done
+  for i in $(seq 1 ${n:-5}); do time zsh -i -c exit; done
 }
 
 zplug_build_cache() {
