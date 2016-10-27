@@ -1,0 +1,1 @@
+xkbcomp -I$HOME/.config/xkb $HOME/.config/xkb/keymap/my "${DISPLAY%%.*}" >> $HOME/.xsession-xkbcomp-log
