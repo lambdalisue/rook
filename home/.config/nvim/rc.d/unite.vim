@@ -22,6 +22,18 @@ let g:unite_source_alias_aliases = {
       \ },
       \}
 
+function! s:unite_my_settings() abort
+  silent! iunmap <buffer> <C-p>
+  silent! iunmap <buffer> <C-n>
+  silent! nunmap <buffer> <C-p>
+  silent! nunmap <buffer> <C-n>
+  imap <buffer> <C-t> <Plug>(unite_select_previous_line)
+  imap <buffer> <C-g> <Plug>(unite_select_next_line)
+  nmap <buffer> <C-t> <Plug>(unite_loop_cursor_up)
+  nmap <buffer> <C-g> <Plug>(unite_loop_cursor_down)
+endfunction
+autocmd MyAutoCmd FileType unite call s:unite_my_settings()
+
 
 function! s:build_filemenu(description, precursors) abort
   let candidates = []
