@@ -1,0 +1,2 @@
+sh $HOME/.config/xkb/enable-keymap.sh
+echo 'gnomerc' >> $HOME/log

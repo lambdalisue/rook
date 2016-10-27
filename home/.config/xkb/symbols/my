@@ -1,22 +1,21 @@
 // The followings may need to be executed in the shell
 // xset -r 100  # <MUHE>
 // xset -r 102  # <HENK>
-partial modifier_keys
-xkb_symbols "usjis" {
+default partial alphanumeric_keys modifier_keys
+xkb_symbols "summod" {
   include "us"
-  name[Group1]= "English (US) on JIS";
+  name[Group1]= "English (US) on JIS with Summod";
 
-  // NOTE: ISO_Level2_Latch = Sticky shift
   replace key <AE13> { [ grave, asciitilde ] }; // Yen
   replace key <AB11> { [ Alt_R, Meta_R ] };     // Ro
   replace key <HKTG> { [ Return ] };            // Hiragana/Katakana
-  replace key <MUHE> { [ Control_L ] };         // Muhenkan
-  replace key <HENK> { [ ISO_Level2_Latch ] };  // Henkan
+  replace key <MUHE> { [ Control_R ] };         // Muhenkan
+  replace key <HENK> { [ Shift_R, Shift_R ] };  // Henkan
   replace key <MENU> { [ Multi_key ] };         // Application (Menu)
   replace key <LFSH> { [ Muhenkan ] };
   replace key <RTSH> { [ Henkan ] };
 
   modifier_map Control { <MUHE>, Control_L, Control_R };
-  modifier_map Shift   { <HENK>, <AB11> };
+  modifier_map Shift   { <HENK> };
   modifier_map Mod1    { <AB11>, Alt_L, Alt_R };
 };

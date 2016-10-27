@@ -1,0 +1,5 @@
+[Unite]
+Description=Assign custom keymap
+
+[Service]
+ExecStart=bash %h/.config/xkb/enable-keymap.sh
