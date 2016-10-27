@@ -8,6 +8,12 @@ on_cmd = 'Dein'
 
 [[plugins]]
 repo = 'lambdalisue/pinkyless.vim'
+hook_add = '''
+let g:pinkyless_stickyshift_i = 0
+let g:pinkyless_stickyshift_c = 0
+let g:pinkyless_stickyshift_s = 0
+let g:pinkyless_stickyreplace_n = 0
+'''
 
 [[plugins]]
 repo = 'lambdalisue/vim-protocol'
