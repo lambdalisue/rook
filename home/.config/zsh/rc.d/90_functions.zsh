@@ -1,3 +1,21 @@
+if [[ "x$PLATFORM" = 'xLinux' ]]; then
+  install_porg() {
+    sudo apt install curl
+    curl -sL git.io/vXTrh | bash
+  }
+  install_nvim() {
+    curl -sL git.io/vXToq | bash
+  }
+else
+  install_brew() {
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  }
+fi
+
+install_anyenv() {
+  git clone https://github.com/riywo/anyenv ~/.anyenv
+}
+
 zsh_reload_rc() {
   source ${ZDOTDIR}/zshrc
 }
