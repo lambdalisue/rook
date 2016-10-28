@@ -338,7 +338,6 @@ nnoremap <silent> <Plug>(my-tagbar) :<C-u>TagbarToggle<CR>
 
 [[plugins]]
 repo = 'lambdalisue/lista.nvim'
-build = 'pip install neovim-prompt --upgrade'
 on_cmd = 'Lista'
 hook_add = '''
 let g:lista#custom_mappings = [
@@ -1134,6 +1133,7 @@ repo = 'c9s/perlomni.vim'
 on_ft = 'perl'
 
 [[plugins]]
+if = 'executable("npm")'
 repo = 'Quramy/tsuquyomi'
 depends = 'vimproc.vim'
 build = 'npm install -g typescript'
