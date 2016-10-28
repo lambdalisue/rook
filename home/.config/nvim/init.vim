@@ -313,18 +313,6 @@ nnoremap <silent><expr> k  v:count == 0 ? 'gk' : 'k'
 nnoremap <silent><expr> gj v:count == 0 ? 'j' : 'gj'
 nnoremap <silent><expr> gk v:count == 0 ? 'k' : 'gk'
 
-" Tab navigations
-nnoremap <silent> <C-n> gt
-nnoremap <silent> <C-p> gT
-nnoremap <silent> <C-t>t     :<C-u>tabnew<CR>
-nnoremap <silent> <C-t><C-t> :<C-u>tabnew<CR>
-nnoremap <silent> <C-t>q     :<C-u>tabclose<CR>
-nnoremap <silent> <C-t><C-q> :<C-u>tabclose<CR>
-nnoremap <silent> <C-t>n     gt
-nnoremap <silent> <C-t><C-n> gt
-nnoremap <silent> <C-t>p     gT
-nnoremap <silent> <C-t><C-p> gT
-
 " Window resize operations with <S-Arrow>
 nnoremap <S-Left>  <C-w><<CR>
 nnoremap <S-Right> <C-w>><CR>
@@ -337,42 +325,6 @@ nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 " Jump to next/previous errors
 nnoremap <silent><expr> ]c &diff ? ']c' : ":\<C-u>cnext\<CR>"
 nnoremap <silent><expr> [c &diff ? ']c' : ":\<C-u>cprevious\<CR>"
-
-" Baby finger
-nnoremap <Space>a A
-nnoremap <Space>c C
-nnoremap <Space>d D
-nnoremap <Space>j J
-nnoremap <Space>y Y
-nnoremap <Space>v V
-nnoremap <Space>p P
-nnoremap <Space>r R
-nnoremap <Space>f F
-nnoremap <Space>e E
-nnoremap <Space>n N
-nnoremap <Space>b B
-nnoremap <Space>x X
-nnoremap <Space>k K
-nnoremap <Space>o O
-nnoremap <Space>u <C-u>
-nnoremap <Space>d <C-d>
-nnoremap <Space>tt :<C-u>tabnew<CR>
-nnoremap <Space>tq :<C-u>tabclose<CR>
-nnoremap <Space>tn gt
-nnoremap <Space>tp gT
-nnoremap <Space>wh <C-w>h
-nnoremap <Space>wj <C-w>j
-nnoremap <Space>wk <C-w>k
-nnoremap <Space>wl <C-w>l
-nnoremap <Space>w<Left> <C-w>H
-nnoremap <Space>w<Down> <C-w>J
-nnoremap <Space>w<Up> <C-w>K
-nnoremap <Space>w<Right> <C-w>L
-nmap     <Space>wo <Plug>(my-zoom-window)
-nnoremap <Space>, <<
-nnoremap <Space>. >>
-vnoremap , <<
-vnoremap . >>
 
 if has('nvim')
   " Use <ESC> to escape from terminal mode
@@ -410,7 +362,7 @@ nnoremap <silent> <Plug>(my-toggle-quickfix)
 nmap Q <Plug>(my-toggle-quickfix)
 " }}}
 
-" Switch options with <C-s> {{{
+" Switch options with S {{{
 let s:switch_allowed_options = [
       \ 'spell',
       \ 'wrap',
@@ -472,7 +424,7 @@ else
 endif
 
 nnoremap <silent> <Plug>(my-switch-option) :<C-u>call <SID>switch_option()<CR>
-nmap <C-s> <Plug>(my-switch-option)
+nmap S <Plug>(my-switch-option)
 " }}}
 
 " Source Vim script file with <Leader><Leader>s {{{
