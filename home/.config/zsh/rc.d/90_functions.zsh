@@ -1,4 +1,4 @@
-if [[ "x$PLATFORM" = 'xLinux' ]]; then
+if [[ "x$PLATFORM" = 'xlinux' ]]; then
   install_porg() {
     sudo apt install curl
     curl -sL git.io/vXTrh | bash
