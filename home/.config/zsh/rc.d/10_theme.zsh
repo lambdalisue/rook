@@ -43,9 +43,17 @@ __colon::get_segment() {
 __colon::get_root() {
   local fcolor='white'
   local kcolor='red'
-  # show hostname only when user connect to a remote machine
+  # Show username only when the user is root
   if [ $(id -u) -eq 0 ]; then
     __colon::get_segment "%{%B%} %n %{%b%}" $fcolor $kcolor
+  fi
+}
+
+__colon::get_host() {
+  local fcolor='67'
+  # Show hostname only when user connect to a remote machine
+  if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
+    __colon::get_segment "%m" $fcolor
   fi
 }
 
@@ -222,6 +230,7 @@ __colon::configure_prompt() {
     local exitstatus=$?
     __colon_prompt_1st_bits=(
       "$(__colon::get_root)"
+      "$(__colon::get_host)"
       "$(__colon::get_time)"
       "$(__colon::get_exitstatus $exitstatus)"
       "$(__colon::get_symbol $exitstatus)"
