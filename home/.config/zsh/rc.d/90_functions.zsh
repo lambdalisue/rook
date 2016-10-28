@@ -1,14 +1,19 @@
 if [[ "x$PLATFORM" = 'xlinux' ]]; then
   install_porg() {
-    sudo apt install curl
-    curl -sL git.io/vXTrh | bash
+    sudo apt install curl realpath
+    curl -sL git.io/vXTo7 | bash
   }
   install_nvim() {
+    sudo apt-get install libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
     curl -sL git.io/vXToq | bash
   }
 else
   install_brew() {
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  }
+  install_nvim() {
+    brew uninstall neovim --force
+    brew install nevoim --release
   }
 fi
 
