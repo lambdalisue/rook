@@ -293,8 +293,8 @@ vnoremap : ;
 " Emacs like movement in Insert/Command
 noremap! <C-a> <Home>
 noremap! <C-e> <End>
-noremap! <C-f> <Left>
-noremap! <C-b> <Right>
+noremap! <C-f> <Right>
+noremap! <C-b> <Left>
 noremap! <C-d> <Del>
 
 " Better <C-n>/<C-p> in Command
