@@ -149,6 +149,36 @@
         <autogen>__KeyToKey__ KeyCode::PC_APPLICATION, KeyCode::OPTION_R</autogen>
         <autogen>__KeyToKey__ KeyCode::SHIFT_R, KeyCode::OPTION_R</autogen>
       </item>
+      <item>
+        <name>JIS Keyboard (PC) to US Keyboard (Mac) with Summod</name>
+        <appendix><![CDATA[  * Command_L			-> Command_L ]]></appendix>
+        <appendix><![CDATA[  * Option_L				-> Eisuu ]]></appendix>
+        <appendix><![CDATA[  * Eisuu					-> Space ]]></appendix>
+        <appendix><![CDATA[  * Kana					-> Space ]]></appendix>
+        <appendix><![CDATA[  * Option_R				-> Kana ]]></appendix>
+        <appendix><![CDATA[  * Application			-> Option_R ]]></appendix>
+        <appendix><![CDATA[  * Shift_R				-> Option_R ]]></appendix>
+        <identifier>private.pcjis_to_macus_with_altjis</identifier>
+        <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::COMMAND_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::OPTION_R, KeyCode::COMMAND_R</autogen>
+        <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::OPTION_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::COMMAND_R, KeyCode::OPTION_R</autogen>
+        <autogen>__KeyToKey__ KeyCode::PC_APPLICATION, KeyCode::OPTION_R</autogen>
+        <autogen>__KeyToKey__ KeyCode::SHIFT_L, KeyCode::JIS_EISUU</autogen>
+        <autogen>__KeyToKey__ KeyCode::SHIFT_R, KeyCode::JIS_KANA</autogen>
+        <autogen>
+          __KeyOverlaidModifier__
+          KeyCode::JIS_EISUU,
+          KeyCode::CONTROL_L,
+          KeyCode::VK_STICKY_CONTROL_L
+        </autogen>
+        <autogen>
+          __KeyOverlaidModifier__
+          KeyCode::JIS_KANA,
+          KeyCode::SHIFT_R,
+          KeyCode::VK_STICKY_SHIFT_R
+        </autogen>
+      </item>
     </item>
     <item>
       <name>For PC US Keyboard</name>
