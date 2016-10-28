@@ -67,8 +67,8 @@ elif __has 'pbcopy'; then
   alias __clipboard_copy=pbcopy
   alias __clipboard_paste=pbpaste
 elif __has 'xsel'; then
-  alias __clipboard_copy='xsel --clipboard --input'
-  alias __clipboard_paste='xsel --clipboard --out'
+  alias __clipboard_copy='xsel --input'
+  alias __clipboard_paste='xsel --out'
 elif __has 'xclip'; then
   alias __clipboard_copy='xclip -in -selection clipboard'
   alias __clipboard_paste='xclip -out -selection clipboard'
