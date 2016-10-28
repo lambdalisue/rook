@@ -56,7 +56,7 @@
 # }}}
 
 __has() {
-  declare -f $1 > /dev/null
+  which "$1" >/dev/null 2>&1
 }
 
 # https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/clipboard.zsh
