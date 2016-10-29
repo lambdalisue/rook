@@ -158,7 +158,7 @@
         <appendix><![CDATA[  * Option_R				-> Kana ]]></appendix>
         <appendix><![CDATA[  * Application			-> Option_R ]]></appendix>
         <appendix><![CDATA[  * Shift_R				-> Option_R ]]></appendix>
-        <identifier>private.pcjis_to_macus_with_altjis</identifier>
+        <identifier>private.pcjis_to_macus_with_summod</identifier>
         <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::COMMAND_L</autogen>
         <autogen>__KeyToKey__ KeyCode::OPTION_R, KeyCode::COMMAND_R</autogen>
         <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::OPTION_L</autogen>
