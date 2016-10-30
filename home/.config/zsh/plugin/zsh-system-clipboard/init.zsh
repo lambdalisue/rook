@@ -59,23 +59,30 @@ __has() {
   which "$1" >/dev/null 2>&1
 }
 
-# https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/clipboard.zsh
-if __has 'clipcopy'; then
-  alias __clipboard_copy=clipcopy
-  alias __clipboard_paste=clippaste
-elif __has 'pbcopy'; then
-  alias __clipboard_copy=pbcopy
-  alias __clipboard_paste=pbpaste
-elif __has 'xsel'; then
-  alias __clipboard_copy='xsel --input'
-  alias __clipboard_paste='xsel --output'
-elif __has 'xclip'; then
-  alias __clipboard_copy='xclip -in -selection clipboard'
-  alias __clipboard_paste='xclip -out -selection clipboard'
-else
-  __clipboard_copy() {}
-  __clipboard_paste() {}
-fi
+# clipcopy: https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/clipboard.zsh
+__clipboard_copy() {
+  if __has 'clipcopy'; then
+    clipcopy $@
+  elif __has 'pbcopy'; then
+    pbcopy $@
+  elif __has 'xsel'; then
+    xsel --input $@
+  elif __has 'xclip'; then
+    xclip -in -selection clipboard $@
+  fi
+}
+
+__clipboard_paste() {
+  if __has 'clippaste'; then
+    clippaste $@
+  elif __has 'pbpaste'; then
+    pbpaste $@
+  elif __has 'xsel'; then
+    xsel --output
+  elif __has 'xclip'; then
+    xclip -out -selection clipboard $@
+  fi
+}
 
 # Emacs {{{
 x-backward-kill-line() {

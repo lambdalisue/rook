@@ -1,11 +1,15 @@
 if [[ "x$PLATFORM" = 'xlinux' ]]; then
   install_porg() {
-    sudo apt install curl realpath
     curl -sL git.io/vXTo7 | bash
   }
   install_nvim() {
-    sudo apt-get install libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
     curl -sL git.io/vXToq | bash
+  }
+  install_zsh() {
+    curl -sL git.io/vXLNO | bash
+  }
+  install_tmux() {
+    curl -sL git.io/vXLAI | bash
   }
 else
   install_brew() {
@@ -18,7 +22,7 @@ else
 fi
 
 install_anyenv() {
-  git clone https://github.com/riywo/anyenv ~/.anyenv
+  git clone --single-branch --depth 1 https://github.com/riywo/anyenv ~/.anyenv
 }
 
 zsh_reload_rc() {
