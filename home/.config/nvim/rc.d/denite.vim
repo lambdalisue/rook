@@ -1,5 +1,5 @@
 " <C-z> is used in tmux so remap it to <C-s>
-call denite#custom#map('insert', "\<C-s>", 'suspend')
+call denite#custom#map('insert', '<C-s>', 'suspend')
 
 " grep
 if executable('pt')

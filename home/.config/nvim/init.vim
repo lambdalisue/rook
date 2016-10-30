@@ -319,12 +319,31 @@ nnoremap <S-Right> <C-w>><CR>
 nnoremap <S-Up>    <C-w>-<CR>
 nnoremap <S-Down>  <C-w>+<CR>
 
+" Tab navigation
+nnoremap <silent> <C-w>t :<C-u>tabnew<CR>
+nnoremap <silent> <C-w><C-t> :<C-u>tabnew<CR>
+nnoremap <silent> <C-w>q :<C-u>tabclose<CR>
+nnoremap <silent> <C-w><C-q> :<C-u>tabclose<CR>
+
 " Clear highlight with <C-l>
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
 " Jump to next/previous errors
 nnoremap <silent><expr> ]c &diff ? ']c' : ":\<C-u>cnext\<CR>"
 nnoremap <silent><expr> [c &diff ? ']c' : ":\<C-u>cprevious\<CR>"
+
+" Easy window navigation
+nmap <Space>wh <C-w>h
+nmap <Space>wj <C-w>j
+nmap <Space>wk <C-w>k
+nmap <Space>wl <C-w>l
+nmap <Space>wH <C-w>H
+nmap <Space>wJ <C-w>J
+nmap <Space>wK <C-w>K
+nmap <Space>wL <C-w>L
+nmap <Space>wt <C-w>t
+nmap <Space>wq <C-w>q
+nmap <Space>wo <C-w>o
 
 if has('nvim')
   " Use <ESC> to escape from terminal mode

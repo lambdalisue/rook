@@ -1,8 +1,11 @@
 " vim -u ~/.vim/vimrc.min
 if has('vim_starting')
   set nocompatible
-  set runtimepath+=~/.vim/bundle/repos/github.com/machakann/vim-sandwich/
+  set runtimepath+=~/Code/github.com/lambdalisue/denite.nvim
 endif
+
+nnoremap ; :
+nnoremap : ;
 
 filetype plugin indent on
 syntax on
