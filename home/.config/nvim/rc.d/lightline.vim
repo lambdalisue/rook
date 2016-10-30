@@ -28,6 +28,7 @@ let g:lightline = {
       \ },
       \ 'tabline': {
       \   'left': [
+      \     [ 'cwd' ],
       \     [ 'tabs' ],
       \   ],
       \   'right': [
@@ -52,9 +53,9 @@ let g:lightline = {
       \ },
       \ 'component_function': {
       \   'mode': 'lightline#mode',
-      \   'cwd': 'g:lightline.my.cwd',
       \   'wifi': 'wifi#component',
       \   'battery': 'battery#component',
+      \   'cwd': 'g:lightline.my.cwd',
       \   'filename': 'g:lightline.my.filename',
       \   'fileinfo': 'g:lightline.my.fileinfo',
       \   'filetype': 'g:lightline.my.filetype',
@@ -130,7 +131,7 @@ endfunction
 
 function! g:lightline.my.fileinfo() abort
   let encoding = (strlen(&fileencoding) ? &fileencoding : &encoding)
-  let fileformat = &fileformat == 'unix'
+  let fileformat = &fileformat ==# 'unix'
         \ ? g:Symbols.unix
         \ : g:Symbols.dos
   return encoding . ' ' . fileformat
@@ -185,3 +186,7 @@ endfunction
 function! g:lightline.my.datetime() abort
   return strftime('%a %m/%d %H:%M')
 endfunction
+
+if !has('vim_starting')
+  call lightline#init()
+endif
