@@ -41,6 +41,7 @@ path=(
     $HOME/.plenv/shims(N-/)
     $HOME/.rbenv/shims(N-/)
     $HOME/.local/bin(N-/)
+    $path
     /usr/local/texlive/2014/bin/i386-linux(N-/)
     /usr/local/texlive/2014/bin/i386-darwin(N-/)
     /usr/local/texlive/2014/bin/x86_64-linux(N-/)
@@ -54,7 +55,6 @@ path=(
     /usr/sbin(N-/)
     /sbin(N-/)
     /usr/X11/bin(N-/)
-    $path
 )
 
 # -x: do export SUDO_PATH same time
@@ -62,27 +62,27 @@ path=(
 typeset -xT SUDO_PATH sudo_path
 typeset -U sudo_path
 sudo_path=(
+    $sudo_path
     /opt/local/sbin(N-/)
     /usr/local/sbin(N-/)
     /usr/sbin(N-/)
     /sbin(N-/)
-    $sudo_path
 )
 
 # Add completion path
 fpath=(
     $ZDOTDIR/completions(N-/)
     $HOME/.homesick/repos/homeshick/completions(N-/)
-    /usr/local/share/zsh/site-functions(N-/)
     $fpath
+    /usr/local/share/zsh/site-functions(N-/)
 )
 
 typeset -U manpath
 manpath=(
     $HOME/.local/share/man(N-/)
+    $manpath
     /usr/local/texlive/texmf-dist/doc/man(N-/)
     /opt/local/share/man(N-/)
     /usr/local/share/man(N-/)
     /usr/share/man(N-/)
-    $manpath
 )
