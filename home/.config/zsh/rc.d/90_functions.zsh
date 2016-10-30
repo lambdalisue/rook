@@ -6,7 +6,7 @@ if [[ "x$PLATFORM" = 'xlinux' ]]; then
     curl -sL git.io/vXToq | bash
   }
   install_zsh() {
-    curl -sL git.io/vXLNO | bash
+    curl -sL git.io/vXLAa | bash
   }
   install_tmux() {
     curl -sL git.io/vXLAI | bash
