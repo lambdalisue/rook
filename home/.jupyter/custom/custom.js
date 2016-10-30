@@ -13,10 +13,10 @@ require([
   CodeMirror.Vim.map("gk", "<Plug>(vim-binding-k)", "normal");
 
   // Emacs like binding
-  CodeMirror.Vim.map("<C-a>", "<Esc>^i", "insert");
-  CodeMirror.Vim.map("<C-e>", "<Esc>$a", "insert");
-  CodeMirror.Vim.map("<C-f>", "<Esc>2li", "insert");
-  CodeMirror.Vim.map("<C-b>", "<Esc>i", "insert");
+  CodeMirror.Vim.map("<C-a>", "<Home>", "insert");
+  CodeMirror.Vim.map("<C-e>", "<End>", "insert");
+  CodeMirror.Vim.map("<C-f>", "<Right>", "insert");
+  CodeMirror.Vim.map("<C-b>", "<Left>", "insert");
 
   CodeMirror.Vim.map("<C-h>", "<BS>", "normal");
   CodeMirror.Vim.map("<C-m>", "<CR>", "normal");
