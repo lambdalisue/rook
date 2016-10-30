@@ -19,9 +19,12 @@ function zle-line-init zle-line-finish {
 # Use Vi like binding
 bindkey -v
 
-# Decrease timeout to 0.1 seconds
+# Decrease timeout to 0.1 seconds on local
+# 0.1 seconds would be to fast for SSH connection.
 # http://www.johnhawthorn.com/2012/09/vi-escape-delays/
-export KEYTIMEOUT=1
+if [ -z "${REMOTEHOST}${SSH_CONNECTION}" ]; then
+  export KEYTIMEOUT=1
+fi
 
 # Cycle history search with C-p/C-n
 autoload history-search-end
