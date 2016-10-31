@@ -151,19 +151,13 @@
       </item>
       <item>
         <name>JIS Keyboard (PC) to US Keyboard (Mac) with Summod</name>
-        <appendix><![CDATA[  * Command_L			-> Command_L ]]></appendix>
-        <appendix><![CDATA[  * Option_L				-> Eisuu ]]></appendix>
-        <appendix><![CDATA[  * Eisuu					-> Space ]]></appendix>
-        <appendix><![CDATA[  * Kana					-> Space ]]></appendix>
-        <appendix><![CDATA[  * Option_R				-> Kana ]]></appendix>
-        <appendix><![CDATA[  * Application			-> Option_R ]]></appendix>
-        <appendix><![CDATA[  * Shift_R				-> Option_R ]]></appendix>
+        <appendix><![CDATA[  * Eisuu				-> Control_L (Sticky) ]]></appendix>
+        <appendix><![CDATA[  * Kana				-> Shift_R (Sticky) ]]></appendix>
+        <appendix><![CDATA[  * Application			-> Fn ]]></appendix>
+        <appendix><![CDATA[  * Shift_L				-> Eisuu ]]></appendix>
+        <appendix><![CDATA[  * Shift_R				-> Kana ]]></appendix>
         <identifier>private.pcjis_to_macus_with_summod</identifier>
-        <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::COMMAND_L</autogen>
-        <autogen>__KeyToKey__ KeyCode::OPTION_R, KeyCode::COMMAND_R</autogen>
-        <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::OPTION_L</autogen>
-        <autogen>__KeyToKey__ KeyCode::COMMAND_R, KeyCode::OPTION_R</autogen>
-        <autogen>__KeyToKey__ KeyCode::PC_APPLICATION, KeyCode::OPTION_R</autogen>
+        <autogen>__KeyToKey__ KeyCode::PC_APPLICATION, KeyCode::FN</autogen>
         <autogen>__KeyToKey__ KeyCode::SHIFT_L, KeyCode::JIS_EISUU</autogen>
         <autogen>__KeyToKey__ KeyCode::SHIFT_R, KeyCode::JIS_KANA</autogen>
         <autogen>
