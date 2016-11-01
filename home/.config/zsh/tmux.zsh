@@ -7,7 +7,7 @@ __tmux::has_shell_started_interactively() {
 }
 
 __tmux::is_ssh_running() {
-  [ ! -z "$SSH_CONECTION" ]
+  [ ! -z "$REMOTEHOST$SSH_CONECTION" ]
 }
 
 __tmux::main() {
