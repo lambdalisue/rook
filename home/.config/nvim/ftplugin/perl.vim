@@ -20,7 +20,7 @@ setl include=use
 setl includeexpr=substitute(v:fname,'::','/','g').'.pm'
 let s:carton_path = system('carton exec perl -e "print join(q/,/,@INC)"')
 let s:lib_path = fnamemodify(finddir("lib", ";"), ":p")
-execute 'setl path=' . join([s:carton_path, s:lib_path], ',')
+execute 'setl path=' . fnameescape(join([s:carton_path, s:lib_path], ','))
 
 " check if the package name and file name are mismached {{{
 function! s:get_package_name() abort
