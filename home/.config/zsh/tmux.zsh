@@ -1,13 +1,13 @@
 __tmux::is_tmux_running() {
-  [ ! -z "$TMUX" ]
+  [ -n "$TMUX" ]
 }
 
 __tmux::has_shell_started_interactively() {
-  [ ! -z "$PS1" ]
+  [ -n "$PS1" ]
 }
 
 __tmux::is_ssh_running() {
-  [ ! -z "$REMOTEHOST$SSH_CONECTION" ]
+  [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]
 }
 
 __tmux::main() {
