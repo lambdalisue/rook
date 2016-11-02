@@ -333,17 +333,7 @@ nnoremap <silent><expr> ]c &diff ? ']c' : ":\<C-u>cnext\<CR>"
 nnoremap <silent><expr> [c &diff ? ']c' : ":\<C-u>cprevious\<CR>"
 
 " Easy window navigation
-nmap <Space>wh <C-w>h
-nmap <Space>wj <C-w>j
-nmap <Space>wk <C-w>k
-nmap <Space>wl <C-w>l
-nmap <Space>wH <C-w>H
-nmap <Space>wJ <C-w>J
-nmap <Space>wK <C-w>K
-nmap <Space>wL <C-w>L
-nmap <Space>wt <C-w>t
-nmap <Space>wq <C-w>q
-nmap <Space>wo <C-w>o
+nmap <Space>w <C-w>
 
 if has('nvim')
   " Use <ESC> to escape from terminal mode
