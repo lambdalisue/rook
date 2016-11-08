@@ -31,6 +31,8 @@ function! s:unite_my_settings() abort
   imap <buffer> <C-g> <Plug>(unite_select_next_line)
   nmap <buffer> <C-t> <Plug>(unite_loop_cursor_up)
   nmap <buffer> <C-g> <Plug>(unite_loop_cursor_down)
+  imap <buffer> <C-j> <Plug>(unite_do_default_action)
+  nmap <buffer> <C-j> <Plug>(unite_do_default_action)
 endfunction
 autocmd MyAutoCmd FileType unite call s:unite_my_settings()
 

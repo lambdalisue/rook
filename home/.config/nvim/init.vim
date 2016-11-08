@@ -18,7 +18,9 @@ if has('vim_starting')
   silent! unlet c_comment_strings
 
   " Use as many color as possible
-  set termguicolors       " use truecolor in term
+  if !has('gui_running')
+    set termguicolors       " use truecolor in term
+  endif
   if &term =~ '256color'
     " disable Background Color Erase (BCE) so that color schemes
     " render properly when inside 256-color tmux and GNU screen.
