@@ -646,6 +646,11 @@ let g:quickrun_config = extend(get(g:, 'quickrun_config', {}), {
       \   'command': 'vint',
       \   'exec'   : '%c %o %s:p',
       \ },
+      \ "watchdogs_checker/tsc" : {
+      \    "command"     : "tsc",
+      \    "exec"        : "%c %s:p --outDir " . tempname(),
+      \    "errorformat" : '%+A\ %#%f\ %#(%l\\,%c):\ %m,%C%m',
+      \ },
       \})
 
 " use carton
@@ -1039,6 +1044,9 @@ repo = 'elzr/vim-json'
 repo = 'jQuery'
 
 [[plugins]]
+repo = 'pangloss/vim-javascript'
+
+[[plugins]]
 repo = 'jelera/vim-javascript-syntax'
 
 [[plugins]]
@@ -1074,6 +1082,9 @@ on_ft = 'perl'
 [[plugins]]
 repo = 'c9s/perlomni.vim'
 on_ft = 'perl'
+
+[[plugins]]
+repo = 'lambdalisue/vim-riot'
 
 [[plugins]]
 if = 'executable("npm")'
