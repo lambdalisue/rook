@@ -326,6 +326,8 @@ nnoremap <silent> <C-w>t :<C-u>tabnew<CR>
 nnoremap <silent> <C-w><C-t> :<C-u>tabnew<CR>
 nnoremap <silent> <C-w>q :<C-u>tabclose<CR>
 nnoremap <silent> <C-w><C-q> :<C-u>tabclose<CR>
+nnoremap <C-n> gt
+nnoremap <C-p> gT
 
 " Clear highlight with <C-l>
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
@@ -336,6 +338,8 @@ nnoremap <silent><expr> [c &diff ? ']c' : ":\<C-u>cprevious\<CR>"
 
 " Easy window navigation
 nmap <Space>w <C-w>
+nnoremap <Space>n gt
+nnoremap <Space>p gT
 
 if has('nvim')
   " Use <ESC> to escape from terminal mode
@@ -502,6 +506,15 @@ nnoremap <silent> <Plug>(my-zoom-window)
 nmap <C-w>o <Plug>(my-zoom-window)
 nmap <C-w><C-o> <Plug>(my-zoom-window)
 "}}}
+
+function! s:display_syninfo() abort
+  let l = line('.')
+  let c = col('.')
+  echomsg printf('Hl: %s', synIDattr(synID(l, c, 1), 'name'))
+  echomsg printf('Tr: %s', synIDattr(synID(l, c, 0), 'name'))
+  echomsg printf('Lo: %s', synIDattr(synIDtrans(synID(l, c, 1)), 'name'))
+endfunction
+nnoremap <silent> <C-g>h :<C-u>call <SID>display_syninfo()<CR>
 
 " }}}
 
@@ -701,6 +714,11 @@ endif
 " }}}
 
 " Plugin {{{
+
+" Source '~/.vimrc.local' only when exists
+" This requires to be prior to Plugin loading
+silent call s:source_script('~/.vimrc.local')
+
 let s:bundle_root = expand('~/.cache/nvim/dein')
 let s:bundle_dein = s:join(s:bundle_root, 'repos/github.com/Shougo/dein.vim')
 if isdirectory(s:bundle_dein)
@@ -748,6 +766,11 @@ endif
 " }}}
 
 " Postludium {{{
+" Make sure required directories exist
+call s:auto_mkdir(&viewdir, 1)
+call s:auto_mkdir(&undodir, 1)
+call s:auto_mkdir(fnamemodify(&spellfile, ':p:h'), 1)
+
 filetype indent plugin on
 syntax on
 set background=dark
@@ -756,14 +779,6 @@ try
 catch
   colorscheme desert
 endtry
-
-" Make sure required directories exist
-call s:auto_mkdir(&viewdir, 1)
-call s:auto_mkdir(&undodir, 1)
-call s:auto_mkdir(fnamemodify(&spellfile, ':p:h'), 1)
-
-" Source '~/.vimrc.local' only when exists
-silent call s:source_script('~/.vimrc.local')
 
 set secure
 " }}}

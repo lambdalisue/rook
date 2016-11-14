@@ -534,19 +534,12 @@ repo = 'AndrewRadev/linediff.vim'
 on_cmd = 'Linediff'
 
 [[plugins]]
-repo = 'kurkale6ka/vim-swap'
-on_map = '<Plug>SwapSwap'
+repo = 'junegunn/vim-easy-align'
+on_map = '<Plug>'
 hook_add = '''
-nnoremap <Plug>(my-swap) <Nop>
-vnoremap <Plug>(my-swap) <Nop>
-nmap ~ <Plug>(my-swap)
-vmap ~ <Plug>(my-swap)
-vmap <Plug>(my-swap)~ <Plug>SwapSwapOperands
-vmap <Plug>(my-swap)- <Plug>SwapSwapPivotOperands
-nmap <Plug>(my-swap)~ <Plug>SwapSwapWithR_WORD
-nmap <Plug>(my-swap)- <Plug>SwapSwapWithL_WORD
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 '''
-hook_source = 'let g:swap_enable_default_keymaps = 0'
 
 [[plugins]]
 repo = 'lambdalisue/vim-findent'
@@ -652,6 +645,11 @@ let g:quickrun_config = extend(get(g:, 'quickrun_config', {}), {
       \ 'watchdogs_checker/vint': {
       \   'command': 'vint',
       \   'exec'   : '%c %o %s:p',
+      \ },
+      \ "watchdogs_checker/tsc" : {
+      \    "command"     : "tsc",
+      \    "exec"        : "%c %s:p --outDir " . tempname(),
+      \    "errorformat" : '%+A\ %#%f\ %#(%l\\,%c):\ %m,%C%m',
       \ },
       \})
 
@@ -1046,6 +1044,9 @@ repo = 'elzr/vim-json'
 repo = 'jQuery'
 
 [[plugins]]
+repo = 'pangloss/vim-javascript'
+
+[[plugins]]
 repo = 'jelera/vim-javascript-syntax'
 
 [[plugins]]
@@ -1081,6 +1082,9 @@ on_ft = 'perl'
 [[plugins]]
 repo = 'c9s/perlomni.vim'
 on_ft = 'perl'
+
+[[plugins]]
+repo = 'lambdalisue/vim-riot'
 
 [[plugins]]
 if = 'executable("npm")'
