@@ -21,59 +21,49 @@
       <name>For Mac JIS Keyboard</name>
       <item>
         <name style="important">The following extra configurations are required.</name>
-        <appendix>
-          <![CDATA[ * Assign "No Action" to Capslock by in Keyboard > Modifier keys... > Caps Lock ]]>
-        </appendix>
-        <appendix>
-          <![CDATA[ * Assign "62" (CONTROL_R: 0x3E) to Capslock in "Seil". ]]>
-        </appendix>
+        <appendix><![CDATA[ * Assign "No Action" to Capslock by in Keyboard > Modifier keys... > Caps Lock ]]></appendix>
+        <appendix><![CDATA[ * Assign "59" (CONTROL_L: 0x37) to Capslock in "Seil". ]]></appendix>
         <appendix>&#8594; https://pqrs.org/osx/karabiner/seil.html</appendix>
       </item>
       <item>
-        <name>JIS Keyboard (Mac) to US Keyboard (Mac)</name>
-        <appendix><![CDATA[  * Capslock (Control_R)	-> Fn ]]></appendix>
-        <appendix><![CDATA[  * Option_L			-> Control_L ]]></appendix>
-        <appendix><![CDATA[  * Command_L			-> Option_L ]]></appendix>
-        <appendix><![CDATA[  * Eisuu				-> Command_L ]]></appendix>
-        <appendix><![CDATA[  * Kana				-> Space ]]></appendix>
-        <appendix><![CDATA[  * Fn				-> Option_R ]]></appendix>
-        <identifier>private.macjis_to_macus</identifier>
-        <autogen>__KeyToKey__ KeyCode::CONTROL_R, KeyCode::FN</autogen>
-        <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::CONTROL_L</autogen>
+        <name>Pinkyless : JIS Keyboard (Mac) to US Keyboard (Mac)</name>
+        <appendix><![CDATA[  * Option_L					-> Command_L ]]></appendix>
+        <appendix><![CDATA[  * Command_L					-> Option_L ]]></appendix>
+        <appendix><![CDATA[  * Eisuu						-> Space ]]></appendix>
+        <appendix><![CDATA[  * Space						-> Control_L/Space ]]></appendix>
+        <appendix><![CDATA[  * Kana						-> Shift_R/Enter ]]></appendix>
+        <appendix><![CDATA[  * Command_R					-> Enter ]]></appendix>
+        <appendix><![CDATA[  * Shift_L						-> Eisuu ]]></appendix>
+        <appendix><![CDATA[  * Shift_R						-> Kana ]]></appendix>
+        <identifier>private.macjis_to_macus_pinkyless</identifier>
+        <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::COMMAND_L</autogen>
         <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::OPTION_L</autogen>
-        <autogen>__KeyToKey__ KeyCode::JIS_EISUU, KeyCode::COMMAND_L</autogen>
-        <autogen>__KeyToKey__ KeyCode::JIS_KANA, KeyCode::SPACE</autogen>
-        <autogen>__KeyToKey__ KeyCode::FN, KeyCode::OPTION_R</autogen>
+        <autogen>__KeyToKey__ KeyCode::COMMAND_R, KeyCode::RETURN</autogen>
+        <autogen>__KeyToKey__ KeyCode::JIS_EISUU, KeyCode::SPACE</autogen>
+        <autogen>__KeyToKey__ KeyCode::SHIFT_L, KeyCode::JIS_EISUU</autogen>
+        <autogen>__KeyToKey__ KeyCode::SHIFT_R, KeyCode::JIS_KANA</autogen>
+        <autogen>
+          __KeyOverlaidModifier__
+          KeyCode::SPACE,
+          KeyCode::CONTROL_L,
+          KeyCode::SPACE
+        </autogen>
+        <autogen>
+          __KeyOverlaidModifier__
+          KeyCode::JIS_KANA,
+          KeyCode::SHIFT_R,
+          KeyCode::RETURN
+        </autogen>
       </item>
     </item>
     <item>
       <name>For PC JIS Keyboard</name>
       <item>
         <name style="important">The following extra configurations are required.</name>
-        <appendix>
-          <![CDATA[ * Enable NFER (102 : JIS eisuu) in "Seil". ]]>
-          <![CDATA[ * Enable XFER (104 : JIS kana) in "Seil". ]]>
-          <![CDATA[ * Enable KATAKANA (54 : Right command) in "Seil". ]]>
-        </appendix>
+        <appendix><![CDATA[ * Enable NFER (102 : JIS eisuu) in "Seil". ]]></appendix>
+        <appendix><![CDATA[ * Enable XFER (104 : JIS kana) in "Seil". ]]></appendix>
+        <appendix><![CDATA[ * Enable KATAKANA (54 : Right command) in "Seil". ]]></appendix>
         <appendix>&#8594; https://pqrs.org/osx/karabiner/seil.html</appendix>
-      </item>
-      <item>
-        <name>JIS Keyboard (PC) to US Keyboard (Mac)</name>
-        <appendix><![CDATA[  * Command_L					-> Option_L ]]></appendix>
-        <appendix><![CDATA[  * Option_L					-> Command_L ]]></appendix>
-        <appendix><![CDATA[  * Eisuu						-> Space ]]></appendix>
-        <appendix><![CDATA[  * Kana						-> Space ]]></appendix>
-        <appendix><![CDATA[  * Katakana (Command_R)			-> Space ]]></appendix>
-        <appendix><![CDATA[  * Option_R					-> Command_R ]]></appendix>
-        <appendix><![CDATA[  * Application					-> Option_R ]]></appendix>
-        <identifier>private.pcjis_to_macus</identifier>
-        <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::OPTION_L</autogen>
-        <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::COMMAND_L</autogen>
-        <autogen>__KeyToKey__ KeyCode::JIS_EISUU, KeyCode::SPACE</autogen>
-        <autogen>__KeyToKey__ KeyCode::JIS_KANA, KeyCode::SPACE</autogen>
-        <autogen>__KeyToKey__ KeyCode::COMMAND_R, KeyCode::SPACE</autogen>
-        <autogen>__KeyToKey__ KeyCode::OPTION_R, KeyCode::COMMAND_R</autogen>
-        <autogen>__KeyToKey__ KeyCode::PC_APPLICATION, KeyCode::OPTION_R</autogen>
       </item>
       <item>
         <name>Pinkyless : JIS Keyboard (PC) to US Keyboard (Mac)</name>
