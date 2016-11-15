@@ -1050,9 +1050,6 @@ repo = 'pangloss/vim-javascript'
 repo = 'jelera/vim-javascript-syntax'
 
 [[plugins]]
-repo = 'lambdalisue/vim-js-indent'
-
-[[plugins]]
 repo = 'leafgarland/typescript-vim'
 hook_source = '''
 let g:typescript_indent_disable = 1
