@@ -619,7 +619,7 @@ let g:watchdogs_check_CursorHold_enables = {
       \ 'perl': 1,
       \ 'python': 1,
       \ 'javascript': 1,
-      \ 'typescript': 1,
+      \ 'typescript': 0,
       \ 'html': 1,
       \ 'css': 1,
       \ 'less': 1,
