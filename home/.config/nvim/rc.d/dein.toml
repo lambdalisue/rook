@@ -215,12 +215,12 @@ let g:calendar_google_task = 1
 repo = 'lambdalisue/vim-gita'
 on_cmd = 'Gita'
 hook_add = '''
-nnoremap <silent> <C-a><C-a> :<C-u>Gita status -u --ignore-submodules <CR>
-nnoremap <silent> <C-a><C-B> :<C-u>Gita browse -- %<CR>
-nnoremap <silent> <C-a><C-b> :<C-u>Gita branch --all<CR>
-nnoremap <silent> <C-a><C-g> :<C-u>Gita grep<CR>
-nnoremap <silent> <C-a><C-d> :<C-u>Gita diff-ls --ignore-submodules origin/HEAD...<CR>
-nnoremap <silent> <C-a><C-l> :<C-u>Gita ls-files<CR>
+nnoremap <silent> <Space>aa :<C-u>Gita status -u --ignore-submodules <CR>
+nnoremap <silent> <Space>aB :<C-u>Gita browse -- %<CR>
+nnoremap <silent> <Space>ab :<C-u>Gita branch --all<CR>
+nnoremap <silent> <Space>ag :<C-u>Gita grep<CR>
+nnoremap <silent> <Space>ad :<C-u>Gita diff-ls --ignore-submodules origin/HEAD...<CR>
+nnoremap <silent> <Space>al :<C-u>Gita ls-files<CR>
 '''
 hook_source = '''
 let g:gita#command#browse#extra_translation_patterns = {
