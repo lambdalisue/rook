@@ -85,7 +85,7 @@ nnoremap = :togglepin<CR>
 javascript <<EOF
 if (liberator.has("MacUnix")) {
     liberator.execute(
-        "set editor='/Applications/MacVim.app/Contents/MacOS/mvim -f -c \"set ft=markdown\" '"
+        "set editor='/Applications/MacVim.app/Contents/MacOS/MacVim -g -c \"set ft=markdown\" -f '"
     )
 }
 else {
