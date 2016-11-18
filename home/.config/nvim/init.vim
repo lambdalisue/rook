@@ -209,6 +209,11 @@ function! FoldText() abort
 endf
 set foldtext=FoldText()
 
+if exists('&inccommand')
+  " Show the effects of a command incrementally
+  set inccommand=nosplit
+endif
+
 " }}}
 
 " Editing {{{
@@ -348,7 +353,7 @@ endif
 
 " Seemless substitution with :s<Space> {{{
 cnoreabbrev <silent><expr>s getcmdtype() ==# ':' && getcmdline() =~# '^s'
-      \ ? "<C-u>%s/<C-r>=get([], getchar(0), '')<CR>"
+      \ ? "%s/<C-r>=get([], getchar(0), '')<CR>"
       \ : 's'
 cnoreabbrev <silent><expr>'<,'>s getcmdtype() ==# ':' && getcmdline() =~# "^'<,'>s"
       \ ? "'<,'>s/<C-r>=get([], getchar(0), '')<CR>"

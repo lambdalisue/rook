@@ -507,14 +507,18 @@ on_cmd = [
   'OverCommandLineNoremap',
 ]
 hook_add = '''
-" Use vim-over instead of builtin substitution
-" http://leafcage.hateblo.jp/entry/2013/11/23/212838
-cnoreabbrev <silent><expr>s getcmdtype() ==# ':' && getcmdline() =~# '^s'
-      \ ? "OverCommandLine<CR><C-u>%s/<C-r>=get([], getchar(0), '')<CR>"
-      \ : 's'
-cnoreabbrev <silent><expr>'<,'>s getcmdtype() ==# ':' && getcmdline() =~# "^'<,'>s"
-      \ ? "'<,'>OverCommandLine<CR>s/<C-r>=get([], getchar(0), '')<CR>"
-      \ : "'<,'>s"
+if has('nvim')
+  set inccommand=nosplit
+else
+  " Use vim-over instead of builtin substitution
+  " http://leafcage.hateblo.jp/entry/2013/11/23/212838
+  cnoreabbrev <silent><expr>s getcmdtype() ==# ':' && getcmdline() =~# '^s'
+        \ ? "OverCommandLine<CR><C-u>%s/<C-r>=get([], getchar(0), '')<CR>"
+        \ : 's'
+  cnoreabbrev <silent><expr>'<,'>s getcmdtype() ==# ':' && getcmdline() =~# "^'<,'>s"
+        \ ? "'<,'>OverCommandLine<CR>s/<C-r>=get([], getchar(0), '')<CR>"
+        \ : "'<,'>s"
+endif
 '''
 hook_source = '''
 let g:over_enable_auto_nohlsearch = 1
