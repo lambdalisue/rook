@@ -849,7 +849,7 @@ xmap iz <Plug>(textobj-fold-i)
 '''
 
 [[plugins]]
-repo = 'kana/vim-textobj-underscore'
+repo = 'lucapette/vim-textobj-underscore'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
 hook_add = '''

@@ -346,11 +346,6 @@ nmap <Space>w <C-w>
 nnoremap <Space>n gt
 nnoremap <Space>p gT
 
-if has('nvim')
-  " Use <ESC> to escape from terminal mode
-  tnoremap <Esc> <C-\><C-n>
-endif
-
 " Seemless substitution with :s<Space> {{{
 cnoreabbrev <silent><expr>s getcmdtype() ==# ':' && getcmdline() =~# '^s'
       \ ? "%s/<C-r>=get([], getchar(0), '')<CR>"
@@ -715,6 +710,23 @@ else
         \ 'separator_left': '',
         \ 'separator_right': '',
         \}
+endif
+" }}}
+
+
+" Terminal {{{
+if has('nvim')
+  " Use <ESC> to escape from terminal mode
+  tnoremap <Esc> <C-\><C-n>
+
+  " Configure terminal buffer
+  function! s:configure_terminal() abort
+    setlocal nofoldenable
+    setlocal foldcolumn=0
+    setlocal nonumber
+    setlocal norelativenumber
+  endfunction
+  autocmd MyAutoCmd TermOpen * call s:configure_terminal()
 endif
 " }}}
 
