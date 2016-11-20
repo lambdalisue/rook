@@ -17,6 +17,9 @@ vnoremap : ;
 " From undolist
 nnoremap U :undo<Space>
 
+" GitHub is vimperator unfriendly...
+inoremap <A-i> <C-i>
+
 " Tab navigation
 nnoremap <C-n> gt
 nnoremap <C-p> gT
