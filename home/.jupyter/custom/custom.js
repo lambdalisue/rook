@@ -13,14 +13,28 @@ require([
   CodeMirror.Vim.map("gk", "<Plug>(vim-binding-k)", "normal");
 
   // Emacs like binding
+  CodeMirror.Vim.defineAction('[i]<BS>', function(cm) {
+    cm.execCommand('delCharBefore');
+  });
+  CodeMirror.Vim.defineAction('[i]<Del>', function(cm) {
+    cm.execCommand('delCharAfter');
+  });
+  CodeMirror.Vim.defineAction('[i]<Tab>', function(cm) {
+    cm.execCommand('indentMore');
+  });
+  CodeMirror.Vim.defineAction('[i]<CR>', function(cm) {
+    cm.execCommand('newlineAndIndent');
+  });
+  CodeMirror.Vim.mapCommand("<C-h>", "action", "[i]<BS>", {}, { "context": "insert" });
+  CodeMirror.Vim.mapCommand("<C-d>", "action", "[i]<Del>", {}, { "context": "insert" });
+  CodeMirror.Vim.mapCommand("<C-m>", "action", "[i]<CR>", {}, { "context": "insert" });
+  CodeMirror.Vim.mapCommand("<C-j>", "action", "[i]<CR>", {}, { "context": "insert" });
+  CodeMirror.Vim.mapCommand("<C-i>", "action", "[i]<Tab>", {}, { "context": "insert" });
+
   CodeMirror.Vim.map("<C-a>", "<Esc>^i", "insert");
   CodeMirror.Vim.map("<C-e>", "<Esc>$a", "insert");
   CodeMirror.Vim.map("<C-f>", "<Esc>lwi", "insert");
   CodeMirror.Vim.map("<C-b>", "<Esc>lbi", "insert");
-  CodeMirror.Vim.map("<C-d>", "<Esc>lxi", "insert");
-  CodeMirror.Vim.map("<C-h>", "<BS>", "insert");
-  CodeMirror.Vim.map("<C-m>", "<CR>", "insert");
-  CodeMirror.Vim.map("<C-i>", "<Tab>", "insert");
 
   console.log('Custom keymaps are applied.');
 });
