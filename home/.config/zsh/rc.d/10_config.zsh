@@ -55,6 +55,11 @@ if ! __rook::has 'vim'; then
 fi
 alias vimm="vim -u ~/.vim/vimrc.min -i NONE"
 
+if __rook::has 'nvim'; then
+  export EDITOR=nvim
+  export MANPAGER="nvim -c MANPAGER -"
+fi
+
 # hub
 if __rook::has 'hub'; then
   hub() {
