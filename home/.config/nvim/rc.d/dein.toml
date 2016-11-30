@@ -714,6 +714,8 @@ let g:deoplete#sources = get(g:, 'deoplete#sources', {})
 let g:deoplete#sources.gitcommit=['github']
 '''
 hook_source = '''
+
+let g:deoplete#omni#input_patterns = get(g:, 'deoplete#omni#input_patterns', {})
 let g:deoplete#keyword_patterns = get(g:, 'deoplete#keyword_patterns', {})
 let g:deoplete#keyword_patterns.gitcommit = '.+'
 
