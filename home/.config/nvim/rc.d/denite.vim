@@ -1,5 +1,18 @@
 " <C-z> is used in tmux so remap it to <C-s>
-call denite#custom#map('insert', '<C-s>', 'suspend')
+call denite#custom#map('_', '<C-s>', '<denite:suspend>', 'noremap')
+
+" Swap C-n/Down C-p/Up
+call denite#custom#map('insert', '<C-n>', '<denite:assign_next_matched_text>', 'noremap')
+call denite#custom#map('insert', '<Down>', '<denite:assign_next_text>', 'noremap')
+call denite#custom#map('insert', '<C-p>', '<denite:assign_previous_matched_text>', 'noremap')
+call denite#custom#map('insert', '<Up>', '<denite:assign_previous_text>', 'noremap')
+
+" Emacs like mapping
+call denite#custom#map('insert', '<C-f>', '<Right>')
+call denite#custom#map('insert', '<C-b>', '<Left>')
+call denite#custom#map('insert', '<C-a>', '<Home>')
+call denite#custom#map('insert', '<C-e>', '<End>')
+call denite#custom#map('insert', '<C-d>', '<Del>')
 
 " grep
 if executable('pt')
