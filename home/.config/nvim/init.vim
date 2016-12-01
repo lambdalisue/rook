@@ -18,7 +18,7 @@ if has('vim_starting')
   silent! unlet c_comment_strings
 
   " Use as many color as possible
-  if !has('gui_running')
+  if !has('gui_running') && exists('&termguicolors')
     set termguicolors       " use truecolor in term
   endif
   if &term =~ '256color'
@@ -187,13 +187,15 @@ set wildmode=list:longest,full
 set wildoptions=tagfile
 
 set list          " show invisible characters
-set breakindent   " every wrapped line will continue visually indented
 if $LANG !=# 'C'
   set listchars=tab:»-,trail:˽,extends:»,precedes:«,nbsp:%,eol:↵
   set showbreak=\ +
 else
   set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%,eol:$
   set showbreak=\ +
+endif
+if exists('&breakindent')
+  set breakindent   " every wrapped line will continue visually indented
 endif
 
 function! FoldText() abort
