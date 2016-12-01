@@ -121,29 +121,31 @@ hook_add = '''
 let g:submode_timeout = 0
 let g:submode_keep_leaving_key = 1
 
-call submode#enter_with('undo/redo', 'n', '', 'g-', 'g-')
-call submode#enter_with('undo/redo', 'n', '', 'g+', 'g+')
-call submode#leave_with('undo/redo', 'n', '', '<Esc>')
-call submode#map('undo/redo', 'n', '', '-', 'g-')
-call submode#map('undo/redo', 'n', '', '+', 'g+')
+if dein#is_sourced('vim-submoode')
+  call submode#enter_with('undo/redo', 'n', '', 'g-', 'g-')
+  call submode#enter_with('undo/redo', 'n', '', 'g+', 'g+')
+  call submode#leave_with('undo/redo', 'n', '', '<Esc>')
+  call submode#map('undo/redo', 'n', '', '-', 'g-')
+  call submode#map('undo/redo', 'n', '', '+', 'g+')
 
-call submode#enter_with('tab', 'n', '', 'gt', 'gt')
-call submode#enter_with('tab', 'n', '', 'gT', 'gT')
-call submode#map('tab', 'n', '', 't', 'gt')
-call submode#map('tab', 'n', '', 'T', 'gT')
+  call submode#enter_with('tab', 'n', '', 'gt', 'gt')
+  call submode#enter_with('tab', 'n', '', 'gT', 'gT')
+  call submode#map('tab', 'n', '', 't', 'gt')
+  call submode#map('tab', 'n', '', 'T', 'gT')
 
-call submode#enter_with('scroll', 'n', '', '<C-y>', '<C-y>')
-call submode#enter_with('scroll', 'n', '', '<C-e>', '<C-e>')
-call submode#enter_with('scroll', 'n', '', '<C-u>', '<C-u>')
-call submode#enter_with('scroll', 'n', '', '<C-d>', '<C-d>')
-call submode#enter_with('scroll', 'n', '', '<C-f>', '<C-f>')
-call submode#enter_with('scroll', 'n', '', '<C-b>', '<C-b>')
-call submode#map('scroll', 'n', '', 'y', '<C-y>')
-call submode#map('scroll', 'n', '', 'e', '<C-e>')
-call submode#map('scroll', 'n', '', 'u', '<C-u>')
-call submode#map('scroll', 'n', '', 'd', '<C-d>')
-call submode#map('scroll', 'n', '', 'f', '<C-f>')
-call submode#map('scroll', 'n', '', 'b', '<C-b>')
+  call submode#enter_with('scroll', 'n', '', '<C-y>', '<C-y>')
+  call submode#enter_with('scroll', 'n', '', '<C-e>', '<C-e>')
+  call submode#enter_with('scroll', 'n', '', '<C-u>', '<C-u>')
+  call submode#enter_with('scroll', 'n', '', '<C-d>', '<C-d>')
+  call submode#enter_with('scroll', 'n', '', '<C-f>', '<C-f>')
+  call submode#enter_with('scroll', 'n', '', '<C-b>', '<C-b>')
+  call submode#map('scroll', 'n', '', 'y', '<C-y>')
+  call submode#map('scroll', 'n', '', 'e', '<C-e>')
+  call submode#map('scroll', 'n', '', 'u', '<C-u>')
+  call submode#map('scroll', 'n', '', 'd', '<C-d>')
+  call submode#map('scroll', 'n', '', 'f', '<C-f>')
+  call submode#map('scroll', 'n', '', 'b', '<C-b>')
+endif
 '''
 
 # }}}

@@ -29,9 +29,11 @@ if has('vim_starting')
   endif
 
   " Disable annoying bells
-  set belloff=all
   set noerrorbells
   set novisualbell t_vb=
+  if exists('&belloff')
+    set belloff=all
+  endif
 
   " Do not wait more than 100 ms for keys
   set timeout
