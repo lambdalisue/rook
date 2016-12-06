@@ -707,24 +707,6 @@ build = 'npm install -g typescript'
 repo = 'mhartington/deoplete-typescript'
 on_ft = 'typescript'
 
-[[plugins]]
-depends = 'deoplete.nvim'
-repo = 'SevereOverfl0w/deoplete-github'
-on_ft = ['gitcommit', 'gita-commit']
-hook_add = '''
-let g:deoplete#sources = get(g:, 'deoplete#sources', {})
-let g:deoplete#sources.gitcommit=['github']
-'''
-hook_source = '''
-
-let g:deoplete#omni#input_patterns = get(g:, 'deoplete#omni#input_patterns', {})
-let g:deoplete#keyword_patterns = get(g:, 'deoplete#keyword_patterns', {})
-let g:deoplete#keyword_patterns.gitcommit = '.+'
-
-call deoplete#util#set_pattern(
-  \ g:deoplete#omni#input_patterns,
-  \ 'gitcommit', [g:deoplete#keyword_patterns.gitcommit])
-'''
 
 # }}}
 
