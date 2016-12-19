@@ -469,26 +469,31 @@ nmap <Leader><Leader>s <Plug>(my-source-script)
 " Switch colorscheme with <F3> {{{
 let s:colorschemes = [
       \ 'tender',
-      \ 'lucius',
-      \ 'molokai',
-      \ 'atom-dark',
-      \ 'lucario',
-      \ 'material-theme',
-      \ 'iceberg',
       \ 'hybrid',
+      \ 'iceberg',
+      \ 'lucius',
+      \ 'lucario',
+      \ 'atom-dark',
       \]
 let s:colorscheme_index = 0
-function! s:switch_colorscheme(offset) abort
-  let s:colorscheme_index += a:offset
-  let s:colorscheme_index = s:colorscheme_index % len(s:colorschemes)
+function! s:set_colorscheme(index) abort
+  let index = a:index is v:null
+        \ ? float2nr(reltimefloat(reltime()))
+        \ : a:index
+  let s:colorscheme_index = index % len(s:colorschemes)
   let colorscheme_name = s:colorschemes[s:colorscheme_index]
-  execute 'colorscheme' colorscheme_name
   if colorscheme_name =~# '\%(tender\|hybrid\)'
     highlight Cursor guifg=white guibg=black
     highlight iCursor guifg=white guibg=steelblue
   endif
+  execute 'colorscheme' colorscheme_name
   redraw | echo colorscheme_name
 endfunction
+
+function! s:switch_colorscheme(offset) abort
+  call s:set_colorscheme(s:colorscheme_index + a:offset)
+endfunction
+
 nnoremap <silent> <Plug>(my-switch-colorscheme)
       \ :<C-u>call <SID>switch_colorscheme(1)<CR>
 nmap <F3> <Plug>(my-switch-colorscheme)
@@ -717,7 +722,6 @@ else
 endif
 " }}}
 
-
 " Terminal {{{
 if has('nvim')
   " Use <ESC> to escape from terminal mode
@@ -796,7 +800,7 @@ filetype indent plugin on
 syntax on
 set background=dark
 try
-  silent call s:switch_colorscheme(0)
+  silent call s:set_colorscheme(v:null)
 catch
   colorscheme desert
 endtry
