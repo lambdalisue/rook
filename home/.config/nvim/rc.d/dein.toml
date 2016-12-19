@@ -322,6 +322,7 @@ nnoremap <silent> <Plug>(my-tagbar) :<C-u>TagbarToggle<CR>
 '''
 
 [[plugins]]
+if = '&runtimepath !~# "lista.nvim"'
 repo = 'lambdalisue/lista.nvim'
 on_cmd = 'Lista'
 hook_add = '''
@@ -712,6 +713,7 @@ on_ft = 'typescript'
 
 # Unite {{{
 [[plugins]]
+if = '&runtimepath !~# "denite.nvim"'
 repo = 'Shougo/denite.nvim'
 on_cmd = [
   'Denite',
