@@ -183,6 +183,14 @@ repo = 'rhysd/nyaovim-popup-tooltip'
 
 # App {{{
 [[plugins]]
+repo = 'rizzatti/dash.vim'
+on_cmd = 'Dash'
+
+[[plugins]]
+repo = 'thinca/vim-ref'
+on_cmd = 'Ref'
+
+[[plugins]]
 repo = 'cocopon/colorswatch.vim'
 on_cmd = 'ColorSwatchGenerate'
 

@@ -16,6 +16,7 @@ setlocal shiftwidth=8     " width of Indent
 setlocal nosmarttab       " use 'shiftwidth' and 'softtabstop' for indentation
 setlocal noexpandtab
 setlocal nospell
+setlocal nolist
 if v:version >= 703
   setlocal conceallevel=2
   " keep conceal of current line in command mode
@@ -30,5 +31,3 @@ endif
 
 " Close with q
 nnoremap <buffer><expr> q &modifiable ? 'q' : ':<C-u>close<CR>'
-
-setlocal nospell
