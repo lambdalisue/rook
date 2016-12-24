@@ -383,20 +383,20 @@ depends = 'open-browser.vim'
 on_cmd = 'PrevimOpen'
 hook_source = 'let g:previm_show_header = 0'
 
-[[plugins]]
-repo = 'osyo-manga/vim-precious'
-hook_add = '''
-let g:context_filetype#search_offset = 50
-let g:textobj_precious_no_default_key_mappings = 1
-let g:precious_enable_switch_CursorHold = { '*': 0 }
-let g:precious_enable_switch_CursorHold_i = { '*': 0 }
-let g:precious_enable_switch_CursorMoved = { '*': 0 }
-let g:precious_enable_switch_CursorMoved_i = { '*': 0 }
-autocmd MyAutoCmd InsertEnter * :PreciousSwitch
-autocmd MyAutoCmd InsertLeave,BufLeave,WinLeave * :PreciousReset
-autocmd MyAutoCmd User PreviousFileType_vim
-      \ :PreciousSetContextLocal foldlevel=0
-'''
+# [[plugins]]
+# repo = 'osyo-manga/vim-precious'
+# hook_add = '''
+# let g:context_filetype#search_offset = 50
+# let g:textobj_precious_no_default_key_mappings = 1
+# let g:precious_enable_switch_CursorHold = { '*': 0 }
+# let g:precious_enable_switch_CursorHold_i = { '*': 0 }
+# let g:precious_enable_switch_CursorMoved = { '*': 0 }
+# let g:precious_enable_switch_CursorMoved_i = { '*': 0 }
+# autocmd MyAutoCmd InsertEnter * :PreciousSwitch
+# autocmd MyAutoCmd InsertLeave,BufLeave,WinLeave * :PreciousReset
+# autocmd MyAutoCmd User PreviousFileType_vim
+#       \ :PreciousSetContextLocal foldlevel=0
+# '''
 
 [[plugins]]
 repo = 'cohama/vim-hier'

@@ -14,6 +14,23 @@
         KeyCode::ESCAPE
       </autogen>
     </item>
+    <item>
+      <name>Sticky shift with semicolon (;)</name>
+      <appendix>Use double semicolon (;;) to insert a colon (:)</appendix>
+      <appendix>Use semicolon + space (; ) to insert a semicolon (;)</appendix>
+      <identifier>private.pinkyless_vim_sticky_shift_with_semicolon</identifier>
+      <autogen>
+        __SimultaneousKeyPresses__
+        KeyCode::SEMICOLON, KeyCode::SPACE,
+        KeyCode::SEMICOLON
+      </autogen>
+      <autogen>
+        __DoublePressModifier__
+        KeyCode::SEMICOLON,
+        KeyCode::VK_STICKY_SHIFT_L,
+        KeyCode::SEMICOLON, ModifierFlag::SHIFT_L
+      </autogen>
+    </item>
   </item>
   <item>
     <name>For Japanese</name>
@@ -54,6 +71,8 @@
           KeyCode::SHIFT_R,
           KeyCode::RETURN
         </autogen>
+        <autogen>__KeyToKey__ KeyCode::JIS_UNDERSCORE, KeyCode::BACKSLASH</autogen>
+        <autogen>__KeyToKey__ KeyCode::BACKSLASH, KeyCode::BACKQUOTE</autogen>
       </item>
     </item>
     <item>
