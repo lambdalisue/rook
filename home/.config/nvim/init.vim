@@ -145,6 +145,7 @@ set fileformats=unix,dos,mac
 " }}}
 
 " Interface {{{
+set emoji               " use double in unicode emoji
 set hidden              " hide the buffer instead of close
 set switchbuf=useopen   " use an existing buffer instaed of creating a new one
 
@@ -154,6 +155,7 @@ set updatetime=500      " increase speed of CursorHold autocommand
 set nostartofline       " let C-D, C-U,... to keep same column
 set smartcase           " override the ignorecase if the search pattern contains
                         " upper case characters
+set tagcase=match       " use case sensitive for tag
 set hlsearch            " highlight found terms
 
 set foldlevelstart=99
@@ -280,10 +282,10 @@ set keywordprg=:help
 " :help insert-index
 
 " define <Leader> and <LocalLeader>
-let g:mapleader = ','
-let g:maplocalleader = ','
 noremap <Leader>      <Nop>
 noremap <LocalLeader> <Nop>
+let g:mapleader = ','
+let g:maplocalleader = ','
 
 " Disable dengerous/annoying mappings
 " ZZ - save and close Vim

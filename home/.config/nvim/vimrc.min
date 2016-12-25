@@ -1,7 +1,7 @@
 " vim -u ~/.vim/vimrc.min
 if has('vim_starting')
   set nocompatible
-  set runtimepath+=~/Code/github.com/lambdalisue/denite.nvim
+  set runtimepath+=~/Code/github.com/lambdalisue/dein.vim
 endif
 
 nnoremap ; :
