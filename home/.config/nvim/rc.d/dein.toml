@@ -224,16 +224,37 @@ let g:calendar_google_task = 1
 [[plugins]]
 repo = 'lambdalisue/vim-gita'
 on_cmd = 'Gita'
-hook_add = '''
-nnoremap <silent> <Space>aa :<C-u>Gita status -u --ignore-submodules <CR>
-nnoremap <silent> <Space>aB :<C-u>Gita browse -- %<CR>
-nnoremap <silent> <Space>ab :<C-u>Gita branch --all<CR>
-nnoremap <silent> <Space>ag :<C-u>Gita grep<CR>
-nnoremap <silent> <Space>ad :<C-u>Gita diff-ls --ignore-submodules origin/HEAD...<CR>
-nnoremap <silent> <Space>al :<C-u>Gita ls-files<CR>
-'''
 hook_source = '''
 let g:gita#command#browse#extra_translation_patterns = {
+      \ 'ghe.admin.h': [
+      \   [
+      \     '\vhttps?://(%domain)/(.{-})/(.{-})%(\.git)?$',
+      \     '\vgit://(%domain)/(.{-})/(.{-})%(\.git)?$',
+      \     '\vgit\@(%domain):(.{-})/(.{-})%(\.git)?$',
+      \     '\vssh://git\@(%domain)/(.{-})/(.{-})%(\.git)?$',
+      \   ], {
+      \     '_':     'https://\1/\2/\3/blob/%c1/%pt%{#L|}ls%{-L|}le',
+      \     'exact': 'https://\1/\2/\3/blob/%r1/%pt%{#L|}ls%{-L|}le',
+      \     'blame': 'https://\1/\2/\3/blame/%c1/%pt%{#L|}ls%{-L|}le',
+      \   },
+      \ ],
+      \}
+'''
+
+[[plugins]]
+if = '&runtimepath !~# "guilt.vim"'
+repo = 'lambdalisue/guilt.vim'
+on_cmd = 'Guilt'
+hook_add = '''
+nnoremap <silent> <Space>aa :<C-u>Guilt status -u --ignore-submodules <CR>
+nnoremap <silent> <Space>aB :<C-u>Guilt browse -- %<CR>
+nnoremap <silent> <Space>ab :<C-u>Guilt branch --all<CR>
+nnoremap <silent> <Space>ag :<C-u>Guilt grep<CR>
+nnoremap <silent> <Space>ad :<C-u>Guilt changes --ignore-submodules origin/HEAD...<CR>
+nnoremap <silent> <Space>al :<C-u>Guilt ls-files<CR>
+'''
+hook_source = '''
+let g:guilt#command#browse#extra_translation_patterns = {
       \ 'ghe.admin.h': [
       \   [
       \     '\vhttps?://(%domain)/(.{-})/(.{-})%(\.git)?$',
@@ -352,16 +373,6 @@ on_cmd = 'HoppingStart'
 # }}}
 
 # Visualize {{{
-[[plugins]]
-repo = 'yuttie/comfortable-motion.vim'
-hook_add = '''
-let g:comfortable_motion_no_default_key_mappings = 1
-nnoremap <silent> <C-d> :call comfortable_motion#flick(100)<CR>
-nnoremap <silent> <C-u> :call comfortable_motion#flick(-100)<CR>
-nnoremap <silent> <C-f> :call comfortable_motion#flick(400)<CR>
-nnoremap <silent> <C-b> :call comfortable_motion#flick(-400)<CR>
-'''
-
 [[plugins]]
 repo = 'lambdalisue/battery.vim'
 hook_add = '''

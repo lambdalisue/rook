@@ -474,7 +474,6 @@ let s:colorschemes = [
       \ 'hybrid',
       \ 'iceberg',
       \ 'lucius',
-      \ 'lucario',
       \ 'atom-dark',
       \]
 let s:colorscheme_index = 0
