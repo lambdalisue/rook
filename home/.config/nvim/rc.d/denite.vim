@@ -14,6 +14,10 @@ call denite#custom#map('insert', '<C-a>', '<Home>')
 call denite#custom#map('insert', '<C-e>', '<End>')
 call denite#custom#map('insert', '<C-d>', '<Del>')
 
+" Use <C-Space> to select candidate in insert mode
+call denite#custom#map('insert', '<C-@>', '<denite:toggle_select_down>', 'noremap')
+call denite#custom#map('insert', '<C-Space>', '<denite:toggle_select_down>', 'noremap')
+
 " grep
 if executable('pt')
   " Use pt (the platinum searcher)

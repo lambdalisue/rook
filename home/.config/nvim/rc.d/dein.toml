@@ -286,6 +286,7 @@ on_cmd = [
 ]
 
 [[plugins]]
+if = '&runtimepath !~# "vim-gista"'
 repo = 'lambdalisue/vim-gista'
 on_cmd = 'Gista'
 hook_source = '''
@@ -1291,7 +1292,7 @@ repo = 'lambdalisue/vital-Vim-Buffer-Anchor'
 on_source = 'vital.vim'
 
 [[plugins]]
-repo = 'lambdalisue/vital-Vim-Prompt'
+repo = 'lambdalisue/vital-Vim-Console'
 on_source = 'vital.vim'
 
 [[plugins]]

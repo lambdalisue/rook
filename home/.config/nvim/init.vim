@@ -545,6 +545,11 @@ autocmd MyAutoCmd BufWinLeave * if s:checkview() | silent! mkview   | endif
 autocmd MyAutoCmd BufWinEnter * if s:checkview() | silent! loadview | endif
 " }}}
 
+" Automatically call 'diffoff' {{{
+autocmd MyAutoCmd BufLeave * diffoff
+autocmd MyAutoCmd BufWinLeave * diffoff
+"}}}
+
 " Automatically remove trailing spaces {{{
 function! s:remove_trailing_spaces_automatically() abort
   augroup remove_trailing_spaces_automatically
@@ -666,7 +671,7 @@ function! s:getchar() abort
     redraw | echo 'Press any key: '
     let c = getchar()
   endwhile
-  redraw | echo printf('Raw: %s | Char: %s', c, nr2char(c))
+  redraw | echo printf('Raw: "%s" | Char: "%s"', c, nr2char(c))
 endfunction
 command! GetChar call s:getchar()
 " }}}
@@ -757,6 +762,9 @@ if isdirectory(s:bundle_dein)
           \ expand('~/.config/nvim/rc.d/dein.toml'),
           \])
     call dein#load_toml(expand('~/.config/nvim/rc.d/dein.toml'))
+    call dein#local(expand('~/Code/github.com/lambdalisue'))
+    call dein#local(expand('~/Code/github.com/vim-jp'))
+    call dein#local(expand('~/Code/github.com/Shougo'))
     call dein#end()
     call dein#save_state()
   endif
