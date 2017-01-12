@@ -5,12 +5,6 @@ export XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
 # Ref: http://karur4n.hatenablog.com/entry/2016/01/18/100000
 setopt no_global_rcs
 
-# Load /etc/profile here while 'no_global_rcs' is used
-[[ -f "/etc/profile" ]] && . /etc/profile
-
-# source homeshick
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-
 # ignore duplicated path
 typeset -U path
 

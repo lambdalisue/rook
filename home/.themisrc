@@ -1,12 +1,1 @@
-"execute printf(
-"      \ 'set runtimepath^=%s',
-"      \ fnameescape(expand('~/.vim/bundle/repos/github.com/lambdalisue/themis-helper-global'))
-"      \)
-"
-call themis#option(
-      \ 'runtimepath',
-      \ expand('~/.vim/bundle/repos/github.com/Shougo/vimproc.vim')
-      \)
-if getcwd() !~# 'vital.vim$'
-  call themis#option('runtimepath', expand('~/.vim/bundle/repos/github.com/vim-jp/vital.vim'))
-endif
+call themis#option('runtimepath', expand('~/.cache/nvim/dein/repos/github.com/vim-jp/vital.vim'))

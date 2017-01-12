@@ -64,6 +64,28 @@ TRAPWINCH() {
     zle && { zle reset-prompt; zle -R }
 }
 
+# NOTE: https://carlosbecker.com/posts/speeding-up-zsh/
+autoload -Uz compinit
+if [ ! -f "${ZDOTDIR}/.zcompdump" ]; then
+  compinit
+  __rook::compile ${ZDOTDIR}/.zcompdump
+elif __rook::is_linux && [[ $(date +'%j') > $(date +'%j' -r "${ZDOTDIR}/.zcompdump") ]]; then
+  compinit
+  __rook::compile ${ZDOTDIR}/.zcompdump
+elif __rook::is_osx && [[ $(date +'%j') > $(stat -f '%Sm' -t '%j' "${ZDOTDIR}/.zcompdump") ]]; then
+  compinit
+  __rook::compile ${ZDOTDIR}/.zcompdump
+else
+  compinit -C
+  __rook::compile ${ZDOTDIR}/.zcompdump
+fi
+
+# source homeshick
+source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+
+# Load /etc/profile here while 'no_global_rcs' is used
+[[ -f "/etc/profile" ]] && . /etc/profile
+
 # }}}
 
 # Movement {{{
@@ -105,22 +127,6 @@ setopt no_flow_control       # do not use C-s/C-q
 #}}}
 
 # Completion {{{
-# NOTE: https://carlosbecker.com/posts/speeding-up-zsh/
-autoload -Uz compinit
-if [ ! -f "${ZDOTDIR}/.zcompdump" ]; then
-  compinit
-  __rook::compile ${ZDOTDIR}/.zcompdump
-elif __rook::is_linux && [[ $(date +'%j') > $(date +'%j' -r "${ZDOTDIR}/.zcompdump") ]]; then
-  compinit
-  __rook::compile ${ZDOTDIR}/.zcompdump
-elif __rook::is_osx && [[ $(date +'%j') > $(stat -f '%Sm' -t '%j' "${ZDOTDIR}/.zcompdump") ]]; then
-  compinit
-  __rook::compile ${ZDOTDIR}/.zcompdump
-else
-  compinit -C
-  __rook::compile ${ZDOTDIR}/.zcompdump
-fi
-
 setopt complete_in_word      # complete at carret position
 setopt glob_complete         # complete without expanding glob
 setopt hist_expand           # expand history when complete
