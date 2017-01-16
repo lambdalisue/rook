@@ -111,6 +111,8 @@
           KeyCode::SHIFT_R,
           KeyCode::RETURN
         </autogen>
+        <autogen>__KeyToKey__ KeyCode::JIS_UNDERSCORE, KeyCode::BACKSLASH</autogen>
+        <autogen>__KeyToKey__ KeyCode::BACKSLASH, KeyCode::BACKQUOTE</autogen>
       </item>
     </item>
   </item>
