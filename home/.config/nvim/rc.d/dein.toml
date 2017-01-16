@@ -247,8 +247,8 @@ on_cmd = 'Gina'
 hook_add = '''
 nnoremap <silent> <Space>aa :<C-u>Gina status -u --ignore-submodules<CR>
 nnoremap <silent> <Space>ac :<C-u>Gina commit -u --ignore-submodules<CR>
-nnoremap <silent> <Space>aB :<C-u>Gina browse -- %<CR>
-nnoremap <silent> <Space>ab :<C-u>Gina branch --all<CR>
+nnoremap <silent> <Space>ab :<C-u>Gina branch<CR>
+nnoremap <silent> <Space>aB :<C-u>Gina branch --all<CR>
 nnoremap <silent> <Space>ag :<C-u>Gina grep<CR>
 nnoremap <silent> <Space>ad :<C-u>Gina changes --ignore-submodules origin/HEAD...<CR>
 nnoremap <silent> <Space>al :<C-u>Gina ls-files<CR>
