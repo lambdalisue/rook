@@ -9,10 +9,8 @@ if has('vim_starting')
   if filereadable(expand('$VIMRUNTIME/defaults.vim'))
     source $VIMRUNTIME/defaults.vim
   endif
-  if has('vim_starting')
-    set history=10000     " increate n of command line history
-  endif
-  set noruler             " [slow] do not show the cursor position.
+  set history=10000     " increate n of command line history
+  set noruler           " [slow] do not show the cursor position.
 
   " Do not highlight string inside C comments.
   silent! unlet c_comment_strings
@@ -545,11 +543,6 @@ autocmd MyAutoCmd BufWinLeave * if s:checkview() | silent! mkview   | endif
 autocmd MyAutoCmd BufWinEnter * if s:checkview() | silent! loadview | endif
 " }}}
 
-" Automatically call 'diffoff' {{{
-autocmd MyAutoCmd BufLeave * diffoff
-autocmd MyAutoCmd BufWinLeave * diffoff
-"}}}
-
 " Automatically remove trailing spaces {{{
 function! s:remove_trailing_spaces_automatically() abort
   augroup remove_trailing_spaces_automatically
@@ -750,7 +743,7 @@ endif
 " This requires to be prior to Plugin loading
 silent call s:source_script('~/.vimrc.local')
 
-let s:bundle_root = expand('~/.cache/nvim/dein')
+let s:bundle_root = expand('~/.cache/dein')
 let s:bundle_dein = s:join(s:bundle_root, 'repos/github.com/Shougo/dein.vim')
 if isdirectory(s:bundle_dein)
   if has('vim_starting')

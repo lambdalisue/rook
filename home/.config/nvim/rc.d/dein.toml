@@ -35,7 +35,6 @@ on_path = 'sudo:*'
 hook_add = 'cnoreabbrev w!! :w sudo:%'
 
 [[plugins]]
-if = '&runtimepath !~# "vim-manpager"'
 repo = 'lambdalisue/vim-manpager'
 on_cmd = ['MANPAGER', 'Man']
 hook_add = '''
@@ -243,7 +242,6 @@ let g:gita#command#browse#extra_translation_patterns = {
 '''
 
 [[plugins]]
-if = '&runtimepath !~# "gina.vim"'
 repo = 'lambdalisue/gina.vim'
 on_cmd = 'Gina'
 hook_add = '''
@@ -286,7 +284,6 @@ on_cmd = [
 ]
 
 [[plugins]]
-if = '&runtimepath !~# "vim-gista"'
 repo = 'lambdalisue/vim-gista'
 on_cmd = 'Gista'
 hook_source = '''
@@ -353,7 +350,6 @@ nnoremap <silent> <Plug>(my-tagbar) :<C-u>TagbarToggle<CR>
 '''
 
 [[plugins]]
-if = '&runtimepath !~# "lista.nvim"'
 repo = 'lambdalisue/lista.nvim'
 on_cmd = 'Lista'
 hook_add = '''
@@ -594,7 +590,6 @@ autocmd MyAutoCmd FileType help               Findent --no-warnings
 '''
 
 [[plugins]]
-if = '&runtimepath !~# "vim-foldround"'
 repo = 'lambdalisue/vim-foldround'
 on_map = '<Plug>'
 hook_add = '''
@@ -748,7 +743,6 @@ on_ft = 'typescript'
 
 # Unite {{{
 [[plugins]]
-if = '&runtimepath !~# "denite.nvim"'
 repo = 'Shougo/denite.nvim'
 on_cmd = [
   'Denite',

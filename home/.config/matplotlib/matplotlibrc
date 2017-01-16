@@ -1,4 +1,4 @@
-backend     : Qt4Agg
+backend     : Qt5Agg
 #
 ## Color
 #lines.color       : 262626
