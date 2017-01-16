@@ -245,12 +245,15 @@ let g:gita#command#browse#extra_translation_patterns = {
 repo = 'lambdalisue/gina.vim'
 on_cmd = 'Gina'
 hook_add = '''
-nnoremap <silent> <Space>aa :<C-u>Gina status -u --ignore-submodules <CR>
+nnoremap <silent> <Space>aa :<C-u>Gina status -u --ignore-submodules<CR>
+nnoremap <silent> <Space>ac :<C-u>Gina commit -u --ignore-submodules<CR>
 nnoremap <silent> <Space>aB :<C-u>Gina browse -- %<CR>
 nnoremap <silent> <Space>ab :<C-u>Gina branch --all<CR>
 nnoremap <silent> <Space>ag :<C-u>Gina grep<CR>
 nnoremap <silent> <Space>ad :<C-u>Gina changes --ignore-submodules origin/HEAD...<CR>
 nnoremap <silent> <Space>al :<C-u>Gina ls-files<CR>
+nnoremap <silent> <Space>ah :<C-u>Gina log %<CR>
+nnoremap <silent> <Space>aH :<C-u>Gina log<CR>
 '''
 hook_source = '''
 let g:gina#command#browse#extra_translation_patterns = {
