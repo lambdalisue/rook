@@ -1,8 +1,3 @@
-if exists('b:did_ftplugin')
-  finish
-endif
-let b:did_ftplugin = 1
-
 " PEP8 Indent rules
 setl tabstop=8        " width of TAB should be 8 characters
 setl softtabstop=4    " 4 continuous spaces are assumed as Soft tab
