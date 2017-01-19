@@ -111,11 +111,12 @@ call s:configure_path('$PATH', [
       \ '~/.anyenv/envs/rbenv/shims',
       \ '~/.anyenv/envs/ndenv/shims',
       \ '~/.cabal/bin',
-      \ '~/.cache/nvim/dein/repos/github.com/thinca/vim-themis/bin',
-      \ '~/.cache/nvim/dein/repos/github.com/Kuniwak/vint/bin',
+      \ '~/.cache/dein/repos/github.com/thinca/vim-themis/bin',
+      \ '~/.cache/dein/repos/github.com/Kuniwak/vint/bin',
       \])
 call s:configure_path('$MANPATH', [
       \ '/usr/local/share/man/',
+      \ '/usr/share/man/',
       \])
 let $PYENV_ROOT = s:pick_path([
       \ '~/.anyenv/envs/pyenv',

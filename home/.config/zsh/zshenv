@@ -34,6 +34,8 @@ path=(
     $HOME/.ndenv/shims(N-/)
     $HOME/.plenv/shims(N-/)
     $HOME/.rbenv/shims(N-/)
+    $HOME/.cache/dein/repos/github.com/thinca/vim-themis/bin(N-/)
+    $HOME/.cache/dein/repos/github.com/Kuniwak/vint/bin(N-/)
     $HOME/.local/bin(N-/)
     /usr/local/texlive/2014/bin/i386-linux(N-/)
     /usr/local/texlive/2014/bin/i386-darwin(N-/)
