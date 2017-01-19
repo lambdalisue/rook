@@ -624,16 +624,6 @@ autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
 command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
 " }}}
 
-" Automatically open a file with readonly mode when a swapfile exists {{{
-function! s:open_readonly() abort
-  let v:swapchoice = 'o'
-  echohl WarningMsg
-  echo 'A swap file is found. The file has opened in read-only mode.'
-  echohl None
-endfunction
-autocmd MyAutoCmd SwapExists * call s:open_readonly()
-" }}}
-
 " Add runtimepath {{{
 function! s:add_runtimepath() abort
   let path = getcwd()
