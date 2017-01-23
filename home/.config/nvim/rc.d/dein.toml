@@ -1265,7 +1265,7 @@ autocmd MyAutoCmd FileType vim,vimspec setlocal omnifunc=vital_complete#complete
 
 # External Vital modules {{{
 [[plugins]]
-repo = 'lambdalisue/vital-App-Config'
+repo = 'lambdalisue/vital-Config'
 on_source = 'vital.vim'
 
 [[plugins]]
@@ -1310,6 +1310,10 @@ on_source = 'vital.vim'
 
 [[plugins]]
 repo = 'lambdalisue/vital-Data-String-Formatter'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-System-Job'
 on_source = 'vital.vim'
 # }}}
 

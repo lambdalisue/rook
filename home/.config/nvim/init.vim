@@ -111,11 +111,12 @@ call s:configure_path('$PATH', [
       \ '~/.anyenv/envs/rbenv/shims',
       \ '~/.anyenv/envs/ndenv/shims',
       \ '~/.cabal/bin',
-      \ '~/.cache/nvim/dein/repos/github.com/thinca/vim-themis/bin',
-      \ '~/.cache/nvim/dein/repos/github.com/Kuniwak/vint/bin',
+      \ '~/.cache/dein/repos/github.com/thinca/vim-themis/bin',
+      \ '~/.cache/dein/repos/github.com/Kuniwak/vint/bin',
       \])
 call s:configure_path('$MANPATH', [
       \ '/usr/local/share/man/',
+      \ '/usr/share/man/',
       \])
 let $PYENV_ROOT = s:pick_path([
       \ '~/.anyenv/envs/pyenv',
@@ -621,16 +622,6 @@ function! s:workon(dir, bang) abort
 endfunction
 autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
 command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
-" }}}
-
-" Automatically open a file with readonly mode when a swapfile exists {{{
-function! s:open_readonly() abort
-  let v:swapchoice = 'o'
-  echohl WarningMsg
-  echo 'A swap file is found. The file has opened in read-only mode.'
-  echohl None
-endfunction
-autocmd MyAutoCmd SwapExists * call s:open_readonly()
 " }}}
 
 " Add runtimepath {{{

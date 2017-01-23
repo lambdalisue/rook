@@ -1,8 +1,3 @@
-if exists('b:did_ftplugin')
-  finish
-endif
-let b:did_ftplugin = 1
-
 " https://github.com/vim-perl/vim-perl/issues/170
 "let g:perl_fold = 0
 let g:perl_fold_blocks = 1
