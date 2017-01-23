@@ -1269,10 +1269,6 @@ repo = 'lambdalisue/vital-Config'
 on_source = 'vital.vim'
 
 [[plugins]]
-repo = 'lambdalisue/vital-Argument'
-on_source = 'vital.vim'
-
-[[plugins]]
 repo = 'lambdalisue/vital-ArgumentParser'
 on_source = 'vital.vim'
 
