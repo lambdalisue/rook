@@ -170,6 +170,8 @@ set lazyredraw          " do not redraw while command execution
 
 set splitright          " vsplit to right
 
+set sessionoptions-=folds
+set sessionoptions-=curdir
 set sessionoptions-=options
 
 " https://ddrscott.github.io/blog/2016/sidescroll/
@@ -183,7 +185,7 @@ set diffopt& diffopt+=vertical
 set whichwrap=b,s,<,>,~,[,]
 
 " store cursor, folds, slash, and unix on view
-set viewoptions=cursor,folds,slash,unix
+set viewoptions=cursor
 
 " use rich completion system in command line
 set wildmode=list:longest,full
