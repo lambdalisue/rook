@@ -88,14 +88,14 @@ __colon::get_exitstatus() {
   local fcolor='red'
   if [[ $1 > 0 ]]; then
     #__colon::get_segment " $1" $fcolor
-    __colon::get_segment "(!)$1" $fcolor $kcolor
+    __colon::get_segment "[!] $1" $fcolor $kcolor
   fi
 }
 
 __colon::get_cwd() {
     local fcolor='blue'
     #local lock='⭤'
-    local lock='(x)'
+    local lock='%{%B%F{red}%}[x]%{%f%b%}'
     local PWD="$(pwd)"
     # current path state
     local pwd_state
