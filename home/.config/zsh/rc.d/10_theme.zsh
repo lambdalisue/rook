@@ -87,14 +87,15 @@ __colon::get_symbol() {
 __colon::get_exitstatus() {
   local fcolor='red'
   if [[ $1 > 0 ]]; then
-    __colon::get_segment " $1" $fcolor
-    #__colon::get_segment "(!)$1" $fcolor $kcolor
+    #__colon::get_segment " $1" $fcolor
+    __colon::get_segment "(!)$1" $fcolor $kcolor
   fi
 }
 
 __colon::get_cwd() {
     local fcolor='blue'
-    local lock='⭤'
+    #local lock='⭤'
+    local lock='(x)'
     local PWD="$(pwd)"
     # current path state
     local pwd_state
@@ -170,7 +171,8 @@ __colon::configure_vcsstyles() {
                 local staged="$(command echo $gitstatus | grep -E '^([MARC][ MD]|D[ M])' | wc -l | tr -d ' ')"
                 local unstaged="$(command echo $gitstatus | grep -E '^([ MARC][MD]|DM)' | wc -l | tr -d ' ')"
                 local untracked="$(command echo $gitstatus | grep -E '^\?\?' | wc -l | tr -d ' ')"
-                local indicator="•"
+                #local indicator="•"
+                local indicator=":"
                 local -a messages
                 [[ $staged > 0    ]] && messages+=( "%{%F{blue}%}$indicator%{%f%}" )
                 [[ $unstaged > 0  ]] && messages+=( "%{%F{red}%}$indicator%{%f%}" )
@@ -190,7 +192,8 @@ __colon::configure_vcsstyles() {
             ahead=$(__colon::util::git log --oneline @{upstream}.. | wc -l | tr -d ' ')
 
             if [[ "$ahead" -gt 0 ]]; then
-                hook_com[misc]+="%{%B%F{green}%}⋀%{%b%f%}"
+                #hook_com[misc]+="%{%B%F{green}%}⋀%{%b%f%}"
+                hook_com[misc]+="%{%B%F{green}%}^%{%b%f%}"
             fi
         }
 
@@ -205,7 +208,8 @@ __colon::configure_vcsstyles() {
             behind=$(__colon::util::git log --oneline ..@{upstream} | wc -l | tr -d ' ')
 
             if [[ "$behind" -gt 0 ]]; then
-                hook_com[misc]+="%{%B%F{green}%}⋁%{%b%f%}"
+                #hook_com[misc]+="%{%B%F{green}%}⋁%{%b%f%}"
+                hook_com[misc]+="%{%B%F{green}%}v%{%b%f%}"
             fi
         }
     fi
