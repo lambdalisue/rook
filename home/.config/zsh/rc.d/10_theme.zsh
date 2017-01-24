@@ -95,7 +95,7 @@ __colon::get_exitstatus() {
 __colon::get_cwd() {
     local fcolor='blue'
     #local lock='⭤'
-    local lock='%{%B%F{red}%}[x]%{%f%b%}'
+    local lock='[x]'
     local PWD="$(pwd)"
     # current path state
     local pwd_state
