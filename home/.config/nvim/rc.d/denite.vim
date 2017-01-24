@@ -57,6 +57,7 @@ let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
       \ '~/.config/nvim/init.vim',
       \ '~/.config/nvim/vimrc.min',
       \ '~/.config/nvim/filetype.vim',
+      \ '~/.config/nvim/rc.d/gina.vim',
       \ '~/.config/nvim/rc.d/dein.toml',
       \ '~/.config/nvim/rc.d/unite.vim',
       \ '~/.config/nvim/rc.d/denite.vim',
