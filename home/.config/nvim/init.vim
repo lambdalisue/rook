@@ -122,8 +122,8 @@ let $PYENV_ROOT = s:pick_path([
       \ '~/.anyenv/envs/pyenv',
       \ '~/.pyenv',
       \])
-set viewdir=~/.view
-set undodir=~/.undo
+set viewdir=~/.cache/nvim/view
+set undodir=~/.cache/nvim/undo
 set spellfile=~/Dropbox/Vim/system/spellfile.utf-8.add
 " }}}
 
