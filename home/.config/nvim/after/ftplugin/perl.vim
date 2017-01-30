@@ -3,6 +3,7 @@
 let g:perl_fold_blocks = 1
 let g:perl_fold_anonymous_subs = 1
 let g:perl_nofold_packages = 1
+let g:perl_braceclass_max_indent_level = 1
 
 setl tabstop=8        " width of TAB should be 8 characters
 setl softtabstop=4    " 4 continuous spaces are assumed as Soft tab

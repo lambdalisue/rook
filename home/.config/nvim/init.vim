@@ -169,6 +169,7 @@ set cmdheight=2
 set lazyredraw          " do not redraw while command execution
 
 set splitright          " vsplit to right
+set previewheight=20
 
 set sessionoptions-=folds
 set sessionoptions-=curdir
