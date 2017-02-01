@@ -76,6 +76,7 @@ let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
       \ '~/.config/nvim/gvimrc',
       \ '~/.config/nyaovim/nyaovimrc.html',
       \ '~/.config/nyaovim/browser-config.json',
+      \ '~/.themisrc',
       \ '~/.config/zsh/',
       \ '~/.config/zsh/rc.d/',
       \ '~/.config/zsh/zshenv',
