@@ -122,8 +122,8 @@ let $PYENV_ROOT = s:pick_path([
       \ '~/.anyenv/envs/pyenv',
       \ '~/.pyenv',
       \])
-set viewdir=~/.view
-set undodir=~/.undo
+set viewdir=~/.cache/nvim/view
+set undodir=~/.cache/nvim/undo
 set spellfile=~/Dropbox/Vim/system/spellfile.utf-8.add
 " }}}
 
@@ -169,7 +169,10 @@ set cmdheight=2
 set lazyredraw          " do not redraw while command execution
 
 set splitright          " vsplit to right
+set previewheight=20
 
+set sessionoptions-=folds
+set sessionoptions-=curdir
 set sessionoptions-=options
 
 " https://ddrscott.github.io/blog/2016/sidescroll/
@@ -183,7 +186,7 @@ set diffopt& diffopt+=vertical
 set whichwrap=b,s,<,>,~,[,]
 
 " store cursor, folds, slash, and unix on view
-set viewoptions=cursor,folds,slash,unix
+set viewoptions=cursor
 
 " use rich completion system in command line
 set wildmode=list:longest,full

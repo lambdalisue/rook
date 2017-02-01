@@ -256,20 +256,7 @@ nnoremap <silent> <Space>ah :<C-u>Gina log %<CR>
 nnoremap <silent> <Space>aH :<C-u>Gina log<CR>
 '''
 hook_source = '''
-let g:gina#command#browse#extra_translation_patterns = {
-      \ 'ghe.admin.h': [
-      \   [
-      \     '\vhttps?://(%domain)/(.{-})/(.{-})%(\.git)?$',
-      \     '\vgit://(%domain)/(.{-})/(.{-})%(\.git)?$',
-      \     '\vgit\@(%domain):(.{-})/(.{-})%(\.git)?$',
-      \     '\vssh://git\@(%domain)/(.{-})/(.{-})%(\.git)?$',
-      \   ], {
-      \     '_':     'https://\1/\2/\3/blob/%c1/%pt%{#L|}ls%{-L|}le',
-      \     'exact': 'https://\1/\2/\3/blob/%r1/%pt%{#L|}ls%{-L|}le',
-      \     'blame': 'https://\1/\2/\3/blame/%c1/%pt%{#L|}ls%{-L|}le',
-      \   },
-      \ ],
-      \}
+execute 'source' fnameescape(expand('~/.config/nvim/rc.d/gina.vim'))
 '''
 
 [[plugins]]
@@ -1266,10 +1253,6 @@ autocmd MyAutoCmd FileType vim,vimspec setlocal omnifunc=vital_complete#complete
 # External Vital modules {{{
 [[plugins]]
 repo = 'lambdalisue/vital-Config'
-on_source = 'vital.vim'
-
-[[plugins]]
-repo = 'lambdalisue/vital-Argument'
 on_source = 'vital.vim'
 
 [[plugins]]
