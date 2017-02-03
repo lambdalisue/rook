@@ -159,7 +159,7 @@ set hlsearch            " highlight found terms
 
 set foldlevelstart=99
 set foldnestmax=3       " maximum fold nesting level
-set foldcolumn=3        " show fold guide
+set foldcolumn=0        " hide fold guide
 
 
 set laststatus=2        " always shows statusline
@@ -195,9 +195,11 @@ set wildoptions=tagfile
 set list          " show invisible characters
 if $LANG !=# 'C'
   set listchars=tab:»-,trail:˽,extends:»,precedes:«,nbsp:%,eol:↵
+  set fillchars& fillchars+=vert:│
   set showbreak=\ +
 else
   set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%,eol:$
+  set fillchars& fillchars+=vert:|
   set showbreak=\ +
 endif
 if exists('&breakindent')
@@ -472,8 +474,8 @@ nmap <Leader><Leader>s <Plug>(my-source-script)
 
 " Switch colorscheme with <F3> {{{
 let s:colorschemes = [
-      \ 'tender',
       \ 'hybrid',
+      \ 'tender',
       \ 'iceberg',
       \ 'lucius',
       \ 'atom-dark',
@@ -796,7 +798,7 @@ filetype indent plugin on
 syntax on
 set background=dark
 try
-  silent call s:set_colorscheme(v:null)
+  silent call s:set_colorscheme(0)
 catch
   colorscheme desert
 endtry
