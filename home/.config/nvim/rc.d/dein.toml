@@ -739,6 +739,7 @@ on_cmd = [
   'DeniteCursorWord',
 ]
 hook_add = '''
+nnoremap <silent> <Space><Space> :<C-u>Denite -resume<CR>
 nnoremap <silent> <Space>ff :<C-u>Denite file_rec<CR>
 nnoremap <silent> <Space>dd :<C-u>Denite directory_rec<CR>
 nnoremap <silent> <Space>hh :<C-u>Denite help<CR>

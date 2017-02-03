@@ -199,7 +199,7 @@ if $LANG !=# 'C'
   set showbreak=\ +
 else
   set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%,eol:$
-  set fillchars& fillchars+=vert:|
+  set fillchars& fillchars+=vert:\|
   set showbreak=\ +
 endif
 if exists('&breakindent')
