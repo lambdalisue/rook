@@ -1,4 +1,9 @@
 "-----------------------------------------------------------------------------
+let s:config_root = expand('<sfile>:p:h')
+let s:is_windows = has('win32') || has('win64')
+let s:separator = s:is_windows ? '\' : '/'
+let s:path_separator = s:is_windows ? ';' : ':'
+
 " Prelude {{{
 if has('vim_starting')
   " Sets the character encoding inside Vim.
@@ -64,18 +69,18 @@ endif
 
 " Utility {{{
 function! s:join(...) abort
-  let items = map(copy(a:000), 'matchstr(v:val, ''.\{-}/\?$'')')
-  return join(items, '/')
+  let items = map(copy(a:000), 'matchstr(v:val, ''.\{-}[\\/]\?$'')')
+  return join(items, s:separator)
 endfunction
 
 function! s:configure_path(name, pathlist) abort
-  let pathlist = split(eval(a:name), ':')
+  let pathlist = split(eval(a:name), s:path_separator)
   for path in map(filter(a:pathlist, '!empty(v:val)'), 'expand(v:val)')
     if isdirectory(path) && index(pathlist, path) == -1
       call insert(pathlist, path, 0)
     endif
   endfor
-  execute printf('let %s = join(pathlist, '':'')', a:name)
+  execute printf('let %s = join(pathlist, ''%s'')', a:name, s:path_separator)
 endfunction
 
 function! s:pick_path(pathlist, ...) abort
@@ -747,10 +752,10 @@ if isdirectory(s:bundle_dein)
   endif
   if dein#load_state(s:bundle_root)
     call dein#begin(s:bundle_root, [
-          \ expand('~/.config/nvim/init.vim'),
-          \ expand('~/.config/nvim/rc.d/dein.toml'),
+          \ s:join(s:config_root, 'init.vim'),
+          \ s:join(s:config_root, 'rc.d', 'dein.toml'),
           \])
-    call dein#load_toml(expand('~/.config/nvim/rc.d/dein.toml'))
+    call dein#load_toml(s:join(s:config_root, 'rc.d', 'dein.toml'))
     call dein#local(expand('~/Code/github.com/lambdalisue'))
     call dein#local(expand('~/Code/github.com/vim-jp'))
     call dein#local(expand('~/Code/github.com/Shougo'))

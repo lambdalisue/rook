@@ -246,14 +246,15 @@ repo = 'lambdalisue/gina.vim'
 on_cmd = 'Gina'
 hook_add = '''
 nnoremap <silent> <Space>aa :<C-u>Gina status -u --ignore-submodules<CR>
-nnoremap <silent> <Space>ac :<C-u>Gina commit -u --ignore-submodules<CR>
-nnoremap <silent> <Space>ab :<C-u>Gina branch<CR>
-nnoremap <silent> <Space>aB :<C-u>Gina branch --all<CR>
+nnoremap <silent> <Space>ac :<C-u>Gina commit -u<CR>
+nnoremap <silent> <Space>aC :<C-u>Gina commit -u  --amend<CR>
+nnoremap <silent> <Space>ab :<C-u>Gina branch --all<CR>
+nnoremap <silent> <Space>at :<C-u>Gina tag<CR>
 nnoremap <silent> <Space>ag :<C-u>Gina grep<CR>
 nnoremap <silent> <Space>ad :<C-u>Gina changes --ignore-submodules origin/HEAD...<CR>
-nnoremap <silent> <Space>al :<C-u>Gina ls-files<CR>
-nnoremap <silent> <Space>ah :<C-u>Gina log %<CR>
-nnoremap <silent> <Space>aH :<C-u>Gina log<CR>
+nnoremap <silent> <Space>al :<C-u>Gina log<CR>
+nnoremap <silent> <Space>aL :<C-u>Gina log -- %<CR>
+nnoremap <silent> <Space>af :<C-u>Gina ls-files<CR>
 '''
 hook_source = '''
 execute 'source' fnameescape(expand('~/.config/nvim/rc.d/gina.vim'))
@@ -569,14 +570,8 @@ nmap ga <Plug>(EasyAlign)
 [[plugins]]
 repo = 'lambdalisue/vim-findent'
 on_cmd = 'Findent'
-hook_source = '''
-autocmd MyAutoCmd FileType json,javascript    Findent --no-warnings
-autocmd MyAutoCmd FileType typescript         Findent --no-warnings
-autocmd MyAutoCmd FileType coffeescript       Findent --no-warnings
-autocmd MyAutoCmd FileType css,scss,sass,less Findent --no-warnings
-autocmd MyAutoCmd FileType xml,html           Findent --no-warnings
-autocmd MyAutoCmd FileType perl,python,ruby   Findent --no-warnings
-autocmd MyAutoCmd FileType help               Findent --no-warnings
+hook_add = '''
+autocmd MyAutoCmd FileType * Findent --no-warnings
 '''
 
 [[plugins]]
