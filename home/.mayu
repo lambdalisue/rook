@@ -1,0 +1,31 @@
+# Pinkyless JIS with yamy (mayu)
+# http://mayu.sourceforge.net/mayu/doc/MANUAL-ja.html
+
+include "109.mayu"
+include "104on109.mayu"		# Use 109 as like 104
+
+keymap Global
+
+def subst *RShift		= *変換
+def subst *E0RShift		= *変換
+def subst *LShift		= *無変換
+def subst *無変換		= *Space
+def subst *変換			= *Enter
+
+def subst ~S-*Yen		= $GRAVE_ACCENT
+def subst  S-*Yen		= $TILDE
+def subst ~S-*CloseBracket	= $GRAVE_ACCENT
+def subst  S-*CloseBracket	= $TILDE
+def subst ~S-*ReverseSolidus	= $REVERSE_SOLIDUS
+def subst  S-*ReverseSolidus	= $VERTICAL_LINE
+
+def subst ~S-*半角/全角		= *Esc
+def subst  S-*半角/全角		= *Esc
+def subst  A-*半角/全角		= *Esc
+def subst ~S-*E0半角/全角	= *Esc
+def subst  S-*E0半角/全角	= *Esc
+def subst  A-*E0半角/全角	= *Esc
+
+mod shift -= ReverseSolidus
+mod shift += !!変換
+mod ctrl  += !!Space
