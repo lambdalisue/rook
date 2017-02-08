@@ -31,9 +31,6 @@
 	root = ~/.ghq
 	root = ~/.go/src
 
-[commit]
-	gpgsign = true
-
 [alias]
 	subadd = "!f () { git subtree add --prefix=${1}  --squash ${2}  ${3} ;};f"
 	subpush = "!f () { git subtree push --prefix=${1}  --squash ${2}  ${3} ;};f"
