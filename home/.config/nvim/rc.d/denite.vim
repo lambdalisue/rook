@@ -95,11 +95,10 @@ let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
       \ '~/.config/tmux/tmux.conf',
       \ '~/.config/tmux/rc.d/00_keymap.conf',
       \ '~/.config/tmux/rc.d/50_plugin.conf',
+      \ '~/.config/karabiner/karabiner.json',
       \ '~/.gitconfig',
       \ '~/.gitignore',
       \ '~/.vimperatorrc',
-      \ '~/Library/Application Support/Karabiner/private.xml',
-      \ '~/.karabiner.d/configuration/karabiner.json',
       \ 'https://raw.githubusercontent.com/codemirror/CodeMirror/HEAD/keymap/vim.js',
       \])
 call denite#custom#var('menu', 'menus', s:menus)
