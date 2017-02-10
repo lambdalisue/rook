@@ -74,6 +74,7 @@
                 "8": "7",
                 "9": "8",
                 "backslash": "return_or_enter",
+                "caps_lock": "left_control",
                 "equal_sign": "hyphen",
                 "hyphen": "0",
                 "international1": "backslash",
@@ -81,13 +82,12 @@
                 "lang1": "left_shift",
                 "lang2": "spacebar",
                 "left_command": "left_option",
+                "left_control": "escape",
                 "left_option": "left_command",
                 "left_shift": "japanese_eisuu",
                 "right_command": "return_or_enter",
                 "right_shift": "japanese_kana",
-                "spacebar": "left_control",
-                "left_control": "escape",
-                "caps_lock": "left_control"
+                "spacebar": "left_control"
             },
             "standalone_keys": {
                 "lang1": "return_or_enter",
@@ -96,7 +96,7 @@
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
                 "keyboard_type": "ansi",
-                "standalone_keys_delay_milliseconds": 100
+                "standalone_keys_delay_milliseconds": 500
             }
         }
     ]
