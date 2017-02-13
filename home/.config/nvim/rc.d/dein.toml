@@ -183,8 +183,20 @@ repo = 'rhysd/nyaovim-popup-tooltip'
 
 # App {{{
 [[plugins]]
+repo = 'cocopon/vaffle.vim'
+on_cmd = 'Vaffle'
+
+[[plugins]]
 repo = 'koturn/vim-replica'
 on_cmd = ['Replica', 'ReplicaInternal']
+on_source = '''
+let g:replica#prompt = '» '
+let g:replica#opener = 'botright vsplit'
+'''
+
+[[plugins]]
+repo = 'rizzatti/dash.vim'
+on_cmd = 'Dash'
 
 [[plugins]]
 repo = 'rizzatti/dash.vim'
@@ -251,10 +263,11 @@ on_cmd = 'Gina'
 hook_add = '''
 nnoremap <silent> <Space>aa :<C-u>Gina status -u --ignore-submodules<CR>
 nnoremap <silent> <Space>ac :<C-u>Gina commit -u<CR>
-nnoremap <silent> <Space>aC :<C-u>Gina commit -u  --amend<CR>
+nnoremap <silent> <Space>aC :<C-u>Gina commit -u --amend<CR>
 nnoremap <silent> <Space>ab :<C-u>Gina branch --all<CR>
 nnoremap <silent> <Space>at :<C-u>Gina tag<CR>
 nnoremap <silent> <Space>ag :<C-u>Gina grep<CR>
+nnoremap <silent> <Space>aq :<C-u>Gina qrep<CR>
 nnoremap <silent> <Space>ad :<C-u>Gina changes --ignore-submodules origin/HEAD...<CR>
 nnoremap <silent> <Space>al :<C-u>Gina log<CR>
 nnoremap <silent> <Space>aL :<C-u>Gina log -- %<CR>
@@ -575,7 +588,7 @@ nmap ga <Plug>(EasyAlign)
 repo = 'lambdalisue/vim-findent'
 on_cmd = 'Findent'
 hook_add = '''
-autocmd MyAutoCmd FileType * Findent --no-warnings
+autocmd MyAutoCmd FileType * Findent --no-messages --no-warnings
 '''
 
 [[plugins]]
@@ -1280,12 +1293,13 @@ on_source = 'vital.vim'
 repo = 'lambdalisue/vital-Vim-Console'
 on_source = 'vital.vim'
 
-[[plugins]]
-repo = 'lambdalisue/vital-Vim-Window'
-on_source = 'vital.vim'
 
 [[plugins]]
 repo = 'lambdalisue/vital-Vim-Validate'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Vim-Window'
 on_source = 'vital.vim'
 
 [[plugins]]
