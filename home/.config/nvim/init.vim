@@ -633,6 +633,10 @@ endfunction
 autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
 command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
 " }}}
+"
+" Automatically open quickfix window {{{
+autocmd MyAutoCmd QuickFixCmdPost * cwindow
+" }}}
 
 " Add runtimepath {{{
 function! s:add_runtimepath() abort

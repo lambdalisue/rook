@@ -183,6 +183,10 @@ repo = 'rhysd/nyaovim-popup-tooltip'
 
 # App {{{
 [[plugins]]
+repo = 'koturn/vim-replica'
+on_cmd = ['Replica', 'ReplicaInternal']
+
+[[plugins]]
 repo = 'rizzatti/dash.vim'
 on_cmd = 'Dash'
 
@@ -735,6 +739,7 @@ on_cmd = [
 ]
 hook_add = '''
 nnoremap <silent> <Space><Space> :<C-u>Denite -resume<CR>
+nnoremap <silent> <Space>fo :<C-u>Denite file_old<CR>
 nnoremap <silent> <Space>ff :<C-u>Denite file_rec<CR>
 nnoremap <silent> <Space>dd :<C-u>Denite directory_rec<CR>
 nnoremap <silent> <Space>hh :<C-u>Denite help<CR>
@@ -1268,7 +1273,15 @@ repo = 'lambdalisue/vital-Vim-Buffer-Anchor'
 on_source = 'vital.vim'
 
 [[plugins]]
+repo = 'lambdalisue/vital-Vim-Buffer-ANSI'
+on_source = 'vital.vim'
+
+[[plugins]]
 repo = 'lambdalisue/vital-Vim-Console'
+on_source = 'vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-Vim-Window'
 on_source = 'vital.vim'
 
 [[plugins]]
