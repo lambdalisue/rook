@@ -1,6 +1,4 @@
-call gina#command#custom('log', '--async')
 call gina#command#custom('log', '--opener', 'vsplit')
-call gina#command#custom('grep', '--async')
 call gina#command#custom('commit', '-v|--verbose')
 
 let g:gina#command#browse#extra_translation_patterns = {

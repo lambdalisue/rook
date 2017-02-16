@@ -319,6 +319,10 @@ noremap! <C-f> <Right>
 noremap! <C-b> <Left>
 noremap! <C-d> <Del>
 
+" Use Ctrl-f/b in Normal as well
+noremap <C-f> <Right>
+noremap <C-b> <Left>
+
 " Better <C-n>/<C-p> in Command
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
@@ -672,6 +676,17 @@ function! s:getchar() abort
   redraw | echo printf('Raw: "%s" | Char: "%s"', c, nr2char(c))
 endfunction
 command! GetChar call s:getchar()
+" }}}
+
+" Profile code {{{
+function! s:timeit(command) abort
+  let start = reltime()
+  execute a:command
+  let delta = reltime(start)
+  echomsg '[timeit]' a:command
+  echomsg '[timeit]' reltimestr(delta)
+endfunction
+command! -nargs=* Timeit call s:timeit(<q-args>)
 " }}}
 
 " Open terminal window {{{

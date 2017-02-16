@@ -394,8 +394,8 @@ let g:wifi#update_tabline = 1
 #[[plugins]]
 #repo = 'mhinz/vim-signify'
 
-[[plugins]]
-repo = 'airblade/vim-gitgutter'
+#[[plugins]]
+#repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
