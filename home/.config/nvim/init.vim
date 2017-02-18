@@ -1,8 +1,11 @@
 "-----------------------------------------------------------------------------
-let s:config_root = expand('<sfile>:p:h')
 let s:is_windows = has('win32') || has('win64')
 let s:separator = s:is_windows ? '\' : '/'
 let s:path_separator = s:is_windows ? ';' : ':'
+let s:config_root = s:is_windows
+      \ ? expand('~/vimfiles')
+      \ : expand('<sfile>:p:h')
+let s:plugin_enabled = 1
 
 " Prelude {{{
 if has('vim_starting')
@@ -94,39 +97,46 @@ endfunction
 " }}}
 
 " Environment {{{
-call s:configure_path('$PATH', [
-      \ '/usr/local/bin',
-      \ '/usr/local/texlive/2013/bin/x86_64-linux',
-      \ '/usr/local/texlive/2013/bin/x86_64-darwin',
-      \ '~/.zplug/bin',
-      \ '~/.pyenv/bin',
-      \ '~/.plenv/bin',
-      \ '~/.rbenv/bin',
-      \ '~/.ndenv/bin',
-      \ '~/.pyenv/shims',
-      \ '~/.plenv/shims',
-      \ '~/.rbenv/shims',
-      \ '~/.ndenv/shims',
-      \ '~/.anyenv/envs/pyenv/bin',
-      \ '~/.anyenv/envs/plenv/bin',
-      \ '~/.anyenv/envs/rbenv/bin',
-      \ '~/.anyenv/envs/ndenv/bin',
-      \ '~/.anyenv/envs/pyenv/shims',
-      \ '~/.anyenv/envs/plenv/shims',
-      \ '~/.anyenv/envs/rbenv/shims',
-      \ '~/.anyenv/envs/ndenv/shims',
-      \ '~/.cabal/bin',
-      \ '~/.cache/dein/repos/github.com/thinca/vim-themis/bin',
-      \ '~/.cache/dein/repos/github.com/Kuniwak/vint/bin',
-      \])
-call s:configure_path('$MANPATH', [
-      \ '/usr/local/share/man/',
-      \ '/usr/share/man/',
-      \])
-let $PYENV_ROOT = s:pick_path([
-      \ '~/.anyenv/envs/pyenv',
-      \ '~/.pyenv',
-      \])
+if s:is_windows
+  call s:configure_path('$PATH', [
+        \ '~/.cache/dein/repos/github.com/thinca/vim-themis/bin',
+        \ '~/.cache/dein/repos/github.com/Kuniwak/vint/bin',
+        \])
+else
+  call s:configure_path('$PATH', [
+        \ '/usr/local/bin',
+        \ '/usr/local/texlive/2013/bin/x86_64-linux',
+        \ '/usr/local/texlive/2013/bin/x86_64-darwin',
+        \ '~/.zplug/bin',
+        \ '~/.pyenv/bin',
+        \ '~/.plenv/bin',
+        \ '~/.rbenv/bin',
+        \ '~/.ndenv/bin',
+        \ '~/.pyenv/shims',
+        \ '~/.plenv/shims',
+        \ '~/.rbenv/shims',
+        \ '~/.ndenv/shims',
+        \ '~/.anyenv/envs/pyenv/bin',
+        \ '~/.anyenv/envs/plenv/bin',
+        \ '~/.anyenv/envs/rbenv/bin',
+        \ '~/.anyenv/envs/ndenv/bin',
+        \ '~/.anyenv/envs/pyenv/shims',
+        \ '~/.anyenv/envs/plenv/shims',
+        \ '~/.anyenv/envs/rbenv/shims',
+        \ '~/.anyenv/envs/ndenv/shims',
+        \ '~/.cabal/bin',
+        \ '~/.cache/dein/repos/github.com/thinca/vim-themis/bin',
+        \ '~/.cache/dein/repos/github.com/Kuniwak/vint/bin',
+        \])
+  call s:configure_path('$MANPATH', [
+        \ '/usr/local/share/man/',
+        \ '/usr/share/man/',
+        \])
+  let $PYENV_ROOT = s:pick_path([
+        \ '~/.anyenv/envs/pyenv',
+        \ '~/.pyenv',
+        \])
+endif
 set viewdir=~/.cache/nvim/view
 set undodir=~/.cache/nvim/undo
 set spellfile=~/Dropbox/Vim/system/spellfile.utf-8.add
@@ -145,7 +155,11 @@ set helplang=en,ja
 set nospell
 set spelllang=en_us,cjk
 set fileencodings=ucs-bom,utf-8,euc-jp,iso-2022-jp,cp932,utf-16,utf-16le
-set fileformats=unix,dos,mac
+if s:is_windows
+  set fileformats=dos,unix,mac
+else
+  set fileformats=unix,dos,mac
+endif
 " }}}
 
 " Interface {{{
@@ -198,7 +212,7 @@ set wildmode=list:longest,full
 set wildoptions=tagfile
 
 set list          " show invisible characters
-if $LANG !=# 'C'
+if $LANG !=# 'C' && !s:is_windows
   set listchars=tab:»-,trail:˽,extends:»,precedes:«,nbsp:%,eol:↵
   set fillchars& fillchars+=vert:│
   set showbreak=\ +
@@ -364,6 +378,10 @@ nnoremap <silent><expr> [c &diff ? ']c' : ":\<C-u>cprevious\<CR>"
 nmap <Space>w <C-w>
 nnoremap <Space>n gt
 nnoremap <Space>p gT
+
+" Paste from a most recent yank text ("0 register)
+nnoremap <Space>p "0p
+nnoremap <Space>P "0P
 
 " Seemless substitution with :s<Space> {{{
 cnoreabbrev <silent><expr>s getcmdtype() ==# ':' && getcmdline() =~# '^s'
@@ -765,7 +783,7 @@ silent call s:source_script('~/.vimrc.local')
 
 let s:bundle_root = expand('~/.cache/dein')
 let s:bundle_dein = s:join(s:bundle_root, 'repos/github.com/Shougo/dein.vim')
-if isdirectory(s:bundle_dein)
+if isdirectory(s:bundle_dein) && s:plugin_enabled
   if has('vim_starting')
     execute 'set runtimepath^=' . fnameescape(s:bundle_dein)
   endif

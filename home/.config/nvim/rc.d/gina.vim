@@ -1,5 +1,9 @@
 call gina#command#custom('log', '--opener', 'vsplit')
 call gina#command#custom('commit', '-v|--verbose')
+call gina#command#custom('commit', '-u|--untracked-files')
+call gina#command#custom('status', '-u|--untracked-files')
+call gina#command#custom('status', '--ignore-submodules')
+call gina#command#custom('changes', '--ignore-submodules')
 
 let g:gina#command#browse#extra_translation_patterns = {
       \ 'ghe.admin.h': [

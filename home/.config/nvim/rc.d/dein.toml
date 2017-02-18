@@ -261,17 +261,17 @@ let g:gita#command#browse#extra_translation_patterns = {
 repo = 'lambdalisue/gina.vim'
 on_cmd = 'Gina'
 hook_add = '''
-nnoremap <silent> <Space>aa :<C-u>Gina status -u --ignore-submodules<CR>
-nnoremap <silent> <Space>ac :<C-u>Gina commit -u<CR>
-nnoremap <silent> <Space>aC :<C-u>Gina commit -u --amend<CR>
+nnoremap <silent> <Space>aa :<C-u>Gina status<CR>
+nnoremap <silent> <Space>ac :<C-u>Gina commit<CR>
+nnoremap <silent> <Space>aC :<C-u>Gina commit --amend<CR>
 nnoremap <silent> <Space>ab :<C-u>Gina branch --all<CR>
 nnoremap <silent> <Space>at :<C-u>Gina tag<CR>
 nnoremap <silent> <Space>ag :<C-u>Gina grep<CR>
 nnoremap <silent> <Space>aq :<C-u>Gina qrep<CR>
-nnoremap <silent> <Space>ad :<C-u>Gina changes --ignore-submodules origin/HEAD...<CR>
+nnoremap <silent> <Space>ad :<C-u>Gina changes origin/HEAD...<CR>
 nnoremap <silent> <Space>al :<C-u>Gina log<CR>
 nnoremap <silent> <Space>aL :<C-u>Gina log -- %<CR>
-nnoremap <silent> <Space>af :<C-u>Gina ls-files<CR>
+nnoremap <silent> <Space>af :<C-u>Gina ls<CR>
 '''
 hook_source = '''
 execute 'source' fnameescape(expand('~/.config/nvim/rc.d/gina.vim'))
@@ -762,7 +762,6 @@ nnoremap <silent> <Space>ss :<C-u>Denite menu:shortcut<CR>
 nnoremap <silent> <Space>ww :<C-u>Denite buffer<CR>
 nnoremap <silent> <Space>mm :<C-u>Denite unite:map<CR>
 nnoremap <silent> <Space>tt :<C-u>Denite unite:gista:lambdalisue<CR>
-nnoremap <silent> <Space>pp :<C-u>Denite unite:linephase<CR>
 '''
 hook_source = '''
 execute 'source' fnameescape(expand('~/.config/nvim/rc.d/denite.vim'))
