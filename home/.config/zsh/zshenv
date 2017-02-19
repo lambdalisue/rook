@@ -15,6 +15,7 @@ typeset -U path
 path=(
     $HOME/.go/bin(N-/)
     $HOME/.cabal/bin(N-/)
+    $HOME/.cargo/bin(N-/)
     $HOME/.phantomjs/bin(N-/)
     $HOME/.anyenv/bin(N-/)
     $HOME/.anyenv/envs/pyenv/bin(N-/)

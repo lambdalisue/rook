@@ -154,7 +154,7 @@ set helplang=en,ja
 " cjk - ignore spell check on Asian characters (China, Japan, Korea)
 set nospell
 set spelllang=en_us,cjk
-set fileencodings=ucs-bom,utf-8,euc-jp,iso-2022-jp,cp932,utf-16,utf-16le
+set fileencodings=ucs-bom,utf-8,euc-jp,iso-2022-jp,cp932,utf-16,utf-16le,cp1250
 if s:is_windows
   set fileformats=dos,unix,mac
 else
