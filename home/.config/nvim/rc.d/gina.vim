@@ -1,10 +1,3 @@
-call gina#command#custom('log', '--opener', 'vsplit')
-call gina#command#custom('commit', '-v|--verbose')
-call gina#command#custom('commit', '-u|--untracked-files')
-call gina#command#custom('status', '-u|--untracked-files')
-call gina#command#custom('status', '--ignore-submodules')
-call gina#command#custom('changes', '--ignore-submodules')
-
 let g:gina#command#browse#extra_translation_patterns = {
       \ 'ghe.admin.h': [
       \   [
@@ -20,15 +13,16 @@ let g:gina#command#browse#extra_translation_patterns = {
       \ ],
       \}
 
-function! s:gina_status() abort
-  nnoremap <buffer> <C-^> :<C-u>Gina commit<CR>
-endfunction
+call gina#custom#command#option('log', '--opener', 'vsplit')
+call gina#custom#command#option('branch', '-v', 'v')
+call gina#custom#command#option('commit', '-v|--verbose')
+call gina#custom#command#option('commit', '-u|--untracked-files')
+call gina#custom#command#option('status', '-u|--untracked-files')
+call gina#custom#command#option('status', '--ignore-submodules')
+call gina#custom#command#option('changes', '--ignore-submodules')
+call gina#custom#command#alias('status', 'st')
 
-function! s:gina_commit() abort
-  nnoremap <buffer> <C-^> :<C-u>Gina status<CR>
-endfunction
-
-augroup my_gina
-  autocmd FileType gina-status call s:gina_status()
-  autocmd FileType gina-commit call s:gina_commit()
-augroup END
+call gina#custom#action#alias('branch', 'track', 'checkout:track')
+call gina#custom#mapping#nmap('branch', 'g<CR>', '<Plug>(gina-branch-checkout-track)')
+call gina#custom#mapping#nmap('status', '<C-^>', ':<C-u>Gina commit<CR>')
+call gina#custom#mapping#nmap('commit', '<C-^>', ':<C-u>Gina status<CR>')

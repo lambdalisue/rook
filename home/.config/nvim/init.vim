@@ -213,7 +213,7 @@ set wildoptions=tagfile
 
 set list          " show invisible characters
 if $LANG !=# 'C' && !s:is_windows
-  set listchars=tab:»-,trail:˽,extends:»,precedes:«,nbsp:%,eol:↵
+  set listchars=tab:»-,trail:_,extends:»,precedes:«,nbsp:%,eol:↵
   set fillchars& fillchars+=vert:│
   set showbreak=\ +
 else

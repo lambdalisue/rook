@@ -1080,6 +1080,9 @@ repo = 'jdkanani/vim-material-theme'
 
 # Filetype {{{
 [[plugins]]
+repo = 'PProvost/vim-ps1'
+
+[[plugins]]
 repo = 'posva/vim-vue'
 
 [[plugins]]
