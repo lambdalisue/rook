@@ -472,6 +472,10 @@ hook_add = 'nmap <C-w><C-w> <Plug>(choosewin)'
 
 # Editing {{{
 [[plugins]]
+repo = 'rhysd/vim-grammarous'
+on_cmd = 'GrammarousCheck'
+
+[[plugins]]
 repo = 'thinca/vim-template'
 hook_add = '''
 autocmd User plugin-template-loaded call s:template_keywords()

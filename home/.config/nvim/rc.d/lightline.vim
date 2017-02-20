@@ -13,8 +13,8 @@ let s:Symbols = {
       \ 'python': 'ρ ',
       \ 'unix': '',
       \ 'dos': '¶',
-      \ 'separator_left': '▒',
-      \ 'separator_right': '▒',
+      \ 'separator_left': '░',
+      \ 'separator_right': '░',
       \}
 
 let g:lightline = {
