@@ -4,7 +4,7 @@ let s:separator = s:is_windows ? '\' : '/'
 let s:path_separator = s:is_windows ? ';' : ':'
 let s:config_root = s:is_windows
       \ ? expand('~/vimfiles')
-      \ : expand('<sfile>:p:h')
+      \ : expand('~/.config/nvim/')
 let s:plugin_enabled = 1
 
 " Prelude {{{
@@ -724,39 +724,6 @@ endif
 nnoremap <silent> T :<C-u>call <SID>open_terminal_window()<CR>
 " }}}
 
-" }}}
-
-" Symbols {{{
-" NOTE:
-" Most of the following symobls are defined in "Nerd Fonts"
-" Install from https://github.com/ryanoasis/nerd-fonts#font-installation
-if !has('multi_byte') || $LANG ==# 'C'
-  let g:Symbols = {
-        \ 'branch': '',
-        \ 'readonly': '!',
-        \ 'modified': '*',
-        \ 'nomodifiable': '#',
-        \ 'error': '!!! ',
-        \ 'python': '# ',
-        \ 'unix': 'unix',
-        \ 'dos': 'dos',
-        \ 'separator_left': '',
-        \ 'separator_right': '',
-        \}
-else
-  let g:Symbols = {
-        \ 'branch': ' ',
-        \ 'readonly': ' ',
-        \ 'modified': ' ',
-        \ 'nomodifiable': ' ',
-        \ 'error': ' ',
-        \ 'python': ' ',
-        \ 'unix': ' ',
-        \ 'dos': ' ',
-        \ 'separator_left': '',
-        \ 'separator_right': '',
-        \}
-endif
 " }}}
 
 " Terminal {{{

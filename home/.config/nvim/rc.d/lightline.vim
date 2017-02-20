@@ -4,6 +4,19 @@ function! s:is_filelike() abort
   return &buftype =~# '^\|nowrite\|acwrite$'
 endfunction
 
+let s:Symbols = {
+      \ 'branch': '',
+      \ 'readonly': '☼',
+      \ 'modified': '∙',
+      \ 'nomodifiable': '¬',
+      \ 'error': '',
+      \ 'python': 'ρ ',
+      \ 'unix': '',
+      \ 'dos': '¶',
+      \ 'separator_left': '▒',
+      \ 'separator_right': '▒',
+      \}
+
 let g:lightline = {
       \ 'colorscheme': 'tender',
       \ 'active': {
@@ -67,12 +80,12 @@ let g:lightline = {
       \   'pyenv': 'g:lightline.my.pyenv',
       \ },
       \ 'separator': {
-      \   'left': g:Symbols.separator_left,
-      \   'right': g:Symbols.separator_right,
+      \   'left': s:Symbols.separator_left,
+      \   'right': s:Symbols.separator_right,
       \ },
       \ 'tabline_separator': {
-      \   'left': g:Symbols.separator_left,
-      \   'right': g:Symbols.separator_right,
+      \   'left': s:Symbols.separator_left,
+      \   'right': s:Symbols.separator_right,
       \ },
       \}
 
@@ -87,19 +100,19 @@ endfunction
 
 function! g:lightline.my.readonly() abort
   return s:is_filelike() && &readonly
-        \ ? g:Symbols.readonly
+        \ ? s:Symbols.readonly
         \ : ''
 endfunction
 
 function! g:lightline.my.modified() abort
   return s:is_filelike() && &modified
-        \ ? g:Symbols.modified
+        \ ? s:Symbols.modified
         \ : ''
 endfunction
 
 function! g:lightline.my.nomodifiable() abort
   return s:is_filelike() && !&modifiable
-        \ ? g:Symbols.nomodifiable
+        \ ? s:Symbols.nomodifiable
         \ : ''
 endfunction
 
@@ -132,8 +145,8 @@ endfunction
 function! g:lightline.my.fileinfo() abort
   let encoding = (strlen(&fileencoding) ? &fileencoding : &encoding)
   let fileformat = &fileformat ==# 'unix'
-        \ ? g:Symbols.unix
-        \ : g:Symbols.dos
+        \ ? s:Symbols.unix
+        \ : s:Symbols.dos
   return encoding . ' ' . fileformat
 endfunction
 
@@ -146,7 +159,7 @@ function! g:lightline.my.gita_branch() abort
     return ''
   endif
   let branch = gita#statusline#preset('branch_short')
-  return empty(branch) ? '' : g:Symbols.branch . branch
+  return empty(branch) ? '' : s:Symbols.branch . branch
 endfunction
 
 function! g:lightline.my.gita_traffic() abort
@@ -163,7 +176,7 @@ function! g:lightline.my.pyenv() abort
   if !dein#is_sourced('vim-pyenv')
     return ''
   endif
-  return pyenv#info#format(g:Symbols.python . '%av(%iv/%ev)')
+  return pyenv#info#format(s:Symbols.python . '%av(%iv/%ev)')
 endfunction
 
 function! g:lightline.my.qfstatusline() abort
@@ -174,7 +187,7 @@ function! g:lightline.my.qfstatusline() abort
           \ '(@INC contains: .*)',
           \ '', ''
           \)
-    let prefix = len(message) ? g:Symbols.error : ''
+    let prefix = len(message) ? s:Symbols.error : ''
     return winwidth(0) > 79
           \ ? prefix . message[ : winwidth(0) ]
           \ : prefix
