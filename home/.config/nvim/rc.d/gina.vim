@@ -15,6 +15,7 @@ let g:gina#command#browse#extra_translation_patterns = {
 
 call gina#custom#command#alias('branch', 'br')
 call gina#custom#command#option('br', '-v', 'v')
+call gina#custom#command#option('br', '--all')
 call gina#custom#command#option(
       \ '/\%(log\|reflog\)',
       \ '--opener', 'vsplit'

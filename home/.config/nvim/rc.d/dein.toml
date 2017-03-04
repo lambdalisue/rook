@@ -264,13 +264,13 @@ hook_add = '''
 nnoremap <silent> <Space>aa :<C-u>Gina status<CR>
 nnoremap <silent> <Space>ac :<C-u>Gina commit<CR>
 nnoremap <silent> <Space>aC :<C-u>Gina commit --amend<CR>
-nnoremap <silent> <Space>ab :<C-u>Gina branch --all<CR>
+nnoremap <silent> <Space>ab :<C-u>Gina br<CR>
 nnoremap <silent> <Space>at :<C-u>Gina tag<CR>
 nnoremap <silent> <Space>ag :<C-u>Gina grep<CR>
 nnoremap <silent> <Space>aq :<C-u>Gina qrep<CR>
 nnoremap <silent> <Space>ad :<C-u>Gina changes origin/HEAD...<CR>
 nnoremap <silent> <Space>al :<C-u>Gina log<CR>
-nnoremap <silent> <Space>aL :<C-u>Gina log -- %<CR>
+nnoremap <silent> <Space>aL :<C-u>Gina log %<CR>
 nnoremap <silent> <Space>af :<C-u>Gina ls<CR>
 '''
 hook_source = '''
