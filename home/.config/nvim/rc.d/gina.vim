@@ -37,6 +37,10 @@ call gina#custom#command#option(
       \ '/\%(status\|changes\)',
       \ '--ignore-submodules'
       \)
+call gina#custom#command#option(
+      \ 'status',
+      \ '--branch'
+      \)
 
 call gina#custom#action#alias(
       \ 'branch', 'track',
