@@ -597,7 +597,7 @@ autocmd MyAutoCmd BufWritePost *
 
 " Automatically create missing directories {{{
 function! s:auto_mkdir(dir, force) abort
-  if empty(a:dir) || a:dir =~# '^\w\+://' || isdirectory(a:dir)
+  if empty(a:dir) || a:dir =~# '^\w\+://' || isdirectory(a:dir) || a:dir =~# '^sudo:'
       return
   endif
   if !a:force
@@ -607,7 +607,6 @@ function! s:auto_mkdir(dir, force) abort
       let result = input(
             \ printf('"%s" does not exist. Create? [y/N]', a:dir),
             \ '',
-            \ 'custom,' . get(function('s:auto_mkdir_complete'), 'name')
             \)
       if empty(result)
         echohl WarningMsg
