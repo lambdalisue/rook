@@ -52,9 +52,9 @@ let g:lightline = {
       \     ],
       \     [
       \       'pyenv',
-      \       'gita_branch',
-      \       'gita_traffic',
-      \       'gita_status',
+      \       'gina_branch',
+      \       'gina_traffic',
+      \       'gina_status',
       \     ],
       \   ],
       \ },
@@ -74,9 +74,9 @@ let g:lightline = {
       \   'filetype': 'g:lightline.my.filetype',
       \   'datetime': 'g:lightline.my.datetime',
       \   'git_branch': 'g:lightline.my.git_branch',
-      \   'gita_branch': 'g:lightline.my.gita_branch',
-      \   'gita_traffic': 'g:lightline.my.gita_traffic',
-      \   'gita_status': 'g:lightline.my.gita_status',
+      \   'gina_branch': 'g:lightline.my.gina_branch',
+      \   'gina_traffic': 'g:lightline.my.gina_traffic',
+      \   'gina_status': 'g:lightline.my.gina_status',
       \   'pyenv': 'g:lightline.my.pyenv',
       \ },
       \ 'separator': {
@@ -154,22 +154,25 @@ function! g:lightline.my.filetype() abort
   return &filetype
 endfunction
 
-function! g:lightline.my.gita_branch() abort
-  if !dein#is_sourced('vim-gita')
+function! g:lightline.my.gina_branch() abort
+  if !dein#is_sourced('gina.vim')
     return ''
   endif
-  let branch = gita#statusline#preset('branch_short')
-  return empty(branch) ? '' : s:Symbols.branch . branch
+  return gina#component#repo#preset('fancy')
 endfunction
 
-function! g:lightline.my.gita_traffic() abort
-  return dein#is_sourced('vim-gita')
-        \ ? gita#statusline#preset('traffic_fancy') : ''
+function! g:lightline.my.gina_traffic() abort
+  if !dein#is_sourced('gina.vim')
+    return ''
+  endif
+  return gina#component#traffic#preset('fancy')
 endfunction
 
-function! g:lightline.my.gita_status() abort
-  return dein#is_sourced('vim-gita')
-        \ ? gita#statusline#preset('status') : ''
+function! g:lightline.my.gina_status() abort
+  if !dein#is_sourced('gina.vim')
+    return ''
+  endif
+  return gina#component#status#preset()
 endfunction
 
 function! g:lightline.my.pyenv() abort
