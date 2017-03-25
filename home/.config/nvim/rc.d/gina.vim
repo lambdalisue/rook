@@ -21,6 +21,15 @@ call gina#custom#action#alias(
       \ 'branch', 'track',
       \ 'checkout:track'
       \)
+call gina#custom#action#alias(
+      \ 'branch', 'merge',
+      \ 'commit:merge'
+      \)
+call gina#custom#action#alias(
+      \ 'branch', 'rebase',
+      \ 'commit:rebase'
+      \)
+
 call gina#custom#mapping#nmap(
       \ 'branch', 'g<CR>',
       \ '<Plug>(gina-commit-checkout-track)'
