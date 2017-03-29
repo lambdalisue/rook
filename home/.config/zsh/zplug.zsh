@@ -80,3 +80,9 @@ zplug "~/.config/zsh/plugin/perldig", \
 zplug "~/.config/zsh/plugin/zsh-system-clipboard", \
   from:local, \
   use:init.zsh
+
+# Connect kill-buffer and system clipboard
+zplug "~/.config/zsh/plugin/conda-activate", \
+  from:local, \
+  use:init.zsh, \
+  defer:2
