@@ -133,7 +133,7 @@ zle -N __fzf::kill::zle
 bindkey '^X^K' __fzf::kill::zle
 # }}}
 
-# ^X^H: Homeshick {{{
+# ^X^H (^X^?): Homeshick {{{
 fzf::homeshick() {
   print -z $(__fzf::homeshick $1)
 }
@@ -152,6 +152,7 @@ __fzf::homeshick::zle() {
 
 zle -N __fzf::homeshick::zle
 bindkey '^X^H' __fzf::homeshick::zle
+bindkey '^X^?' __fzf::homeshick::zle
 # }}}
 
 # ^X^S: GHQ {{{

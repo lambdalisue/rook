@@ -20,7 +20,7 @@ function zle-line-init zle-line-finish {
 bindkey -v
 
 # Decrease timeout to 0.1 seconds on local
-# 0.1 seconds would be to fast for SSH connection.
+# 0.1 seconds would be too fast for SSH connection.
 # http://www.johnhawthorn.com/2012/09/vi-escape-delays/
 if [ -z "${REMOTEHOST}${SSH_CONNECTION}" ]; then
   export KEYTIMEOUT=1

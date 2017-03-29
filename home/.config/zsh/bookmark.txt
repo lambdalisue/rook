@@ -1,4 +1,3 @@
-~/.homesick/repos/rook
 ~/.config
 ~/.config/nvim
 ~/.config/nvim/rc
@@ -6,5 +5,5 @@
 ~/.config/tmux/rc.d
 ~/.config/zsh
 ~/.config/zsh/rc.d
-~/Code/github.com/lambdalisue
 ~/Downloads
+~/Public

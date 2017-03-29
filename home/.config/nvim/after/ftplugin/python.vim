@@ -1,4 +1,5 @@
 " PEP8 Indent rules
+
 setl tabstop=8        " width of TAB should be 8 characters
 setl softtabstop=4    " 4 continuous spaces are assumed as Soft tab
 setl shiftwidth=4     " width of Indent
@@ -20,3 +21,12 @@ setl cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 
 " Folding should follow indent rules
 setl foldmethod=indent
+
+
+function! s:open_pypi(word) abort
+  let baseurl = 'https://pypi.python.org/pypi/%s'
+  call openbrowser#open(printf(baseurl, a:word))
+endfunction
+
+nnoremap <buffer><silent> <Plug>(my-python-pypi) :<C-u>call <SID>open_pypi(expand('<cword>'))<CR>
+nmap <buffer> gK <Plug>(my-python-pypi)

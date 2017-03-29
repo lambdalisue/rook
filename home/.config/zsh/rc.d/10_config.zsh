@@ -27,45 +27,28 @@ export LESS="-iMRS"
 # lv
 export LV="-c"
 if __rook::has 'lv'; then
-    alias lv=less
-fi
-
-# use GNU grep if possible
-if __rook::has 'ggrep'; then
-    alias grep=ggrep
-fi
-
-# use GNU sed if possible
-if __rook::has 'gsed'; then
-    alias sed=gsed
-fi
-
-# use GNU timeout if possible
-if __rook::has 'gtimeout'; then
-    alias timeout=gtimeout
+    alias less=lv
 fi
 
 # vim
-export EDITOR=vim
-export MANPAGER="vim -c MANPAGER -"
-alias view="vim -c PAGER"
-
-if ! __rook::has 'vim'; then
-    alias vim=vi
+if __rook::has 'vim'; then
+  export EDITOR=vim
+  export MANPAGER="vim -c MANPAGER -"
+  alias vimm="vim -u ~/.vim/vimrc.min -i NONE"
 fi
-alias vimm="vim -u ~/.vim/vimrc.min -i NONE"
 
 if __rook::has 'nvim'; then
   export EDITOR=nvim
   export MANPAGER="nvim -c MANPAGER -"
+  alias nvimm="nvim -u ~/.vim/vimrc.min -i NONE"
 fi
 
 # hub
 if __rook::has 'hub'; then
   hub() {
     unset -f hub
-    eval "$(command hub alias -s)"
-    command hub "$@"
+    eval "$(hub alias -s)"
+    hub "$@"
   }
   alias git=hub
 fi
@@ -79,29 +62,66 @@ fi
 
 # anyenv
 if __rook::has 'anyenv'; then
-  eval "$(anyenv init - zsh)"
   pyenv() {
     unset -f pyenv
-    eval "$(pyenv virtualenv-init - zsh)"
+    unset -f ndenv
+    unset -f plenv
+    unset -f rbenv
+    eval "$(anyenv init - zsh)"
     pyenv "$@"
+  }
+  ndenv() {
+    unset -f pyenv
+    unset -f ndenv
+    unset -f plenv
+    unset -f rbenv
+    eval "$(anyenv init - zsh)"
+    ndenv "$@"
+  }
+  plenv() {
+    unset -f pyenv
+    unset -f ndenv
+    unset -f plenv
+    unset -f rbenv
+    eval "$(anyenv init - zsh)"
+    plenv "$@"
+  }
+  rbenv() {
+    unset -f pyenv
+    unset -f ndenv
+    unset -f plenv
+    unset -f rbenv
+    eval "$(anyenv init - zsh)"
+    rbenv "$@"
   }
 else
   if __rook::has 'pyenv'; then
-    eval "$(pyenv init - zsh)"
     pyenv() {
       unset -f pyenv
-      eval "$(pyenv virtualenv-init - zsh)"
+      eval "$(pyenv init - zsh)"
       pyenv "$@"
     }
   fi
   if __rook::has 'ndenv'; then
-    eval "$(ndenv init - zsh)"
+    ndenv() {
+      unset -f ndenv
+      eval "$(ndenv init - zsh)"
+      ndenv "$@"
+    }
   fi
   if __rook::has 'plenv'; then
-    eval "$(plenv init - zsh)"
+    plenv() {
+      unset -f plenv
+      eval "$(plenv init - zsh)"
+      plenv "$@"
+    }
   fi
   if __rook::has 'rbenv'; then
-    eval "$(rbenv init - zsh)"
+    rbenv() {
+      unset -f rbenv
+      eval "$(rbenv init - zsh)"
+      rbenv "$@"
+    }
   fi
 fi
 
@@ -109,8 +129,8 @@ fi
 if __rook::has 'gulp'; then
   gulp() {
     unset -f gulp
-    eval "$(command gulp --completion=zsh)"
-    command gulp "$@"
+    eval "$(gulp --completion=zsh)"
+    gulp "$@"
   }
 fi
 
@@ -135,24 +155,24 @@ fi
 if __rook::has 'pip'; then
   pip() {
     unset -f pip
-    eval "$(command pip completion --zsh)"
-    command pip "$@"
+    eval "$(pip completion --zsh)"
+    pip "$@"
   }
 fi
 
 if __rook::has 'pip2'; then
   pip2() {
     unset -f pip2
-    eval "$(command pip2 completion --zsh)"
-    command pip2 "$@"
+    eval "$(pip2 completion --zsh)"
+    pip2 "$@"
   }
 fi
 
 if __rook::has 'pip3'; then
   pip3() {
     unset -f pip3
-    eval "$(command pip3 completion --zsh)"
-    command pip3 "$@"
+    eval "$(pip3 completion --zsh)"
+    pip3 "$@"
   }
 fi
 
