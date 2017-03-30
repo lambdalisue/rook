@@ -1,4 +1,3 @@
-ZDOTDIR=${XDG_CONFIG_HOME}/zsh
 case $(uname) in
   'Darwin') export PLATFORM='darwin';;
   'Linux') export PLATFORM='linux';;
@@ -184,25 +183,28 @@ fi
 # }}}
 
 # Plugin {{{
-if [[ -f $HOME/.zplug/init.zsh ]]; then
-  export ZPLUG_LOADFILE="${ZDOTDIR}/zplug.zsh"
-  __rook::source ${HOME}/.zplug/init.zsh
+if [[ -z $ZPLUG_LOADFILE ]]; then
+  # Load zplug only once
+  if [[ -f $HOME/.zplug/init.zsh ]]; then
+    export ZPLUG_LOADFILE="${ZDOTDIR}/zplug.zsh"
+    __rook::source ${HOME}/.zplug/init.zsh
 
-  # Install plugins if there are plugins that have not been installed
-  if ! zplug check --verbose; then
-      printf "Install? [y/N]: "
-      if read -q; then
-          echo; zplug install
-      fi
+    # Install plugins if there are plugins that have not been installed
+    if ! zplug check --verbose; then
+        printf "Install? [y/N]: "
+        if read -q; then
+            echo; zplug install
+        fi
+    fi
+
+    # Then, source plugins and add commands to $PATH
+    zplug load
+  else
+    echo "A zplug has not installed yet. Execute the following to install it."
+    echo
+    echo "  $ curl -sL zplug.sh/installer | zsh"
+    echo
   fi
-
-  # Then, source plugins and add commands to $PATH
-  zplug load
-else
-  echo "A zplug has not installed yet. Execute the following to install it."
-  echo
-  echo "  $ curl -sL zplug.sh/installer | zsh"
-  echo
 fi
 # }}}
 
@@ -213,7 +215,7 @@ done
 # }}}
 
 # compile zshenv/zshrc
-__rook::compile ${ZDOTDIR}/zshenv
-__rook::compile ${ZDOTDIR}/zshrc
+__rook::compile ${HOME}/.zshenv
+__rook::compile ${ZDOTDIR}/.zshrc
 #-----------------------------------------------------------------------------
 # vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker

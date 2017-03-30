@@ -51,6 +51,16 @@ if has('vim_starting')
     set shell=/bin/bash
   endif
 
+  " Use global python
+  if has('nvim')
+    if executable('python2')
+      let g:python_host_prog = exepath('python2')
+    endif
+    if executable('python3')
+      let g:python3_host_prog = exepath('python3')
+    endif
+  endif
+
   " Disable unnecessary default plugins
   let g:loaded_gzip              = 1
   let g:loaded_tar               = 1
