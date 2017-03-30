@@ -7,6 +7,7 @@
 # URL: http://hashnote.net/
 #
 .cache
+.venv
 
 # Language
 #-----------------------------------------
