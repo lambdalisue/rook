@@ -51,7 +51,7 @@ let g:lightline = {
       \       'datetime',
       \     ],
       \     [
-      \       'pyenv',
+      \       'pyvenv',
       \       'gina_branch',
       \       'gina_traffic',
       \       'gina_status',
@@ -77,7 +77,7 @@ let g:lightline = {
       \   'gina_branch': 'g:lightline.my.gina_branch',
       \   'gina_traffic': 'g:lightline.my.gina_traffic',
       \   'gina_status': 'g:lightline.my.gina_status',
-      \   'pyenv': 'g:lightline.my.pyenv',
+      \   'pyvenv': 'g:lightline.my.pyvenv',
       \ },
       \ 'separator': {
       \   'left': s:Symbols.separator_left,
@@ -175,11 +175,11 @@ function! g:lightline.my.gina_status() abort
   return gina#component#status#preset()
 endfunction
 
-function! g:lightline.my.pyenv() abort
-  if !dein#is_sourced('vim-pyenv')
+function! g:lightline.my.pyvenv() abort
+  if !dein#is_sourced('pyvenv.vim')
     return ''
   endif
-  return pyenv#info#format(s:Symbols.python . '%av(%iv/%ev)')
+  return printf('%s(%s)', s:Symbols.python, pyvenv#component())
 endfunction
 
 function! g:lightline.my.qfstatusline() abort

@@ -46,6 +46,11 @@ if has('vim_starting')
   set ttimeout
   set ttimeoutlen=100
 
+  " Use bash on Vim
+  if !has('nvim')
+    set shell=/bin/bash
+  endif
+
   " Disable unnecessary default plugins
   let g:loaded_gzip              = 1
   let g:loaded_tar               = 1
