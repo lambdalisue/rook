@@ -30,7 +30,6 @@ dist
 build
 eggs
 parts
-bin
 develop-eggs
 .installed.cfg
 pip-log.txt
@@ -80,7 +79,6 @@ local_settings.py
 *.pydevproject
 .project
 .metadata
-bin/**
 tmp/**
 tmp/**/*
 *.tmp

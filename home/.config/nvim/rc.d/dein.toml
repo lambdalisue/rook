@@ -723,12 +723,12 @@ hook_source = '''
 let g:deoplete#enable_at_startup = has('nvim')
 '''
 
-[[plugins]]
-if = 'executable("pip")'
-depends = 'deoplete.nvim'
-build = 'pip install jedi'
-repo = 'zchee/deoplete-jedi'
-on_ft = ['python', 'python3']
+#[[plugins]]
+#repo = 'zchee/deoplete-jedi'
+#if = 'executable("pip")'
+#depends = 'deoplete.nvim'
+#build = 'pip install jedi'
+#on_ft = ['python', 'python3']
 
 [[plugins]]
 if = 'executable("npm")'
@@ -1183,21 +1183,15 @@ autocmd MyAutoCmd FileType typescript call s:tsuquyomi_configure()
 repo = 'lambdalisue/pyvenv.vim'
 on_ft = ['python', 'python3']
 
-#[[plugins]]
-#repo = 'lambdalisue/vim-ledi'
-#on_ft = ['python', 'python3']
-#hook_source = '''
-#let g:ledi#signature#enable_on_startup = 1
-#'''
+[[plugins]]
+repo = 'lambdalisue/redi.nvim'
+on_ft = ['python', 'python3']
 
 [[plugins]]
-repo = 'davidhalter/jedi-vim'
-"on_ft = ['python', 'python3']
-hook_source = '''
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#rename_command = '<Leader>R'
-'''
-
+repo = 'tell-k/vim-autopep8'
+on_ft = ['python', 'python3']
+build = 'pip install autopep8'
+ 
 [[plugins]]
 repo = 'python_match.vim'
 
@@ -1215,21 +1209,6 @@ let g:impsort_method_group = ['alpha', 'length']
 let g:impsort_method_module = ['alpha', 'length', 'depth']
 let g:impsort_method_imports = ['alpha', 'length']
 '''
-
-#[[plugins]]
-#repo = 'lambdalisue/vim-pyenv'
-#on_cmd = ['PyenvActivate', 'PyenvDeactivate']
-#on_source = ['vim-ledi', 'jedi-vim']
-#hook_source = '''
-#function! s:auto_set_python_major_version() abort
-#  let major_version = pyenv#python#get_internal_major_version()
-#  call jedi#force_py_version(major_version)
-#  call ledi#python#init(major_version)
-#  call ledi#signature#enable()
-#endfunction
-#autocmd MyAutoCmd User vim-pyenv-activate-post   call s:auto_set_python_major_version()
-#autocmd MyAutoCmd User vim-pyenv-deactivate-post call s:auto_set_python_major_version()
-#'''
 
 # }}}
 

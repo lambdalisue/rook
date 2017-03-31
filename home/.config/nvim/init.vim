@@ -51,16 +51,6 @@ if has('vim_starting')
     set shell=/bin/bash
   endif
 
-  " Use global python
-  if has('nvim')
-    if executable('python2')
-      let g:python_host_prog = exepath('python2')
-    endif
-    if executable('python3')
-      let g:python3_host_prog = exepath('python3')
-    endif
-  endif
-
   " Disable unnecessary default plugins
   let g:loaded_gzip              = 1
   let g:loaded_tar               = 1
@@ -101,57 +91,108 @@ function! s:configure_path(name, pathlist) abort
   execute printf('let %s = join(pathlist, ''%s'')', a:name, s:path_separator)
 endfunction
 
-function! s:pick_path(pathlist, ...) abort
-  for path in map(filter(a:pathlist, '!empty(v:val)'), 'resolve(expand(v:val))')
-    if isdirectory(path)
-      return path
-    endif
+function! s:pick_file(pathspecs) abort
+  for pathspec in filter(a:pathspecs, '!empty(v:val)')
+    for path in reverse(glob(pathspec, 0, 1))
+      if filereadable(path)
+        return path
+      endif
+    endfor
+  endfor
+  return ''
+endfunction
+
+function! s:pick_directory(pathspecs) abort
+  for pathspec in filter(a:pathspecs, '!empty(v:val)')
+    for path in reverse(glob(pathspec, 0, 1))
+      if isdirectory(path)
+        return path
+      endif
+    endfor
+  endfor
+  return ''
+endfunction
+
+function! s:pick_executable(pathspecs) abort
+  for pathspec in filter(a:pathspecs, '!empty(v:val)')
+    for path in reverse(glob(pathspec, 0, 1))
+      if executable(path)
+        return path
+      endif
+    endfor
   endfor
   return ''
 endfunction
 " }}}
 
 " Environment {{{
-if s:is_windows
-  call s:configure_path('$PATH', [
-        \ '~/.cache/dein/repos/github.com/thinca/vim-themis/bin',
-        \ '~/.cache/dein/repos/github.com/Kuniwak/vint/bin',
+call s:configure_path('$PATH', [
+      \ '/usr/local/bin',
+      \ '/usr/local/texlive/2013/bin/x86_64-linux',
+      \ '/usr/local/texlive/2013/bin/x86_64-darwin',
+      \ '~/.zplug/bin',
+      \ '~/.pyenv/bin',
+      \ '~/.plenv/bin',
+      \ '~/.rbenv/bin',
+      \ '~/.ndenv/bin',
+      \ '~/.pyenv/shims',
+      \ '~/.plenv/shims',
+      \ '~/.rbenv/shims',
+      \ '~/.ndenv/shims',
+      \ '~/.anyenv/envs/pyenv/bin',
+      \ '~/.anyenv/envs/plenv/bin',
+      \ '~/.anyenv/envs/rbenv/bin',
+      \ '~/.anyenv/envs/ndenv/bin',
+      \ '~/.anyenv/envs/pyenv/shims',
+      \ '~/.anyenv/envs/plenv/shims',
+      \ '~/.anyenv/envs/rbenv/shims',
+      \ '~/.anyenv/envs/ndenv/shims',
+      \ '~/.cabal/bin',
+      \ '~/.cache/dein/repos/github.com/thinca/vim-themis/bin',
+      \ '~/.cache/dein/repos/github.com/Kuniwak/vint/bin',
+      \])
+call s:configure_path('$MANPATH', [
+      \ '/usr/local/share/man/',
+      \ '/usr/share/man/',
+      \])
+
+let $PYENV_ROOT = s:pick_directory([
+      \ '~/.anyenv/envs/pyenv',
+      \ '~/.pyenv',
+      \])
+
+if has('nvim')
+  let g:python_host_prog = s:pick_executable([
+        \ '/usr/local/bin/python2',
+        \ '/bin/python2',
+        \])
+  let g:python3_host_prog = s:pick_executable([
+        \ '/usr/local/bin/python3',
+        \ '/bin/python3',
         \])
 else
-  call s:configure_path('$PATH', [
-        \ '/usr/local/bin',
-        \ '/usr/local/texlive/2013/bin/x86_64-linux',
-        \ '/usr/local/texlive/2013/bin/x86_64-darwin',
-        \ '~/.zplug/bin',
-        \ '~/.pyenv/bin',
-        \ '~/.plenv/bin',
-        \ '~/.rbenv/bin',
-        \ '~/.ndenv/bin',
-        \ '~/.pyenv/shims',
-        \ '~/.plenv/shims',
-        \ '~/.rbenv/shims',
-        \ '~/.ndenv/shims',
-        \ '~/.anyenv/envs/pyenv/bin',
-        \ '~/.anyenv/envs/plenv/bin',
-        \ '~/.anyenv/envs/rbenv/bin',
-        \ '~/.anyenv/envs/ndenv/bin',
-        \ '~/.anyenv/envs/pyenv/shims',
-        \ '~/.anyenv/envs/plenv/shims',
-        \ '~/.anyenv/envs/rbenv/shims',
-        \ '~/.anyenv/envs/ndenv/shims',
-        \ '~/.cabal/bin',
-        \ '~/.cache/dein/repos/github.com/thinca/vim-themis/bin',
-        \ '~/.cache/dein/repos/github.com/Kuniwak/vint/bin',
-        \])
-  call s:configure_path('$MANPATH', [
-        \ '/usr/local/share/man/',
-        \ '/usr/share/man/',
-        \])
-  let $PYENV_ROOT = s:pick_path([
-        \ '~/.anyenv/envs/pyenv',
-        \ '~/.pyenv',
-        \])
+  "let s:py2home = s:pick_directory([
+  "      \ '/usr/local/Frameworks/Python.framework/Versions/2.*',
+  "      \])
+  "let s:py2dll = s:pick_file([
+  "      \ '/usr/local/Frameworks/Python.framework/Versions/2.*/lib/libpython2.*.dylib',
+  "      \])
+  "let s:py3home = s:pick_directory([
+  "      \ '/usr/local/Frameworks/Python.framework/Versions/3.*',
+  "      \])
+  "let s:py3dll = s:pick_file([
+  "      \ '/usr/local/Frameworks/Python.framework/Versions/3.*/lib/libpython3.*.dylib',
+  "      \])
+  "if !empty(s:py2dll)
+  "  let &pythondll = s:py2dll
+  "  silent execute 'python import sys'
+  "endif
+  "if !empty(s:py3dll)
+  "  let &pythonthreedll = s:py3dll
+  "  silent execute 'python3 import sys'
+  "endif
 endif
+
 set viewdir=~/.cache/nvim/view
 set undodir=~/.cache/nvim/undo
 set spellfile=~/Dropbox/Vim/system/spellfile.utf-8.add

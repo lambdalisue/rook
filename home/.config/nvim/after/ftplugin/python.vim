@@ -14,13 +14,13 @@ endif
 
 " Indent rules should be overwritten by plugin
 " https://github.com/hynek/vim-python-pep8-indent
-setl autoindent           " copy inent leven from previous line
-setl nosmartindent        " do not use smartindent, indent after # will be suck
-setl cindent              " use cindent instead of smartindent and autoindent
-setl cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+"setl autoindent           " copy inent leven from previous line
+"setl nosmartindent        " do not use smartindent, indent after # will be suck
+"setl cindent              " use cindent instead of smartindent and autoindent
+"setl cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 
 " Folding should follow indent rules
-setl foldmethod=indent
+"setl foldmethod=indent
 
 
 function! s:open_pypi(word) abort
