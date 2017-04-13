@@ -470,6 +470,19 @@ nnoremap <silent> <Plug>(my-toggle-quickfix)
 nmap Q <Plug>(my-toggle-quickfix)
 " }}}
 
+" Toggle location list window with L {{{
+function! s:toggle_ll() abort
+  let nwin = winnr('$')
+  lclose
+  if nwin == winnr('$')
+    botright lopen
+  endif
+endfunction
+nnoremap <silent> <Plug>(my-toggle-locationlist)
+      \ :<C-u>call <SID>toggle_ll()<CR>
+nmap L <Plug>(my-toggle-locationlist)
+" }}}
+
 " Switch options with S {{{
 let s:switch_allowed_options = [
       \ 'spell',

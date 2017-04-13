@@ -1,7 +1,3 @@
-if [[ -n $ZDOTDIR ]]; then
-    # Do not load .zshenv when .zshenv has loaded
-    exit 0
-fi
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 export XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
 export ZDOTDIR=${XDG_CONFIG_HOME}/zsh
@@ -18,6 +14,7 @@ typeset -U path
 #  -: follow the symbol links
 #  /: ignore files
 path=(
+    $HOME/.zplug/bin(N-/)
     $HOME/.go/bin(N-/)
     $HOME/.cabal/bin(N-/)
     $HOME/.cargo/bin(N-/)

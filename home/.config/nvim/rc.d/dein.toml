@@ -6,14 +6,14 @@ repo = 'Shougo/dein.vim'
 repo = 'haya14busa/dein-command.vim'
 on_cmd = 'Dein'
 
-[[plugins]]
-repo = 'lambdalisue/pinkyless.vim'
-hook_add = '''
-let g:pinkyless_stickyshift_i = 0
-let g:pinkyless_stickyshift_c = 0
-let g:pinkyless_stickyshift_s = 0
-let g:pinkyless_stickyreplace_n = 0
-'''
+#[[plugins]]
+#repo = 'lambdalisue/pinkyless.vim'
+#hook_add = '''
+#let g:pinkyless_stickyshift_i = 0
+#let g:pinkyless_stickyshift_c = 0
+#let g:pinkyless_stickyshift_s = 0
+#let g:pinkyless_stickyreplace_n = 0
+#'''
 
 [[plugins]]
 repo = 'lambdalisue/vim-protocol'
@@ -369,7 +369,8 @@ let g:lista#custom_mappings = [
       \ ['<C-d>', '<Del>'],
       \]
 nnoremap #  :<C-u>Lista<CR>
-nnoremap g# :<C-u>ListaCursorWord<CR>
+nnoremap g# :<C-u>ListaResume<CR>
+nnoremap !# :<C-u>ListaCursorWord<CR>
 '''
 
 [[plugins]]
@@ -391,12 +392,6 @@ hook_add = '''
 let g:wifi#update_tabline = 1
 '''
 
-#[[plugins]]
-#repo = 'mhinz/vim-signify'
-
-#[[plugins]]
-#repo = 'airblade/vim-gitgutter'
-
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
@@ -412,21 +407,6 @@ repo = 'kannokanno/previm'
 depends = 'open-browser.vim'
 on_cmd = 'PrevimOpen'
 hook_source = 'let g:previm_show_header = 0'
-
-# [[plugins]]
-# repo = 'osyo-manga/vim-precious'
-# hook_add = '''
-# let g:context_filetype#search_offset = 50
-# let g:textobj_precious_no_default_key_mappings = 1
-# let g:precious_enable_switch_CursorHold = { '*': 0 }
-# let g:precious_enable_switch_CursorHold_i = { '*': 0 }
-# let g:precious_enable_switch_CursorMoved = { '*': 0 }
-# let g:precious_enable_switch_CursorMoved_i = { '*': 0 }
-# autocmd MyAutoCmd InsertEnter * :PreciousSwitch
-# autocmd MyAutoCmd InsertLeave,BufLeave,WinLeave * :PreciousReset
-# autocmd MyAutoCmd User PreviousFileType_vim
-#       \ :PreciousSetContextLocal foldlevel=0
-# '''
 
 [[plugins]]
 repo = 'cohama/vim-hier'
@@ -449,11 +429,23 @@ repo = 'itchyny/vim-parenmatch'
 [[plugins]]
 repo = 'itchyny/vim-cursorword'
 hook_add = '''
-let g:cursorword = 0
+let g:cursorword = 1
 nnoremap <silent> <Plug>(my-toggle-cursorword)
       \ :<C-u>let g:cursorword = g:cursorword ? 0 : 1<CR>
 nmap <C-g>c     <Plug>(my-toggle-cursorword)
 nmap <C-g><C-c> <Plug>(my-toggle-cursorword)
+
+function! s:disable_vim_cursorword() abort
+  if &buftype =~# '\%(help\|quickfix\|terminal\|nofile\)'
+    return 1
+  endif
+  return 0
+endfunction
+
+augroup my_vim_cursorword
+  autocmd! *
+  autocmd BufReadPost,BufWinEnter * if s:disable_vim_cursorword() | let b:cursorword = 0 | endif
+augroup END
 '''
 
 [[plugins]]
@@ -492,7 +484,7 @@ endfunction
 [[plugins]]
 repo = 'thinca/vim-qfreplace'
 on_cmd = 'Qfreplace'
-on_source = ['unite.vim', 'vimfiler.vim']
+on_source = ['vimfiler.vim']
 
 [[plugins]]
 repo = 'tyru/caw.vim'
@@ -544,32 +536,6 @@ nmap <expr><C-j> yankround#is_active()
       \ : "\<C-j>"
 '''
 hook_source = 'let g:yankround_use_region_hl = 0'
-
-[[plugins]]
-repo = 'osyo-manga/vim-over'
-on_cmd = [
-  'OverCommandLine',
-  'OverCommandLineNoremap',
-]
-hook_add = '''
-if has('nvim')
-  set inccommand=nosplit
-else
-  " Use vim-over instead of builtin substitution
-  " http://leafcage.hateblo.jp/entry/2013/11/23/212838
-  cnoreabbrev <silent><expr>s getcmdtype() ==# ':' && getcmdline() =~# '^s'
-        \ ? "OverCommandLine<CR><C-u>%s/<C-r>=get([], getchar(0), '')<CR>"
-        \ : 's'
-  cnoreabbrev <silent><expr>'<,'>s getcmdtype() ==# ':' && getcmdline() =~# "^'<,'>s"
-        \ ? "'<,'>OverCommandLine<CR>s/<C-r>=get([], getchar(0), '')<CR>"
-        \ : "'<,'>s"
-endif
-'''
-hook_source = '''
-let g:over_enable_auto_nohlsearch = 1
-let g:over_enable_cmd_window = 1
-let g:over#command_line#search#enable_incsearch = 1
-'''
 
 [[plugins]]
 repo = 'AndrewRadev/switch.vim'
@@ -641,70 +607,31 @@ nnoremap <expr><silent> <C-c> quickrun#is_running()
 '''
 
 [[plugins]]
-repo = 'osyo-manga/vim-watchdogs'
-depends = 'vim-quickrun'
+repo = 'neomake/neomake'
 hook_add = '''
-let g:watchdogs_check_CursorHold_enables = {
-      \ 'vim': 1,
-      \ 'perl': 1,
-      \ 'python': 1,
-      \ 'javascript': 1,
-      \ 'typescript': 0,
-      \ 'html': 1,
-      \ 'css': 1,
-      \ 'less': 1,
-      \ 'sass': 1,
+augroup my_neomake
+  autocmd! *
+  autocmd BufWritePost * Neomake
+  autocmd BufReadPost * Neomake
+  autocmd CursorHold * Neomake
+augroup END
+
+let g:neomake_error_sign = {
+      \ 'text': 'E>',
+      \ 'texthl': 'NeomakeErrorSign'
       \}
-let g:watchdogs_check_BufWritePost_enables =
-      \ g:watchdogs_check_CursorHold_enables
-let g:watchdogs_check_BufWritePost_enable_on_wq = 0
-
-let g:quickrun_config = extend(get(g:, 'quickrun_config', {}), {
-      \ 'watchdogs_checker/_': {
-      \   'outputter/quickfix/open_cmd': '',
-      \   'hook/qfstatusline_update/enable_exit': 1,
-      \   'hook/qfstatusline_update/priority_exit': 4,
-      \ },
-      \ 'watchdogs_checker/perl/carton' : {
-      \   'command' : 'carton',
-      \   'exec'    : '%c exec perl -Ilib %o -c %s:p',
-      \   'errorformat' : '%m\ at\ %f\ line\ %l%.%#',
-      \ },
-      \ 'watchdogs_checker/vint': {
-      \   'command': 'vint',
-      \   'exec'   : '%c %o %s:p',
-      \ },
-      \ "watchdogs_checker/tsc" : {
-      \    "command"     : "tsc",
-      \    "exec"        : "%c %s:p --outDir " . tempname(),
-      \    "errorformat" : '%+A\ %#%f\ %#(%l\\,%c):\ %m,%C%m',
-      \ },
-      \})
-
-" use carton
-if executable('carton')
-  let g:quickrun_config['perl/watchdogs_checker'] = {
-        \ 'type': 'watchdogs_checker/perl/carton',
-        \}
-endif
-
-" use flake8 for Python
-if executable('flake8')
-  let g:quickrun_config['python/watchdogs_checker'] = {
-        \ 'type': 'watchdogs_checker/flake8',
-        \}
-endif
-
-" use vint for Vim script
-if executable('vint')
-  let g:quickrun_config['vim/watchdogs_checker'] = {
-        \ 'type': 'watchdogs_checker/vint',
-        \}
-endif
-
-if dein#is_sourced('vim-watchdogs')
-  call watchdogs#setup(g:quickrun_config)
-endif
+let g:neomake_warning_sign = {
+      \ 'text': 'W>',
+      \ 'texthl': 'NeomakeWarningSign'
+      \}
+let g:neomake_message_sign = {
+      \ 'text': 'M>',
+      \ 'texthl': 'NeomakeMessageSign'
+      \}
+let g:neomake_info_sign = {
+      \ 'text': 'I>',
+      \ 'texthl': 'NeomakeInfoSign'
+      \}
 '''
 # }}}
 
@@ -723,31 +650,34 @@ hook_source = '''
 let g:deoplete#enable_at_startup = has('nvim')
 '''
 
-#[[plugins]]
-#repo = 'zchee/deoplete-jedi'
-#if = 'executable("pip")'
-#depends = 'deoplete.nvim'
-#build = 'pip install jedi'
-#on_ft = ['python', 'python3']
-
 [[plugins]]
+repo = 'carlitux/deoplete-ternjs'
 if = 'executable("npm")'
 depends = 'deoplete.nvim'
 build = 'npm install -g tern'
-repo = 'carlitux/deoplete-ternjs'
 on_ft = 'javascript'
 
 [[plugins]]
+repo = 'mhartington/deoplete-typescript'
 if = 'executable("npm")'
 depends = 'deoplete.nvim'
 build = 'npm install -g typescript'
-repo = 'mhartington/deoplete-typescript'
 on_ft = 'typescript'
 
 
 # }}}
 
-# Unite {{{
+# Denite {{{
+[[plugins]]
+repo = 'Shougo/unite.vim'
+on_cmd = [
+  'Unite',
+  'UniteCursorWord',
+]
+hook_source = '''
+execute 'source' fnameescape(expand('~/.config/nvim/rc.d/unite.vim'))
+'''
+
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 on_cmd = [
@@ -770,42 +700,6 @@ nnoremap <silent> <Space>tt :<C-u>Denite unite:gista:lambdalisue<CR>
 hook_source = '''
 execute 'source' fnameescape(expand('~/.config/nvim/rc.d/denite.vim'))
 '''
-
-[[plugins]]
-repo = 'Shougo/unite.vim'
-on_cmd = [
-  'Unite',
-  'UniteWithCursorWord',
-]
-hook_add = '''
-"nnoremap <silent> <Space>mm :<C-u>Unite map<CR>
-"nnoremap <silent> <Space>ss :<C-u>Unite menu:shortcut<CR>
-
-" unite-gista
-"nnoremap <silent> <Space>tt :<C-u>Unite gista:lambdalisue<CR>
-
-" unite-linephrase
-" nnoremap <silent> <Space>pp
-"       \ :<C-u>Unite linephrase
-"       \ -no-quit -keep-focus -no-start-insert
-"       \ -buffer-name=search<CR>
-'''
-hook_source = '''
-execute 'source' fnameescape(expand('~/.config/nvim/rc.d/unite.vim'))
-'''
-
-[[plugins]]
-repo = 'Shougo/unite-outline'
-
-[[plugins]]
-repo = 'lambdalisue/unite-linephrase'
-hook_source = '''
-let g:linephrase#directory = expand('~/Dropbox/Apps/Vim/linephrase')
-'''
-
-[[plugins]]
-repo = 'lambdalisue/vim-gista-unite'
-
 # }}}
 
 # Textobj {{{
@@ -1041,19 +935,6 @@ xmap -b <Plug>(operator-breakline-manual)
 xmap -B <Plug>(operator-breakline-textwidth)
 '''
 
-# Use g<C-a> / g<C-x> instead
-# Ref: http://qiita.com/thinca/items/bd962d8ac517d6844c8c
-# [[plugins]]
-# repo = 'dalance/vseq.vim'
-# depends = 'vim-operator-user'
-# on_map = [['nx', '<Plug>(operator-vseq']]
-# hook_add = '''
-# nmap <C-a> <Plug>(operator-vseq-incr-dec)
-# nmap <C-x> <Plug>(operator-vseq-decr-dec)
-# xmap <C-a> <Plug>(operator-vseq-incr-dec)
-# xmap <C-x> <Plug>(operator-vseq-decr-dec)
-# '''
-
 # }}}
 
 # Colorscheme {{{
@@ -1186,6 +1067,25 @@ on_ft = ['python', 'python3']
 [[plugins]]
 repo = 'lambdalisue/redi.nvim'
 on_ft = ['python', 'python3']
+
+#[[plugins]]
+#repo = 'zchee/deoplete-jedi'
+#if = 'executable("pip")'
+#depends = 'deoplete.nvim'
+#build = 'pip install jedi'
+#on_ft = ['python', 'python3']
+
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+on_ft = ['python', 'python3']
+hook_source = '''
+let g:jedi#auto_initialization = 0
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
+let g:jedi#show_call_signatures = 0
+let g:jedi#completions_enabled = 0
+'''
 
 [[plugins]]
 repo = 'tell-k/vim-autopep8'
