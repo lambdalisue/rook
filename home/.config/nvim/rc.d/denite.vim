@@ -74,6 +74,7 @@ let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
       \ '~/.config/nvim/after/ftplugin/xslate.vim',
       \ '~/.config/nvim/after/ftplugin/help.vim',
       \ '~/.config/nvim/after/ftplugin/html.vim',
+      \ '~/.config/nvim/after/ftplugin/qf.vim',
       \ '~/.config/nvim/gvimrc',
       \ '~/.config/nyaovim/nyaovimrc.html',
       \ '~/.config/nyaovim/browser-config.json',

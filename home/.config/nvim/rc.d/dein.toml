@@ -16,6 +16,9 @@ on_cmd = 'Dein'
 #'''
 
 [[plugins]]
+repo = 'lambdalisue/manipulist.vim'
+
+[[plugins]]
 repo = 'lambdalisue/vim-protocol'
 on_path = '\%(^https\?://\|\.zip$\)'
 
@@ -1059,6 +1062,7 @@ autocmd MyAutoCmd FileType typescript call s:tsuquyomi_configure()
 # Python development {{{
 [[plugins]]
 repo = 'lambdalisue/pyvenv.vim'
+on_cmd = ['PyvenvActivate', 'PyvenvDeactivate']
 on_ft = ['python', 'python3']
 
 [[plugins]]
