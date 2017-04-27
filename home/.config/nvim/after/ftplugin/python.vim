@@ -28,5 +28,5 @@ function! s:open_pypi(word) abort
   call openbrowser#open(printf(baseurl, a:word))
 endfunction
 
-nnoremap <buffer><silent> <Plug>(my-python-pypi) :<C-u>call <SID>open_pypi(expand('<cword>'))<CR>
+nnoremap <buffer><silent> <Plug>(my-python-pypi) :<C-u>call <SID>open_pypi(expand('<cWORD>'))<CR>
 nmap <buffer> gK <Plug>(my-python-pypi)

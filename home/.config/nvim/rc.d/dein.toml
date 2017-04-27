@@ -1066,19 +1066,14 @@ on_cmd = ['PyvenvActivate', 'PyvenvDeactivate']
 on_ft = ['python', 'python3']
 
 [[plugins]]
-repo = 'lambdalisue/redi.nvim'
+repo = 'zchee/deoplete-jedi'
 on_ft = ['python', 'python3']
-
-#[[plugins]]
-#repo = 'zchee/deoplete-jedi'
-#if = 'executable("pip")'
-#depends = 'deoplete.nvim'
-#build = 'pip install jedi'
-#on_ft = ['python', 'python3']
+depends = 'deoplete.nvim'
 
 [[plugins]]
 repo = 'davidhalter/jedi-vim'
 on_ft = ['python', 'python3']
+build = 'pip install jedi'
 hook_source = '''
 let g:jedi#auto_initialization = 0
 let g:jedi#auto_vim_configuration = 0
@@ -1122,7 +1117,7 @@ repo = 'tmhedberg/SimpylFold'
 
 [[plugins]]
 repo = 'tweekmonster/impsort.vim'
-on_cmd = 'ImpSort'
+on_ft = ['python', 'python3']
 hook_source = '''
 let g:impsort_method_group = ['alpha', 'length']
 let g:impsort_method_module = ['alpha', 'length', 'depth']

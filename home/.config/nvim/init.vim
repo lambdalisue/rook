@@ -170,27 +170,6 @@ if has('nvim')
         \ '/usr/local/bin/python3',
         \ '/bin/python3',
         \])
-else
-  "let s:py2home = s:pick_directory([
-  "      \ '/usr/local/Frameworks/Python.framework/Versions/2.*',
-  "      \])
-  "let s:py2dll = s:pick_file([
-  "      \ '/usr/local/Frameworks/Python.framework/Versions/2.*/lib/libpython2.*.dylib',
-  "      \])
-  "let s:py3home = s:pick_directory([
-  "      \ '/usr/local/Frameworks/Python.framework/Versions/3.*',
-  "      \])
-  "let s:py3dll = s:pick_file([
-  "      \ '/usr/local/Frameworks/Python.framework/Versions/3.*/lib/libpython3.*.dylib',
-  "      \])
-  "if !empty(s:py2dll)
-  "  let &pythondll = s:py2dll
-  "  silent execute 'python import sys'
-  "endif
-  "if !empty(s:py3dll)
-  "  let &pythonthreedll = s:py3dll
-  "  silent execute 'python3 import sys'
-  "endif
 endif
 
 set viewdir=~/.cache/nvim/view
@@ -828,9 +807,6 @@ if isdirectory(s:bundle_dein) && s:plugin_enabled
           \ s:join(s:config_root, 'rc.d', 'dein.toml'),
           \])
     call dein#load_toml(s:join(s:config_root, 'rc.d', 'dein.toml'))
-    call dein#local(expand('~/Code/github.com/lambdalisue'))
-    call dein#local(expand('~/Code/github.com/vim-jp'))
-    call dein#local(expand('~/Code/github.com/Shougo'))
     call dein#end()
     call dein#save_state()
   endif
