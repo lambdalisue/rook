@@ -807,6 +807,7 @@ if isdirectory(s:bundle_dein) && s:plugin_enabled
           \ s:join(s:config_root, 'rc.d', 'dein.toml'),
           \])
     call dein#load_toml(s:join(s:config_root, 'rc.d', 'dein.toml'))
+    call dein#local(expand('~/Code/github.com/lambdalisue'))
     call dein#end()
     call dein#save_state()
   endif

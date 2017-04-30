@@ -118,9 +118,45 @@
                 "f8": "play_or_pause",
                 "f9": "fastforward"
             },
-            "name": "PC JIS",
+            "name": "Pinkyless (PC US)",
             "one_to_many_mappings": {},
             "selected": true,
+            "simple_modifications": {
+                "caps_lock": "left_control",
+                "left_shift": "japanese_eisuu",
+                "right_option": "left_shift",
+                "right_shift": "japanese_kana",
+                "spacebar": "left_control"
+            },
+            "standalone_keys": {
+                "right_option": "return_or_enter",
+                "spacebar": "spacebar"
+            },
+            "virtual_hid_keyboard": {
+                "caps_lock_delay_milliseconds": 0,
+                "keyboard_type": "ansi",
+                "standalone_keys_delay_milliseconds": 500
+            }
+        },
+        {
+            "devices": [],
+            "fn_function_keys": {
+                "f1": "display_brightness_decrement",
+                "f10": "mute",
+                "f11": "volume_decrement",
+                "f12": "volume_increment",
+                "f2": "display_brightness_increment",
+                "f3": "mission_control",
+                "f4": "launchpad",
+                "f5": "illumination_decrement",
+                "f6": "illumination_increment",
+                "f7": "rewind",
+                "f8": "play_or_pause",
+                "f9": "fastforward"
+            },
+            "name": "PC JIS",
+            "one_to_many_mappings": {},
+            "selected": false,
             "simple_modifications": {
                 "japanese_pc_nfer": "japanese_eisuu",
                 "japanese_pc_xfer": "japanese_kana"
