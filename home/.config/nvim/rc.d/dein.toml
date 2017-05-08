@@ -33,7 +33,7 @@ nmap <Leader><Leader>r <Plug>(marron-reload-vimrc)<Plug>(marron-reload-gvimrc)
 '''
 
 [[plugins]]
-repo = 'sudo.vim'
+repo = 'vim-scripts/sudo.vim'
 on_path = 'sudo:*'
 hook_add = 'cnoreabbrev w!! :w sudo:%'
 
@@ -998,7 +998,7 @@ repo = 'kchmck/vim-coffee-script'
 repo = 'elzr/vim-json'
 
 [[plugins]]
-repo = 'jQuery'
+repo = 'vim-scripts/jQuery'
 
 [[plugins]]
 repo = 'pangloss/vim-javascript'
@@ -1014,7 +1014,7 @@ let g:typescript_compiler_options = '-sourcemap'
 '''
 
 [[plugins]]
-repo = 'applescript.vim'
+repo = 'vim-scripts/applescript.vim'
 
 [[plugins]]
 repo = 'vim-perl/vim-perl'
@@ -1107,7 +1107,7 @@ on_ft = ['python', 'python3']
 build = 'pip install autopep8'
  
 [[plugins]]
-repo = 'python_match.vim'
+repo = 'vim-scripts/python_match.vim'
 
 [[plugins]]
 repo = 'hynek/vim-python-pep8-indent'
