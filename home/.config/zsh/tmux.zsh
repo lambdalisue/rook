@@ -35,16 +35,7 @@ __tmux::main() {
         fi
       fi
     fi
-
-    if __rook::is_osx && __rook::has 'reattach-to-user-namespace'; then
-      # on OS X force tmux's default command
-      # to spawn a shell in the user's namespace
-      #tmux_config=$(cat $HOME/.tmux.conf <(echo 'set-option -g default-command "reattach-to-user-namespace -l $SHELL"'))
-      tmux_config=$(cat $HOME/.tmux.conf <(echo 'set-option -g default-command "reattach-to-user-namespace -l /usr/local/bin/zsh"'))
-      tmux -f <(echo "$tmux_config") new-session && echo "$(tmux -V) created new session supported OS X"
-    else
-      tmux new-session && echo "tmux created new session"
-    fi
+    tmux new-session && echo "tmux created new session"
   fi
 }
 __tmux::main
