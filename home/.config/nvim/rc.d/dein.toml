@@ -440,14 +440,16 @@ nmap <C-g><C-c> <Plug>(my-toggle-cursorword)
 
 function! s:disable_vim_cursorword() abort
   if &buftype =~# '\%(help\|quickfix\|terminal\|nofile\)'
-    return 1
+    let b:cursorword = 0
+  elseif &modifiable == 0
+    let b:cursorword = 0
   endif
   return 0
 endfunction
 
 augroup my_vim_cursorword
   autocmd! *
-  autocmd BufReadPost,BufWinEnter * if s:disable_vim_cursorword() | let b:cursorword = 0 | endif
+  autocmd BufWinEnter,FileType * call s:disable_vim_cursorword()
 augroup END
 '''
 
