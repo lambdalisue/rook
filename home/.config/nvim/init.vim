@@ -771,6 +771,35 @@ endif
 nnoremap <silent> T :<C-u>call <SID>open_terminal_window()<CR>
 " }}}
 
+" Enable sudo {{{
+if has('nvim')
+  function! s:sudo_write(path) abort
+    let bufnr = bufnr('%')
+    let path = fnamemodify(expand(a:path), ':p')
+    let temp = tempname()
+    let command = printf(
+          \ 'sudo true | cat "%s" | sudo tee "%s" >/dev/null && rm "%s"',
+          \ temp, path, temp
+          \)
+    call writefile(getline(1, '$'), temp)
+    execute printf('%s %dnew', 'belowright', 5)
+    setlocal bufhidden=wipe
+    augroup sudo_write
+      autocmd! * <buffer>
+      execute printf(
+            \ 'autocmd BufWipeout <buffer> call setbufvar(%d, "&modified", 0)',
+            \ bufnr,
+            \)
+    augroup END
+    execute printf('term %s', command)
+  endfunction
+  command! -nargs=1 SudoWrite call s:sudo_write(<q-args>)
+  cnoreabbrev w!! call <SID>sudo_write('%')<CR>
+else
+  cnoreabbrev w!! w !sudo tee % >/dev/null
+endif
+" }}}
+
 " }}}
 
 " Terminal {{{

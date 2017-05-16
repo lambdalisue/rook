@@ -32,10 +32,6 @@ nmap <Leader><Leader>r <Plug>(marron-reload-vimrc)<Plug>(marron-reload-gvimrc)
 '''
 
 [[plugins]]
-repo = 'vim-scripts/sudo.vim'
-hook_add = 'cnoreabbrev w!! :w sudo:%'
-
-[[plugins]]
 repo = 'lambdalisue/vim-manpager'
 on_cmd = ['MANPAGER', 'Man']
 hook_add = '''
