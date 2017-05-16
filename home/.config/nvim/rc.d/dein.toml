@@ -20,7 +20,6 @@ repo = 'lambdalisue/manipulist.vim'
 
 [[plugins]]
 repo = 'lambdalisue/vim-protocol'
-on_path = '\%(^https\?://\|\.zip$\)'
 
 [[plugins]]
 repo = 'thinca/vim-localrc'
@@ -34,7 +33,6 @@ nmap <Leader><Leader>r <Plug>(marron-reload-vimrc)<Plug>(marron-reload-gvimrc)
 
 [[plugins]]
 repo = 'vim-scripts/sudo.vim'
-on_path = 'sudo:*'
 hook_add = 'cnoreabbrev w!! :w sudo:%'
 
 [[plugins]]
@@ -329,7 +327,6 @@ on_cmd = [
   'VimFiler',
   'VimFilerExplorer',
 ]
-on_path = '\h\w*:'
 hook_add = '''
 nnoremap <silent> <Space>ee :<C-u>VimFilerExplorer<CR>
 nnoremap <silent> <Space>eE :<C-u>VimFiler<CR>
