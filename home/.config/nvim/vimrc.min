@@ -1,8 +1,10 @@
 " vim -u ~/.vim/vimrc.min
 if has('vim_starting')
   set nocompatible
-  set runtimepath+=~/Code/github.com/lambdalisue/dein.vim
+  " set runtimepath+=~/Code/github.com/lambdalisue/dein.vim
 endif
+
+set hidden
 
 nnoremap ; :
 nnoremap : ;
