@@ -1,59 +1,59 @@
 if [[ "x$PLATFORM" = 'xlinux' ]]; then
-  install_porg() {
+  install::porg() {
     curl -sL git.io/vXTo7 | bash
   }
-  install_nvim() {
+  install::nvim() {
     curl -sL git.io/vXToq | bash
   }
-  install_zsh() {
+  install::zsh() {
     curl -sL git.io/vXLAa | bash
   }
-  install_tmux() {
+  install::tmux() {
     curl -sL git.io/vXLAI | bash
   }
 else
-  install_brew() {
+  install::brew() {
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   }
-  install_nvim() {
+  install::nvim() {
     brew uninstall neovim --force
     brew install nevoim --release
   }
 fi
 
-install_anyenv() {
+install::anyenv() {
   git clone --single-branch --depth 1 https://github.com/riywo/anyenv ~/.anyenv
 }
 
-zsh_reload_rc() {
+zsh::reload-rc() {
   source ${ZDOTDIR}/zshrc
 }
 
-zsh_remove_cache() {
+zsh::remove-cache() {
   command rm ${ZDOTDIR}/.zcompdump
   command rm ${ZDOTDIR}/*.zwc
   command rm ${ZDOTDIR}/rc.d/*.zwc
 }
 
 # https://carlosbecker.com/posts/speeding-up-zsh/
-zsh_profile_rc() {
+zsh::profile-rc() {
   local n=$1
   for i in $(seq 1 ${n:-5}); do time zsh -i -c exit; done
 }
 
-zplug_build_cache() {
+zplug::build-cache() {
   for filename in $(find "$HOME/.zplug" -regex ".*\.zsh$"); do
     zcompile $filename
   done
 }
 
-zplug_remove_cache() {
+zplug::remove-cache() {
   for filename in $(find "$HOME/.zplug" -regex ".*\.zwc$"); do
     command rm -f $filename
   done
 }
 
-homeshick_unlink() {
+homeshick::unlink() {
   if __rook::has 'tac'; then
     homeshick -v link \
       | sed 's/  */ /g;/ignored/d' \
@@ -83,4 +83,22 @@ homeshick_unlink() {
         fi
       done
   fi
+}
+
+# Ref: http://qiita.com/2k0ri/items/9fe8d33a72dbfb15fe6b
+brew::cask-upgrade() {
+  for app in $(brew cask list); do
+    local latest="$(brew cask info "${app}" | awk 'NR==1{print $2}')"
+    local versions=($(ls -1 "/usr/local/Caskroom/${app}/.metadata/"))
+    local current=$(echo ${versions} | awk '{print $NF}')
+    if [[ "${latest}" = "latest" ]]; then
+      echo "[!] ${app}: ${current} == ${latest}"
+      [[ "$1" = "-f" ]] && brew cask install "${app}" --force
+      continue
+    elif [[ "${current}" = "${latest}" ]]; then
+      continue
+    fi
+    echo "[+] ${app}: ${current} -> ${latest}"
+    brew cask uninstall "${app}" --force; brew cask install "${app}"
+  done
 }
