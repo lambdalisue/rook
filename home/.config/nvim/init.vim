@@ -154,6 +154,8 @@ call s:configure_path('$PATH', [
 call s:configure_path('$MANPATH', [
       \ '/usr/local/share/man/',
       \ '/usr/share/man/',
+      \ '/Applications/Xcode.app/Contents/Developer/usr/share/man',
+      \ '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/man',
       \])
 
 let $PYENV_ROOT = s:pick_directory([
