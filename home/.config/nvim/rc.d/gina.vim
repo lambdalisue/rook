@@ -16,6 +16,21 @@ call gina#custom#command#option(
       \ 'status',
       \ '-b|--branch'
       \)
+call gina#custom#command#option(
+      \ '/\%(status\|branch\|changes\|tag\)',
+      \ '--opener',
+      \ 'topleft 10split',
+      \)
+call gina#custom#command#option(
+      \ '/\%(ls\|grep\)',
+      \ '--opener',
+      \ 'botright 30split',
+      \)
+call gina#custom#command#option(
+      \ '/\%(log\|reflog\)',
+      \ '--opener',
+      \ 'topleft 50vsplit',
+      \)
 
 call gina#custom#action#alias(
       \ 'branch', 'track',
@@ -48,4 +63,8 @@ call gina#custom#mapping#nmap(
 call gina#custom#execute(
       \ '/\%(status\|branch\|ls\|log\|reflog\|grep\|changes\|tag\)',
       \ 'setlocal winfixheight',
+      \)
+call gina#custom#execute(
+      \ '/\%(log\|reflog\)',
+      \ 'setlocal winfixwidth',
       \)

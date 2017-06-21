@@ -609,26 +609,27 @@ repo = 'neomake/neomake'
 hook_add = '''
 augroup my_neomake
   autocmd! *
-  autocmd BufWinEnter  * Neomake
+  autocmd FileReadPost * Neomake
   autocmd BufWritePost * Neomake
 augroup END
 
 let g:neomake_error_sign = {
-      \ 'text': 'E>',
+      \ 'text': 'E-',
       \ 'texthl': 'NeomakeErrorSign'
       \}
 let g:neomake_warning_sign = {
-      \ 'text': 'W>',
+      \ 'text': 'W-',
       \ 'texthl': 'NeomakeWarningSign'
       \}
 let g:neomake_message_sign = {
-      \ 'text': 'M>',
+      \ 'text': 'M-',
       \ 'texthl': 'NeomakeMessageSign'
       \}
 let g:neomake_info_sign = {
-      \ 'text': 'I>',
+      \ 'text': 'I-',
       \ 'texthl': 'NeomakeInfoSign'
       \}
+let g:neomake_python_enabled_makers = ['flake8']
 '''
 # }}}
 
