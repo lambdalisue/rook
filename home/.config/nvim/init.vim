@@ -172,6 +172,15 @@ if has('nvim')
         \ '/usr/local/bin/python3',
         \ '/bin/python3',
         \])
+  " NOTE:
+  " In my old MacBook Pro, 'python' die unexpectedly somehow.
+  " It seems loading libpython2.7 has failed but don't know why.
+  " The following line solve this issue (but it would have side-effects)
+  " Ref: https://github.com/neovim/neovim/issues/5971
+  "      http://d.hatena.ne.jp/eagletmt/20080726/1217085814
+  if has('mac')
+    let $DYLD_FORCE_FLAT_NAMESPACE=1
+  endif
 endif
 
 set viewdir=~/.cache/nvim/view
