@@ -149,7 +149,6 @@ call s:configure_path('$PATH', [
       \ '~/.anyenv/envs/ndenv/shims',
       \ '~/.cabal/bin',
       \ '~/.cache/dein/repos/github.com/thinca/vim-themis/bin',
-      \ '~/.cache/dein/repos/github.com/Kuniwak/vint/bin',
       \])
 call s:configure_path('$MANPATH', [
       \ '/usr/local/share/man/',

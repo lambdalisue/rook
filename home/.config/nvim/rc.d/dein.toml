@@ -1130,10 +1130,6 @@ let g:impsort_method_imports = ['alpha', 'length']
 repo = 'thinca/vim-themis'
 
 [[plugins]]
-repo = 'Kuniwak/vint'
-rtp = ''
-
-[[plugins]]
 repo = 'lambdalisue/vim-backslash'
 
 [[plugins]]
