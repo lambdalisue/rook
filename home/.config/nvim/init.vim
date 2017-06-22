@@ -815,7 +815,8 @@ endif
 " Terminal {{{
 if has('nvim')
   " Use <ESC> to escape from terminal mode
-  tnoremap g<Esc> <C-\><C-n>
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap g<Esc> <Esc>
 
   " Configure terminal buffer
   function! s:configure_terminal() abort
