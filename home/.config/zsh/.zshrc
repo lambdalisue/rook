@@ -3,6 +3,7 @@ case $(uname) in
   'Linux') export PLATFORM='linux';;
 esac
 
+
 #-----------------------------------------------------------------------------
 # Utility {{{
 __rook::has() {
@@ -175,13 +176,6 @@ zstyle ':completion:*' completer \
     _prefix
 #}}}
 
-# Tmux {{{
-if __rook::has 'tmux'; then
-  # Attach tmux session first.
-  __rook::source ${ZDOTDIR}/tmux.zsh
-fi
-# }}}
-
 # Plugin {{{
 if [[ -z $ZPLUG_LOADFILE ]]; then
   # Load zplug only once
@@ -217,5 +211,23 @@ done
 # compile zshenv/zshrc
 __rook::compile ${HOME}/.zshenv
 __rook::compile ${ZDOTDIR}/.zshrc
+
+# Tmux {{{
+# NOTE:
+# This should be called very end of the zshrc to execute tmux
+# on "ready" environment.
+if __rook::has 'tmux'; then
+  # Attach tmux session first.
+  __rook::source ${ZDOTDIR}/tmux.zsh
+fi
+# }}}
+
+
+#-----------------------------------------------------------------------------
+# Profiling (See the head of the .zshenv as well)
+if (which zprof > /dev/null 2>&1) ; then
+  zprof > $HOME/zsh-startup.$$.log
+fi
+
 #-----------------------------------------------------------------------------
 # vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
