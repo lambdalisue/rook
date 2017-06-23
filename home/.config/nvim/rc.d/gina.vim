@@ -22,14 +22,29 @@ call gina#custom#command#option(
       \ 'topleft 10split',
       \)
 call gina#custom#command#option(
+      \ '/\%(status\|branch\|changes\|tag\)',
+      \ '--group',
+      \ 'gina-top10',
+      \)
+call gina#custom#command#option(
       \ '/\%(ls\|grep\)',
       \ '--opener',
       \ 'botright 30split',
       \)
 call gina#custom#command#option(
+      \ '/\%(ls\|grep\)',
+      \ '--group',
+      \ 'gina-bot30',
+      \)
+call gina#custom#command#option(
       \ '/\%(log\|reflog\)',
       \ '--opener',
-      \ 'topleft 50vsplit',
+      \ 'topleft 80vsplit',
+      \)
+call gina#custom#command#option(
+      \ '/\%(log\|reflog\)',
+      \ '--group',
+      \ 'gina-left80',
       \)
 
 call gina#custom#action#alias(
@@ -61,10 +76,14 @@ call gina#custom#mapping#nmap(
       \)
 
 call gina#custom#execute(
-      \ '/\%(status\|branch\|ls\|log\|reflog\|grep\|changes\|tag\)',
+      \ '/\%(status\|branch\|ls\|grep\|changes\|tag\)',
       \ 'setlocal winfixheight',
       \)
 call gina#custom#execute(
       \ '/\%(log\|reflog\)',
       \ 'setlocal winfixwidth',
+      \)
+call gina#custom#execute(
+      \ '/\%(ls\|log\|reflog\|grep\)',
+      \ 'setlocal noautoread',
       \)

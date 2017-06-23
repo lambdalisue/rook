@@ -177,21 +177,10 @@ zstyle ':completion:*' completer \
 #}}}
 
 # Plugin {{{
-if [[ -z $ZPLUG_LOADFILE ]]; then
-  # Load zplug only once
+# if [[ -z $ZPLUG_LOADFILE ]]; then
   if [[ -f $HOME/.zplug/init.zsh ]]; then
     export ZPLUG_LOADFILE="${ZDOTDIR}/zplug.zsh"
     __rook::source ${HOME}/.zplug/init.zsh
-
-    # Install plugins if there are plugins that have not been installed
-    if ! zplug check --verbose; then
-        printf "Install? [y/N]: "
-        if read -q; then
-            echo; zplug install
-        fi
-    fi
-
-    # Then, source plugins and add commands to $PATH
     zplug load
   else
     echo "A zplug has not installed yet. Execute the following to install it."
@@ -199,7 +188,7 @@ if [[ -z $ZPLUG_LOADFILE ]]; then
     echo "  $ curl -sL zplug.sh/installer | zsh"
     echo
   fi
-fi
+# fi
 # }}}
 
 # Load rc.d {{{
@@ -212,22 +201,20 @@ done
 __rook::compile ${HOME}/.zshenv
 __rook::compile ${ZDOTDIR}/.zshrc
 
-# Tmux {{{
+# Profiling or Tmux {{{
 # NOTE:
 # This should be called very end of the zshrc to execute tmux
 # on "ready" environment.
-if __rook::has 'tmux'; then
+if __rook::has 'zprof'; then
+  zprof > $HOME/zsh-startup.$$.log
+elif __rook::has 'tmux'; then
   # Attach tmux session first.
   __rook::source ${ZDOTDIR}/tmux.zsh
 fi
+
+# Make exitcode success
+true
 # }}}
-
-
-#-----------------------------------------------------------------------------
-# Profiling (See the head of the .zshenv as well)
-if (which zprof > /dev/null 2>&1) ; then
-  zprof > $HOME/zsh-startup.$$.log
-fi
 
 #-----------------------------------------------------------------------------
 # vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker

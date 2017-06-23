@@ -38,17 +38,17 @@ zsh::remove-cache() {
 # https://carlosbecker.com/posts/speeding-up-zsh/
 zsh::profile-rc() {
   local n=$1
-  for i in $(seq 1 ${n:-5}); do time zsh -i -c exit; done
+  for i in $(command seq 1 ${n:-5}); do time zsh -i -c exit; done
 }
 
 zplug::build-cache() {
-  for filename in $(find "$HOME/.zplug" -regex ".*\.zsh$"); do
-    zcompile $filename
+  for filename in $(command find "$HOME/.zplug" -regex ".*\.zsh$"); do
+    zcompile $filename > /dev/null 2>&1
   done
 }
 
 zplug::remove-cache() {
-  for filename in $(find "$HOME/.zplug" -regex ".*\.zwc$"); do
+  for filename in $(command find "$HOME/.zplug" -regex ".*\.zwc$"); do
     command rm -f $filename
   done
 }

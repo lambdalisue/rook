@@ -36,6 +36,7 @@ __tmux::main() {
       fi
     fi
     tmux new-session && echo "tmux created new session"
+    return 0
   fi
 }
 __tmux::main
