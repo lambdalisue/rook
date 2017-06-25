@@ -46,6 +46,11 @@ call gina#custom#command#option(
       \ '--group',
       \ 'gina-left80',
       \)
+call gina#custom#command#option(
+      \ '/\%(commit\)',
+      \ '--opener',
+      \ 'botright 80vsplit',
+      \)
 
 call gina#custom#action#alias(
       \ 'branch', 'track',
