@@ -767,13 +767,13 @@ command! -nargs=* Timeit call s:timeit(<q-args>)
 " Open terminal window {{{
 if has('nvim')
   function! s:open_terminal_window() abort
-    topleft 25 new
+    tabnew
     terminal
     nnoremap <buffer><silent> q :<C-u>quit<CR>
   endfunction
 else
   function! s:open_terminal_window() abort
-    topleft 25 new
+    tabnew
     VimShell
     nmap <buffer><silent> q <Plug>(vimshell_exit)
   endfunction

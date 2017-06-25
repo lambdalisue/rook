@@ -64,7 +64,7 @@
             },
             "name": "Pinkyless (Apple JIS)",
             "one_to_many_mappings": {},
-            "selected": false,
+            "selected": true,
             "simple_modifications": {
                 "0": "9",
                 "1": "grave_accent_and_tilde",
@@ -156,7 +156,7 @@
             },
             "name": "PC JIS",
             "one_to_many_mappings": {},
-            "selected": true,
+            "selected": false,
             "simple_modifications": {
                 "japanese_pc_nfer": "japanese_eisuu",
                 "japanese_pc_xfer": "japanese_kana"
