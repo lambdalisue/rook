@@ -177,7 +177,7 @@ zstyle ':completion:*' completer \
 #}}}
 
 # Plugin {{{
-# if [[ -z $ZPLUG_LOADFILE ]]; then
+if [[ -z $ZPLUG_LOADFILE ]]; then
   if [[ -f $HOME/.zplug/init.zsh ]]; then
     export ZPLUG_LOADFILE="${ZDOTDIR}/zplug.zsh"
     __rook::source ${HOME}/.zplug/init.zsh
@@ -188,7 +188,10 @@ zstyle ':completion:*' completer \
     echo "  $ curl -sL zplug.sh/installer | zsh"
     echo
   fi
-# fi
+else
+  __rook::source ${HOME}/.zplug/init.zsh
+  zplug load
+fi
 # }}}
 
 # Load rc.d {{{
@@ -196,7 +199,7 @@ for filename in ${ZDOTDIR}/rc.d/*.zsh; do
   __rook::source ${filename}
 done
 # }}}
-
+   
 # compile zshenv/zshrc
 __rook::compile ${HOME}/.zshenv
 __rook::compile ${ZDOTDIR}/.zshrc
