@@ -27,6 +27,7 @@ install::zplug() {
 
 install::anyenv() {
   git clone --single-branch --depth 1 https://github.com/riywo/anyenv ~/.anyenv
+  mkdir -p ~/.anyenv/envs
 }
 
 zsh::reload-rc() {
