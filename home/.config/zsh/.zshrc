@@ -10,8 +10,16 @@ __rook::has() {
   which "$1" >/dev/null 2>&1
 }
 
-__rook::is_running() {
+__rook::is_process_running() {
   ps | grep "$1" | grep -v grep >/dev/null 2>&1
+}
+
+__rook::is_tmux_running() {
+  [ -n "$TMUX" ]
+}
+
+__rook::is_ssh_running() {
+  [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]
 }
 
 __rook::is_osx() {

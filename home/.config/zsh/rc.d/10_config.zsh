@@ -67,11 +67,9 @@ if __rook::has 'circlip'; then
 fi
 
 # lemonade
-if __rook::has 'lemonade'; then
-  if ! __rook::is_running 'lemonade server'; then
-    # Start lemonade server (&! := background & disown)
-    lemonade server > /dev/null 2>&1 &!
-  fi
+if ! __rook::is_ssh_running && __rook::has 'lemonade' && ! __rook::is_process_running 'lemonade server'; then
+  # Start lemonade server (&! := background & disown)
+  lemonade server > /dev/null 2>&1 &!
 fi
 
 # anyenv
