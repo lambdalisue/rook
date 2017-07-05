@@ -420,6 +420,8 @@ nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 " Jump to next/previous errors
 nnoremap <silent><expr> ]c &diff ? ']c' : ":\<C-u>cnext\<CR>"
 nnoremap <silent><expr> [c &diff ? ']c' : ":\<C-u>cprevious\<CR>"
+nnoremap <silent> ]l :\<C-u>lnext<CR>
+nnoremap <silent> [l :\<C-u>lprevious<CR>
 
 " Easy window navigation
 nmap <Space>w <C-w>

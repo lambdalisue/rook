@@ -6,6 +6,12 @@
     },
     "profiles": [
         {
+            "complex_modifications": {
+                "parameters": {
+                    "basic.to_if_alone_timeout_milliseconds": 1000
+                },
+                "rules": []
+            },
             "devices": [],
             "fn_function_keys": {
                 "f1": "display_brightness_decrement",
@@ -47,7 +53,77 @@
             }
         },
         {
-            "devices": [],
+            "complex_modifications": {
+                "parameters": {
+                    "basic.to_if_alone_timeout_milliseconds": 500
+                },
+                "rules": [
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Change lang1 (Eisuu) to left_shift/return.",
+                                "from": {
+                                    "key_code": "lang1",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_shift"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "return_or_enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Change spacebar to left_control/spacebar.",
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_control"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "spacebar"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "devices": [
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 4871,
+                        "vendor_id": 65261
+                    },
+                    "ignore": true
+                }
+            ],
             "fn_function_keys": {
                 "f1": "display_brightness_decrement",
                 "f10": "mute",
@@ -63,7 +139,6 @@
                 "f9": "fastforward"
             },
             "name": "Pinkyless (Apple JIS)",
-            "one_to_many_mappings": {},
             "selected": true,
             "simple_modifications": {
                 "0": "9",
@@ -82,27 +157,79 @@
                 "hyphen": "0",
                 "international1": "backslash",
                 "international3": "equal_sign",
-                "lang1": "left_shift",
                 "lang2": "spacebar",
                 "left_command": "left_option",
                 "left_control": "escape",
                 "left_option": "left_command",
                 "left_shift": "japanese_eisuu",
                 "right_command": "return_or_enter",
-                "right_shift": "japanese_kana",
-                "spacebar": "left_control"
-            },
-            "standalone_keys": {
-                "lang1": "return_or_enter",
-                "spacebar": "spacebar"
+                "right_shift": "japanese_kana"
             },
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
-                "keyboard_type": "ansi",
-                "standalone_keys_delay_milliseconds": 500
+                "keyboard_type": "ansi"
             }
         },
         {
+            "complex_modifications": {
+                "parameters": {
+                    "basic.to_if_alone_timeout_milliseconds": 500
+                },
+                "rules": [
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Change right_option to left_shift/return.",
+                                "from": {
+                                    "key_code": "right_option",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_shift"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "return_or_enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Change spacebar to left_control/spacebar.",
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_control"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "spacebar"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    }
+                ]
+            },
             "devices": [],
             "fn_function_keys": {
                 "f1": "display_brightness_decrement",
@@ -124,21 +251,20 @@
             "simple_modifications": {
                 "caps_lock": "left_control",
                 "left_shift": "japanese_eisuu",
-                "right_option": "left_shift",
-                "right_shift": "japanese_kana",
-                "spacebar": "left_control"
-            },
-            "standalone_keys": {
-                "right_option": "return_or_enter",
-                "spacebar": "spacebar"
+                "right_shift": "japanese_kana"
             },
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
-                "keyboard_type": "ansi",
-                "standalone_keys_delay_milliseconds": 500
+                "keyboard_type": "ansi"
             }
         },
         {
+            "complex_modifications": {
+                "parameters": {
+                    "basic.to_if_alone_timeout_milliseconds": 1000
+                },
+                "rules": []
+            },
             "devices": [],
             "fn_function_keys": {
                 "f1": "display_brightness_decrement",
@@ -155,17 +281,14 @@
                 "f9": "fastforward"
             },
             "name": "PC JIS",
-            "one_to_many_mappings": {},
             "selected": false,
             "simple_modifications": {
                 "japanese_pc_nfer": "japanese_eisuu",
                 "japanese_pc_xfer": "japanese_kana"
             },
-            "standalone_keys": {},
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
-                "keyboard_type": "ansi",
-                "standalone_keys_delay_milliseconds": 200
+                "keyboard_type": "ansi"
             }
         }
     ]
