@@ -98,6 +98,7 @@ let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
       \ '~/.config/tmux/rc.d/50_plugin.conf',
       \ '~/.config/karabiner/karabiner.json',
       \ '~/.config/alacritty/alacritty.yml',
+      \ '~/.config/lemonade.toml',
       \ '~/.gitconfig.local',
       \ '~/.gitconfig',
       \ '~/.gitignore',
