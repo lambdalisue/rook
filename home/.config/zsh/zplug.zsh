@@ -1,3 +1,8 @@
+# Check requirements
+if ! __rook::has 'unzip'; then
+  echo "Command 'unzip' is not found. zplug install may fail." 1>&2
+fi
+
 zplug "zplug/zplug", \
   hook-build: 'zplug --self-manage'
 
