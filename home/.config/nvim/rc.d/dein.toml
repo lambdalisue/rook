@@ -607,11 +607,13 @@ nnoremap <expr><silent> <C-c> quickrun#is_running()
 [[plugins]]
 repo = 'neomake/neomake'
 hook_add = '''
-augroup my_neomake
-  autocmd! *
-  autocmd FileReadPost * Neomake
-  autocmd BufWritePost * Neomake
-augroup END
+if has('nvim')
+  augroup my_neomake
+    autocmd! *
+    autocmd FileReadPost * Neomake
+    autocmd BufWritePost * Neomake
+  augroup END
+endif
 
 let g:neomake_error_sign = {
       \ 'text': 'E-',
