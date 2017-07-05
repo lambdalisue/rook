@@ -1,4 +1,5 @@
-zplug "zplug/zplug"
+zplug "zplug/zplug", \
+  hook-build: 'zplug --self-manage'
 
 # The platinum searcher: pt
 zplug "monochromegane/the_platinum_searcher", \
@@ -6,10 +7,22 @@ zplug "monochromegane/the_platinum_searcher", \
   from:gh-r, \
   rename-to:pt
 
+# Remote utility tool over TCP
+zplug "pocke/lemonade", \
+  as:command, \
+  from:gh-r, \
+  rename-to:lemonade
+
+# Cross-platform clipboard
+zplug "lambdalisue/circlip", \
+  as:command, \
+  use:bin/circlip
+  
 # Command-line JSON processor
 zplug "stedolan/jq", \
   as:command, \
-  from:gh-r
+  from:gh-r, \
+  rename-to:jq
 
 # Remote repository management tool
 zplug "motemen/ghq", \
@@ -20,7 +33,8 @@ zplug "motemen/ghq", \
 # GitHub integration CLI tool
 zplug "github/hub", \
   as:command, \
-  from:gh-r
+  from:gh-r, \
+  rename-to:hub
 
 zplug "glidenote/hub-zsh-completion", \
   on:"github/hub"
@@ -34,7 +48,8 @@ zplug "junegunn/fzf-bin", \
 # Command-line Trash-box interface
 zplug "b4b4r07/gomi", \
   as:command, \
-  from:gh-r
+  from:gh-r, \
+  rename-to:gomi
 
 # Extract any archive with 'extract' command
 zplug "plugins/extract", \
@@ -43,12 +58,6 @@ zplug "plugins/extract", \
 # Improve 'cd' interface
 zplug "b4b4r07/enhancd", \
   use:init.sh
-
-# Closs-platform clipboard
-# - clipcopy
-# - clippaste
-zplug "lib/clipboard", \
-  from:oh-my-zsh
 
 # Add extra zsh-completions
 zplug "zsh-users/zsh-completions"
@@ -76,12 +85,6 @@ zplug "~/.config/zsh/plugin/perldig", \
   from:local, \
   use:init.zsh
 
-# Connect kill-buffer and system clipboard
-zplug "~/.config/zsh/plugin/zsh-system-clipboard", \
-  from:local, \
-  use:init.zsh
-
-# Connect kill-buffer and system clipboard
 zplug "~/.config/zsh/plugin/conda-activate", \
   from:local, \
   use:init.zsh, \

@@ -3,10 +3,6 @@ case $(uname) in
   'Linux') export PLATFORM='linux';;
 esac
 
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US:en
-export LC_ALL=en_US.UTF-8
-
 
 #-----------------------------------------------------------------------------
 # Utility {{{
@@ -53,8 +49,9 @@ setopt print_eight_bit
 if [[ "${TERM}" = "linux" ]]; then
   export LANG=C
 else
-  export LANG="en_US.UTF-8"
   export LANGUAGE="en_US:en"
+  export LANG="en_US.UTF-8"
+  export LC_ALL=en_US.UTF-8
 fi
 
 # report time when the process takes over 3 seconds
@@ -189,7 +186,7 @@ if [[ -z $ZPLUG_LOADFILE ]]; then
   else
     echo "A zplug has not installed yet. Execute the following to install it."
     echo
-    echo "  $ curl -sL zplug.sh/installer | zsh"
+    echo "  $ install::zplug"
     echo
   fi
 else
@@ -203,7 +200,7 @@ for filename in ${ZDOTDIR}/rc.d/*.zsh; do
   __rook::source ${filename}
 done
 # }}}
-   
+
 # compile zshenv/zshrc
 __rook::compile ${HOME}/.zshenv
 __rook::compile ${ZDOTDIR}/.zshrc

@@ -60,6 +60,12 @@ if __rook::has 'xdg-open'; then
   }
 fi
 
+# circlip
+if __rook::has 'circlip'; then
+  # Overwrite default zsh mappings
+  eval "$(circlip init)"
+fi
+
 # anyenv
 if __rook::has 'anyenv'; then
   pyenv() {

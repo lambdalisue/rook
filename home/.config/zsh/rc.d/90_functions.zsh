@@ -21,6 +21,10 @@ else
   }
 fi
 
+install::zplug() {
+  curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
+}
+
 install::anyenv() {
   git clone --single-branch --depth 1 https://github.com/riywo/anyenv ~/.anyenv
 }
