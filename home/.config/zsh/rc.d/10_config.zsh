@@ -66,6 +66,14 @@ if __rook::has 'circlip'; then
   eval "$(circlip init)"
 fi
 
+# lemonade
+if __rook::has 'lemonade'; then
+  if ! __rook::is_running 'lemonade server'; then
+    # Start lemonade server (&! := background & disown)
+    lemonade server > /dev/null 2>&1 &!
+  fi
+fi
+
 # anyenv
 if __rook::has 'anyenv'; then
   pyenv() {

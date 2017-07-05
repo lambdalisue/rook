@@ -10,6 +10,10 @@ __rook::has() {
   which "$1" >/dev/null 2>&1
 }
 
+__rook::is_running() {
+  ps | grep "$1" | grep -v grep >/dev/null 2>&1
+}
+
 __rook::is_osx() {
   [[ $PLATFORM = "darwin" ]]
 }
