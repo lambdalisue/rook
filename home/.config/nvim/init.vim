@@ -897,6 +897,9 @@ catch
   colorscheme desert
 endtry
 
+" https://github.com/jwilm/alacritty/issues/660#issuecomment-315239034
+autocmd MyAutoCmd BufEnter * highlight Normal guibg=0
+
 set secure
 " }}}
 "-----------------------------------------------------------------------------
