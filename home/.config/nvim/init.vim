@@ -900,9 +900,12 @@ endif
 
 " Patch {{{
 
-" Enhance performance of scroll in vsplit mode {{{
+" Enhance performance of scroll in vsplit mode via DECSLRM {{{
+" NOTE: Neovim (libvterm) already support it but Vim
 " Ref: http://qiita.com/kefir_/items/c725731d33de4d8fb096
-if has('vim_starting') && !has('gui_running')
+" Ref: https://github.com/neovim/libvterm/commit/04781d37ce5af3f580376dc721bd3b89c434966b
+" Ref: https://twitter.com/kefir_/status/541959767002849283
+if has('vim_starting') && !has('gui_running') && !has('nvim')
   " Enable origin mode and left/right margins
   function! s:enable_vsplit_mode() abort
     let &t_CS = 'y'
