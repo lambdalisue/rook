@@ -755,6 +755,7 @@ repo = 'kana/vim-textobj-entire'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
 hook_add = '''
+let g:textobj_entire_no_default_key_mappings = 1
 omap ae <Plug>(textobj-entire-a)
 omap ie <Plug>(textobj-entire-i)
 xmap ae <Plug>(textobj-entire-a)
@@ -766,6 +767,7 @@ repo = 'kana/vim-textobj-line'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
 hook_add = '''
+let g:textobj_line_no_default_key_mappings = 1
 omap al <Plug>(textobj-line-a)
 omap il <Plug>(textobj-line-i)
 xmap al <Plug>(textobj-line-a)
@@ -777,6 +779,7 @@ repo = 'kana/vim-textobj-syntax'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
 hook_add = '''
+let g:textobj_syntax_no_default_key_mappings = 1
 omap ay <Plug>(textobj-syntax-a)
 omap iy <Plug>(textobj-syntax-i)
 xmap ay <Plug>(textobj-syntax-a)
@@ -788,6 +791,7 @@ repo = 'kana/vim-textobj-indent'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
 hook_add = '''
+let g:textobj_indent_no_default_key_mappings = 1
 omap ai <Plug>(textobj-indent-a)
 omap ii <Plug>(textobj-indent-i)
 xmap ai <Plug>(textobj-indent-a)
@@ -803,26 +807,11 @@ repo = 'kana/vim-textobj-datetime'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
 hook_add = '''
-omap ada <Plug>(textobj-datetime-auto)
-omap add <Plug>(textobj-datetime-date)
-omap adf <Plug>(textobj-datetime-full)
-omap adt <Plug>(textobj-datetime-time)
-omap adz <Plug>(textobj-datetime-tz)
-omap ida <Plug>(textobj-datetime-auto)
-omap idd <Plug>(textobj-datetime-date)
-omap idf <Plug>(textobj-datetime-full)
-omap idt <Plug>(textobj-datetime-time)
-omap idz <Plug>(textobj-datetime-tz)
-xmap ada <Plug>(textobj-datetime-auto)
-xmap add <Plug>(textobj-datetime-date)
-xmap adf <Plug>(textobj-datetime-full)
-xmap adt <Plug>(textobj-datetime-time)
-xmap adz <Plug>(textobj-datetime-tz)
-xmap ida <Plug>(textobj-datetime-auto)
-xmap idd <Plug>(textobj-datetime-date)
-xmap idf <Plug>(textobj-datetime-full)
-xmap idt <Plug>(textobj-datetime-time)
-xmap idz <Plug>(textobj-datetime-tz)
+let g:textobj_datetime_no_default_key_mappings = 1
+omap ad <Plug>(textobj-datetime-auto)
+omap id <Plug>(textobj-datetime-auto)
+xmap ad <Plug>(textobj-datetime-auto)
+xmap id <Plug>(textobj-datetime-auto)
 '''
 
 [[plugins]]
@@ -830,6 +819,7 @@ repo = 'thinca/vim-textobj-comment'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
 hook_add = '''
+let g:textobj_comment_no_default_key_mappings = 1
 omap ac <Plug>(textobj-comment-a)
 omap ic <Plug>(textobj-comment-i)
 xmap ac <Plug>(textobj-comment-a)
@@ -837,21 +827,11 @@ xmap ic <Plug>(textobj-comment-i)
 '''
 
 [[plugins]]
-repo = 'saihoooooooo/vim-textobj-space'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-omap a<Space> <Plug>(textobj-space-a)
-omap i<Space> <Plug>(textobj-space-i)
-xmap a<Space> <Plug>(textobj-space-a)
-xmap i<Space> <Plug>(textobj-space-i)
-'''
-
-[[plugins]]
 repo = 'kana/vim-textobj-fold'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
 hook_add = '''
+let g:textobj_fold_no_default_key_mappings = 1
 omap az <Plug>(textobj-fold-a)
 omap iz <Plug>(textobj-fold-i)
 xmap az <Plug>(textobj-fold-a)
@@ -859,32 +839,11 @@ xmap iz <Plug>(textobj-fold-i)
 '''
 
 [[plugins]]
-repo = 'lucapette/vim-textobj-underscore'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-omap a_ <Plug>(textobj-underscore-a)
-omap i_ <Plug>(textobj-underscore-i)
-xmap a_ <Plug>(textobj-underscore-a)
-xmap i_ <Plug>(textobj-underscore-i)
-'''
-
-[[plugins]]
-repo = 'RyanMcG/vim-textobj-dash'
-depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
-hook_add = '''
-omap a- <Plug>(textobj-quoted-a)
-omap i- <Plug>(textobj-quoted-i)
-xmap a- <Plug>(textobj-quoted-a)
-xmap i- <Plug>(textobj-quoted-i)
-'''
-
-[[plugins]]
 repo = 'mattn/vim-textobj-url'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
 hook_add = '''
+let g:textobj_url_no_default_key_mappings = 1
 omap au <Plug>(textobj-url-a)
 omap iu <Plug>(textobj-url-i)
 xmap au <Plug>(textobj-url-a)
@@ -901,6 +860,7 @@ on_map = [
   ['ox', '<Plug>(textobj-function-A)'],
 ]
 hook_add = '''
+let g:textobj_function_no_default_key_mappings = 1
 omap af <Plug>(textobj-function-a)
 omap if <Plug>(textobj-function-i)
 xmap af <Plug>(textobj-function-a)
@@ -922,6 +882,7 @@ repo = 'sgur/vim-textobj-parameter'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
 hook_add = '''
+let g:textobj_parameter_no_default_key_mappings = 1
 omap aP <Plug>(textobj-parameter-a)
 omap iP <Plug>(textobj-parameter-i)
 xmap aP <Plug>(textobj-parameter-a)
@@ -933,6 +894,7 @@ repo = 'osyo-manga/vim-textobj-multiblock'
 depends = 'vim-textobj-user'
 on_map = [['ox', '<Plug>']]
 hook_add = '''
+let g:textobj_multiblock_no_default_key_mappings = 1
 omap ab <Plug>(textobj-multiblock-a)
 omap ib <Plug>(textobj-multiblock-i)
 xmap ab <Plug>(textobj-multiblock-a)
@@ -949,6 +911,7 @@ on_map = [
   ['ox', '<Plug>(textobj-wordcolumn-w-a)'],
 ]
 hook_add = '''
+let g:textobj_wordcolumn_no_default_key_mappings = 1
 omap av <Plug>(textobj-wordcolumn-w-a)
 omap iv <Plug>(textobj-wordcolumn-w-i)
 xmap av <Plug>(textobj-wordcolumn-w-a)
