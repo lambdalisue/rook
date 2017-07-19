@@ -850,6 +850,36 @@ else
 endif
 " }}}
 
+" Enhance performance {{{
+" Removing guibg enhance performance on Alacritty
+" Ref: https://github.com/jwilm/alacritty/issues/660#issuecomment-315239034
+function! s:performance_enhancer(args) abort
+  if empty(a:args)
+    let s:performance_enhancer_enabled = !s:performance_enhancer_enabled
+  elseif a:args =~# '^\%(enable\|on\)$'
+    let s:performance_enhancer_enabled = 1
+  else
+    let s:performance_enhancer_enabled = 0
+  endif
+  if s:performance_enhancer_enabled
+    augroup alacritty_enhance_performance
+      autocmd! *
+      autocmd BufEnter * highlight Normal guibg=NONE
+      autocmd ColorScheme * highlight Normal guibg=NONE
+    augroup END
+    highlight Normal guibg=None
+  else
+    augroup alacritty_enhance_performance
+      autocmd! *
+    augroup END
+    execute 'colorscheme' get(g:, 'colors_name', 'default')
+  endif
+endfunction
+
+let s:performance_enhancer_enabled = 0
+command! -nargs=? PerformanceEnhancer call s:performance_enhancer(<q-args>)
+" }}}
+
 " }}}
 
 " Terminal {{{
@@ -958,13 +988,6 @@ try
 catch
   colorscheme desert
 endtry
-
-" https://github.com/jwilm/alacritty/issues/660#issuecomment-315239034
-" It also increase the performance as well
-augroup hotfix_issue660_alacritty
-  autocmd BufEnter * highlight Normal guibg=NONE
-  autocmd ColorScheme * highlight Normal guibg=NONE
-augroup END
 
 " Source '~/.vimrc.local' only when exists
 " This requires to be posterior to Plugin loading
