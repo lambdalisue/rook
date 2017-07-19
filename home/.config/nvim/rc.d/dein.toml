@@ -5,21 +5,14 @@ repo = 'Shougo/dein.vim'
 [[plugins]]
 repo = 'lambdalisue/vim-unified-diff'
 hook_add = '''
-set diffexpr=unified_diff#diffexpr()
+if dein#is_sourced('vim-unified-diff')
+  set diffexpr=unified_diff#diffexpr()
+endif
 '''
 
 [[plugins]]
 repo = 'haya14busa/dein-command.vim'
 on_cmd = 'Dein'
-
-#[[plugins]]
-#repo = 'lambdalisue/pinkyless.vim'
-#hook_add = '''
-#let g:pinkyless_stickyshift_i = 0
-#let g:pinkyless_stickyshift_c = 0
-#let g:pinkyless_stickyshift_s = 0
-#let g:pinkyless_stickyreplace_n = 0
-#'''
 
 [[plugins]]
 repo = 'lambdalisue/manipulist.vim'
@@ -427,13 +420,49 @@ repo = 'thinca/vim-zenspace'
 
 [[plugins]]
 repo = 'itchyny/vim-parenmatch'
+hook_add = '''
+let g:parenmatch = get(g:, 'parenmatch', 1)
+let g:parenmatch_highlight = 0
+
+highlight default link ParenMatch DiffChange
+
+function! s:toggle_vim_parenmatch() abort
+  silent! call matchdelete(w:parenmatch)
+  let g:parenmatch = g:parenmatch ? 0 : 1
+  call parenmatch#update()
+endfunction
+
+nnoremap <silent> <Plug>(my-toggle-parenmatch)
+      \ :<C-u>call <SID>toggle_vim_parenmatch()<CR>
+nmap <C-g>m     <Plug>(my-toggle-parenmatch)
+nmap <C-g><C-m> <Plug>(my-toggle-parenmatch)
+
+function! s:disable_vim_parenmatch() abort
+  if &buftype =~# '\%(help\|quickfix\|terminal\|nofile\)'
+    let b:parenmatch = 0
+  elseif &modifiable == 0
+    let b:parenmatch = 0
+  endif
+endfunction
+
+augroup my_vim_parenmatch
+  autocmd! *
+  autocmd BufEnter * call s:disable_vim_parenmatch()
+augroup END
+'''
 
 [[plugins]]
 repo = 'itchyny/vim-cursorword'
 hook_add = '''
-let g:cursorword = 1
+let g:cursorword = get(g:, 'cursorword', 1)
+
+function! s:toggle_vim_cursorword() abort
+  let g:cursorword = g:cursorword ? 0 : 1
+  call cursorword#matchadd()
+endfunction
+
 nnoremap <silent> <Plug>(my-toggle-cursorword)
-      \ :<C-u>let g:cursorword = g:cursorword ? 0 : 1<CR>
+      \ :<C-u>call <SID>toggle_vim_cursorword()<CR>
 nmap <C-g>c     <Plug>(my-toggle-cursorword)
 nmap <C-g><C-c> <Plug>(my-toggle-cursorword)
 
@@ -443,12 +472,11 @@ function! s:disable_vim_cursorword() abort
   elseif &modifiable == 0
     let b:cursorword = 0
   endif
-  return 0
 endfunction
 
 augroup my_vim_cursorword
   autocmd! *
-  autocmd BufWinEnter,FileType * call s:disable_vim_cursorword()
+  autocmd BufEnter * call s:disable_vim_cursorword()
 augroup END
 '''
 
@@ -637,7 +665,7 @@ let g:neomake_info_sign = {
       \ 'text': 'I-',
       \ 'texthl': 'NeomakeInfoSign'
       \}
-let g:neomake_python_enabled_makers = ['flake8']
+let g:neomake_python_enabled_makers = ['python', 'flake8', 'mypy']
 '''
 # }}}
 
@@ -651,8 +679,7 @@ let g:neocomplete#enable_at_startup = !has('nvim')
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-on_i = 1
-hook_source = '''
+hook_add = '''
 let g:deoplete#enable_at_startup = has('nvim')
 '''
 

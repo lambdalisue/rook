@@ -27,7 +27,7 @@ if has('vim_starting')
   if !has('gui_running') && exists('&termguicolors')
     set termguicolors       " use truecolor in term
   endif
-  if &term =~ '256color'
+  if &term =~# '256color'
     " disable Background Color Erase (BCE) so that color schemes
     " render properly when inside 256-color tmux and GNU screen.
     " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
@@ -214,9 +214,9 @@ set emoji               " use double in unicode emoji
 set hidden              " hide the buffer instead of close
 set switchbuf=useopen   " use an existing buffer instaed of creating a new one
 
+set signcolumn=yes      " show signcolumn always
 set showmatch           " highlight a partner of cursor character
 set matchtime=1         " highlight a partner ASAP
-set updatetime=500      " increase speed of CursorHold autocommand
 set nostartofline       " let C-D, C-U,... to keep same column
 set smartcase           " override the ignorecase if the search pattern contains
                         " upper case characters
@@ -262,11 +262,11 @@ set list          " show invisible characters
 if $LANG !=# 'C' && !s:is_windows
   set listchars=tab:»-,trail:_,extends:»,precedes:«,nbsp:%,eol:↵
   set fillchars& fillchars+=vert:│
-  set showbreak=\ +
+  set showbreak=
 else
   set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%,eol:$
   set fillchars& fillchars+=vert:\|
-  set showbreak=\ +
+  set showbreak=
 endif
 if exists('&breakindent')
   set breakindent   " every wrapped line will continue visually indented
@@ -277,7 +277,9 @@ function! FoldText() abort
   let line = lnum > v:foldend
         \ ? getline(v:foldstart)
         \ : substitute(getline(lnum), '\t', repeat(' ', &tabstop), 'g')
-  let w = winwidth(0) - &foldcolumn - (&number || &relativenumber ? 8 : 0) - 5
+  let w = winwidth(0) - &foldcolumn - 3
+  let w -= &signcolumn ==# 'no' ? 0 : 2
+  let w -= (&number || &relativenumber) ? len(string(line('$'))) + 1 : 0
   let s = (1 + v:foldend - v:foldstart) . ' lines'
   let f = repeat('|', v:foldlevel)
   let e = repeat('.', w - strwidth(line . s . f))
@@ -645,8 +647,14 @@ function! s:remove_trailing_spaces_automatically() abort
     autocmd BufWritePre <buffer> %s/\s\+$//e
   augroup END
 endfunction
-autocmd FileType perl,python,vim,vimspec,javascript,typescript
-      \ call s:remove_trailing_spaces_automatically()
+augroup enable_remove_trailing_spaces_automatically
+  autocmd FileType perl call s:remove_trailing_spaces_automatically()
+  autocmd FileType python call s:remove_trailing_spaces_automatically()
+  autocmd FileType vim call s:remove_trailing_spaces_automatically()
+  autocmd FileType vimspec call s:remove_trailing_spaces_automatically()
+  autocmd FileType javascript call s:remove_trailing_spaces_automatically()
+  autocmd FileType typescript call s:remove_trailing_spaces_automatically()
+augroup END
 " }}}
 
 " Automatically re-assign filetype {{{
@@ -717,6 +725,38 @@ autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
 command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
 " }}}
 
+" Automatically show cursorline when hold {{{
+augroup vimrc-auto-cursorline
+  autocmd!
+  autocmd CursorMoved,CursorMovedI * call s:auto_cursorline('CursorMoved')
+  autocmd CursorHold,CursorHoldI * call s:auto_cursorline('CursorHold')
+  autocmd WinEnter * call s:auto_cursorline('WinEnter')
+  autocmd WinLeave * call s:auto_cursorline('WinLeave')
+
+  let s:cursorline_lock = 0
+  function! s:auto_cursorline(event)
+    if a:event ==# 'WinEnter'
+      setlocal cursorline
+      let s:cursorline_lock = 2
+    elseif a:event ==# 'WinLeave'
+      setlocal nocursorline
+    elseif a:event ==# 'CursorMoved'
+      if s:cursorline_lock
+        if 1 < s:cursorline_lock
+          let s:cursorline_lock = 1
+        else
+          setlocal nocursorline
+          let s:cursorline_lock = 0
+        endif
+      endif
+    elseif a:event ==# 'CursorHold'
+      setlocal cursorline
+      let s:cursorline_lock = 1
+    endif
+  endfunction
+augroup END
+" }}}
+
 " Add runtimepath {{{
 function! s:add_runtimepath() abort
   let path = getcwd()
@@ -768,7 +808,7 @@ command! -nargs=* Timeit call s:timeit(<q-args>)
 if has('nvim')
   function! s:open_terminal_window() abort
     tabnew
-    terminal
+    execute 'terminal'
     nnoremap <buffer><silent> q :<C-u>quit<CR>
   endfunction
 else
@@ -829,12 +869,34 @@ if has('nvim')
 endif
 " }}}
 
+" Patch {{{
+
+" Enhance performance of scroll in vsplit mode {{{
+" Ref: http://qiita.com/kefir_/items/c725731d33de4d8fb096
+if has('vim_starting') && !has('gui_running')
+  " Enable origin mode and left/right margins
+  function! s:enable_vsplit_mode() abort
+    let &t_CS = 'y'
+    let &t_ti = &t_ti . "\e[?6;69h"
+    let &t_te = "\e[?6;69l\e[999H" . &t_te
+    let &t_CV = "\e[%i%p1%d;%p2%ds"
+    call writefile(["\e[?6;69h"], '/dev/tty', 'a')
+  endfunction
+
+  " Old vim does not ignore CPR
+  map <special> <Esc>[3;9R <Nop>
+
+  " New vim can't handle CPR with direct mapping
+  " map <expr> ^[[3;3R <SID>enable_vsplit_mode()
+  set t_F9=[3;3R
+  map <expr> <t_F9> <SID>enable_vsplit_mode()
+  let &t_RV .= "\e[?6;69h\e[1;3s\e[3;9H\e[6n\e[0;0s\e[?6;69l"
+endif
+" }}}
+
+" }}}
+
 " Plugin {{{
-
-" Source '~/.vimrc.local' only when exists
-" This requires to be prior to Plugin loading
-silent call s:source_script('~/.vimrc.local')
-
 let s:bundle_root = expand('~/.cache/dein')
 let s:bundle_dein = s:join(s:bundle_root, 'repos/github.com/Shougo/dein.vim')
 if isdirectory(s:bundle_dein) && s:plugin_enabled
@@ -898,7 +960,15 @@ catch
 endtry
 
 " https://github.com/jwilm/alacritty/issues/660#issuecomment-315239034
-autocmd MyAutoCmd BufEnter * highlight Normal guibg=0
+" It also increase the performance as well
+augroup hotfix_issue660_alacritty
+  autocmd BufEnter * highlight Normal guibg=NONE
+  autocmd ColorScheme * highlight Normal guibg=NONE
+augroup END
+
+" Source '~/.vimrc.local' only when exists
+" This requires to be posterior to Plugin loading
+silent call s:source_script('~/.vimrc.local')
 
 set secure
 " }}}
