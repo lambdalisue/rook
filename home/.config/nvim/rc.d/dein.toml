@@ -16,11 +16,18 @@ on_cmd = 'Dein'
 
 [[plugins]]
 repo = 'easymotion/vim-easymotion'
-on_map = [['nx', '<Plug>']]
+on_map = [['nxo', '<Plug>']]
 hook_add = '''
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 nmap ss <Plug>(easymotion-overwin-f2)
 xmap ss <Plug>(easymotion-bd-f2)
+omap ss <Plug>(easymotion-bd-f2)
+nmap f <Plug>(easymotion-fl)
+xmap f <Plug>(easymotion-fl)
+omap f <Plug>(easymotion-fl)
+nmap F <Plug>(easymotion-Fl)
+xmap F <Plug>(easymotion-Fl)
+omap F <Plug>(easymotion-Fl)
 '''
 
 [[plugins]]
