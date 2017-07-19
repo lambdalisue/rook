@@ -864,7 +864,6 @@ function! s:performance_enhancer(args) abort
   if s:performance_enhancer_enabled
     augroup alacritty_enhance_performance
       autocmd! *
-      autocmd BufEnter * highlight Normal guibg=NONE
       autocmd ColorScheme * highlight Normal guibg=NONE
     augroup END
     highlight Normal guibg=None
