@@ -392,6 +392,9 @@ cnoremap <C-n> <Down>
 cnoremap <Up>   <C-p>
 cnoremap <Down> <C-n>
 
+if has('nvim')
+endif
+
 " Fix unreasonable mappings by historical reason
 nnoremap vv 0v$
 nnoremap Y y$
@@ -853,30 +856,32 @@ endif
 " Enhance performance {{{
 " Removing guibg enhance performance on Alacritty
 " Ref: https://github.com/jwilm/alacritty/issues/660#issuecomment-315239034
-function! s:performance_enhancer(args) abort
-  if empty(a:args)
-    let s:performance_enhancer_enabled = !s:performance_enhancer_enabled
-  elseif a:args =~# '^\%(enable\|on\)$'
-    let s:performance_enhancer_enabled = 1
-  else
-    let s:performance_enhancer_enabled = 0
-  endif
-  if s:performance_enhancer_enabled
-    augroup alacritty_enhance_performance
-      autocmd! *
-      autocmd ColorScheme * highlight Normal guibg=NONE
-    augroup END
-    highlight Normal guibg=None
-  else
-    augroup alacritty_enhance_performance
-      autocmd! *
-    augroup END
-    execute 'colorscheme' get(g:, 'colors_name', 'default')
-  endif
-endfunction
+if has('nvim')
+  function! s:performance_enhancer(args) abort
+    if empty(a:args)
+      let s:performance_enhancer_enabled = !s:performance_enhancer_enabled
+    elseif a:args =~# '^\%(enable\|on\)$'
+      let s:performance_enhancer_enabled = 1
+    else
+      let s:performance_enhancer_enabled = 0
+    endif
+    if s:performance_enhancer_enabled
+      augroup alacritty_enhance_performance
+        autocmd! *
+        autocmd ColorScheme * highlight Normal guibg=NONE
+      augroup END
+      highlight Normal guibg=None
+    else
+      augroup alacritty_enhance_performance
+        autocmd! *
+      augroup END
+      execute 'colorscheme' get(g:, 'colors_name', 'default')
+    endif
+  endfunction
 
-let s:performance_enhancer_enabled = 0
-command! -nargs=? PerformanceEnhancer call s:performance_enhancer(<q-args>)
+  let s:performance_enhancer_enabled = 0
+  command! -nargs=? PerformanceEnhancer call s:performance_enhancer(<q-args>)
+endif
 " }}}
 
 " }}}
