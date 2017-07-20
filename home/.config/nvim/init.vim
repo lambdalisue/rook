@@ -214,7 +214,9 @@ set emoji               " use double in unicode emoji
 set hidden              " hide the buffer instead of close
 set switchbuf=useopen   " use an existing buffer instaed of creating a new one
 
-set signcolumn=yes      " show signcolumn always
+if exists('&signcolumn')
+  set signcolumn=yes      " show signcolumn always
+endif
 set showmatch           " highlight a partner of cursor character
 set matchtime=1         " highlight a partner ASAP
 set nostartofline       " let C-D, C-U,... to keep same column
@@ -391,9 +393,6 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <Up>   <C-p>
 cnoremap <Down> <C-n>
-
-if has('nvim')
-endif
 
 " Fix unreasonable mappings by historical reason
 nnoremap vv 0v$
