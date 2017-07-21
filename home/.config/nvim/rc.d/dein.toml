@@ -740,7 +740,7 @@ nnoremap <silent> <Space>ff :<C-u>Denite file_rec<CR>
 nnoremap <silent> <Space>dd :<C-u>Denite directory_rec<CR>
 nnoremap <silent> <Space>hh :<C-u>Denite help<CR>
 nnoremap <silent> <Space>gg :<C-u>Denite grep<CR>
-nnoremap <silent> <Space>jj :<C-u>Denite jump_point<CR>
+nnoremap <silent> <Space>jj :<C-u>Denite jump<CR>
 nnoremap <silent> <Space>ss :<C-u>Denite menu:shortcut<CR>
 nnoremap <silent> <Space>ww :<C-u>Denite buffer<CR>
 '''
