@@ -49,7 +49,7 @@
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
                 "keyboard_type": "ansi",
-                "standalone_keys_delay_milliseconds": 0
+                "standalone_keys_delay_milliseconds": 500
             }
         },
         {
@@ -61,7 +61,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Change lang1 (Eisuu) to left_shift/return.",
+                                "description": "Change lang1 (Kana) to left_shift/return.",
                                 "from": {
                                     "key_code": "lang1",
                                     "modifiers": {
@@ -139,7 +139,8 @@
                 "f9": "fastforward"
             },
             "name": "Pinkyless (Apple JIS)",
-            "selected": false,
+            "one_to_many_mappings": {},
+            "selected": true,
             "simple_modifications": {
                 "0": "9",
                 "1": "grave_accent_and_tilde",
@@ -157,17 +158,24 @@
                 "hyphen": "0",
                 "international1": "backslash",
                 "international3": "equal_sign",
+                "lang1": "left_shift",
                 "lang2": "spacebar",
                 "left_command": "left_option",
                 "left_control": "escape",
                 "left_option": "left_command",
                 "left_shift": "japanese_eisuu",
                 "right_command": "return_or_enter",
-                "right_shift": "japanese_kana"
+                "right_shift": "japanese_kana",
+                "spacebar": "left_control"
+            },
+            "standalone_keys": {
+                "lang1": "return_or_enter",
+                "spacebar": "spacebar"
             },
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
-                "keyboard_type": "ansi"
+                "keyboard_type": "ansi",
+                "standalone_keys_delay_milliseconds": 100
             }
         },
         {
@@ -253,9 +261,11 @@
                 "left_shift": "japanese_eisuu",
                 "right_shift": "japanese_kana"
             },
+            "standalone_keys": {},
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
-                "keyboard_type": "ansi"
+                "keyboard_type": "ansi",
+                "standalone_keys_delay_milliseconds": 200
             }
         },
         {
@@ -281,14 +291,17 @@
                 "f9": "fastforward"
             },
             "name": "PC JIS",
-            "selected": true,
+            "one_to_many_mappings": {},
+            "selected": false,
             "simple_modifications": {
                 "japanese_pc_nfer": "japanese_eisuu",
                 "japanese_pc_xfer": "japanese_kana"
             },
+            "standalone_keys": {},
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
-                "keyboard_type": "ansi"
+                "keyboard_type": "ansi",
+                "standalone_keys_delay_milliseconds": 200
             }
         }
     ]
