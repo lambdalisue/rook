@@ -728,6 +728,7 @@ execute 'source' fnameescape(expand('~/.config/nvim/rc.d/unite.vim'))
 '''
 
 [[plugins]]
+rev = '9416f57'
 repo = 'Shougo/denite.nvim'
 on_cmd = [
   'Denite',
