@@ -46,4 +46,7 @@ augroup filetypedetect
 
   " python stub file
   autocmd BufNewFile,BufRead *.pyi setfiletype python
+
+  " Docker
+  autocmd BufNewFile,BufRead Dockerfile.* setfiletype Dockerfile
 augroup END
