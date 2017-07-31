@@ -5,7 +5,7 @@ repo = 'Shougo/dein.vim'
 [[plugins]]
 repo = 'lambdalisue/vim-unified-diff'
 hook_add = '''
-if dein#is_sourced('vim-unified-diff')
+if dein#tap('vim-unified-diff')
   set diffexpr=unified_diff#diffexpr()
 endif
 '''
@@ -13,7 +13,7 @@ endif
 [[plugins]]
 repo = 'lambdalisue/macra.vim'
 hook_add = '''
-if dein#is_sourced('macra.vim')
+if dein#tap('macra.vim')
   call macra#register('f', 'nxo')
   call macra#register('F', 'nxo')
 endif
@@ -142,7 +142,7 @@ hook_add = '''
 let g:submode_timeout = 0
 let g:submode_keep_leaving_key = 1
 
-if dein#is_sourced('vim-submoode')
+if dein#tap('vim-submoode')
   call submode#enter_with('undo/redo', 'n', '', 'g-', 'g-')
   call submode#enter_with('undo/redo', 'n', '', 'g+', 'g+')
   call submode#leave_with('undo/redo', 'n', '', '<Esc>')
@@ -429,9 +429,6 @@ on_cmd = 'PrevimOpen'
 hook_source = 'let g:previm_show_header = 0'
 
 [[plugins]]
-repo = 'cohama/vim-hier'
-
-[[plugins]]
 repo = 't9md/vim-quickhl'
 depends = 'vim-operator-user'
 on_map = [
@@ -503,13 +500,6 @@ augroup my_vim_cursorword
   autocmd! *
   autocmd BufEnter * call s:disable_vim_cursorword()
 augroup END
-'''
-
-[[plugins]]
-repo = 'KazuakiM/vim-qfstatusline'
-depends = 'shabadou.vim'
-hook_add = '''
-let g:Qfstatusline#UpdateCmd = function('lightline#update')
 '''
 
 [[plugins]]
@@ -671,6 +661,7 @@ if has('nvim')
     autocmd! *
     autocmd FileReadPost * Neomake
     autocmd BufWritePost * Neomake
+    autocmd User NeomakeFinished nested call lightline#update()
   augroup END
 
   let g:neomake_error_sign = {
@@ -690,8 +681,11 @@ if has('nvim')
         \ 'texthl': 'NeomakeInfoSign'
         \}
 
-  let g:neomake_python_enabled_makers = ['python', 'flake8', 'mypy']
-
+  let g:neomake_python_enabled_makers = [
+        \ 'python',
+        \ 'flake8',
+        \ 'mypy'
+        \]
   augroup my_neomake_buffer_local
     autocmd! *
     autocmd BufEnter setup.py let b:neomake_python_enabled_markers = ['python']

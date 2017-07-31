@@ -183,17 +183,12 @@ function! g:lightline.my.pyvenv() abort
 endfunction
 
 function! g:lightline.my.qfstatusline() abort
-  if dein#is_sourced('vim-qfstatusline')
-    let message = qfstatusline#Update()
-    let message = substitute(
-          \ message,
-          \ '(@INC contains: .*)',
-          \ '', ''
-          \)
-    let prefix = len(message) ? s:Symbols.error : ''
-    return winwidth(0) > 79
-          \ ? prefix . message[ : winwidth(0) ]
-          \ : prefix
+  if dein#is_sourced('neomake')
+    if empty(neomake#statusline#LoclistCounts())
+      return neomake#statusline#QflistStatus()
+    else
+      return neomake#statusline#LoclistStatus()
+    endif
   else
     return ''
   endif
