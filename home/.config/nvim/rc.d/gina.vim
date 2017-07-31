@@ -17,6 +17,10 @@ call gina#custom#command#option(
       \ '-b|--branch'
       \)
 call gina#custom#command#option(
+      \ 'status',
+      \ '-s|--short'
+      \)
+call gina#custom#command#option(
       \ '/\%(status\|branch\|changes\|tag\)',
       \ '--opener',
       \ 'topleft 10split',
