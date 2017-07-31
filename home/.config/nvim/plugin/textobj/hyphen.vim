@@ -2,7 +2,7 @@ if exists('g:loaded_textobj_hyphen')
   finish
 endif
 
-call textobj#user#plugin('hyphen', {
+silent! call textobj#user#plugin('hyphen', {
       \ '-': {
       \     '*sfile*': expand('<sfile>:p'),
       \     'select-a': 'a-',  '*select-a-function*': 's:select_a',

@@ -2,7 +2,7 @@ if exists('g:loaded_textobj_whitespace')
   finish
 endif
 
-call textobj#user#plugin('whitespace', {
+silent! call textobj#user#plugin('whitespace', {
       \ '-': {
       \     '*sfile*': expand('<sfile>:p'),
       \     'select-a': 'a<Space>',  '*select-a-function*': 's:select_a',
