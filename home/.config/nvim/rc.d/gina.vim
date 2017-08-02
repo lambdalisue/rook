@@ -84,6 +84,18 @@ call gina#custom#mapping#nmap(
       \ {'noremap': 1, 'silent': 1}
       \)
 
+call gina#custom#action#alias(
+      \ '/\%(blame\|log\|reflog\)',
+      \ 'preview',
+      \ 'topleft show:commit:preview',
+      \)
+call gina#custom#mapping#nmap(
+      \ '/\%(blame\|log\|reflog\)',
+      \ 'p',
+      \ ':<C-u>call gina#action#call(''preview'')<CR>',
+      \ {'noremap': 1, 'silent': 1}
+      \)
+
 call gina#custom#execute(
       \ '/\%(status\|branch\|ls\|grep\|changes\|tag\)',
       \ 'setlocal winfixheight',
@@ -95,4 +107,14 @@ call gina#custom#execute(
 call gina#custom#execute(
       \ '/\%(ls\|log\|reflog\|grep\)',
       \ 'setlocal noautoread',
+      \)
+
+" Echo chunk info with j/k
+call gina#custom#mapping#nmap(
+      \ 'blame', 'j',
+      \ 'j<Plug>(gina-blame-echo)'
+      \)
+call gina#custom#mapping#nmap(
+      \ 'blame', 'k',
+      \ 'k<Plug>(gina-blame-echo)'
       \)
