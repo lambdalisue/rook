@@ -1,6 +1,6 @@
 {
     "global": {
-        "check_for_updates_on_startup": false,
+        "check_for_updates_on_startup": true,
         "show_in_menu_bar": true,
         "show_profile_name_in_menu_bar": true
     },
@@ -161,7 +161,7 @@
             },
             "name": "Pinkyless (Apple JIS)",
             "one_to_many_mappings": {},
-            "selected": true,
+            "selected": false,
             "simple_modifications": {
                 "0": "9",
                 "1": "grave_accent_and_tilde",
@@ -294,7 +294,18 @@
                 },
                 "rules": []
             },
-            "devices": [],
+            "devices": [
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 632,
+                        "vendor_id": 1452
+                    },
+                    "ignore": true
+                }
+            ],
             "fn_function_keys": {
                 "f1": "display_brightness_decrement",
                 "f10": "mute",
@@ -311,7 +322,7 @@
             },
             "name": "PC JIS",
             "one_to_many_mappings": {},
-            "selected": false,
+            "selected": true,
             "simple_modifications": {
                 "japanese_pc_nfer": "japanese_eisuu",
                 "japanese_pc_xfer": "japanese_kana"

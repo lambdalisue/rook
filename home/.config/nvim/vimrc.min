@@ -1,10 +1,13 @@
 " vim -u ~/.vim/vimrc.min
 if has('vim_starting')
-  set nocompatible
-  " set runtimepath+=~/Code/github.com/lambdalisue/dein.vim
+  if filereadable(expand('$VIMRUNTIME/defaults.vim'))
+    source $VIMRUNTIME/defaults.vim
+  else
+    set nocompatible
+  endif
+  set runtimepath+=~/Code/github.com/lambdalisue/gina.vim
 endif
 
-set hidden
 
 nnoremap ; :
 nnoremap : ;
@@ -19,3 +22,15 @@ function! s:echo_runtimepath() abort
   endfor
 endfunction
 command! EchoRuntimePath call s:echo_runtimepath()
+
+set columns=141
+set lines=40
+
+
+function! s:my_git(args) abort
+  enew
+  execute printf('read !git %s', a:args)
+  0delete
+  setlocal nomodified nomodifiable buftype=nofile
+endfunction
+command! -nargs=* MyGit call s:my_git(<q-args>)
