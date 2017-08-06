@@ -1,36 +1,26 @@
 " vim -u ~/.vim/vimrc.min
 if has('vim_starting')
-  if filereadable(expand('$VIMRUNTIME/defaults.vim'))
-    source $VIMRUNTIME/defaults.vim
-  else
-    set nocompatible
-  endif
-  set runtimepath+=~/Code/github.com/lambdalisue/gina.vim
+  source $VIMRUNTIME/defaults.vim
 endif
 
+" vim-plug でインストールするプラグインは call plug#begin(...) から
+" call plug#end() の間に Plug ... として記載する。
+call plug#begin('~/.vim/plugged')
 
+" gina.vim の指定
+Plug 'lambdalisue/gina.vim'
+
+" 上記したプラグインの初期化処理
+call plug#end()
+
+" vimdiff で横分割を使う設定
+" Gina は diffopt の値で分割方向を決めるので、ここで指定する
+set diffopt+=vertical
+
+" ----------------------------------------------------------------------------
 nnoremap ; :
 nnoremap : ;
-
-filetype plugin indent on
-syntax on
-
-" --- Utilities --------------------------------------------------------------
-function! s:echo_runtimepath() abort
-  for path in split(&runtimepath, ',')
-    echo path
-  endfor
-endfunction
-command! EchoRuntimePath call s:echo_runtimepath()
-
+set background=light
 set columns=141
 set lines=40
 
-
-function! s:my_git(args) abort
-  enew
-  execute printf('read !git %s', a:args)
-  0delete
-  setlocal nomodified nomodifiable buftype=nofile
-endfunction
-command! -nargs=* MyGit call s:my_git(<q-args>)

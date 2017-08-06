@@ -45,6 +45,7 @@ path=(
     $HOME/miniconda/bin(N-/)
     $HOME/miniconda3/bin(N-/)
     $HOME/miniconda2/bin(N-/)
+    /usr/local/texlive/2017basic/bin/x86_64-darwin(N-/)
     /usr/local/texlive/2014/bin/i386-linux(N-/)
     /usr/local/texlive/2014/bin/i386-darwin(N-/)
     /usr/local/texlive/2014/bin/x86_64-linux(N-/)

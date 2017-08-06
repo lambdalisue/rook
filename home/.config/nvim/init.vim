@@ -128,6 +128,7 @@ endfunction
 " Environment {{{
 call s:configure_path('$PATH', [
       \ '/usr/local/bin',
+      \ '/usr/local/texlive/2017basic/bin/x86_64-darwin',
       \ '/usr/local/texlive/2013/bin/x86_64-linux',
       \ '/usr/local/texlive/2013/bin/x86_64-darwin',
       \ '~/.zplug/bin',

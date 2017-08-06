@@ -4,11 +4,6 @@ repo = 'Shougo/dein.vim'
 
 [[plugins]]
 repo = 'lambdalisue/vim-unified-diff'
-hook_add = '''
-if dein#tap('vim-unified-diff')
-  set diffexpr=unified_diff#diffexpr()
-endif
-'''
 
 [[plugins]]
 repo = 'lambdalisue/macra.vim'
