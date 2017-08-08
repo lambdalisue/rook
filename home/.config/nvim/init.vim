@@ -3,9 +3,10 @@ let s:is_windows = has('win32') || has('win64')
 let s:separator = s:is_windows ? '\' : '/'
 let s:path_separator = s:is_windows ? ';' : ':'
 let s:config_root = s:is_windows
-      \ ? expand('~/vimfiles')
+      \ ? expand('~/AppData/Local/nvim')
       \ : expand('~/.config/nvim/')
 let s:plugin_enabled = 1
+let $MYVIM_HOME = s:config_root
 
 " Prelude {{{
 if has('vim_starting')
@@ -47,7 +48,7 @@ if has('vim_starting')
   set ttimeoutlen=100
 
   " Use bash on Vim
-  if !has('nvim')
+  if !has('nvim') && !s:is_windows
     set shell=/bin/bash
   endif
 
@@ -68,10 +69,10 @@ if has('vim_starting')
   let g:loaded_man               = 1
   " NOTE:
   " The Netrw is use to download a missing spellfile
-  let g:loaded_netrw             = 1
-  let g:loaded_netrwPlugin       = 1
-  let g:loaded_netrwSettings     = 1
-  let g:loaded_netrwFileHandlers = 1
+  " let g:loaded_netrw             = 1
+  " let g:loaded_netrwPlugin       = 1
+  " let g:loaded_netrwSettings     = 1
+  " let g:loaded_netrwFileHandlers = 1
 endif
 " }}}
 
@@ -163,7 +164,7 @@ let $PYENV_ROOT = s:pick_directory([
       \ '~/.pyenv',
       \])
 
-if has('nvim')
+if has('nvim') && !s:is_windows
   let g:python_host_prog = s:pick_executable([
         \ '/usr/local/bin/python2',
         \ '/usr/bin/python2',

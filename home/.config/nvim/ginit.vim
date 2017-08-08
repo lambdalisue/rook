@@ -1,10 +1,3 @@
-"
-" GVim configuration
-" Author:   Alisue <lambdalisue@hashnote.net>
-" Web:      http://www.hashnote.net/
-" Platform: Linux, Mac OS X
-"
-
 " I prefer console like GVim
 "
 " 'm'	Menu bar is present.
@@ -57,11 +50,17 @@ set visualbell t_vb=
 
 " Disable cursor blinking in any mode
 set guicursor+=a:blinkon0
-set antialias
 
-" http://d.hatena.ne.jp/yascentur/20120221/1329756132
-" http://d.hatena.ne.jp/yascentur/20110621/1308650962
-if has('gui_macvim')
+" Use antialias if possible
+if exists('antialias')
+  set antialias
+endif
+
+if has(':Guifont')
+  Guifont! Literation\ Mono\ Powerline:h11
+elseif has('gui_macvim')
+  " http://d.hatena.ne.jp/yascentur/20120221/1329756132
+  " http://d.hatena.ne.jp/yascentur/20110621/1308650962
   " Font size should be 2.0x
   set guifont=Liberation\ Mono\ for\ Powerline:h14
 else
