@@ -67,6 +67,7 @@ let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
       \ '$MYVIM_HOME/rc.d/vimfiler.vim',
       \ '$MYVIM_HOME/rc.d/vimshell.vim',
       \ '$MYVIM_HOME/rc.d/lightline.vim',
+      \ '$MYVIM_HOME/rc.d/quickrun.vim',
       \ '$MYVIM_HOME/after/ftplugin/vim.vim',
       \ '$MYVIM_HOME/after/ftplugin/perl.vim',
       \ '$MYVIM_HOME/after/ftplugin/python.vim',

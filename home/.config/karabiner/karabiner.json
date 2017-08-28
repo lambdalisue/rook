@@ -19,18 +19,6 @@
                     "identifiers": {
                         "is_keyboard": true,
                         "is_pointing_device": false,
-                        "product_id": 4871,
-                        "vendor_id": 65261
-                    },
-                    "ignore": true,
-                    "simple_modifications": {}
-                },
-                {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": {},
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "is_pointing_device": false,
                         "product_id": 632,
                         "vendor_id": 1452
                     },
@@ -46,23 +34,11 @@
                         "7": "6",
                         "8": "7",
                         "9": "8",
-                        "hyphen": "0",
                         "equal_sign": "hyphen",
+                        "hyphen": "0",
                         "international1": "backslash",
                         "international3": "equal_sign"
                     }
-                },
-                {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": {},
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "is_pointing_device": false,
-                        "product_id": 34304,
-                        "vendor_id": 1452
-                    },
-                    "ignore": false,
-                    "simple_modifications": {}
                 }
             ],
             "fn_function_keys": {
@@ -82,8 +58,8 @@
             "name": "Basic (Apple JIS)",
             "selected": true,
             "simple_modifications": {
-                "japanese_pc_nfer": "japanese_kana",
-                "japanese_pc_xfer": "japanese_eisuu"
+                "japanese_pc_nfer": "japanese_eisuu",
+                "japanese_pc_xfer": "japanese_kana"
             },
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
@@ -101,73 +77,77 @@
                         "manipulators": [
                             {
                                 "description": "Space -> Ctrl/Space",
-                                "type": "basic",
                                 "from": {
                                     "key_code": "spacebar"
                                 },
-                                "to": [{
-                                    "key_code": "left_control"
-                                }],
-                                "to_if_alone": [{
-                                    "key_code": "spacebar"
-                                }]
+                                "to": [
+                                    {
+                                        "key_code": "left_control"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "spacebar"
+                                    }
+                                ],
+                                "type": "basic"
                             },
                             {
                                 "description": "Kana -> Shift/Return",
-                                "type": "basic",
                                 "from": {
                                     "key_code": "lang1"
                                 },
-                                "to": [{
-                                    "key_code": "left_shift"
-                                }],
-                                "to_if_alone": [{
-                                    "key_code": "return_or_enter"
-                                }]
+                                "to": [
+                                    {
+                                        "key_code": "left_shift"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "return_or_enter"
+                                    }
+                                ],
+                                "type": "basic"
                             },
                             {
                                 "description": "Shift (L) -> Eisu",
-                                "type": "basic",
                                 "from": {
                                     "key_code": "left_shift"
                                 },
-                                "to": [{
-                                    "key_code": "left_shift"
-                                }],
-                                "to_if_alone": [{
-                                    "key_code": "japanese_eisuu"
-                                }]
+                                "to": [
+                                    {
+                                        "key_code": "left_shift"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "japanese_eisuu"
+                                    }
+                                ],
+                                "type": "basic"
                             },
                             {
                                 "description": "Shift (R) -> Kana",
-                                "type": "basic",
                                 "from": {
                                     "key_code": "right_shift"
                                 },
-                                "to": [{
-                                    "key_code": "right_shift"
-                                }],
-                                "to_if_alone": [{
-                                    "key_code": "japanese_kana"
-                                }]
+                                "to": [
+                                    {
+                                        "key_code": "right_shift"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "japanese_kana"
+                                    }
+                                ],
+                                "type": "basic"
                             }
                         ]
                     }
                 ]
             },
             "devices": [
-                {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": {},
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "is_pointing_device": false,
-                        "product_id": 4871,
-                        "vendor_id": 65261
-                    },
-                    "ignore": true,
-                    "simple_modifications": {}
-                },
                 {
                     "disable_built_in_keyboard_if_exists": false,
                     "fn_function_keys": {},
@@ -189,23 +169,11 @@
                         "7": "6",
                         "8": "7",
                         "9": "8",
-                        "hyphen": "0",
                         "equal_sign": "hyphen",
+                        "hyphen": "0",
                         "international1": "backslash",
                         "international3": "equal_sign"
                     }
-                },
-                {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": {},
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "is_pointing_device": false,
-                        "product_id": 34304,
-                        "vendor_id": 1452
-                    },
-                    "ignore": false,
-                    "simple_modifications": {}
                 }
             ],
             "fn_function_keys": {
@@ -225,8 +193,8 @@
             "name": "Pinkyless (Apple JIS)",
             "selected": false,
             "simple_modifications": {
-                "japanese_pc_nfer": "japanese_kana",
-                "japanese_pc_xfer": "japanese_eisuu"
+                "japanese_pc_nfer": "japanese_eisuu",
+                "japanese_pc_xfer": "japanese_kana"
             },
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,

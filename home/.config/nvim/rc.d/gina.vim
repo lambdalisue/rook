@@ -74,6 +74,16 @@ call gina#custom#mapping#nmap(
       \ '<Plug>(gina-commit-checkout-track)'
       \)
 call gina#custom#mapping#nmap(
+      \ 'status', '<C-^>',
+      \ ':<C-u>Gina commit<CR>',
+      \ {'noremap': 1, 'silent': 1}
+      \)
+call gina#custom#mapping#nmap(
+      \ 'commit', '<C-^>',
+      \ ':<C-u>Gina status<CR>',
+      \ {'noremap': 1, 'silent': 1}
+      \)
+call gina#custom#mapping#nmap(
       \ 'status', '<C-6>',
       \ ':<C-u>Gina commit<CR>',
       \ {'noremap': 1, 'silent': 1}
