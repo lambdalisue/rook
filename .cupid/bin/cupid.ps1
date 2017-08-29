@@ -12,18 +12,10 @@ if (-not (Test-Path env:CUPID_HOME)) {
   $env:CUPID_HOME = (Get-Item "$PSScriptRoot").parent.FullName
 }
 
-function echoerr([string]$msg) {
-  [Console]::Error.WriteLine($msg)
+$filename = Join-Path "$env:CUPID_HOME" "windows\$name.psm1"
+if (-not (Test-Path "$filename")) {
+  [Console]::Error.WriteLine "No such command exists '$name'"
+  exit 1
 }
-
-function cupid-main([string]$name, [array]$params) {
-  $filename = Join-Path "$env:CUPID_HOME" "windows\$name.psm1"
-
-  if (-not (Test-Path "$filename")) {
-    echoerr "No such command exists '$name'"
-    exit 1
-  }
-  Import-Module "$filename"
-  Invoke-Expression "invoke-cupid-command ($params -join ' ')"
-}
-cupid-main $name $params
+. "$filename"
+Invoke-Expression "Invoke-CupidCommand ($params -join ' ')"

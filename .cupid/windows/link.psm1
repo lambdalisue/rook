@@ -1,4 +1,6 @@
-function create-hardlink([string]$src, [string]$dst) {
+$REPOSITORY_ROOT = (Get-Item "$env:CUPID_HOME").parent.FullName
+
+function New-Hardlink([string]$src, [string]$dst) {
   try {
     Push-Location (Split-Path $dst -Parent)
     New-Item -Force -ItemType HardLink -Name (Split-Path $dst -Leaf) -Value $REPOSITORY_ROOT\$src > $null
@@ -8,7 +10,7 @@ function create-hardlink([string]$src, [string]$dst) {
   }
 }
 
-function create-junction([string]$src, [string]$dst) {
+function New-Junction([string]$src, [string]$dst) {
   try {
     Push-Location (Split-Path $dst -Parent)
     if (Test-Path $dst) {
@@ -21,24 +23,21 @@ function create-junction([string]$src, [string]$dst) {
   }
 }
 
-function create-link([string]$src, [string]$dst) {
-  if ((Get-Item $src) -is [System.IO.DirectoryInfo]) {
-    create-junction "$src" "$dst"
+function New-Link([string]$src, [string]$dst) {
+  if ((Get-Item "$REPOSITORY_ROOT\$src") -is [System.IO.DirectoryInfo]) {
+    New-Junction "$src" "$dst"
   }
   else {
-    create-hardlink "$src" "$dst"
+    New-Hardlink "$src" "$dst"
   }
   $Item = Get-Item $dst -Force
   $Item.attributes = "Hidden"
 
 }
 
-function invoke-cupid-command {
-  $root = (Get-Item "$env:CUPID_HOME").parent.FullName
-  create-link "$root\Documents\WindowsPowerShell" "$env:USERPROFILE\Documents\WindowsPowerShell"
-  create-link "$root\home\.config\nvim" "$env:LOCALAPPDATA\nvim"
-  create-link "$root\home\.gitconfig" "$env:USERPROFILE\.gitconfig"
-  create-link "$root\home\.gitignore" "$env:USERPROFILE\.gitignore"
+function Invoke-CupidCommand {
+  New-Link "Documents\WindowsPowerShell" "$env:USERPROFILE\Documents\WindowsPowerShell"
+  New-Link "home\.config\nvim" "$env:LOCALAPPDATA\nvim"
+  New-Link "home\.gitconfig" "$env:USERPROFILE\.gitconfig"
+  New-Link "home\.gitignore" "$env:USERPROFILE\.gitignore"
 }
-
-Export-ModuleMember -Function invoke-cupid-command
