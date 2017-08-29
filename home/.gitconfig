@@ -41,9 +41,3 @@
 	changelog-head = !python $HOME/.gittag-changelog/src/gittag_changelog.py --include-head
 	changelog-latest-head = !python $HOME/.gittag-changelog/src/gittag_changelog.py --latest-only --include-head
 	ask = "!f(){ echo -n 'Input: '; read STDIN; echo \"hello '$STDIN'\"; };f"
-
-[url "git@github.com:lambdalisue"]
-	insteadOf = https://github.com/lambdalisue
-
-[url "git@bitbucket.com:lambdalisue"]
-	insteadOf = https://bitbucket.org/lambdalisue
