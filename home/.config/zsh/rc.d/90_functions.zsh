@@ -31,7 +31,7 @@ install::anyenv() {
 }
 
 zsh::reload-rc() {
-  source ${ZDOTDIR}/zshrc
+  source ${ZDOTDIR}/.zshrc
 }
 
 zsh::remove-cache() {

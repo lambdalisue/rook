@@ -31,6 +31,8 @@ if executable('pt')
         \])
 endif
 
+call denite#custom#option('_', 'cursor_wrap', v:true)
+
 function! s:build_filemenu(description, precursors) abort
   let candidates = []
   for precursor in a:precursors
@@ -91,7 +93,7 @@ let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
       \ '~/.config/zsh/rc.d/10_config.zsh',
       \ '~/.config/zsh/rc.d/10_theme.zsh',
       \ '~/.config/zsh/rc.d/20_keymap.zsh',
-      \ '~/.config/zsh/rc.d/50_config_fzf.zsh',
+      \ '~/.config/zsh/rc.d/50_config_peco.zsh',
       \ '~/.config/zsh/rc.d/50_extend_rsync.zsh',
       \ '~/.config/zsh/rc.d/90_functions.zsh',
       \ '~/.config/tmux/',
