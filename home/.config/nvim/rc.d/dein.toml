@@ -183,6 +183,7 @@ repo = 'osyo-manga/shabadou.vim'
 repo = 'Shougo/vimproc.vim'
 build = 'make'
 merged = 0
+hook_add = 'let g:vimproc#download_windows_dll = 1'
 
 [[plugins]]
 repo = 'lambdalisue/vim-rplugin'
