@@ -57,10 +57,7 @@
             },
             "name": "Basic (Apple JIS)",
             "selected": true,
-            "simple_modifications": {
-                "japanese_pc_nfer": "japanese_eisuu",
-                "japanese_pc_xfer": "japanese_kana"
-            },
+            "simple_modifications": {},
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
                 "keyboard_type": "ansi"
@@ -192,10 +189,7 @@
             },
             "name": "Pinkyless (Apple JIS)",
             "selected": false,
-            "simple_modifications": {
-                "japanese_pc_nfer": "japanese_eisuu",
-                "japanese_pc_xfer": "japanese_kana"
-            },
+            "simple_modifications": {},
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
                 "keyboard_type": "ansi"
