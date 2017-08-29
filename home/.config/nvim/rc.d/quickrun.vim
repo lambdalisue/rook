@@ -16,10 +16,8 @@ let g:quickrun_config = extend(get(g:, 'quickrun_config', {}), {
       \   'exec': '%c exec perl %o %s',
       \ },
       \ 'ps1': {
+      \   'runner': 'system',
       \   'command': 'powershell',
-      \   'cmdopt': '-ExecutionPolicy RemoteSigned',
-      \   'tempfile': '%{tempname()}.ps1',
-      \   'exec': '%c %o -F %s:p'
       \ }
       \})
 
@@ -31,4 +29,3 @@ endif
 nnoremap <expr><silent> <C-c> quickrun#is_running()
       \ ? quickrun#sweep_sessions()
       \ : "\<C-c>"
-
