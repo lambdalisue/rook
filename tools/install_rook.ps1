@@ -25,5 +25,6 @@ function New-Link([string]$src, [string]$dst) {
 # Link
 New-Link "Documents\WindowsPowerShell" "$env:USERPROFILE\Documents\WindowsPowerShell"
 New-Link "home\.config\nvim" "$env:LOCALAPPDATA\nvim"
+New-Link "home\.config\peco" "$env:USERPROFILE\.config\peco"
 New-Link "home\.gitconfig" "$env:USERPROFILE\.gitconfig"
 New-Link "home\.gitignore" "$env:USERPROFILE\.gitignore"

@@ -105,6 +105,7 @@ let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
       \ '~/.gitconfig',
       \ '~/.gitignore',
       \ '~/.vimperatorrc',
+      \ '~/Documents/WindowsPowerShell/profile.ps1',
       \ 'https://raw.githubusercontent.com/codemirror/CodeMirror/HEAD/keymap/vim.js',
       \])
 call denite#custom#var('menu', 'menus', s:menus)
