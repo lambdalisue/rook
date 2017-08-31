@@ -6,9 +6,15 @@ $RepositoryRoot = (Get-Item "$PSScriptRoot").parent.FullName
 # Functions
 function New-Link([string]$src, [string]$dst) {
   $src = Join-Path "$RepositoryRoot" "$src"
+  if (-not (Test-Path "$src")) {
+    return
+  }
   try {
     Push-Location (Split-Path "$dst" -Parent)
-    if ((Get-Item "$src") -is [System.IO.DirectoryInfo] ) {
+    if ((Get-Item "$src" -Force) -is [System.IO.DirectoryInfo] ) {
+      if (Test-Path "$dst") {
+        Remove-Item (Split-Path "$dst" -Leaf) -Force -Confirm:$False -Recurse
+      }
       New-Item -Force -ItemType Junction -Name (Split-Path "$dst" -Leaf) -Value "$src" > $null
     }
     else {
@@ -18,7 +24,7 @@ function New-Link([string]$src, [string]$dst) {
   finally {
     Pop-Location
   }
-  $Item = Get-Item "$dst"
+  $Item = Get-Item "$dst" -Force
   $Item.attributes = 'Hidden'
 }
 
