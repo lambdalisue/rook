@@ -40,7 +40,7 @@ function Add-EnvPath {
   }
 
   $envPaths = $env:Path -split ';'
-  if ($envPaths -notcontains $Path)}{
+  if ($envPaths -notcontains $Path) {
     $envPaths = $envPAths + $Path | where { $_ }
     $env:Path = $envPaths -join ';'
   }
