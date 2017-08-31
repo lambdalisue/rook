@@ -7,20 +7,16 @@ Set-ExecutionPolicy RemoteSigned
 iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 # Install fundemental applications
-choco install -y git golang nodejs miniconda3 peco
+choco install -y git golang nodejs miniconda3 peco posh-git openssh
 
 # Install GUI applications
-choco install -y googlechrome conemu
+choco install -y googlechrome conemu rapidee
 choco install -y neovim --pre
-
-# Install tools
-go get github.com/motemen/ghq
-go get github.com/mattn/sudo
 
 # Configure PATH
 function Add-EnvPath {
   param(
-    [Parameter(Mondatory=$true)]
+    [Parameter(Mandatory=$true)]
     [string] $Path,
     [ValidateSet('Machine', 'User', 'Session')]
     [string] $Container = 'Session'
@@ -49,3 +45,7 @@ Add-EnvPath "$env:USERPROFILE\go\bin" "User"
 Add-EnvPath "$env:ALLUSERSPROFILE\Miniconda3" "Machine"
 Add-EnvPath "$env:ALLUSERSPROFILE\Miniconda3\Scripts" "Machine"
 Add-EnvPath "C:\tools\neovim\Neovim\bin" "Machine"
+
+# Install go tools
+go get github.com/motemen/ghq
+go get github.com/mattn/sudo

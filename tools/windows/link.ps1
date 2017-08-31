@@ -10,6 +10,9 @@ function New-Link([string]$src, [string]$dst) {
     return
   }
   try {
+    if (-not (Test-Path (Split-Path "$dst" -Parent))) {
+      New-Item -Force -ItemType Directory -Path (Split-Path "$dst" -Parent)
+    }
     Push-Location (Split-Path "$dst" -Parent)
     if ((Get-Item "$src" -Force) -is [System.IO.DirectoryInfo] ) {
       if (Test-Path "$dst") {
