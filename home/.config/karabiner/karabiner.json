@@ -39,6 +39,18 @@
                         "international1": "backslash",
                         "international3": "equal_sign"
                     }
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": {},
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 4871,
+                        "vendor_id": 65261
+                    },
+                    "ignore": false,
+                    "simple_modifications": {}
                 }
             ],
             "fn_function_keys": {
@@ -56,8 +68,11 @@
                 "f9": "fastforward"
             },
             "name": "Basic (Apple JIS)",
-            "selected": true,
-            "simple_modifications": {},
+            "selected": false,
+            "simple_modifications": {
+                "japanese_pc_nfer": "japanese_eisuu",
+                "japanese_pc_xfer": "japanese_kana"
+            },
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
                 "keyboard_type": "ansi"
@@ -188,8 +203,11 @@
                 "f9": "fastforward"
             },
             "name": "Pinkyless (Apple JIS)",
-            "selected": false,
-            "simple_modifications": {},
+            "selected": true,
+            "simple_modifications": {
+                "japanese_pc_nfer": "japanese_eisuu",
+                "japanese_pc_xfer": "japanese_kana"
+            },
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
                 "keyboard_type": "ansi"
