@@ -41,11 +41,16 @@ function Add-EnvPath {
     $env:Path = $envPaths -join ';'
   }
 }
-Add-EnvPath "$env:USERPROFILE\go\bin" "User"
 Add-EnvPath "$env:ALLUSERSPROFILE\Miniconda3" "Machine"
 Add-EnvPath "$env:ALLUSERSPROFILE\Miniconda3\Scripts" "Machine"
+Add-EnvPath "$env:ALLUSERSPROFILE\Miniconda3\Library\bin" "Machine"
 Add-EnvPath "C:\tools\neovim\Neovim\bin" "Machine"
+
+Add-EnvPath "$env:USERPROFILE\go\bin" "User"
 
 # Install go tools
 go get github.com/motemen/ghq
 go get github.com/mattn/sudo
+
+# Install neovim/jedi/flake8/etc...
+pip install neovim jedi flake8 autopep8 vim-vint mypy
