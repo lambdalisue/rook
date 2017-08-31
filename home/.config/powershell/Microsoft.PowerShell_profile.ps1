@@ -15,3 +15,9 @@ Set-PSReadlineKeyHandler -Chord 'Ctrl+r' -ScriptBlock {
 
 # Add new alias like open/gnome-open/xdg-open
 New-Alias open Invoke-Item
+
+# Chocolatey profile
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+  Import-Module "$ChocolateyProfile"
+}
