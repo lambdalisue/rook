@@ -46,6 +46,33 @@
                     "identifiers": {
                         "is_keyboard": true,
                         "is_pointing_device": false,
+                        "product_id": 568,
+                        "vendor_id": 1452
+                    },
+                    "ignore": false,
+                    "simple_modifications": {
+                        "0": "9",
+                        "1": "grave_accent_and_tilde",
+                        "2": "1",
+                        "3": "2",
+                        "4": "3",
+                        "5": "4",
+                        "6": "5",
+                        "7": "6",
+                        "8": "7",
+                        "9": "8",
+                        "equal_sign": "hyphen",
+                        "hyphen": "0",
+                        "international1": "backslash",
+                        "international3": "equal_sign"
+                    }
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": {},
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
                         "product_id": 4871,
                         "vendor_id": 65261
                     },
@@ -167,6 +194,33 @@
                         "is_keyboard": true,
                         "is_pointing_device": false,
                         "product_id": 632,
+                        "vendor_id": 1452
+                    },
+                    "ignore": false,
+                    "simple_modifications": {
+                        "0": "9",
+                        "1": "grave_accent_and_tilde",
+                        "2": "1",
+                        "3": "2",
+                        "4": "3",
+                        "5": "4",
+                        "6": "5",
+                        "7": "6",
+                        "8": "7",
+                        "9": "8",
+                        "equal_sign": "hyphen",
+                        "hyphen": "0",
+                        "international1": "backslash",
+                        "international3": "equal_sign"
+                    }
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": {},
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 568,
                         "vendor_id": 1452
                     },
                     "ignore": false,
