@@ -68,7 +68,7 @@
                 "f9": "fastforward"
             },
             "name": "Basic (Apple JIS)",
-            "selected": true,
+            "selected": false,
             "simple_modifications": {
                 "japanese_pc_nfer": "japanese_eisuu",
                 "japanese_pc_xfer": "japanese_kana"
@@ -203,7 +203,7 @@
                 "f9": "fastforward"
             },
             "name": "Pinkyless (Apple JIS)",
-            "selected": false,
+            "selected": true,
             "simple_modifications": {
                 "japanese_pc_nfer": "japanese_eisuu",
                 "japanese_pc_xfer": "japanese_kana"

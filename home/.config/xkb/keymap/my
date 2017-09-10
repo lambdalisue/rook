@@ -1,8 +1,0 @@
-// Usage: xkbcomp -I$HOME/.config/xkb ~/.config/xkb/keymap/usjis $DISPLAY
-xkb_keymap {
-  xkb_keycodes { include "evdev+aliases(qwerty)" };
-  xkb_types    { include "complete" };
-  xkb_compat   { include "complete+my+ledcaps(shift_lock)+ledscroll(scroll_lock)+lednum(num_lock)" };
-  xkb_symbols  { include "pc+inet(evdev)+ctrl(nocaps)+my" };
-  xkb_geometry { include "pc(pc104)" };
-};

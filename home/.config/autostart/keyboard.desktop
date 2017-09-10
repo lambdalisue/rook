@@ -1,6 +1,0 @@
-[Desktop Entry]
-Name="Configure keyboard"
-Exec=/home/alisue/.config/xkb/enable-keymap.sh
-Terminal=false
-Type=Application
-X-Gnome-Autostart=true
