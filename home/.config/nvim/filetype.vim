@@ -49,4 +49,8 @@ augroup filetypedetect
 
   " Docker
   autocmd BufNewFile,BufRead Dockerfile.* setfiletype Dockerfile
+
+  " InnoSetup
+  autocmd BufNewFile,BufRead *.pp setfiletype pascal
+  autocmd BufNewFile,BufRead *.isl setfiletype iss
 augroup END
