@@ -1082,6 +1082,10 @@ autocmd MyAutoCmd FileType typescript call s:tsuquyomi_configure()
 
 # Python development {{{
 [[plugins]]
+if = 'has("nvim") && (has("win32") || has("win64"))'
+repo = 'lambdalisue/pywin.nvim'
+
+[[plugins]]
 repo = 'lambdalisue/mypy-compiler.vim'
 
 [[plugins]]
