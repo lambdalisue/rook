@@ -32,3 +32,11 @@ function touch {
 New-Alias open Invoke-Item
 New-Alias grep Select-String
 New-Alias which Get-Command
+
+# Create aliases for Miniconda
+if (Test-Path("~\Miniconda3-32")) {
+  New-Alias conda32 "~\Miniconda3-32\Scripts\conda.exe"
+}
+if (Test-Path("~\Miniconda3-64")) {
+  New-Alias conda64 "~\Miniconda3-64\Scripts\conda.exe"
+}
