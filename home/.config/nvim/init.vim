@@ -69,10 +69,10 @@ if has('vim_starting')
   let g:loaded_man               = 1
   " NOTE:
   " The Netrw is use to download a missing spellfile
-  " let g:loaded_netrw             = 1
-  " let g:loaded_netrwPlugin       = 1
-  " let g:loaded_netrwSettings     = 1
-  " let g:loaded_netrwFileHandlers = 1
+  let g:loaded_netrw             = 1
+  let g:loaded_netrwPlugin       = 1
+  let g:loaded_netrwSettings     = 1
+  let g:loaded_netrwFileHandlers = 1
 endif
 " }}}
 
@@ -190,16 +190,16 @@ else
         \ 'C:\Python26\python.exe',
         \])
   let g:python3_host_prog = s:pick_executable([
-        \ 'C:\Users\alisue\AppData\Local\Programs\Python\Python37\python.exe',
+        \ '~\AppData\Local\Programs\Python\Python37\python.exe',
         \ 'C:\Program Files\Python37\python.exe',
-        \ 'C:\Users\alisue\AppData\Local\Programs\Python\Python36\python.exe',
+        \ '~\AppData\Local\Programs\Python\Python36\python.exe',
         \ 'C:\Program Files\Python36\python.exe',
         \])
 endif
 
 set viewdir=~/.cache/nvim/view
 set undodir=~/.cache/nvim/undo
-set spellfile=~/Dropbox/Vim/system/spellfile.utf-8.add
+"set spellfile=~/Dropbox/Vim/system/spellfile.utf-8.add
 " }}}
 
 " Language {{{
