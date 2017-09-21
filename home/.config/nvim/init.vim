@@ -184,6 +184,17 @@ if has('nvim') && !s:is_windows
   if has('mac')
     let $DYLD_FORCE_FLAT_NAMESPACE=1
   endif
+else
+  let g:python_host_prog = s:pick_executable([
+        \ 'C:\Python27\python.exe',
+        \ 'C:\Python26\python.exe',
+        \])
+  let g:python3_host_prog = s:pick_executable([
+        \ 'C:\Users\alisue\AppData\Local\Programs\Python\Python37\python.exe',
+        \ 'C:\Program Files\Python37\python.exe',
+        \ 'C:\Users\alisue\AppData\Local\Programs\Python\Python36\python.exe',
+        \ 'C:\Program Files\Python36\python.exe',
+        \])
 endif
 
 set viewdir=~/.cache/nvim/view

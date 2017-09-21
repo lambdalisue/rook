@@ -722,7 +722,7 @@ nnoremap <silent> <Space>hh :<C-u>Denite help<CR>
 nnoremap <silent> <Space>gg :<C-u>Denite grep<CR>
 nnoremap <silent> <Space>jj :<C-u>Denite jump<CR>
 nnoremap <silent> <Space>ss :<C-u>Denite menu:shortcut<CR>
-nnoremap <silent> <Space>qq :<C-u>Denite ghq<CR>
+nnoremap <silent> <Space>qq :<C-u>Denite -default-action=cd ghq<CR>
 nnoremap <silent> <Space>ww :<C-u>Denite buffer<CR>
 '''
 hook_source = '''
@@ -1081,13 +1081,6 @@ autocmd MyAutoCmd FileType typescript call s:tsuquyomi_configure()
 # }}}
 
 # Python development {{{
-[[plugins]]
-if = 'has("nvim") && (has("win32") || has("win64"))'
-repo = 'lambdalisue/pywin.nvim'
-
-[[plugins]]
-repo = 'lambdalisue/mypy-compiler.vim'
-
 [[plugins]]
 repo = 'lambdalisue/pyvenv.vim'
 on_cmd = ['PyvenvActivate', 'PyvenvDeactivate']
