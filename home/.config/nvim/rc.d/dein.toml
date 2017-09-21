@@ -708,7 +708,6 @@ execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/unite.vim'))
 '''
 
 [[plugins]]
-rev = '9416f57'
 repo = 'Shougo/denite.nvim'
 on_cmd = [
   'Denite',
@@ -723,11 +722,16 @@ nnoremap <silent> <Space>hh :<C-u>Denite help<CR>
 nnoremap <silent> <Space>gg :<C-u>Denite grep<CR>
 nnoremap <silent> <Space>jj :<C-u>Denite jump<CR>
 nnoremap <silent> <Space>ss :<C-u>Denite menu:shortcut<CR>
+nnoremap <silent> <Space>qq :<C-u>Denite ghq<CR>
 nnoremap <silent> <Space>ww :<C-u>Denite buffer<CR>
 '''
 hook_source = '''
 execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/denite.vim'))
 '''
+
+[[plugins]]
+repo = 'Jagua/vim-denite-ghq'
+on_source = 'denite.nvim'
 # }}}
 
 # Textobj {{{

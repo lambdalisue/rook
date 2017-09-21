@@ -15,7 +15,7 @@
             "devices": [
                 {
                     "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": {},
+                    "fn_function_keys": [],
                     "identifiers": {
                         "is_keyboard": true,
                         "is_pointing_device": false,
@@ -23,26 +23,124 @@
                         "vendor_id": 1452
                     },
                     "ignore": false,
-                    "simple_modifications": {
-                        "0": "9",
-                        "1": "grave_accent_and_tilde",
-                        "2": "1",
-                        "3": "2",
-                        "4": "3",
-                        "5": "4",
-                        "6": "5",
-                        "7": "6",
-                        "8": "7",
-                        "9": "8",
-                        "equal_sign": "hyphen",
-                        "hyphen": "0",
-                        "international1": "backslash",
-                        "international3": "equal_sign"
-                    }
+                    "simple_modifications": [
+                        {
+                            "from": {
+                                "key_code": "0"
+                            },
+                            "to": {
+                                "key_code": "9"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "equal_sign"
+                            },
+                            "to": {
+                                "key_code": "hyphen"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "hyphen"
+                            },
+                            "to": {
+                                "key_code": "0"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "international1"
+                            },
+                            "to": {
+                                "key_code": "backslash"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "international3"
+                            },
+                            "to": {
+                                "key_code": "equal_sign"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "1"
+                            },
+                            "to": {
+                                "key_code": "grave_accent_and_tilde"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "2"
+                            },
+                            "to": {
+                                "key_code": "1"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "3"
+                            },
+                            "to": {
+                                "key_code": "2"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "4"
+                            },
+                            "to": {
+                                "key_code": "3"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "5"
+                            },
+                            "to": {
+                                "key_code": "4"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "6"
+                            },
+                            "to": {
+                                "key_code": "5"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "7"
+                            },
+                            "to": {
+                                "key_code": "6"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "8"
+                            },
+                            "to": {
+                                "key_code": "7"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "9"
+                            },
+                            "to": {
+                                "key_code": "8"
+                            }
+                        }
+                    ]
                 },
                 {
                     "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": {},
+                    "fn_function_keys": [],
                     "identifiers": {
                         "is_keyboard": true,
                         "is_pointing_device": false,
@@ -50,26 +148,124 @@
                         "vendor_id": 1452
                     },
                     "ignore": false,
-                    "simple_modifications": {
-                        "0": "9",
-                        "1": "grave_accent_and_tilde",
-                        "2": "1",
-                        "3": "2",
-                        "4": "3",
-                        "5": "4",
-                        "6": "5",
-                        "7": "6",
-                        "8": "7",
-                        "9": "8",
-                        "equal_sign": "hyphen",
-                        "hyphen": "0",
-                        "international1": "backslash",
-                        "international3": "equal_sign"
-                    }
+                    "simple_modifications": [
+                        {
+                            "from": {
+                                "key_code": "0"
+                            },
+                            "to": {
+                                "key_code": "9"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "equal_sign"
+                            },
+                            "to": {
+                                "key_code": "hyphen"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "hyphen"
+                            },
+                            "to": {
+                                "key_code": "0"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "international1"
+                            },
+                            "to": {
+                                "key_code": "backslash"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "international3"
+                            },
+                            "to": {
+                                "key_code": "equal_sign"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "1"
+                            },
+                            "to": {
+                                "key_code": "grave_accent_and_tilde"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "2"
+                            },
+                            "to": {
+                                "key_code": "1"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "3"
+                            },
+                            "to": {
+                                "key_code": "2"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "4"
+                            },
+                            "to": {
+                                "key_code": "3"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "5"
+                            },
+                            "to": {
+                                "key_code": "4"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "6"
+                            },
+                            "to": {
+                                "key_code": "5"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "7"
+                            },
+                            "to": {
+                                "key_code": "6"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "8"
+                            },
+                            "to": {
+                                "key_code": "7"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "9"
+                            },
+                            "to": {
+                                "key_code": "8"
+                            }
+                        }
+                    ]
                 },
                 {
                     "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": {},
+                    "fn_function_keys": [],
                     "identifiers": {
                         "is_keyboard": true,
                         "is_pointing_device": false,
@@ -77,29 +273,127 @@
                         "vendor_id": 65261
                     },
                     "ignore": false,
-                    "simple_modifications": {}
+                    "simple_modifications": []
                 }
             ],
-            "fn_function_keys": {
-                "f1": "display_brightness_decrement",
-                "f10": "mute",
-                "f11": "volume_decrement",
-                "f12": "volume_increment",
-                "f2": "display_brightness_increment",
-                "f3": "mission_control",
-                "f4": "launchpad",
-                "f5": "illumination_decrement",
-                "f6": "illumination_increment",
-                "f7": "rewind",
-                "f8": "play_or_pause",
-                "f9": "fastforward"
-            },
+            "fn_function_keys": [
+                {
+                    "from": {
+                        "key_code": "f1"
+                    },
+                    "to": {
+                        "key_code": "display_brightness_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f2"
+                    },
+                    "to": {
+                        "key_code": "display_brightness_increment"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f3"
+                    },
+                    "to": {
+                        "key_code": "mission_control"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f4"
+                    },
+                    "to": {
+                        "key_code": "launchpad"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f5"
+                    },
+                    "to": {
+                        "key_code": "illumination_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f6"
+                    },
+                    "to": {
+                        "key_code": "illumination_increment"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f7"
+                    },
+                    "to": {
+                        "key_code": "rewind"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f8"
+                    },
+                    "to": {
+                        "key_code": "play_or_pause"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f9"
+                    },
+                    "to": {
+                        "key_code": "fastforward"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f10"
+                    },
+                    "to": {
+                        "key_code": "mute"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f11"
+                    },
+                    "to": {
+                        "key_code": "volume_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f12"
+                    },
+                    "to": {
+                        "key_code": "volume_increment"
+                    }
+                }
+            ],
             "name": "Basic (Apple JIS)",
             "selected": false,
-            "simple_modifications": {
-                "japanese_pc_nfer": "japanese_eisuu",
-                "japanese_pc_xfer": "japanese_kana"
-            },
+            "simple_modifications": [
+                {
+                    "from": {
+                        "key_code": "japanese_pc_nfer"
+                    },
+                    "to": {
+                        "key_code": "japanese_eisuu"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "japanese_pc_xfer"
+                    },
+                    "to": {
+                        "key_code": "japanese_kana"
+                    }
+                }
+            ],
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
                 "keyboard_type": "ansi"
@@ -189,7 +483,7 @@
             "devices": [
                 {
                     "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": {},
+                    "fn_function_keys": [],
                     "identifiers": {
                         "is_keyboard": true,
                         "is_pointing_device": false,
@@ -197,26 +491,124 @@
                         "vendor_id": 1452
                     },
                     "ignore": false,
-                    "simple_modifications": {
-                        "0": "9",
-                        "1": "grave_accent_and_tilde",
-                        "2": "1",
-                        "3": "2",
-                        "4": "3",
-                        "5": "4",
-                        "6": "5",
-                        "7": "6",
-                        "8": "7",
-                        "9": "8",
-                        "equal_sign": "hyphen",
-                        "hyphen": "0",
-                        "international1": "backslash",
-                        "international3": "equal_sign"
-                    }
+                    "simple_modifications": [
+                        {
+                            "from": {
+                                "key_code": "0"
+                            },
+                            "to": {
+                                "key_code": "9"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "equal_sign"
+                            },
+                            "to": {
+                                "key_code": "hyphen"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "hyphen"
+                            },
+                            "to": {
+                                "key_code": "0"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "international1"
+                            },
+                            "to": {
+                                "key_code": "backslash"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "international3"
+                            },
+                            "to": {
+                                "key_code": "equal_sign"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "1"
+                            },
+                            "to": {
+                                "key_code": "grave_accent_and_tilde"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "2"
+                            },
+                            "to": {
+                                "key_code": "1"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "3"
+                            },
+                            "to": {
+                                "key_code": "2"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "4"
+                            },
+                            "to": {
+                                "key_code": "3"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "5"
+                            },
+                            "to": {
+                                "key_code": "4"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "6"
+                            },
+                            "to": {
+                                "key_code": "5"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "7"
+                            },
+                            "to": {
+                                "key_code": "6"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "8"
+                            },
+                            "to": {
+                                "key_code": "7"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "9"
+                            },
+                            "to": {
+                                "key_code": "8"
+                            }
+                        }
+                    ]
                 },
                 {
                     "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": {},
+                    "fn_function_keys": [],
                     "identifiers": {
                         "is_keyboard": true,
                         "is_pointing_device": false,
@@ -224,44 +616,264 @@
                         "vendor_id": 1452
                     },
                     "ignore": false,
-                    "simple_modifications": {
-                        "0": "9",
-                        "1": "grave_accent_and_tilde",
-                        "2": "1",
-                        "3": "2",
-                        "4": "3",
-                        "5": "4",
-                        "6": "5",
-                        "7": "6",
-                        "8": "7",
-                        "9": "8",
-                        "equal_sign": "hyphen",
-                        "hyphen": "0",
-                        "international1": "backslash",
-                        "international3": "equal_sign"
+                    "simple_modifications": [
+                        {
+                            "from": {
+                                "key_code": "0"
+                            },
+                            "to": {
+                                "key_code": "9"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "equal_sign"
+                            },
+                            "to": {
+                                "key_code": "hyphen"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "hyphen"
+                            },
+                            "to": {
+                                "key_code": "0"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "international1"
+                            },
+                            "to": {
+                                "key_code": "backslash"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "international3"
+                            },
+                            "to": {
+                                "key_code": "equal_sign"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "1"
+                            },
+                            "to": {
+                                "key_code": "grave_accent_and_tilde"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "2"
+                            },
+                            "to": {
+                                "key_code": "1"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "3"
+                            },
+                            "to": {
+                                "key_code": "2"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "4"
+                            },
+                            "to": {
+                                "key_code": "3"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "5"
+                            },
+                            "to": {
+                                "key_code": "4"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "6"
+                            },
+                            "to": {
+                                "key_code": "5"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "7"
+                            },
+                            "to": {
+                                "key_code": "6"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "8"
+                            },
+                            "to": {
+                                "key_code": "7"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "9"
+                            },
+                            "to": {
+                                "key_code": "8"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [],
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 34304,
+                        "vendor_id": 1452
+                    },
+                    "ignore": false,
+                    "simple_modifications": []
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [],
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 4871,
+                        "vendor_id": 65261
+                    },
+                    "ignore": true,
+                    "simple_modifications": []
+                }
+            ],
+            "fn_function_keys": [
+                {
+                    "from": {
+                        "key_code": "f1"
+                    },
+                    "to": {
+                        "key_code": "display_brightness_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f2"
+                    },
+                    "to": {
+                        "key_code": "display_brightness_increment"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f3"
+                    },
+                    "to": {
+                        "key_code": "mission_control"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f4"
+                    },
+                    "to": {
+                        "key_code": "launchpad"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f5"
+                    },
+                    "to": {
+                        "key_code": "illumination_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f6"
+                    },
+                    "to": {
+                        "key_code": "illumination_increment"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f7"
+                    },
+                    "to": {
+                        "key_code": "rewind"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f8"
+                    },
+                    "to": {
+                        "key_code": "play_or_pause"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f9"
+                    },
+                    "to": {
+                        "key_code": "fastforward"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f10"
+                    },
+                    "to": {
+                        "key_code": "mute"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f11"
+                    },
+                    "to": {
+                        "key_code": "volume_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f12"
+                    },
+                    "to": {
+                        "key_code": "volume_increment"
                     }
                 }
             ],
-            "fn_function_keys": {
-                "f1": "display_brightness_decrement",
-                "f10": "mute",
-                "f11": "volume_decrement",
-                "f12": "volume_increment",
-                "f2": "display_brightness_increment",
-                "f3": "mission_control",
-                "f4": "launchpad",
-                "f5": "illumination_decrement",
-                "f6": "illumination_increment",
-                "f7": "rewind",
-                "f8": "play_or_pause",
-                "f9": "fastforward"
-            },
             "name": "Pinkyless (Apple JIS)",
             "selected": true,
-            "simple_modifications": {
-                "japanese_pc_nfer": "japanese_eisuu",
-                "japanese_pc_xfer": "japanese_kana"
-            },
+            "simple_modifications": [
+                {
+                    "from": {
+                        "key_code": "japanese_pc_nfer"
+                    },
+                    "to": {
+                        "key_code": "japanese_eisuu"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "japanese_pc_xfer"
+                    },
+                    "to": {
+                        "key_code": "japanese_kana"
+                    }
+                }
+            ],
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
                 "keyboard_type": "ansi"

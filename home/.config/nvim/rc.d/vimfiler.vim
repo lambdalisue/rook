@@ -29,35 +29,19 @@ function! s:configure_vimfiler() abort
   nnoremap <buffer><silent> <Plug>(vimfiler_tab_edit_file)
         \ :<C-u>call vimfiler#mappings#do_action(b:vimfiler, 'tabopen')<CR>
   nmap <buffer> t <Plug>(vimfiler_tab_edit_file)
-  " <Space>k to open bookmark
-  nmap <buffer><silent> <Space>k :<C-u>Unite bookmark<CR>
 endfunction
-autocmd MyAutoCmd FileType vimfiler call s:configure_vimfiler()
 
-function! s:cd_all_vimfiler(path) abort
-  let current_nr = winnr()
-  try
-    for winnr in filter(range(1, winnr('$')),
-          \ "getwinvar(v:val, '&filetype') ==# 'vimfiler'")
-      call vimfiler#util#winmove(winnr)
-      call vimfiler#mappings#cd(a:path)
-    endfor
-  finally
-    call vimfiler#util#winmove(current_nr)
-  endtry
+function! s:enable_cd_to_cwd_on_edit() abort
+  setlocal buftype=nowrite
+  augroup _vimfiler_cd_to_cwd_on_edit
+    autocmd! *
+    autocmd BufReadCmd <buffer> call vimfiler#mappings#cd(getcwd())
+  augroup END
 endfunction
-autocmd MyAutoCmd User my-workon-post call s:cd_all_vimfiler(getcwd())
 
-" XXX: This is a work around
-" Note:
-"   Somehow, &winfixwidth of a buffer opened from VimFilerExplorer is set to
-"   1 and thus <C-w>= or those kind of command doesn't work.
-"   This work around stands for fixing that.
-function! s:force_nofixwidth() abort
-  if &buftype =~# '^\%(\|nowrite\|acwrite\)$'
-    setlocal nowinfixwidth
-  endif
-endfunction
-autocmd MyAutoCmd BufWinEnter * call s:force_nofixwidth()
-
+augroup my_vimfiler_configure
+  autocmd! *
+  autocmd FileType vimfiler call s:configure_vimfiler()
+  autocmd FileType vimfiler call s:enable_cd_to_cwd_on_edit()
+augroup END
 " vim: expandtab softtabstop=2 shiftwidth=2 foldmethod=marker
