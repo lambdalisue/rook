@@ -663,12 +663,13 @@ function! s:remove_trailing_spaces_automatically() abort
   augroup END
 endfunction
 augroup enable_remove_trailing_spaces_automatically
-  autocmd FileType perl call s:remove_trailing_spaces_automatically()
-  autocmd FileType python call s:remove_trailing_spaces_automatically()
-  autocmd FileType vim call s:remove_trailing_spaces_automatically()
-  autocmd FileType vimspec call s:remove_trailing_spaces_automatically()
-  autocmd FileType javascript call s:remove_trailing_spaces_automatically()
-  autocmd FileType typescript call s:remove_trailing_spaces_automatically()
+  execute printf(
+        \ 'autocmd FileType %s call s:remove_trailing_spaces_automatically()',
+        \ join(split(
+        \   'perl python vim vimspec javascript typescript ' .
+        \   'dosbatch ps1 sh iss pascal'
+        \ ), ',')
+        \)
 augroup END
 " }}}
 
