@@ -1,16 +1,14 @@
 $ErrorActionPreference = 'Stop'
 
-# Change powershell execution policy
-Set-ExecutionPolicy RemoteSigned
- 
 # Install chocolatey
 iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 # Install fundemental applications
-choco install -y git golang nodejs miniconda3 peco posh-git openssh
+choco install -y git posh-git golang nodejs peco openssh
+choco install -y python2 python3 miniconda3
 
 # Install GUI applications
-choco install -y googlechrome conemu rapidee
+choco install -y vivaldi googlechrome conemu rapidee hain
 choco install -y neovim --pre
 
 # Configure PATH
@@ -41,16 +39,16 @@ function Add-EnvPath {
     $env:Path = $envPaths -join ';'
   }
 }
-Add-EnvPath "$env:ALLUSERSPROFILE\Miniconda3" "Machine"
-Add-EnvPath "$env:ALLUSERSPROFILE\Miniconda3\Scripts" "Machine"
-Add-EnvPath "$env:ALLUSERSPROFILE\Miniconda3\Library\bin" "Machine"
 Add-EnvPath "C:\tools\neovim\Neovim\bin" "Machine"
-
-Add-EnvPath "$env:USERPROFILE\go\bin" "User"
+Add-EnvPath (Join-Path $env:USERPROFILE "go\bin") "User"
 
 # Install go tools
 go get github.com/motemen/ghq
 go get github.com/mattn/sudo
 
-# Install neovim/jedi/flake8/etc...
-pip install neovim jedi flake8 autopep8 vim-vint mypy
+# Install 'rook' with ghq
+$env:GHQ_ROOT = Join-Path $env:USERPROFILE "Code"
+ghq get https://github.com/lambdalisue/rook
+
+# Link
+& (Join-Path $env:USERPROFILE "Code\github.com\lambdalisue\rook\tools\windows\link.ps1")
