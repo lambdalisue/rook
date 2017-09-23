@@ -41,6 +41,7 @@ function Add-EnvPath {
 }
 Add-EnvPath "C:\tools\neovim\Neovim\bin" "Machine"
 Add-EnvPath (Join-Path $env:USERPROFILE "go\bin") "User"
+refreshenv
 
 # Install go tools
 go get github.com/motemen/ghq

@@ -190,6 +190,8 @@ else
         \ 'C:\Python26\python.exe',
         \])
   let g:python3_host_prog = s:pick_executable([
+        \ 'C:\Python37\python.exe',
+        \ 'C:\Python36\python.exe',
         \ '~\AppData\Local\Programs\Python\Python37\python.exe',
         \ 'C:\Program Files\Python37\python.exe',
         \ '~\AppData\Local\Programs\Python\Python36\python.exe',
