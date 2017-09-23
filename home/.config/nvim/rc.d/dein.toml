@@ -675,7 +675,8 @@ let g:neocomplete#enable_at_startup = !has('nvim')
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-hook_add = '''
+on_i = 1
+hook_source = '''
 let g:deoplete#enable_at_startup = has('nvim')
 '''
 
