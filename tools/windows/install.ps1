@@ -8,7 +8,7 @@ choco install -y git posh-git golang nodejs peco openssh
 choco install -y python2 python3 miniconda3
 
 # Install GUI applications
-choco install -y vivaldi googlechrome conemu rapidee hain
+choco install -y vivaldi googlechrome conemu rapidee hain notepadplusplus
 choco install -y neovim --pre
 
 # Configure PATH
