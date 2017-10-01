@@ -494,30 +494,6 @@
                     "simple_modifications": [
                         {
                             "from": {
-                                "key_code": "0"
-                            },
-                            "to": {
-                                "key_code": "9"
-                            }
-                        },
-                        {
-                            "from": {
-                                "key_code": "equal_sign"
-                            },
-                            "to": {
-                                "key_code": "hyphen"
-                            }
-                        },
-                        {
-                            "from": {
-                                "key_code": "hyphen"
-                            },
-                            "to": {
-                                "key_code": "0"
-                            }
-                        },
-                        {
-                            "from": {
                                 "key_code": "international1"
                             },
                             "to": {
@@ -529,79 +505,7 @@
                                 "key_code": "international3"
                             },
                             "to": {
-                                "key_code": "equal_sign"
-                            }
-                        },
-                        {
-                            "from": {
-                                "key_code": "1"
-                            },
-                            "to": {
                                 "key_code": "grave_accent_and_tilde"
-                            }
-                        },
-                        {
-                            "from": {
-                                "key_code": "2"
-                            },
-                            "to": {
-                                "key_code": "1"
-                            }
-                        },
-                        {
-                            "from": {
-                                "key_code": "3"
-                            },
-                            "to": {
-                                "key_code": "2"
-                            }
-                        },
-                        {
-                            "from": {
-                                "key_code": "4"
-                            },
-                            "to": {
-                                "key_code": "3"
-                            }
-                        },
-                        {
-                            "from": {
-                                "key_code": "5"
-                            },
-                            "to": {
-                                "key_code": "4"
-                            }
-                        },
-                        {
-                            "from": {
-                                "key_code": "6"
-                            },
-                            "to": {
-                                "key_code": "5"
-                            }
-                        },
-                        {
-                            "from": {
-                                "key_code": "7"
-                            },
-                            "to": {
-                                "key_code": "6"
-                            }
-                        },
-                        {
-                            "from": {
-                                "key_code": "8"
-                            },
-                            "to": {
-                                "key_code": "7"
-                            }
-                        },
-                        {
-                            "from": {
-                                "key_code": "9"
-                            },
-                            "to": {
-                                "key_code": "8"
                             }
                         }
                     ]
