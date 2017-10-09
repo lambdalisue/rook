@@ -23,6 +23,7 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.scss     setfiletype scss
   autocmd BufNewFile,BufRead *.ts       setfiletype typescript
   autocmd BufNewFile,BufRead *.json     setfiletype json
+  autocmd BufNewFile,BufRead .babelrc   setfiletype json
   autocmd BufNewFile,BufRead *.jsm      setfiletype javascript
   autocmd BufNewFile,BufRead *.coffee   setfiletype coffeescript
   autocmd BufNewFile,BufRead Cakefile   setfiletype coffeescript
@@ -53,4 +54,5 @@ augroup filetypedetect
   " InnoSetup
   autocmd BufNewFile,BufRead *.pp setfiletype pascal
   autocmd BufNewFile,BufRead *.isl setfiletype iss
+
 augroup END

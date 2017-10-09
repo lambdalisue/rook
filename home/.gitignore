@@ -11,6 +11,7 @@
 .venv2
 .venv3
 .mypy_cache
+.tern-port
 
 # Language
 #-----------------------------------------

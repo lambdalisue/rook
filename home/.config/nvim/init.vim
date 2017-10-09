@@ -464,15 +464,6 @@ nnoremap <Space>p gT
 nnoremap <Space>p "0p
 nnoremap <Space>P "0P
 
-" Seemless substitution with :s<Space> {{{
-cnoreabbrev <silent><expr>s getcmdtype() ==# ':' && getcmdline() =~# '^s'
-      \ ? "%s/<C-r>=get([], getchar(0), '')<CR>"
-      \ : 's'
-cnoreabbrev <silent><expr>'<,'>s getcmdtype() ==# ':' && getcmdline() =~# "^'<,'>s"
-      \ ? "'<,'>s/<C-r>=get([], getchar(0), '')<CR>"
-      \ : "'<,'>s"
-" }}}
-
 " Execute a macro over a visual range with @ {{{
 function! s:execute_macro_over_visual_range() abort
   execute ":'<,'>normal @" . nr2char(getchar())
@@ -660,14 +651,16 @@ augroup MyAutoCmd
 augroup END
 
 " Improve mkview/loadview {{{
-function! s:checkview() abort
-  if !&buflisted || &buftype =~# '^\%(nofile\|help\|quickfix\|terminal\)$' || &previewwindow
-    return 0
-  endif
-  return 1
-endfunction
-autocmd MyAutoCmd BufWinLeave * if s:checkview() | silent! mkview   | endif
-autocmd MyAutoCmd BufWinEnter * if s:checkview() | silent! loadview | endif
+" function! s:checkview() abort
+"   if !&buflisted || &buftype =~# '^\%(nofile\|help\|quickfix\|terminal\)$' || &previewwindow
+"     return 0
+"   elseif &filetype =~# '^\%(vimfiler\|deoplete\)$'
+"     return 0
+"   endif
+"   return 1
+" endfunction
+" autocmd MyAutoCmd BufWinLeave * if s:checkview() | silent! mkview   | endif
+" autocmd MyAutoCmd BufWinEnter * if s:checkview() | silent! loadview | endif
 " }}}
 
 " Automatically remove trailing spaces {{{

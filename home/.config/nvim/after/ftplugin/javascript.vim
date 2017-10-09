@@ -1,6 +1,6 @@
 setl tabstop=8
-setl softtabstop=2
-setl shiftwidth=2
+setl softtabstop=4
+setl shiftwidth=4
 setl smarttab
 setl expandtab
 
@@ -12,3 +12,6 @@ setl textwidth=0
 if exists('&colorcolumn')
   setl colorcolumn=79
 endif
+
+" https://github.com/leafgarland/typescript-vim#indenting
+setl indentkeys+=0.

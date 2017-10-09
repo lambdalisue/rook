@@ -495,6 +495,7 @@ endfunction
 augroup my_vim_cursorword
   autocmd! *
   autocmd BufEnter * call s:disable_vim_cursorword()
+  autocmd FileType html,vue let b:cursorword = 0
 augroup END
 '''
 
@@ -678,6 +679,7 @@ repo = 'Shougo/deoplete.nvim'
 on_i = 1
 hook_source = '''
 let g:deoplete#enable_at_startup = has('nvim')
+call deoplete#custom#source('omni', 'is_silent', 1)
 '''
 
 [[plugins]]
@@ -687,13 +689,42 @@ depends = 'deoplete.nvim'
 build = 'npm install -g tern'
 on_ft = 'javascript'
 
+# NOTE:
+# This plugins often cause 'channel' exception...
 [[plugins]]
-repo = 'mhartington/deoplete-typescript'
 if = 'executable("npm")'
+repo = 'mhartington/nvim-typescript'
 depends = 'deoplete.nvim'
 build = 'npm install -g typescript'
 on_ft = 'typescript'
+hook_add = '''
+let g:nvim_typescript#javascript_support = 1
+let g:nvim_typescript#vue_support = 1
+let g:nvim_typescript#type_info_on_hold = 1
+let g:nvim_typescript#default_mappings = 1
+'''
 
+# [[plugins]]
+# if = 'executable("npm")'
+# repo = 'Quramy/tsuquyomi'
+# depends = 'vimproc.vim'
+# build = 'npm install -g typescript'
+# on_ft = 'typescript'
+# hook_add = '''
+# let g:tsuquyomi_disable_default_mappings = 1
+# let g:tsuquyomi_disable_quickfix = 1
+# function! s:tsuquyomi_configure() abort
+#   nmap <buffer> <LocalLeader>d <Plug>(TsuquyomiDefinition)
+#   nmap <buffer> <LocalLeader>b <Plug>(TsuquyomiGoBack)
+#   nmap <buffer> <LocalLeader>r <Plug>(TsuquyomiReferences)
+#   nmap <buffer> <LocalLeader>R <Plug>(TsuquyomiRenameSymbolC)
+#   if exists('&ballooneval')
+#     setlocal ballooneval
+#     setlocal balloonexpr=tsuquyomi#balloonexpr()
+#   endif
+# endfunction
+# autocmd MyAutoCmd FileType typescript call s:tsuquyomi_configure()
+# '''
 
 # }}}
 
@@ -716,7 +747,6 @@ on_cmd = [
 ]
 hook_add = '''
 nnoremap <silent> <Space><Space> :<C-u>Denite -resume<CR>
-nnoremap <silent> <Space>fo :<C-u>Denite file_old<CR>
 nnoremap <silent> <Space>ff :<C-u>Denite file_rec<CR>
 nnoremap <silent> <Space>dd :<C-u>Denite directory_rec<CR>
 nnoremap <silent> <Space>hh :<C-u>Denite help<CR>
@@ -724,6 +754,7 @@ nnoremap <silent> <Space>gg :<C-u>Denite grep<CR>
 nnoremap <silent> <Space>jj :<C-u>Denite jump<CR>
 nnoremap <silent> <Space>ss :<C-u>Denite menu:shortcut<CR>
 nnoremap <silent> <Space>qq :<C-u>Denite -default-action=cd ghq<CR>
+nnoremap <silent> <Space>oo :<C-u>Denite file_old<CR>
 nnoremap <silent> <Space>ww :<C-u>Denite buffer<CR>
 '''
 hook_source = '''
@@ -993,6 +1024,9 @@ repo = 'PProvost/vim-ps1'
 repo = 'posva/vim-vue'
 
 [[plugins]]
+repo = 'othree/html5.vim'
+
+[[plugins]]
 repo = 'zplug/vim-zplug'
 
 [[plugins]]
@@ -1003,9 +1037,6 @@ repo = 'cespare/vim-toml'
 
 [[plugins]]
 repo = 'hail2u/vim-css3-syntax'
-
-[[plugins]]
-repo = 'othree/html5.vim'
 
 [[plugins]]
 repo = 'groenewege/vim-less'
@@ -1023,15 +1054,21 @@ repo = 'elzr/vim-json'
 repo = 'vim-scripts/jQuery'
 
 [[plugins]]
-repo = 'pangloss/vim-javascript'
+repo = 'othree/yajs.vim'
 
 [[plugins]]
-repo = 'jelera/vim-javascript-syntax'
+repo = 'othree/javascript-libraries-syntax.vim'
+hook_add = '''
+let g:used_javascript_libs = 'jquery,underscore,vue,chai'
+'''
+
+[[plugins]]
+repo = 'othree/es.next.syntax.vim'
 
 [[plugins]]
 repo = 'leafgarland/typescript-vim'
 hook_source = '''
-let g:typescript_indent_disable = 1
+" let g:typescript_indent_disable = 1
 let g:typescript_compiler_options = '-sourcemap'
 '''
 
@@ -1058,26 +1095,6 @@ on_ft = 'perl'
 
 [[plugins]]
 repo = 'lambdalisue/vim-riot'
-
-[[plugins]]
-if = 'executable("npm")'
-repo = 'Quramy/tsuquyomi'
-depends = 'vimproc.vim'
-build = 'npm install -g typescript'
-on_ft = 'typescript'
-hook_add = '''
-function! s:tsuquyomi_configure() abort
-  nmap <buffer> <LocalLeader>d <Plug>(TsuquyomiDefinition)
-  nmap <buffer> <LocalLeader>b <Plug>(TsuquyomiGoBack)
-  nmap <buffer> <LocalLeader>r <Plug>(TsuquyomiReferences)
-  nmap <buffer> <LocalLeader>R <Plug>(TsuquyomiRenameSymbolC)
-  if exists('&ballooneval')
-    setlocal ballooneval
-    setlocal balloonexpr=tsuquyomi#balloonexpr()
-  endif
-endfunction
-autocmd MyAutoCmd FileType typescript call s:tsuquyomi_configure()
-'''
 
 # }}}
 
