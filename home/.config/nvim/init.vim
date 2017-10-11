@@ -302,21 +302,6 @@ if exists('&breakindent')
   set breakindent   " every wrapped line will continue visually indented
 endif
 
-function! FoldText() abort
-  let lnum = nextnonblank(v:foldstart)
-  let line = lnum > v:foldend
-        \ ? getline(v:foldstart)
-        \ : substitute(getline(lnum), '\t', repeat(' ', &tabstop), 'g')
-  let w = winwidth(0) - &foldcolumn - 3
-  let w -= &signcolumn ==# 'no' ? 0 : 2
-  let w -= (&number || &relativenumber) ? len(string(line('$'))) + 1 : 0
-  let s = (1 + v:foldend - v:foldstart) . ' lines'
-  let f = repeat('|', v:foldlevel)
-  let e = repeat('.', w - strwidth(line . s . f))
-  return join([line, e, s, f], ' ')
-endf
-set foldtext=FoldText()
-
 if exists('&inccommand')
   " Show the effects of a command incrementally
   set inccommand=nosplit

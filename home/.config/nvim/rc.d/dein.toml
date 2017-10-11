@@ -6,6 +6,9 @@ repo = 'Shougo/dein.vim'
 repo = 'lambdalisue/vim-unified-diff'
 
 [[plugins]]
+repo = 'lambdalisue/readablefold.vim'
+
+[[plugins]]
 repo = 'lambdalisue/macra.vim'
 hook_add = '''
 if dein#tap('macra.vim')
