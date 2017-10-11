@@ -15,4 +15,4 @@ endif
 
 " https://github.com/leafgarland/typescript-vim#indenting
 setl indentkeys+=0.
-setl foldexpr=syntax
+setl foldmethod=syntax
