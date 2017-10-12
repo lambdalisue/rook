@@ -475,7 +475,8 @@ augroup END
 [[plugins]]
 repo = 'itchyny/vim-cursorword'
 hook_add = '''
-let g:cursorword = get(g:, 'cursorword', 1)
+" Initially disable
+let g:cursorword = 0
 
 function! s:toggle_vim_cursorword() abort
   let g:cursorword = g:cursorword ? 0 : 1
@@ -498,7 +499,6 @@ endfunction
 augroup my_vim_cursorword
   autocmd! *
   autocmd BufEnter * call s:disable_vim_cursorword()
-  autocmd FileType html,vue let b:cursorword = 0
 augroup END
 '''
 
@@ -686,8 +686,45 @@ call deoplete#custom#source('omni', 'is_silent', 1)
 '''
 
 [[plugins]]
-repo = 'carlitux/deoplete-ternjs'
+repo = 'Shougo/neco-vim'
+depends = 'deoplete.nvim'
+on_ft = 'vim'
+
+[[plugins]]
+repo = 'Shougo/neco-syntax'
+depends = 'deoplete.nvim'
+
+[[plugins]]
+repo = 'Shougo/neco-look'
+depends = 'deoplete.nvim'
+
+[[plugins]]
+repo = 'fszymanski/deoplete-emoji'
+depends = 'deoplete.nvim'
+
+[[plugins]]
+repo = 'zchee/deoplete-go'
+depends = 'deoplete.nvim'
+on_ft = 'go'
+
+[[plugins]]
+repo = 'zchee/deoplete-jedi'
+depends = 'deoplete.nvim'
+on_ft = ['python', 'python3']
+
+[[plugins]]
+repo = 'zchee/deoplete-zsh'
+depends = 'deoplete.nvim'
+on_ft = 'zsh'
+
+[[plugins]]
+repo = 'wellle/tmux-complete.vim'
+depends = 'deoplete.nvim'
+on_ft = 'tmux'
+
+[[plugins]]
 if = 'executable("npm")'
+repo = 'carlitux/deoplete-ternjs'
 depends = 'deoplete.nvim'
 build = 'npm install -g tern'
 on_ft = 'javascript'
@@ -1106,11 +1143,6 @@ repo = 'lambdalisue/vim-riot'
 repo = 'lambdalisue/pyvenv.vim'
 on_cmd = ['PyvenvActivate', 'PyvenvDeactivate']
 on_ft = ['python', 'python3']
-
-[[plugins]]
-repo = 'zchee/deoplete-jedi'
-on_ft = ['python', 'python3']
-depends = 'deoplete.nvim'
 
 [[plugins]]
 repo = 'davidhalter/jedi-vim'
