@@ -56,8 +56,9 @@ if exists('antialias')
   set antialias
 endif
 
-if has(':Guifont')
-  Guifont! Literation\ Mono\ Powerline:h11
+
+if exists(':Guifont')
+  Guifont! Liberation\ Mono\ for\ Powerline:h12
 elseif has('gui_macvim')
   " http://d.hatena.ne.jp/yascentur/20120221/1329756132
   " http://d.hatena.ne.jp/yascentur/20110621/1308650962
