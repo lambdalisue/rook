@@ -129,8 +129,7 @@ map gz* <Plug>(asterisk-gz*)
 
 [[plugins]]
 repo = 'cohama/lexima.vim'
-on_i = 1
-hook_source = '''
+hook_add = '''
 execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/lexima.vim'))
 '''
 
@@ -671,16 +670,8 @@ endif
 
 # Deoplete {{{
 [[plugins]]
-repo = 'Shougo/neocomplete.vim'
-on_i = 1
-hook_source = '''
-let g:neocomplete#enable_at_startup = !has('nvim')
-'''
-
-[[plugins]]
 repo = 'Shougo/deoplete.nvim'
-on_i = 1
-hook_source = '''
+hook_add = '''
 let g:deoplete#enable_at_startup = has('nvim')
 call deoplete#custom#source('omni', 'is_silent', 1)
 '''
