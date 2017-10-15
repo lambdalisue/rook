@@ -47,9 +47,13 @@ if has('vim_starting')
   set ttimeout
   set ttimeoutlen=100
 
-  " Use bash on Vim
-  if !has('nvim') && !s:is_windows
-    set shell=/bin/bash
+  if !s:is_windows
+    if has('nvim')
+      set shell=/usr/local/bin/zsh
+    else
+      " Use bash on Vim
+      set shell=/bin/bash
+    endif
   endif
 
   " Disable unnecessary default plugins
