@@ -35,11 +35,11 @@ zplug "motemen/ghq", \
   from:gh-r, \
   rename-to:ghq
 
-# GitHub integration CLI tool
-zplug "github/hub", \
-  as:command, \
-  from:gh-r, \
-  rename-to:hub
+# # GitHub integration CLI tool
+# zplug "github/hub", \
+#   as:command, \
+#   from:gh-r, \
+#   rename-to:hub
 
 zplug "glidenote/hub-zsh-completion", \
   on:"github/hub"
