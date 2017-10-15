@@ -284,7 +284,7 @@ hide_cursor_when_typing: true
 # You can set shell.program to the path of your favorite shell, e.g. /bin/fish.
 # Entries in shell.args are passed unmodified as arguments to the shell.
 #
-#shell:
-#  program: /bin/bash
+shell:
+  program: /usr/local/bin/zsh
 #  args:
 #    - --login
