@@ -25,7 +25,9 @@ if has('vim_starting')
   silent! unlet c_comment_strings
 
   " Use as many color as possible
-  if !has('gui_running') && exists('&termguicolors')
+  if !has('gui_running')
+        \ && exists('&termguicolors')
+        \ && $COLORTERM ==# 'truecolor'
     set termguicolors       " use truecolor in term
   endif
   if &term =~# '256color'

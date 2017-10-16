@@ -12,6 +12,7 @@ env:
   # You can verify this by checking for the presence of `smso` and `sitm` in
   # `infocmp xterm-256color`.
   TERM: xterm-256color
+  COLORTERM: truecolor
 
 # Window dimensions in character columns and lines
 # (changes require restart)
@@ -284,7 +285,7 @@ hide_cursor_when_typing: true
 # You can set shell.program to the path of your favorite shell, e.g. /bin/fish.
 # Entries in shell.args are passed unmodified as arguments to the shell.
 #
-shell:
-  program: /usr/local/bin/zsh
+# shell:
+#   program: /usr/local/bin/zsh
 #  args:
 #    - --login

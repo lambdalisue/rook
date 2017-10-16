@@ -14,10 +14,6 @@ __rook::is_process_running() {
   ps | grep "$1" | grep -v grep >/dev/null 2>&1
 }
 
-__rook::is_tmux_running() {
-  [ -n "$TMUX" ]
-}
-
 __rook::is_ssh_running() {
   [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]
 }
@@ -217,15 +213,9 @@ done
 __rook::compile ${HOME}/.zshenv
 __rook::compile ${ZDOTDIR}/.zshrc
 
-# Profiling or Tmux {{{
-# NOTE:
-# This should be called very end of the zshrc to execute tmux
-# on "ready" environment.
+# Profiling {{{
 if __rook::has 'zprof'; then
   zprof > $HOME/zsh-startup.$$.log
-elif __rook::has 'tmux'; then
-  # Attach tmux session first.
-  __rook::source ${ZDOTDIR}/tmux.zsh
 fi
 
 # Make exitcode success

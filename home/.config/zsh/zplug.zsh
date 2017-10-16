@@ -77,20 +77,3 @@ zplug "zsh-users/zsh-syntax-highlighting", \
 # AFTER zsh-syntax-highlighting
 zplug "zsh-users/zsh-history-substring-search", \
   defer:2
-
-# Add static HTTP serve command
-# - serve
-zplug "~/.config/zsh/plugin/serve", \
-  from:local, \
-  use:init.zsh
-
-# Add perl dignostic command
-# - perldig
-zplug "~/.config/zsh/plugin/perldig", \
-  from:local, \
-  use:init.zsh
-
-zplug "~/.config/zsh/plugin/conda-activate", \
-  from:local, \
-  use:init.zsh, \
-  defer:2
