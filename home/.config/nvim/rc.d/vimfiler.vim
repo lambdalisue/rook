@@ -39,8 +39,21 @@ function! s:enable_cd_to_cwd_on_edit() abort
   augroup END
 endfunction
 
+" XXX: This is a work around
+" Note:
+"   Somehow, &winfixwidth of a buffer opened from VimFilerExplorer is set to
+"   1 and thus <C-w>= or those kind of command doesn't work.
+"   This work around stands for fixing that.
+function! s:force_nofixwidth() abort
+  let last_bufnr = winbufnr(winnr('#'))
+  if bufname(last_bufnr) =~# '^vimfiler:'
+    setlocal nowinfixwidth
+  endif
+endfunction
+
 augroup my_vimfiler_configure
   autocmd! *
+  autocmd BufWinEnter * call s:force_nofixwidth()
   autocmd FileType vimfiler call s:configure_vimfiler()
   autocmd FileType vimfiler call s:enable_cd_to_cwd_on_edit()
 augroup END
