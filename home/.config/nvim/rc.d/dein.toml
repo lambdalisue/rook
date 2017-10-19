@@ -6,39 +6,15 @@ repo = 'Shougo/dein.vim'
 repo = 'lambdalisue/vim-unified-diff'
 
 [[plugins]]
-repo = 'lambdalisue/readablefold.vim'
+repo = 'Shougo/junkfile.vim'
+on_cmd = 'JunkfileOpen'
 
 [[plugins]]
-repo = 'lambdalisue/macra.vim'
-hook_add = '''
-if dein#tap('macra.vim')
-  call macra#register('f', 'nxo')
-  call macra#register('F', 'nxo')
-endif
-'''
+repo = 'lambdalisue/readablefold.vim'
 
 [[plugins]]
 repo = 'haya14busa/dein-command.vim'
 on_cmd = 'Dein'
-
-[[plugins]]
-repo = 'easymotion/vim-easymotion'
-on_map = [['nxo', '<Plug>']]
-hook_add = '''
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-nmap ss <Plug>(easymotion-overwin-f2)
-xmap ss <Plug>(easymotion-bd-f2)
-omap ss <Plug>(easymotion-bd-f2)
-nmap f <Plug>(easymotion-fl)
-xmap f <Plug>(easymotion-fl)
-omap f <Plug>(easymotion-fl)
-nmap F <Plug>(easymotion-Fl)
-xmap F <Plug>(easymotion-Fl)
-omap F <Plug>(easymotion-Fl)
-'''
-
-[[plugins]]
-repo = 'lambdalisue/manipulist.vim'
 
 [[plugins]]
 repo = 'lambdalisue/vim-protocol'
@@ -56,41 +32,6 @@ nmap <Leader><Leader>r <Plug>(marron-reload-vimrc)<Plug>(marron-reload-gvimrc)
 [[plugins]]
 repo = 'lambdalisue/vim-manpager'
 on_cmd = ['MANPAGER', 'Man']
-hook_add = '''
-let g:loaded_man = 1  " Disable Neovim builtin 'Man'
-'''
-
-[[plugins]]
-repo = 'lambdalisue/vim-fullscreen'
-on_map = [['n', '<Plug>']]
-hook_add = '''
-nmap <C-CR> <Plug>(fullscreen-toggle)
-
-if exists('g:nyaovim_version')
-  function! SetFullscreen(flag) abort
-    call nyaovim#call_javascript_function(
-          \ 'toggleWindowFullScreen',
-          \ [a:flag]
-          \)
-  endfunction
-  let g:fullscreen#start_command =
-        \ 'call SetFullscreen(v:true)'
-  let g:fullscreen#stop_command =
-        \ 'call SetFullscreen(v:false)'
-endif
-'''
-
-[[plugins]]
-repo = 'thinca/vim-fontzoom'
-on_map = [['n', '<Plug>']]
-on_cmd = 'Fontzoom'
-hook_add = '''
-let g:fontzoom_no_default_key_mappings = 1
-nmap <C-ScrollWheelUp>   <Plug>(fontzoom-larger)
-nmap <C-ScrollWheelDown> <Plug>(fontzoom-smaller)
-nmap <C-S-Up>            <Plug>(fontzoom-larger)
-nmap <C-S-Down>          <Plug>(fontzoom-smaller)
-'''
 
 [[plugins]]
 repo = 'tyru/open-browser.vim'
@@ -133,39 +74,6 @@ hook_add = '''
 execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/lexima.vim'))
 '''
 
-[[plugins]]
-repo = 'kana/vim-submode'
-hook_add = '''
-let g:submode_timeout = 0
-let g:submode_keep_leaving_key = 1
-
-if dein#tap('vim-submoode')
-  call submode#enter_with('undo/redo', 'n', '', 'g-', 'g-')
-  call submode#enter_with('undo/redo', 'n', '', 'g+', 'g+')
-  call submode#leave_with('undo/redo', 'n', '', '<Esc>')
-  call submode#map('undo/redo', 'n', '', '-', 'g-')
-  call submode#map('undo/redo', 'n', '', '+', 'g+')
-
-  call submode#enter_with('tab', 'n', '', 'gt', 'gt')
-  call submode#enter_with('tab', 'n', '', 'gT', 'gT')
-  call submode#map('tab', 'n', '', 't', 'gt')
-  call submode#map('tab', 'n', '', 'T', 'gT')
-
-  call submode#enter_with('scroll', 'n', '', '<C-y>', '<C-y>')
-  call submode#enter_with('scroll', 'n', '', '<C-e>', '<C-e>')
-  call submode#enter_with('scroll', 'n', '', '<C-u>', '<C-u>')
-  call submode#enter_with('scroll', 'n', '', '<C-d>', '<C-d>')
-  call submode#enter_with('scroll', 'n', '', '<C-f>', '<C-f>')
-  call submode#enter_with('scroll', 'n', '', '<C-b>', '<C-b>')
-  call submode#map('scroll', 'n', '', 'y', '<C-y>')
-  call submode#map('scroll', 'n', '', 'e', '<C-e>')
-  call submode#map('scroll', 'n', '', 'u', '<C-u>')
-  call submode#map('scroll', 'n', '', 'd', '<C-d>')
-  call submode#map('scroll', 'n', '', 'f', '<C-f>')
-  call submode#map('scroll', 'n', '', 'b', '<C-b>')
-endif
-'''
-
 # }}}
 
 # Dependency {{{
@@ -177,9 +85,6 @@ repo = 'kana/vim-textobj-user'
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
-
-[[plugins]]
-repo = 'osyo-manga/shabadou.vim'
 
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
@@ -194,17 +99,7 @@ repo = 'lambdalisue/vim-rplugin'
 repo = 'tyru/current-func-info.vim'
 # }}}
 
-# Nyaovim {{{
-[[plugins]]
-repo = 'rhysd/nyaovim-popup-tooltip'
-
-# }}}
-
 # App {{{
-[[plugins]]
-repo = 'cocopon/vaffle.vim'
-on_cmd = 'Vaffle'
-
 [[plugins]]
 repo = 'koturn/vim-replica'
 on_cmd = ['Replica', 'ReplicaInternal']
@@ -214,67 +109,12 @@ let g:replica#opener = 'botright vsplit'
 '''
 
 [[plugins]]
-repo = 'rizzatti/dash.vim'
-on_cmd = 'Dash'
-
-[[plugins]]
-repo = 'rizzatti/dash.vim'
-on_cmd = 'Dash'
-
-[[plugins]]
 repo = 'thinca/vim-ref'
 on_cmd = 'Ref'
 
 [[plugins]]
 repo = 'cocopon/colorswatch.vim'
 on_cmd = 'ColorSwatchGenerate'
-
-[[plugins]]
-repo = 'junegunn/goyo.vim'
-on_cmd = 'Goyo'
-
-[[plugins]]
-repo = 'junegunn/limelight.vim'
-on_cmd = 'Limelight'
-
-[[plugins]]
-repo = 'kana/vim-altr'
-on_map = '<Plug>'
-hook_add = 'nmap <F2> <Plug>(altr-forward)'
-hook_post_source = '''
-call altr#define('autoload/%.vim', 'test/%.vimspec', 'plugin/%.vim', 'doc/%.txt')
-call altr#define('lib/%.pm', 't/%.t', 'template/%.tx')
-'''
-
-[[plugins]]
-repo = 'itchyny/calendar.vim'
-on_cmd = 'Calendar'
-hook_add = '''
-let g:calendar_frame = 'default'
-let g:calendar_first_day = 'sunday'
-let g:calendar_google_calendar = 1
-let g:calendar_google_task = 1
-'''
-
-[[plugins]]
-repo = 'lambdalisue/vim-gita'
-on_cmd = 'Gita'
-hook_source = '''
-let g:gita#command#browse#extra_translation_patterns = {
-      \ 'ghe.admin.h': [
-      \   [
-      \     '\vhttps?://(%domain)/(.{-})/(.{-})%(\.git)?$',
-      \     '\vgit://(%domain)/(.{-})/(.{-})%(\.git)?$',
-      \     '\vgit\@(%domain):(.{-})/(.{-})%(\.git)?$',
-      \     '\vssh://git\@(%domain)/(.{-})/(.{-})%(\.git)?$',
-      \   ], {
-      \     '_':     'https://\1/\2/\3/blob/%c1/%pt%{#L|}ls%{-L|}le',
-      \     'exact': 'https://\1/\2/\3/blob/%r1/%pt%{#L|}ls%{-L|}le',
-      \     'blame': 'https://\1/\2/\3/blame/%c1/%pt%{#L|}ls%{-L|}le',
-      \   },
-      \ ],
-      \}
-'''
 
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
@@ -297,45 +137,10 @@ execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/gina.vim'))
 '''
 
 [[plugins]]
-repo = 'cohama/agit.vim'
-on_cmd = ['Agit', 'AgitFile']
-
-[[plugins]]
-repo = 'tpope/vim-fugitive'
-on_cmd = [
-  'Git', 'Gcd', 'Glcd', 'Gstatus', 'Gcommit', 'Gmerge',
-  'Gpull', 'Gpush', 'Gfetch', 'Ggrep', 'Glgrep', 'Glog',
-  'Gllog', 'Gedit', 'Gsplit', 'Gvsplit', 'Gtabedit', 'Gpedit',
-  'Gread', 'Gwrite', 'Gwq', 'Gdiff', 'Gsdiff', 'Gvdiff',
-  'Gmove', 'Gremove', 'Gblame', 'Gbrowse',
-]
-
-[[plugins]]
 repo = 'lambdalisue/vim-gista'
 on_cmd = 'Gista'
 hook_source = '''
 let g:gista#client#default_username = 'lambdalisue'
-'''
-
-[[plugins]]
-repo = 'ctrlpvim/ctrlp.vim'
-on_cmd = 'CtrlP'
-hook_source = '''
-let g:ctrlp_map = '<Nop>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
-'''
-
-[[plugins]]
-repo = 'Shougo/vimshell.vim'
-on_cmd = [
-  'VimShell',
-  'VimShellTab',
-  'VimShellPop',
-]
-hook_source = '''
-highlight! vimshellError gui=NONE cterm=NONE guifg='#cc6666' ctermfg=9
-execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/vimshell.vim'))
 '''
 
 [[plugins]]
@@ -391,23 +196,19 @@ nnoremap g# :<C-u>ListaResume<CR>
 nnoremap !# :<C-u>ListaCursorWord<CR>
 '''
 
-[[plugins]]
-repo = 'osyo-manga/vim-hopping'
-on_cmd = 'HoppingStart'
-
 # }}}
 
 # Visualize {{{
 [[plugins]]
 repo = 'lambdalisue/battery.vim'
 hook_add = '''
-let g:battery#update_tabline = 1
+let g:battery#update_tabline = 0
 '''
 
 [[plugins]]
 repo = 'lambdalisue/wifi.vim'
 hook_add = '''
-let g:wifi#update_tabline = 1
+let g:wifi#update_tabline = 0
 '''
 
 [[plugins]]
@@ -441,10 +242,7 @@ repo = 'thinca/vim-zenspace'
 [[plugins]]
 repo = 'itchyny/vim-parenmatch'
 hook_add = '''
-let g:parenmatch = get(g:, 'parenmatch', 1)
-let g:parenmatch_highlight = 0
-
-highlight default link ParenMatch DiffChange
+let g:parenmatch = 0
 
 function! s:toggle_vim_parenmatch() abort
   silent! call matchdelete(w:parenmatch)
@@ -456,25 +254,11 @@ nnoremap <silent> <Plug>(my-toggle-parenmatch)
       \ :<C-u>call <SID>toggle_vim_parenmatch()<CR>
 nmap <C-g>m     <Plug>(my-toggle-parenmatch)
 nmap <C-g><C-m> <Plug>(my-toggle-parenmatch)
-
-function! s:disable_vim_parenmatch() abort
-  if &buftype =~# '\%(help\|quickfix\|terminal\|nofile\)'
-    let b:parenmatch = 0
-  elseif &modifiable == 0
-    let b:parenmatch = 0
-  endif
-endfunction
-
-augroup my_vim_parenmatch
-  autocmd! *
-  autocmd BufEnter * call s:disable_vim_parenmatch()
-augroup END
 '''
 
 [[plugins]]
 repo = 'itchyny/vim-cursorword'
 hook_add = '''
-" Initially disable
 let g:cursorword = 0
 
 function! s:toggle_vim_cursorword() abort
@@ -486,33 +270,11 @@ nnoremap <silent> <Plug>(my-toggle-cursorword)
       \ :<C-u>call <SID>toggle_vim_cursorword()<CR>
 nmap <C-g>c     <Plug>(my-toggle-cursorword)
 nmap <C-g><C-c> <Plug>(my-toggle-cursorword)
-
-function! s:disable_vim_cursorword() abort
-  if &buftype =~# '\%(help\|quickfix\|terminal\|nofile\)'
-    let b:cursorword = 0
-  elseif &modifiable == 0
-    let b:cursorword = 0
-  endif
-endfunction
-
-augroup my_vim_cursorword
-  autocmd! *
-  autocmd BufEnter * call s:disable_vim_cursorword()
-augroup END
 '''
-
-[[plugins]]
-repo = 't9md/vim-choosewin'
-on_map = '<Plug>'
-hook_add = 'nmap <C-w><C-w> <Plug>(choosewin)'
 
 # }}}
 
 # Editing {{{
-[[plugins]]
-repo = 'rhysd/vim-grammarous'
-on_cmd = 'GrammarousCheck'
-
 [[plugins]]
 repo = 'thinca/vim-template'
 hook_add = '''
@@ -603,9 +365,6 @@ nmap ga <Plug>(EasyAlign)
 [[plugins]]
 repo = 'lambdalisue/vim-findent'
 on_cmd = 'Findent'
-hook_add = '''
-autocmd MyAutoCmd FileType * Findent --no-messages --no-warnings
-'''
 
 [[plugins]]
 repo = 'lambdalisue/vim-foldround'
@@ -636,6 +395,11 @@ if has('nvim')
     autocmd BufWritePost * Neomake
     autocmd User NeomakeFinished nested call lightline#update()
   augroup END
+  augroup my_neomake_buffer_local
+    autocmd! *
+    autocmd BufEnter setup.py let b:neomake_python_enabled_markers = ['python']
+    autocmd BufEnter docs/conf.py let b:neomake_python_enabled_markers = ['python']
+  augroup END
 
   let g:neomake_error_sign = {
         \ 'text': 'E-',
@@ -659,11 +423,6 @@ if has('nvim')
         \ 'flake8',
         \ 'mypy'
         \]
-  augroup my_neomake_buffer_local
-    autocmd! *
-    autocmd BufEnter setup.py let b:neomake_python_enabled_markers = ['python']
-    autocmd BufEnter docs/conf.py let b:neomake_python_enabled_markers = ['python']
-  augroup END
 endif
 '''
 # }}}
@@ -672,7 +431,6 @@ endif
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 hook_add = '''
-let g:deoplete#enable_at_startup = has('nvim')
 call deoplete#custom#source('omni', 'is_silent', 1)
 '''
 
@@ -713,20 +471,12 @@ repo = 'wellle/tmux-complete.vim'
 depends = 'deoplete.nvim'
 on_ft = 'tmux'
 
-[[plugins]]
-if = 'executable("npm")'
-repo = 'carlitux/deoplete-ternjs'
-depends = 'deoplete.nvim'
-build = 'npm install -g tern'
-on_ft = 'javascript'
-
 # NOTE:
 # This plugins often cause 'channel' exception...
 [[plugins]]
-if = 'executable("npm")'
+if = 'executable("typescript")'
 repo = 'mhartington/nvim-typescript'
 depends = 'deoplete.nvim'
-build = 'npm install -g typescript'
 on_ft = 'typescript'
 hook_add = '''
 let g:nvim_typescript#javascript_support = 1
@@ -734,28 +484,6 @@ let g:nvim_typescript#vue_support = 1
 let g:nvim_typescript#type_info_on_hold = 1
 let g:nvim_typescript#default_mappings = 1
 '''
-
-# [[plugins]]
-# if = 'executable("npm")'
-# repo = 'Quramy/tsuquyomi'
-# depends = 'vimproc.vim'
-# build = 'npm install -g typescript'
-# on_ft = 'typescript'
-# hook_add = '''
-# let g:tsuquyomi_disable_default_mappings = 1
-# let g:tsuquyomi_disable_quickfix = 1
-# function! s:tsuquyomi_configure() abort
-#   nmap <buffer> <LocalLeader>d <Plug>(TsuquyomiDefinition)
-#   nmap <buffer> <LocalLeader>b <Plug>(TsuquyomiGoBack)
-#   nmap <buffer> <LocalLeader>r <Plug>(TsuquyomiReferences)
-#   nmap <buffer> <LocalLeader>R <Plug>(TsuquyomiRenameSymbolC)
-#   if exists('&ballooneval')
-#     setlocal ballooneval
-#     setlocal balloonexpr=tsuquyomi#balloonexpr()
-#   endif
-# endfunction
-# autocmd MyAutoCmd FileType typescript call s:tsuquyomi_configure()
-# '''
 
 # }}}
 
@@ -1098,10 +826,7 @@ repo = 'othree/es.next.syntax.vim'
 
 [[plugins]]
 repo = 'leafgarland/typescript-vim'
-hook_source = '''
-" let g:typescript_indent_disable = 1
-let g:typescript_compiler_options = '-sourcemap'
-'''
+on_ft = 'typescript'
 
 [[plugins]]
 repo = 'vim-scripts/applescript.vim'
@@ -1178,9 +903,6 @@ repo = 'vim-scripts/python_match.vim'
 repo = 'hynek/vim-python-pep8-indent'
 
 [[plugins]]
-repo = 'tmhedberg/SimpylFold'
-
-[[plugins]]
 repo = 'tweekmonster/impsort.vim'
 on_ft = ['python', 'python3']
 hook_source = '''
@@ -1209,10 +931,6 @@ on_cmd = ['PP', 'PrettyPrint']
 [[plugins]]
 repo = 'tyru/capture.vim'
 on_cmd = 'Capture'
-
-[[plugins]]
-repo = 'Shougo/junkfile.vim'
-on_cmd = 'JunkfileOpen'
 
 [[plugins]]
 repo = 'vim-jp/vital.vim'

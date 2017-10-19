@@ -8,11 +8,6 @@ setl autoindent
 setl smartindent
 setl foldmethod=indent
 
-setl textwidth=0
-if exists('&colorcolumn')
-  setl colorcolumn=79
-endif
-
 " https://github.com/leafgarland/typescript-vim#indenting
 setl indentkeys+=0.
 setl foldmethod=syntax

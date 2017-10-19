@@ -8,6 +8,4 @@ setl autoindent
 setl smartindent
 
 setl textwidth=79
-if exists('&colorcolumn')
-  setl colorcolumn=20,80
-endif
+setl colorcolumn=20,80

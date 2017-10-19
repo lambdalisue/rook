@@ -15,7 +15,6 @@ setlocal concealcursor=nc
 
 " Each lines should be shorter than 78 characters
 setlocal textwidth=78
-setlocal colorcolumn=78
 
 " Close with q
 nnoremap <buffer><expr> q &modifiable ? 'q' : ':<C-u>close<CR>'

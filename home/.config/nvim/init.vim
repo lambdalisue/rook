@@ -14,15 +14,8 @@ if has('vim_starting')
   set encoding=utf-8
   scriptencoding utf-8
 
-  " Use defaults.vim and revert several settings
-  if filereadable(expand('$VIMRUNTIME/defaults.vim'))
-    source $VIMRUNTIME/defaults.vim
-  endif
   set history=10000     " increate n of command line history
   set noruler           " [slow] do not show the cursor position.
-
-  " Do not highlight string inside C comments.
-  silent! unlet c_comment_strings
 
   " Use as many color as possible
   if !has('gui_running')
@@ -53,19 +46,18 @@ if has('vim_starting')
     if has('nvim')
       set shell=/usr/local/bin/zsh
     else
-      " Use bash on Vim
       set shell=/bin/bash
     endif
   endif
 
   " Disable unnecessary default plugins
-  let g:loaded_gzip              = 1
-  let g:loaded_tar               = 1
-  let g:loaded_tarPlugin         = 1
-  let g:loaded_zip               = 1
-  let g:loaded_zipPlugin         = 1
+  " let g:loaded_gzip              = 1
+  " let g:loaded_tar               = 1
+  " let g:loaded_tarPlugin         = 1
+  " let g:loaded_zip               = 1
+  " let g:loaded_zipPlugin         = 1
   let g:loaded_rrhelper          = 1
-  "let g:loaded_2html_plugin      = 1
+  " let g:loaded_2html_plugin      = 1
   let g:loaded_vimball           = 1
   let g:loaded_vimballPlugin     = 1
   let g:loaded_getscript         = 1
@@ -136,17 +128,7 @@ endfunction
 call s:configure_path('$PATH', [
       \ '/usr/local/bin',
       \ '/usr/local/texlive/2017basic/bin/x86_64-darwin',
-      \ '/usr/local/texlive/2013/bin/x86_64-linux',
-      \ '/usr/local/texlive/2013/bin/x86_64-darwin',
       \ '~/.zplug/bin',
-      \ '~/.pyenv/bin',
-      \ '~/.plenv/bin',
-      \ '~/.rbenv/bin',
-      \ '~/.ndenv/bin',
-      \ '~/.pyenv/shims',
-      \ '~/.plenv/shims',
-      \ '~/.rbenv/shims',
-      \ '~/.ndenv/shims',
       \ '~/.anyenv/envs/pyenv/bin',
       \ '~/.anyenv/envs/plenv/bin',
       \ '~/.anyenv/envs/rbenv/bin',
@@ -165,10 +147,7 @@ call s:configure_path('$MANPATH', [
       \ '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/man',
       \])
 
-let $PYENV_ROOT = s:pick_directory([
-      \ '~/.anyenv/envs/pyenv',
-      \ '~/.pyenv',
-      \])
+let $PYENV_ROOT = s:pick_directory(['~/.anyenv/envs/pyenv'])
 
 if has('nvim') && !s:is_windows
   let g:python_host_prog = s:pick_executable([
@@ -220,13 +199,10 @@ endif
 
 set viewdir=~/.cache/nvim/view
 set undodir=~/.cache/nvim/undo
-"set spellfile=~/Dropbox/Vim/system/spellfile.utf-8.add
+set spellfile=~/Dropbox/Vim/system/spellfile.utf-8.add
 " }}}
 
 " Language {{{
-
-" prefer English interface
-"language message C
 
 " prefer English help
 set helplang=en,ja
@@ -241,28 +217,36 @@ if s:is_windows
 else
   set fileformats=unix,dos,mac
 endif
+
+if has('langmap') && exists('+langremap')
+  " Prevent that the langmap option applies to characters that result from a
+  " mapping.  If set (default), this may break plugins (but it's backward
+  " compatible).
+  set nolangremap
+endif
 " }}}
 
 " Interface {{{
 set emoji               " use double in unicode emoji
 set hidden              " hide the buffer instead of close
+set showcmd             " displya incomplete commands
 set switchbuf=useopen   " use an existing buffer instaed of creating a new one
-
-if exists('&signcolumn')
-  set signcolumn=yes      " show signcolumn always
-endif
-set showmatch           " highlight a partner of cursor character
+set signcolumn=yes      " show signcolumn always
+set noshowmatch         " highlight a partner of cursor character (matchparen is not used)
 set matchtime=1         " highlight a partner ASAP
 set nostartofline       " let C-D, C-U,... to keep same column
 set smartcase           " override the ignorecase if the search pattern contains
                         " upper case characters
 set tagcase=match       " use case sensitive for tag
 set hlsearch            " highlight found terms
+set breakindent         " every wrapped line will continue visually indented
 
 set foldlevelstart=99
 set foldnestmax=3       " maximum fold nesting level
 set foldcolumn=0        " hide fold guide
 
+" Show @@@ in the last line if it is truncated.
+set display=truncate
 
 set laststatus=2        " always shows statusline
 set showtabline=2       " always shows tabline
@@ -271,12 +255,18 @@ set cmdheight=2
 set lazyredraw          " do not redraw while command execution
 
 set splitright          " vsplit to right
-set previewheight=20
+set previewheight=40
+
+" store cursor, folds, slash, and unix on view
+set viewoptions=cursor
 
 set sessionoptions-=folds
 set sessionoptions-=curdir
 set sessionoptions-=options
 
+" Show a few lines of context around the cursor.  Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
 " https://ddrscott.github.io/blog/2016/sidescroll/
 set sidescroll=1
 
@@ -287,40 +277,37 @@ set diffopt& diffopt+=vertical
 " line and user move the cursor left/right
 set whichwrap=b,s,<,>,~,[,]
 
-" store cursor, folds, slash, and unix on view
-set viewoptions=cursor
-
 " use rich completion system in command line
+set wildmenu
 set wildmode=list:longest,full
 set wildoptions=tagfile
 
 set list          " show invisible characters
-if $LANG !=# 'C' && !s:is_windows
-  set listchars=tab:»-,trail:_,extends:»,precedes:«,nbsp:%,eol:↵
-  set fillchars& fillchars+=vert:│
-  set showbreak=
-else
-  set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%,eol:$
-  set fillchars& fillchars+=vert:\|
-  set showbreak=
-endif
-if exists('&breakindent')
-  set breakindent   " every wrapped line will continue visually indented
+set showbreak=
+set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%,eol:$
+
+" In many terminal emulators the mouse works just fine.  By enabling it you
+" can position the cursor, Visually select and scroll with the mouse.
+if has('mouse')
+  set mouse=a
 endif
 
+" Show the effects of a command incrementally
 if exists('&inccommand')
-  " Show the effects of a command incrementally
   set inccommand=nosplit
 endif
 
+" Improve performance
+set synmaxcol=160
 " }}}
 
 " Editing {{{
 set smarttab        " insert blanks according to shiftwidth
 set expandtab       " use spaces instead of TAB
 set softtabstop=-1  " the number of spaces that a TAB counts for
-set shiftwidth=2    " the number of spaces of an indent
+set shiftwidth=4    " the number of spaces of an indent
 set shiftround      " round indent to multiple of shiftwidth with > and <
+set textwidth=80    " wrap text in 80 chars
 
 set autoindent      " copy indent from current line when starting a new line
 set copyindent      " copy the structure of the existing lines indent when
@@ -329,6 +316,10 @@ set preserveindent  " Use :retab to clean up whitespace
 
 set undofile        " keep undo history on undofile
 set virtualedit=all " allow virtual editing in all modes
+
+" Do not recognize octal numbers for Ctrl-A and Ctrl-X, most users find it
+" confusing.
+set nrformats-=octal
 
 " t - auto-wrap text using textwidth
 " c - auto-wrap comments using textwidth, inserting the
@@ -369,6 +360,9 @@ set showfulltag         " show both the tag name and the search pattern
 
 " K to search the help with the cursor word
 set keywordprg=:help
+
+" Allow backspacing over everything in insert mode.
+set backspace=indent,eol,start
 " }}}
 
 " Mapping {{{
@@ -389,6 +383,10 @@ noremap <MiddleMouse>   <Nop>
 noremap <2-MiddleMouse> <Nop>
 noremap <3-MiddleMouse> <Nop>
 noremap <4-MiddleMouse> <Nop>
+
+" Don't use Ex mode, use Q for formatting.
+" Revert with ":unmap Q".
+noremap Q gq
 
 " Swap ; and : in Normal and Visual mode [US keyboard]
 nnoremap ; :
@@ -429,6 +427,9 @@ nnoremap <S-Right> <C-w>><CR>
 nnoremap <S-Up>    <C-w>-<CR>
 nnoremap <S-Down>  <C-w>+<CR>
 
+" Use <Spacw>w as <C-w>
+nnoremap <Space>w <C-w>
+
 " Tab navigation
 nnoremap <silent> <C-w>t :<C-u>tabnew<CR>
 nnoremap <silent> <C-w><C-t> :<C-u>tabnew<CR>
@@ -440,29 +441,20 @@ nnoremap <C-p> gT
 " Clear highlight with <C-l>
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" so that you can undo CTRL-U after inserting a line break.
+" Revert with ":iunmap <C-u>".
+inoremap <C-u> <C-g>u<C-u>
+
 " Jump to next/previous errors
 nnoremap <silent><expr> ]c &diff ? ']c' : ":\<C-u>cnext\<CR>"
 nnoremap <silent><expr> [c &diff ? ']c' : ":\<C-u>cprevious\<CR>"
 nnoremap <silent> ]l :\<C-u>lnext<CR>
 nnoremap <silent> [l :\<C-u>lprevious<CR>
 
-" Easy window navigation
-nmap <Space>w <C-w>
-nnoremap <Space>n gt
-nnoremap <Space>p gT
-
 " Paste from a most recent yank text ("0 register)
 nnoremap <Space>p "0p
 nnoremap <Space>P "0P
-
-" Execute a macro over a visual range with @ {{{
-function! s:execute_macro_over_visual_range() abort
-  execute ":'<,'>normal @" . nr2char(getchar())
-endfunction
-xnoremap <silent> <Plug>(my-execute-macro)
-      \ :<C-u>call <SID>execute_macro_over_visual_range()<CR>
-xmap @ <Plug>(my-execute-macro)
-" }}}
 
 " Toggle quickfix window with Q {{{
 function! s:toggle_qf() abort
@@ -624,6 +616,7 @@ nmap <C-w>o <Plug>(my-zoom-window)
 nmap <C-w><C-o> <Plug>(my-zoom-window)
 "}}}
 
+" Show syntax info with <C-g>h {{{
 function! s:display_syninfo() abort
   let l = line('.')
   let c = col('.')
@@ -632,6 +625,7 @@ function! s:display_syninfo() abort
   echomsg printf('Lo: %s', synIDattr(synIDtrans(synID(l, c, 1)), 'name'))
 endfunction
 nnoremap <silent> <C-g>h :<C-u>call <SID>display_syninfo()<CR>
+" }}}
 
 " }}}
 
@@ -641,17 +635,23 @@ augroup MyAutoCmd
   autocmd!
 augroup END
 
-" Improve mkview/loadview {{{
-" function! s:checkview() abort
-"   if !&buflisted || &buftype =~# '^\%(nofile\|help\|quickfix\|terminal\)$' || &previewwindow
-"     return 0
-"   elseif &filetype =~# '^\%(vimfiler\|deoplete\)$'
-"     return 0
-"   endif
-"   return 1
-" endfunction
-" autocmd MyAutoCmd BufWinLeave * if s:checkview() | silent! mkview   | endif
-" autocmd MyAutoCmd BufWinEnter * if s:checkview() | silent! loadview | endif
+" Automatically set colorcolumn {{{
+autocmd MyAutoCmd InsertEnter *
+      \ if &textwidth > 0 |
+      \   execute printf('setlocal colorcolumn=%d', &textwidth - 1) |
+      \ endif
+autocmd MyAutoCmd InsertLeave * setlocal colorcolumn=
+" }}}
+
+" Automatically keep cursor position {{{
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid, when inside an event handler
+" (happens when dropping a file on gvim) and for a commit message (it's
+" likely a different one than last time).
+autocmd MyAutoCmd BufReadPost *
+      \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
+      \   execute "normal! g`\"" |
+      \ endif
 " }}}
 
 " Automatically remove trailing spaces {{{
@@ -663,7 +663,7 @@ function! s:remove_trailing_spaces_automatically() abort
 endfunction
 augroup enable_remove_trailing_spaces_automatically
   execute printf(
-        \ 'autocmd FileType %s call s:remove_trailing_spaces_automatically()',
+        \ 'autocmd MyAutoCmd FileType %s call s:remove_trailing_spaces_automatically()',
         \ join(split(
         \   'perl python vim vimspec javascript typescript ' .
         \   'dosbatch ps1 sh iss pascal'
@@ -705,11 +705,6 @@ function! s:auto_mkdir(dir, force) abort
   endif
   call mkdir(a:dir, 'p')
 endfunction
-
-function! s:auto_makedir_complete(...) abort
-  return "yes\nno"
-endfunction
-
 autocmd MyAutoCmd BufWritePre *
       \ call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
 " }}}
@@ -741,58 +736,35 @@ command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
 " }}}
 
 " Automatically show cursorline when hold {{{
-augroup vimrc-auto-cursorline
-  autocmd!
-  autocmd CursorMoved,CursorMovedI * call s:auto_cursorline('CursorMoved')
-  autocmd CursorHold,CursorHoldI * call s:auto_cursorline('CursorHold')
-  autocmd WinEnter * call s:auto_cursorline('WinEnter')
-  autocmd WinLeave * call s:auto_cursorline('WinLeave')
-
-  let s:cursorline_lock = 0
-  function! s:auto_cursorline(event)
-    if a:event ==# 'WinEnter'
-      setlocal cursorline
-      let s:cursorline_lock = 2
-    elseif a:event ==# 'WinLeave'
-      setlocal nocursorline
-    elseif a:event ==# 'CursorMoved'
-      if s:cursorline_lock
-        if 1 < s:cursorline_lock
-          let s:cursorline_lock = 1
-        else
-          setlocal nocursorline
-          let s:cursorline_lock = 0
-        endif
-      endif
-    elseif a:event ==# 'CursorHold'
-      setlocal cursorline
-      let s:cursorline_lock = 1
-    endif
-  endfunction
-augroup END
-" }}}
-
-" Add runtimepath {{{
-function! s:add_runtimepath() abort
-  let path = getcwd()
-  execute printf('set runtimepath^=%s', fnameescape(path))
-  if isdirectory(path . '/plugin')
-    for filename in glob(path . '/plugin/*.vim', 0, 1)
-      execute printf('source %s', fnameescape(filename))
-    endfor
-  endif
-  echo printf('"%s" is added to &runtimepath', path)
-endfunction
-command! AddRuntimePath call s:add_runtimepath()
-" }}}
-
-" Show runtimepath {{{
-function! s:echo_runtimepath() abort
-  for path in split(&runtimepath, ',')
-    echo path
-  endfor
-endfunction
-command! EchoRuntimePath call s:echo_runtimepath()
+" augroup vimrc-auto-cursorline
+"   autocmd!
+"   autocmd CursorMoved * call s:auto_cursorline('CursorMoved')
+"   autocmd CursorHold * call s:auto_cursorline('CursorHold')
+"   autocmd WinEnter * call s:auto_cursorline('WinEnter')
+"   autocmd WinLeave * call s:auto_cursorline('WinLeave')
+"
+"   let s:cursorline_lock = 0
+"   function! s:auto_cursorline(event)
+"     if a:event ==# 'WinEnter'
+"       setlocal cursorline
+"       let s:cursorline_lock = 2
+"     elseif a:event ==# 'WinLeave'
+"       setlocal nocursorline
+"     elseif a:event ==# 'CursorMoved'
+"       if s:cursorline_lock
+"         if 1 < s:cursorline_lock
+"           let s:cursorline_lock = 1
+"         else
+"           setlocal nocursorline
+"           let s:cursorline_lock = 0
+"         endif
+"       endif
+"     elseif a:event ==# 'CursorHold'
+"       setlocal cursorline
+"       let s:cursorline_lock = 1
+"     endif
+"   endfunction
+" augroup END
 " }}}
 
 " Check keycode {{{
@@ -822,18 +794,12 @@ command! -nargs=* Timeit call s:timeit(<q-args>)
 " Open terminal window {{{
 if has('nvim')
   function! s:open_terminal_window() abort
-    tabnew
+    vnew
     execute 'terminal'
     nnoremap <buffer><silent> q :<C-u>quit<CR>
   endfunction
-else
-  function! s:open_terminal_window() abort
-    tabnew
-    VimShell
-    nmap <buffer><silent> q <Plug>(vimshell_exit)
-  endfunction
+  nnoremap <silent> T :<C-u>call <SID>open_terminal_window()<CR>
 endif
-nnoremap <silent> T :<C-u>call <SID>open_terminal_window()<CR>
 " }}}
 
 " Enable sudo {{{
@@ -862,37 +828,6 @@ if has('nvim')
   cnoreabbrev w!! call <SID>sudo_write('%')<CR>
 else
   cnoreabbrev w!! w !sudo tee % >/dev/null
-endif
-" }}}
-
-" Enhance performance {{{
-" Removing guibg enhance performance on Alacritty
-" Ref: https://github.com/jwilm/alacritty/issues/660#issuecomment-315239034
-if has('nvim')
-  function! s:performance_enhancer(args) abort
-    if empty(a:args)
-      let s:performance_enhancer_enabled = !s:performance_enhancer_enabled
-    elseif a:args =~# '^\%(enable\|on\)$'
-      let s:performance_enhancer_enabled = 1
-    else
-      let s:performance_enhancer_enabled = 0
-    endif
-    if s:performance_enhancer_enabled
-      augroup alacritty_enhance_performance
-        autocmd! *
-        autocmd ColorScheme * highlight Normal guibg=NONE
-      augroup END
-      highlight Normal guibg=None
-    else
-      augroup alacritty_enhance_performance
-        autocmd! *
-      augroup END
-      execute 'colorscheme' get(g:, 'colors_name', 'default')
-    endif
-  endfunction
-
-  let s:performance_enhancer_enabled = 0
-  command! -nargs=? PerformanceEnhancer call s:performance_enhancer(<q-args>)
 endif
 " }}}
 
@@ -999,8 +934,12 @@ call s:auto_mkdir(&viewdir, 1)
 call s:auto_mkdir(&undodir, 1)
 call s:auto_mkdir(fnamemodify(&spellfile, ':p:h'), 1)
 
-filetype indent plugin on
 syntax on
+syntax sync linebreaks=1
+syntax sync minlines=100
+syntax sync maxlines=500
+filetype indent plugin on
+
 set background=dark
 try
   silent call s:set_colorscheme(0)

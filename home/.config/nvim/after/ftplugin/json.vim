@@ -7,11 +7,7 @@ setl expandtab
 setl autoindent
 setl smartindent
 setl foldmethod=indent
-
 setl textwidth=0
-if exists('&colorcolumn')
-  setl colorcolumn=79
-endif
 
 if !exists('*s:Jq')
   function! s:Jq(...)
