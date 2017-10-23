@@ -307,7 +307,7 @@ set expandtab       " use spaces instead of TAB
 set softtabstop=-1  " the number of spaces that a TAB counts for
 set shiftwidth=4    " the number of spaces of an indent
 set shiftround      " round indent to multiple of shiftwidth with > and <
-set textwidth=80    " wrap text in 80 chars
+set textwidth=0     " do not automatically wrap text
 
 set autoindent      " copy indent from current line when starting a new line
 set copyindent      " copy the structure of the existing lines indent when
