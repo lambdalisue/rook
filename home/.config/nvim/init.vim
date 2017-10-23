@@ -242,7 +242,7 @@ set hlsearch            " highlight found terms
 set breakindent         " every wrapped line will continue visually indented
 
 set foldlevelstart=99
-set foldnestmax=3       " maximum fold nesting level
+set foldnestmax&        " maximum fold nesting level (internal limit: 20)
 set foldcolumn=0        " hide fold guide
 
 " Show @@@ in the last line if it is truncated.

@@ -15,40 +15,21 @@
                         "description": "Pinkyless (Apple JIS)",
                         "manipulators": [
                             {
-                                "description": "Space -> Ctrl/Space",
-                                "from": {
-                                    "key_code": "spacebar"
-                                },
-                                "to": [
+                                "conditions": [
                                     {
-                                        "key_code": "left_control"
+                                        "identifiers": [
+                                            {
+                                                "product_id": 568,
+                                                "vendor_id": 1452
+                                            },
+                                            {
+                                                "product_id": 632,
+                                                "vendor_id": 1452
+                                            }
+                                        ],
+                                        "type": "device_if"
                                     }
                                 ],
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "spacebar"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "description": "Kana -> Shift/Return",
-                                "from": {
-                                    "key_code": "lang1"
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "left_shift"
-                                    }
-                                ],
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "return_or_enter"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
                                 "description": "caps -> Eisu",
                                 "from": {
                                     "key_code": "caps_lock"
@@ -66,6 +47,139 @@
                                 "type": "basic"
                             },
                             {
+                                "conditions": [
+                                    {
+                                        "identifiers": [
+                                            {
+                                                "product_id": 568,
+                                                "vendor_id": 1452
+                                            },
+                                            {
+                                                "product_id": 632,
+                                                "vendor_id": 1452
+                                            }
+                                        ],
+                                        "type": "device_if"
+                                    }
+                                ],
+                                "description": "Eisuu -> Space",
+                                "from": {
+                                    "key_code": "japanese_eisuu"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "spacebar"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "identifiers": [
+                                            {
+                                                "product_id": 568,
+                                                "vendor_id": 1452
+                                            },
+                                            {
+                                                "product_id": 632,
+                                                "vendor_id": 1452
+                                            }
+                                        ],
+                                        "type": "device_if"
+                                    }
+                                ],
+                                "description": "Space -> Ctrl|Space",
+                                "from": {
+                                    "key_code": "spacebar"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_control"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "spacebar"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "identifiers": [
+                                            {
+                                                "product_id": 568,
+                                                "vendor_id": 1452
+                                            },
+                                            {
+                                                "product_id": 632,
+                                                "vendor_id": 1452
+                                            }
+                                        ],
+                                        "type": "device_if"
+                                    }
+                                ],
+                                "description": "Kana -> Shift|Return",
+                                "from": {
+                                    "key_code": "lang1"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_shift"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "return_or_enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "identifiers": [
+                                            {
+                                                "product_id": 568,
+                                                "vendor_id": 1452
+                                            },
+                                            {
+                                                "product_id": 632,
+                                                "vendor_id": 1452
+                                            }
+                                        ],
+                                        "type": "device_if"
+                                    }
+                                ],
+                                "description": "Right Command -> Return",
+                                "from": {
+                                    "key_code": "right_command"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "return_or_enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "identifiers": [
+                                            {
+                                                "product_id": 568,
+                                                "vendor_id": 1452
+                                            },
+                                            {
+                                                "product_id": 632,
+                                                "vendor_id": 1452
+                                            }
+                                        ],
+                                        "type": "device_if"
+                                    }
+                                ],
                                 "description": "fn -> Kana",
                                 "from": {
                                     "key_code": "fn"
@@ -78,6 +192,42 @@
                                 "to_if_alone": [
                                     {
                                         "key_code": "japanese_kana"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Ctrl+6 -> Ctrl+^",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "type": "frontmost_application_if",
+                                        "bundle_identifiers": [
+                                            "^com\\.apple\\.Terminal$"
+                                        ]
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "6",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "control"
+                                        ],
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "6",
+                                        "modifiers": [
+                                            "left_shift",
+                                            "left_control"
+                                        ]
                                     }
                                 ],
                                 "type": "basic"
@@ -166,7 +316,7 @@
                         "product_id": 4871,
                         "vendor_id": 65261
                     },
-                    "ignore": true,
+                    "ignore": false,
                     "simple_modifications": []
                 }
             ],

@@ -1,0 +1,191 @@
+{
+  "title": "Pinkyless",
+  "rules": [
+    {
+      "description": "Pinkyless (Apple JIS)",
+      "manipulators": [
+        {
+          "conditions": [
+            {
+              "identifiers": [
+                {
+                  "product_id": 568,
+                  "vendor_id": 1452
+                },
+                {
+                  "product_id": 632,
+                  "vendor_id": 1452
+                }
+              ],
+              "type": "device_if"
+            }
+          ],
+          "description": "caps -> Eisu",
+          "from": {
+            "key_code": "caps_lock"
+          },
+          "to": [
+            {
+              "key_code": "fn"
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "japanese_eisuu"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "conditions": [
+            {
+              "identifiers": [
+                {
+                  "product_id": 568,
+                  "vendor_id": 1452
+                },
+                {
+                  "product_id": 632,
+                  "vendor_id": 1452
+                }
+              ],
+              "type": "device_if"
+            }
+          ],
+          "description": "Eisuu -> Space",
+          "from": {
+            "key_code": "japanese_eisuu"
+          },
+          "to": [
+            {
+              "key_code": "spacebar"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "conditions": [
+            {
+              "identifiers": [
+                {
+                  "product_id": 568,
+                  "vendor_id": 1452
+                },
+                {
+                  "product_id": 632,
+                  "vendor_id": 1452
+                }
+              ],
+              "type": "device_if"
+            }
+          ],
+          "description": "Space -> Ctrl|Space",
+          "from": {
+            "key_code": "spacebar"
+          },
+          "to": [
+            {
+              "key_code": "left_control"
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "spacebar"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "conditions": [
+            {
+              "identifiers": [
+                {
+                  "product_id": 568,
+                  "vendor_id": 1452
+                },
+                {
+                  "product_id": 632,
+                  "vendor_id": 1452
+                }
+              ],
+              "type": "device_if"
+            }
+          ],
+          "description": "Kana -> Shift|Return",
+          "from": {
+            "key_code": "lang1"
+          },
+          "to": [
+            {
+              "key_code": "left_shift"
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "return_or_enter"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "conditions": [
+            {
+              "identifiers": [
+                {
+                  "product_id": 568,
+                  "vendor_id": 1452
+                },
+                {
+                  "product_id": 632,
+                  "vendor_id": 1452
+                }
+              ],
+              "type": "device_if"
+            }
+          ],
+          "description": "Right Command -> Return",
+          "from": {
+            "key_code": "right_command"
+          },
+          "to": [
+            {
+              "key_code": "return_or_enter"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "conditions": [
+            {
+              "identifiers": [
+                {
+                  "product_id": 568,
+                  "vendor_id": 1452
+                },
+                {
+                  "product_id": 632,
+                  "vendor_id": 1452
+                }
+              ],
+              "type": "device_if"
+            }
+          ],
+          "description": "fn -> Kana",
+          "from": {
+            "key_code": "fn"
+          },
+          "to": [
+            {
+              "key_code": "fn"
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "japanese_kana"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    }
+}
