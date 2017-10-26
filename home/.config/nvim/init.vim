@@ -286,19 +286,10 @@ set list          " show invisible characters
 set showbreak=
 set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%,eol:$
 
-" In many terminal emulators the mouse works just fine.  By enabling it you
-" can position the cursor, Visually select and scroll with the mouse.
-if has('mouse')
-  set mouse=a
-endif
-
 " Show the effects of a command incrementally
 if exists('&inccommand')
   set inccommand=nosplit
 endif
-
-" Improve performance
-set synmaxcol=160
 " }}}
 
 " Editing {{{
