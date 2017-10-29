@@ -1,13 +1,9 @@
 " <C-z> is used in tmux so remap it to <C-s>
 call denite#custom#map('_', '<C-s>', '<denite:suspend>', 'noremap')
 
-" Use C-n/C-p to select candidates
-call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
-
 " Swap C-g/Down C-t/Up
-call denite#custom#map('insert', '<C-g>', '<denite:assign_next_matched_text>', 'noremap')
-call denite#custom#map('insert', '<C-t>', '<denite:assign_previous_matched_text>', 'noremap')
+call denite#custom#map('insert', '<C-n>', '<denite:assign_next_matched_text>', 'noremap')
+call denite#custom#map('insert', '<C-p>', '<denite:assign_previous_matched_text>', 'noremap')
 call denite#custom#map('insert', '<Down>', '<denite:assign_next_text>', 'noremap')
 call denite#custom#map('insert', '<Up>', '<denite:assign_previous_text>', 'noremap')
 
