@@ -1,3 +1,7 @@
+if ! which tac >/dev/null; then
+  alias tac="tail -r"
+fi
+
 __str::tail() {
   echo "$1" | awk '{print $NF}'
 }
@@ -138,7 +142,7 @@ peco::homeshick() {
 
 __peco::homeshick() {
   local query=$(__str::tail $1)
-  local s="$(homeshick list | sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g' | peco --query "$query")"
+  local s="$(homeshick list | sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g' | tac | peco --query "$query")"
   [[ -n $s ]] && print "homeshick cd $(echo $s | awk '{print $1}')"
 }
 
