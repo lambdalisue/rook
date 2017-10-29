@@ -117,6 +117,12 @@ repo = 'cocopon/colorswatch.vim'
 on_cmd = 'ColorSwatchGenerate'
 
 [[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'lambdalisue/vim-gita'
+
+[[plugins]]
 repo = 'lambdalisue/gina.vim'
 on_cmd = 'Gina'
 hook_add = '''

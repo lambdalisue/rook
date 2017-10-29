@@ -204,10 +204,10 @@
                             {
                                 "conditions": [
                                     {
-                                        "type": "frontmost_application_if",
                                         "bundle_identifiers": [
                                             "^com\\.apple\\.Terminal$"
-                                        ]
+                                        ],
+                                        "type": "frontmost_application_if"
                                     }
                                 ],
                                 "from": {
