@@ -450,10 +450,6 @@ repo = 'Shougo/neco-syntax'
 depends = 'deoplete.nvim'
 
 [[plugins]]
-repo = 'Shougo/neco-look'
-depends = 'deoplete.nvim'
-
-[[plugins]]
 repo = 'fszymanski/deoplete-emoji'
 depends = 'deoplete.nvim'
 
