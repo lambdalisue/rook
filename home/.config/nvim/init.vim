@@ -19,6 +19,7 @@ if has('vim_starting')
 
   " Use as many color as possible
   if !has('gui_running')
+        \ && has('nvim')
         \ && exists('&termguicolors')
         \ && $COLORTERM ==# 'truecolor'
     set termguicolors       " use truecolor in term
