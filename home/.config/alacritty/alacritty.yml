@@ -17,8 +17,10 @@ env:
 # Window dimensions in character columns and lines
 # (changes require restart)
 dimensions:
-  columns: 120
-  lines: 50
+  # columns: 120
+  # lines: 50
+  columns: 128
+  lines: 36
 
 # Adds this many blank pixels of padding around the window
 # Units are physical pixels; this is not DPI aware.
@@ -278,7 +280,8 @@ mouse:
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
-hide_cursor_when_typing: true
+# https://github.com/jwilm/alacritty/issues/883
+# hide_cursor_when_typing: true
 
 # Shell
 #
