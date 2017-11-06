@@ -58,15 +58,15 @@ endif
 
 
 if exists(':Guifont')
-  Guifont! Liberation\ Mono\ for\ Powerline:h12
+  silent! Guifont! Liberation\ Mono\ for\ Powerline:h12
 elseif has('gui_macvim')
   " http://d.hatena.ne.jp/yascentur/20120221/1329756132
   " http://d.hatena.ne.jp/yascentur/20110621/1308650962
   " Font size should be 2.0x
-  set guifont=Liberation\ Mono\ for\ Powerline:h14
+  silent! set guifont=Liberation\ Mono\ for\ Powerline:h14
 else
   " Font size should be 1.5x
-  set guifont=Liberation\ Mono\ for\ Powerline\ 14
+  silent! set guifont=Liberation\ Mono\ for\ Powerline\ 14
 endif
 
 if filereadable(expand('~/.gvimrc.local'))
