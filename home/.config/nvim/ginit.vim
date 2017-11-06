@@ -57,7 +57,10 @@ if exists('antialias')
 endif
 
 
-if exists(':Guifont')
+if exists(':Guifont') && (has('win32') || has('win64'))
+  " Font name in Windows is slitely different
+  silent! Guifont! Literation\ Mono\ Powerline:h10
+elseif exists(':Guifont')
   silent! Guifont! Liberation\ Mono\ for\ Powerline:h12
 elseif has('gui_macvim')
   " http://d.hatena.ne.jp/yascentur/20120221/1329756132
