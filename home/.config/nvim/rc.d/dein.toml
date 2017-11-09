@@ -481,11 +481,11 @@ if = 'executable("tsserver")'
 repo = 'mhartington/nvim-typescript'
 depends = 'deoplete.nvim'
 on_ft = 'typescript'
-hook_add = '''
+hook_source = '''
 let g:nvim_typescript#javascript_support = 1
 let g:nvim_typescript#vue_support = 1
-let g:nvim_typescript#type_info_on_hold = 1
-let g:nvim_typescript#default_mappings = 1
+let g:nvim_typescript#type_info_on_hold = 0
+let g:nvim_typescript#default_mappings = 0
 
 function! s:configure_typescript() abort
   nnoremap <silent><buffer> <Plug>(typescript-goto-definitions) :<C-u>TSTypeDef<CR>
