@@ -364,7 +364,7 @@ set backspace=indent,eol,start
 noremap <Leader>      <Nop>
 noremap <LocalLeader> <Nop>
 let g:mapleader = ','
-let g:maplocalleader = ','
+let g:maplocalleader = '\'
 
 " Disable dengerous/annoying mappings
 " ZZ - save and close Vim
@@ -421,6 +421,8 @@ nnoremap <S-Down>  <C-w>+<CR>
 
 " Use <Spacw>w as <C-w>
 nnoremap <Space>w <C-w>
+nnoremap <Space>wt :<C-u>tabnew<CR>
+nnoremap <Space>wq :<C-u>tabclose<CR>
 
 " Tab navigation
 nnoremap <silent> <C-w>t :<C-u>tabnew<CR>

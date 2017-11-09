@@ -437,6 +437,7 @@ endif
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 hook_add = '''
+let g:deoplete#enable_at_startup = 1
 call deoplete#custom#source('omni', 'is_silent', 1)
 '''
 
@@ -476,7 +477,7 @@ on_ft = 'tmux'
 # NOTE:
 # This plugins often cause 'channel' exception...
 [[plugins]]
-if = 'executable("typescript")'
+if = 'executable("tsserver")'
 repo = 'mhartington/nvim-typescript'
 depends = 'deoplete.nvim'
 on_ft = 'typescript'
@@ -485,6 +486,29 @@ let g:nvim_typescript#javascript_support = 1
 let g:nvim_typescript#vue_support = 1
 let g:nvim_typescript#type_info_on_hold = 1
 let g:nvim_typescript#default_mappings = 1
+
+function! s:configure_typescript() abort
+  nnoremap <silent><buffer> <Plug>(typescript-goto-definitions) :<C-u>TSTypeDef<CR>
+  nnoremap <silent><buffer> <Plug>(typescript-goto-assignments) :<C-u>TSDef<CR>
+  nnoremap <silent><buffer> <Plug>(typescript-rename) :<C-u>TSRename<CR>
+  nnoremap <silent><buffer> <Plug>(typescript-usages) :<C-u>TSRefs<CR>
+  nnoremap <silent><buffer> <Plug>(typescript-import) :<C-u>TSImport<CR>
+  nnoremap <silent><buffer> <Plug>(typescript-show-documentation) :<C-u>TSDoc<CR>
+  nnoremap <silent><buffer> <Plug>(typescript-echo-type) :<C-u>TSType<CR>
+
+  nmap <buffer> <LocalLeader>d <Plug>(typescript-goto-definitions)
+  nmap <buffer> <LocalLeader>g <Plug>(typescript-goto-assignments)
+  nmap <buffer> <LocalLeader>r <Plug>(typescript-rename)
+  nmap <buffer> <LocalLeader>u <Plug>(typescript-usages)
+  nmap <buffer> <LocalLeader>i <Plug>(typescript-import)
+  nmap <buffer> K <Plug>(typescript-show-documentation)
+  nmap <buffer> <C-k> <Plug>(typescript-echo-type)
+endfunction
+
+augroup my_typescript
+  autocmd! *
+  autocmd FileType typescript call s:configure_typescript()
+augroup END
 '''
 
 # }}}
