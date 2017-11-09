@@ -6,6 +6,23 @@ repo = 'Shougo/dein.vim'
 repo = 'lambdalisue/vim-unified-diff'
 
 [[plugins]]
+repo = 'lambdalisue/smartcl.vim'
+
+[[plugins]]
+repo = 'lambdalisue/smarthl.vim'
+hook_add = '''
+let g:smarthl_default_mappings = 0
+nmap / <Plug>(smarthl-/)
+nmap ? <Plug>(smarthl-?)
+nmap * <Plug>(smarthl-*)
+nmap n <Plug>(smarthl-n)
+nmap N <Plug>(smarthl-N)
+nmap g/ <Plug>(smarthl-g/)
+nmap g? <Plug>(smarthl-g?)
+nmap g* <Plug>(smarthl-g*)
+'''
+
+[[plugins]]
 repo = 'Shougo/junkfile.vim'
 on_cmd = 'JunkfileOpen'
 
