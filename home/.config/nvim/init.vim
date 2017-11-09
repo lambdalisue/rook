@@ -249,10 +249,11 @@ set foldcolumn=0        " hide fold guide
 " Show @@@ in the last line if it is truncated.
 set display=truncate
 
+set noshowmode
 set laststatus=2        " always shows statusline
 set showtabline=2       " always shows tabline
 set report=0            " reports any changes
-set cmdheight=2
+set cmdheight=1
 set lazyredraw          " do not redraw while command execution
 
 set splitright          " vsplit to right
@@ -363,7 +364,7 @@ set backspace=indent,eol,start
 " define <Leader> and <LocalLeader>
 noremap <Leader>      <Nop>
 noremap <LocalLeader> <Nop>
-let g:mapleader = ','
+let g:mapleader = '\'
 let g:maplocalleader = '\'
 
 " Disable dengerous/annoying mappings
@@ -375,10 +376,6 @@ noremap <MiddleMouse>   <Nop>
 noremap <2-MiddleMouse> <Nop>
 noremap <3-MiddleMouse> <Nop>
 noremap <4-MiddleMouse> <Nop>
-
-" Don't use Ex mode, use Q for formatting.
-" Revert with ":unmap Q".
-noremap Q gq
 
 " Swap ; and : in Normal and Visual mode [US keyboard]
 nnoremap ; :
@@ -407,12 +404,6 @@ cnoremap <Down> <C-n>
 nnoremap vv 0v$
 nnoremap Y y$
 
-" Cursor movement for Japanese
-nnoremap <silent><expr> j  v:count == 0 ? 'gj' : 'j'
-nnoremap <silent><expr> k  v:count == 0 ? 'gk' : 'k'
-nnoremap <silent><expr> gj v:count == 0 ? 'j' : 'gj'
-nnoremap <silent><expr> gk v:count == 0 ? 'k' : 'gk'
-
 " Window resize operations with <S-Arrow>
 nnoremap <S-Left>  <C-w><<CR>
 nnoremap <S-Right> <C-w>><CR>
@@ -431,9 +422,6 @@ nnoremap <silent> <C-w>q :<C-u>tabclose<CR>
 nnoremap <silent> <C-w><C-q> :<C-u>tabclose<CR>
 nnoremap <C-n> gt
 nnoremap <C-p> gT
-
-" Clear highlight with <C-l>
-nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
@@ -561,38 +549,6 @@ nnoremap <silent> <Plug>(my-source-script)
 nmap <Leader><Leader>s <Plug>(my-source-script)
 " }}}
 
-" Switch colorscheme with <F3> {{{
-let s:colorschemes = [
-      \ 'hybrid',
-      \ 'tender',
-      \ 'iceberg',
-      \ 'lucius',
-      \ 'atom-dark',
-      \]
-let s:colorscheme_index = 0
-function! s:set_colorscheme(index) abort
-  let index = a:index is v:null
-        \ ? float2nr(reltimefloat(reltime()))
-        \ : a:index
-  let s:colorscheme_index = index % len(s:colorschemes)
-  let colorscheme_name = s:colorschemes[s:colorscheme_index]
-  if colorscheme_name =~# '\%(tender\|hybrid\)'
-    highlight Cursor guifg=white guibg=black
-    highlight iCursor guifg=white guibg=steelblue
-  endif
-  execute 'colorscheme' colorscheme_name
-  redraw | echo colorscheme_name
-endfunction
-
-function! s:switch_colorscheme(offset) abort
-  call s:set_colorscheme(s:colorscheme_index + a:offset)
-endfunction
-
-nnoremap <silent> <Plug>(my-switch-colorscheme)
-      \ :<C-u>call <SID>switch_colorscheme(1)<CR>
-nmap <F3> <Plug>(my-switch-colorscheme)
-" }}}
-
 " Zoom widnow temporary with <C-w>o {{{
 function! s:toggle_window_zoom() abort
     if exists('t:zoom_winrestcmd')
@@ -628,14 +584,6 @@ nnoremap <silent> <C-g>h :<C-u>call <SID>display_syninfo()<CR>
 augroup MyAutoCmd
   autocmd!
 augroup END
-
-" Automatically set colorcolumn {{{
-autocmd MyAutoCmd InsertEnter *
-      \ if &textwidth > 0 |
-      \   execute printf('setlocal colorcolumn=%d', &textwidth - 1) |
-      \ endif
-autocmd MyAutoCmd InsertLeave * setlocal colorcolumn=
-" }}}
 
 " Automatically keep cursor position {{{
 " When editing a file, always jump to the last known cursor position.
@@ -727,38 +675,6 @@ function! s:workon(dir, bang) abort
 endfunction
 autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
 command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
-" }}}
-
-" Automatically show cursorline when hold {{{
-" augroup vimrc-auto-cursorline
-"   autocmd!
-"   autocmd CursorMoved * call s:auto_cursorline('CursorMoved')
-"   autocmd CursorHold * call s:auto_cursorline('CursorHold')
-"   autocmd WinEnter * call s:auto_cursorline('WinEnter')
-"   autocmd WinLeave * call s:auto_cursorline('WinLeave')
-"
-"   let s:cursorline_lock = 0
-"   function! s:auto_cursorline(event)
-"     if a:event ==# 'WinEnter'
-"       setlocal cursorline
-"       let s:cursorline_lock = 2
-"     elseif a:event ==# 'WinLeave'
-"       setlocal nocursorline
-"     elseif a:event ==# 'CursorMoved'
-"       if s:cursorline_lock
-"         if 1 < s:cursorline_lock
-"           let s:cursorline_lock = 1
-"         else
-"           setlocal nocursorline
-"           let s:cursorline_lock = 0
-"         endif
-"       endif
-"     elseif a:event ==# 'CursorHold'
-"       setlocal cursorline
-"       let s:cursorline_lock = 1
-"     endif
-"   endfunction
-" augroup END
 " }}}
 
 " Check keycode {{{
@@ -935,11 +851,8 @@ syntax sync maxlines=500
 filetype indent plugin on
 
 set background=dark
-try
-  silent call s:set_colorscheme(0)
-catch
-  colorscheme desert
-endtry
+silent! colorscheme desert
+silent! colorscheme iceberg
 
 " Source '~/.vimrc.local' only when exists
 " This requires to be posterior to Plugin loading

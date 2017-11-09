@@ -6,6 +6,9 @@ repo = 'Shougo/dein.vim'
 repo = 'lambdalisue/vim-unified-diff'
 
 [[plugins]]
+repo = 'lambdalisue/smarttw.vim'
+
+[[plugins]]
 repo = 'lambdalisue/smartcl.vim'
 
 [[plugins]]
@@ -141,7 +144,6 @@ repo = 'lambdalisue/vim-gita'
 
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
-on_cmd = 'Gina'
 hook_add = '''
 nnoremap <silent> <Space>aa :<C-u>Gina status<CR>
 nnoremap <silent> <Space>ac :<C-u>Gina commit<CR>
@@ -154,8 +156,6 @@ nnoremap <silent> <Space>ad :<C-u>Gina changes origin/HEAD...<CR>
 nnoremap <silent> <Space>al :<C-u>Gina log<CR>
 nnoremap <silent> <Space>aL :<C-u>Gina log :%<CR>
 nnoremap <silent> <Space>af :<C-u>Gina ls<CR>
-'''
-hook_source = '''
 execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/gina.vim'))
 '''
 

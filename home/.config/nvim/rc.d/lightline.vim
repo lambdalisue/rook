@@ -18,7 +18,7 @@ let s:Symbols = {
       \}
 
 let g:lightline = {
-      \ 'colorscheme': 'tender',
+      \ 'colorscheme': 'iceberg',
       \ 'active': {
       \   'left': [
       \     [ 'mode', 'paste' ],
@@ -73,7 +73,6 @@ let g:lightline = {
       \   'fileinfo': 'g:lightline.my.fileinfo',
       \   'filetype': 'g:lightline.my.filetype',
       \   'datetime': 'g:lightline.my.datetime',
-      \   'git_branch': 'g:lightline.my.git_branch',
       \   'gina_branch': 'g:lightline.my.gina_branch',
       \   'gina_traffic': 'g:lightline.my.gina_traffic',
       \   'gina_status': 'g:lightline.my.gina_status',
@@ -87,6 +86,19 @@ let g:lightline = {
       \   'left': s:Symbols.separator_left,
       \   'right': s:Symbols.separator_right,
       \ },
+      \ 'mode_map': {
+      \   'n' : 'n',
+      \   'i' : 'i',
+      \   'R' : 'R',
+      \   'v' : 'v',
+      \   'V' : 'V',
+      \   "\<C-v>": '^',
+      \   'c' : 'c',
+      \   's' : 's',
+      \   'S' : 'S',
+      \   "\<C-s>": '^',
+      \   't': 't',
+      \ }
       \}
 
 " Note:
@@ -119,7 +131,7 @@ endfunction
 function! g:lightline.my.filename() abort
   if &filetype =~# '\v%(unite|vimfiler|vimshell)'
     return {&filetype}#get_status_string()
-  elseif &filetype =~# '\v%(gita-blame-navi)'
+  elseif &filetype =~# '\v%(gina-blame-navi)'
     let fname = winwidth(0) > 79
           \ ? expand('%:~:.')
           \ : get(split(expand('%:~:.'), ':'), 2, 'NAVI')
