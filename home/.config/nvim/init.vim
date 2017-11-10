@@ -239,7 +239,6 @@ set nostartofline       " let C-D, C-U,... to keep same column
 set smartcase           " override the ignorecase if the search pattern contains
                         " upper case characters
 set tagcase=match       " use case sensitive for tag
-set hlsearch            " highlight found terms
 set breakindent         " every wrapped line will continue visually indented
 
 set foldlevelstart=99
@@ -847,7 +846,7 @@ call s:auto_mkdir(fnamemodify(&spellfile, ':p:h'), 1)
 syntax on
 syntax sync linebreaks=1
 syntax sync minlines=100
-syntax sync maxlines=500
+syntax sync maxlines=5000
 filetype indent plugin on
 
 set background=dark

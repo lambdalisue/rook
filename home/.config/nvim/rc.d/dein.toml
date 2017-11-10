@@ -156,7 +156,7 @@ nnoremap <silent> <Space>ad :<C-u>Gina changes origin/HEAD...<CR>
 nnoremap <silent> <Space>al :<C-u>Gina log<CR>
 nnoremap <silent> <Space>aL :<C-u>Gina log :%<CR>
 nnoremap <silent> <Space>af :<C-u>Gina ls<CR>
-execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/gina.vim'))
+autocmd MyAutoCmd VimEnter * execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/gina.vim'))
 '''
 
 [[plugins]]
