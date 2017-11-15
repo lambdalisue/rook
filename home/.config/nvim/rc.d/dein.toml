@@ -12,6 +12,10 @@ repo = 'lambdalisue/smarttw.vim'
 repo = 'lambdalisue/smartcl.vim'
 
 [[plugins]]
+repo = 'Shougo/echodoc.vim'
+on_event = 'InsertEnter'
+
+[[plugins]]
 repo = 'lambdalisue/smarthl.vim'
 hook_add = '''
 let g:smarthl_default_mappings = 0
@@ -169,16 +173,11 @@ let g:gista#client#default_username = 'lambdalisue'
 [[plugins]]
 repo = 'Shougo/vimfiler.vim'
 depends = 'unite.vim'
-on_cmd = [
-  'VimFiler',
-  'VimFilerExplorer',
-]
 hook_add = '''
+let g:vimfiler_as_default_explorer = 1
 nnoremap <silent> <Space>ee :<C-u>VimFilerExplorer<CR>
 nnoremap <silent> <Space>eE :<C-u>VimFiler<CR>
-'''
-hook_source = '''
-execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/vimfiler.vim'))
+autocmd MyAutoCmd VimEnter * execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/vimfiler.vim'))
 '''
 
 [[plugins]]
@@ -494,7 +493,6 @@ on_ft = 'tmux'
 # NOTE:
 # This plugins often cause 'channel' exception...
 [[plugins]]
-if = 'executable("tsserver")'
 repo = 'mhartington/nvim-typescript'
 depends = 'deoplete.nvim'
 on_ft = 'typescript'
