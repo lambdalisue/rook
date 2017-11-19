@@ -55,4 +55,6 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.pp setfiletype pascal
   autocmd BufNewFile,BufRead *.isl setfiletype iss
 
+  " Neovim terminal
+  autocmd BufNewFile,BufRead term://*   setfiletype terminal
 augroup END

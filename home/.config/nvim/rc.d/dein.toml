@@ -3,13 +3,27 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
+repo = 'lambdalisue/vim-protocol'
+
+[[plugins]]
 repo = 'lambdalisue/vim-unified-diff'
+
+[[plugins]]
+repo = 'lambdalisue/readablefold.vim'
 
 [[plugins]]
 repo = 'lambdalisue/smarttw.vim'
 
 [[plugins]]
 repo = 'lambdalisue/smartcl.vim'
+
+[[plugins]]
+repo = 'lambdalisue/trimmer.vim'
+hook_add = '''
+augroup trimmer
+  autocmd FileType perl,python,vim,vimspec,javascript,typescript,dosbatch,ps1,sh,iss,pascal Trimmer! enable
+augroup END
+'''
 
 [[plugins]]
 repo = 'Shougo/echodoc.vim'
@@ -30,18 +44,22 @@ nmap g* <Plug>(smarthl-g*)
 '''
 
 [[plugins]]
+repo = 'haya14busa/vim-asterisk'
+on_map = '<Plug>'
+hook_add = '''
+map *   <Plug>(asterisk-*)
+map g*  <Plug>(asterisk-g*)
+map z*  <Plug>(asterisk-z*)
+map gz* <Plug>(asterisk-gz*)
+'''
+
+[[plugins]]
 repo = 'Shougo/junkfile.vim'
 on_cmd = 'JunkfileOpen'
 
 [[plugins]]
-repo = 'lambdalisue/readablefold.vim'
-
-[[plugins]]
 repo = 'haya14busa/dein-command.vim'
 on_cmd = 'Dein'
-
-[[plugins]]
-repo = 'lambdalisue/vim-protocol'
 
 [[plugins]]
 repo = 'thinca/vim-localrc'
@@ -81,20 +99,9 @@ nmap <C-r> <Plug>(repeat-<C-r>)
 nmap g-    <Plug>(repeat-g-)
 nmap g+    <Plug>(repeat-g+)
 '''
-
-[[plugins]]
-repo = 'haya14busa/vim-asterisk'
-on_map = '<Plug>'
-hook_add = '''
-map *   <Plug>(asterisk-*)
-map g*  <Plug>(asterisk-g*)
-map z*  <Plug>(asterisk-z*)
-map gz* <Plug>(asterisk-gz*)
-'''
-
 [[plugins]]
 repo = 'cohama/lexima.vim'
-hook_add = '''
+hook_post_source = '''
 execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/lexima.vim'))
 '''
 
@@ -140,27 +147,29 @@ on_cmd = 'Ref'
 repo = 'cocopon/colorswatch.vim'
 on_cmd = 'ColorSwatchGenerate'
 
-[[plugins]]
-repo = 'tpope/vim-fugitive'
+# [[plugins]]
+# repo = 'tpope/vim-fugitive'
 
-[[plugins]]
-repo = 'lambdalisue/vim-gita'
+# [[plugins]]
+# repo = 'lambdalisue/vim-gita'
 
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
 hook_add = '''
-nnoremap <silent> <Space>aa :<C-u>Gina status<CR>
-nnoremap <silent> <Space>ac :<C-u>Gina commit<CR>
-nnoremap <silent> <Space>aC :<C-u>Gina commit --amend<CR>
-nnoremap <silent> <Space>ab :<C-u>Gina br<CR>
-nnoremap <silent> <Space>at :<C-u>Gina tag<CR>
-nnoremap <silent> <Space>ag :<C-u>Gina grep<CR>
-nnoremap <silent> <Space>aq :<C-u>Gina qrep<CR>
-nnoremap <silent> <Space>ad :<C-u>Gina changes origin/HEAD...<CR>
-nnoremap <silent> <Space>al :<C-u>Gina log<CR>
-nnoremap <silent> <Space>aL :<C-u>Gina log :%<CR>
-nnoremap <silent> <Space>af :<C-u>Gina ls<CR>
-autocmd MyAutoCmd VimEnter * execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/gina.vim'))
+nnoremap <silent> <Leader>aa :<C-u>Gina status<CR>
+nnoremap <silent> <Leader>ac :<C-u>Gina commit<CR>
+nnoremap <silent> <Leader>aC :<C-u>Gina commit --amend<CR>
+nnoremap <silent> <Leader>ab :<C-u>Gina br<CR>
+nnoremap <silent> <Leader>at :<C-u>Gina tag<CR>
+nnoremap <silent> <Leader>ag :<C-u>Gina grep<CR>
+nnoremap <silent> <Leader>aq :<C-u>Gina qrep<CR>
+nnoremap <silent> <Leader>ad :<C-u>Gina changes origin/HEAD...<CR>
+nnoremap <silent> <Leader>al :<C-u>Gina log<CR>
+nnoremap <silent> <Leader>aL :<C-u>Gina log :%<CR>
+nnoremap <silent> <Leader>af :<C-u>Gina ls<CR>
+'''
+hook_post_source = '''
+execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/gina.vim'))
 '''
 
 [[plugins]]
@@ -171,22 +180,23 @@ let g:gista#client#default_username = 'lambdalisue'
 '''
 
 [[plugins]]
-repo = 'Shougo/vimfiler.vim'
-depends = 'unite.vim'
+# repo = 'cocopon/vaffle.vim'
+repo = 'lambdalisue/vaffle.vim'
 hook_add = '''
-let g:vimfiler_as_default_explorer = 1
-nnoremap <silent> <Space>ee :<C-u>VimFilerExplorer<CR>
-nnoremap <silent> <Space>eE :<C-u>VimFiler<CR>
-autocmd MyAutoCmd VimEnter * execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/vimfiler.vim'))
+function! s:my_vaffle() abort
+  nmap <buffer> <C-j> <Plug>(vaffle-toggle-current)
+endfunction
+autocmd MyAutoCmd FileType vaffle call s:my_vaffle()
+
+nnoremap <silent> <Leader>ee :<C-u>Vaffle <C-r>=empty(expand('%')) ? '' : expand('%:h')<CR><CR>
+nnoremap <silent> <Leader>eE :<C-u>Vaffle<CR>
 '''
 
 [[plugins]]
 repo = 'mbbill/undotree'
 on_cmd = 'UndotreeToggle'
 hook_add = '''
-nnoremap <Plug>(my-undotree) <Nop>
-nmap <Leader>u <Plug>(my-undotree)
-nnoremap <silent> <Plug>(my-undotree) :<C-u>UndotreeToggle<CR>
+nnoremap <silent> <Leader>uu :<C-u>UndotreeToggle<CR>
 '''
 
 [[plugins]]
@@ -197,9 +207,7 @@ on_cmd = [
   'TagbarToggle',
 ]
 hook_add = '''
-nnoremap <Plug>(my-tagbar) <Nop>
-nmap <Leader>t <Plug>(my-tagbar)
-nnoremap <silent> <Plug>(my-tagbar) :<C-u>TagbarToggle<CR>
+nnoremap <silent> <Leader>tt :<C-u>TagbarToggle<CR>
 '''
 
 [[plugins]]
@@ -224,13 +232,13 @@ nnoremap !# :<C-u>ListaCursorWord<CR>
 [[plugins]]
 repo = 'lambdalisue/battery.vim'
 hook_add = '''
-let g:battery#update_tabline = 0
+let g:battery#update_tabline = 1
 '''
 
 [[plugins]]
 repo = 'lambdalisue/wifi.vim'
 hook_add = '''
-let g:wifi#update_tabline = 0
+let g:wifi#update_tabline = 1
 '''
 
 [[plugins]]
@@ -264,7 +272,8 @@ repo = 'thinca/vim-zenspace'
 [[plugins]]
 repo = 'itchyny/vim-parenmatch'
 hook_add = '''
-let g:parenmatch = 0
+let g:loaded_matchparen = 1
+let g:parenmatch = 1
 
 function! s:toggle_vim_parenmatch() abort
   silent! call matchdelete(w:parenmatch)
@@ -314,7 +323,6 @@ endfunction
 [[plugins]]
 repo = 'thinca/vim-qfreplace'
 on_cmd = 'Qfreplace'
-on_source = ['vimfiler.vim']
 
 [[plugins]]
 repo = 'tyru/caw.vim'
@@ -364,13 +372,16 @@ nmap <expr><C-k> yankround#is_active()
 nmap <expr><C-j> yankround#is_active()
       \ ? "\<Plug>(yankround-next)"
       \ : "\<C-j>"
+let g:yankround_use_region_hl = 1
 '''
-hook_source = 'let g:yankround_use_region_hl = 0'
 
 [[plugins]]
 repo = 'AndrewRadev/switch.vim'
 on_cmd = 'Switch'
-hook_add = 'nnoremap <silent> \ :<C-u>Switch<CR>'
+hook_add = '''
+let g:switch_mapping = ''
+nnoremap <silent> - :<C-u>Switch<CR>
+'''
 
 [[plugins]]
 repo = 'AndrewRadev/linediff.vim'
@@ -378,9 +389,9 @@ on_cmd = 'Linediff'
 
 [[plugins]]
 repo = 'junegunn/vim-easy-align'
-on_map = '<Plug>'
+on_map = '<Plug>(EasyAlign)'
 hook_add = '''
-xmap ga <Plug>(EasyAlign)
+vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 '''
 
@@ -392,7 +403,7 @@ on_cmd = 'Findent'
 repo = 'lambdalisue/vim-foldround'
 on_map = '<Plug>'
 hook_add = '''
-nmap <Leader>f <Plug>(foldround-forward)
+nmap <Leader>ff <Plug>(foldround-forward)
 '''
 
 # }}}
@@ -402,7 +413,7 @@ nmap <Leader>f <Plug>(foldround-forward)
 repo = 'thinca/vim-quickrun'
 on_map = '<Plug>'
 on_cmd = 'QuickRun'
-hook_add = 'nmap <Space>rr <Plug>(quickrun)'
+hook_add = 'nmap <Leader>rr <Plug>(quickrun)'
 hook_source = '''
 execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/quickrun.vim'))
 '''
@@ -530,34 +541,24 @@ augroup END
 
 # Denite {{{
 [[plugins]]
-repo = 'Shougo/unite.vim'
-on_cmd = [
-  'Unite',
-  'UniteCursorWord',
-]
-hook_source = '''
-execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/unite.vim'))
-'''
-
-[[plugins]]
 repo = 'Shougo/denite.nvim'
 on_cmd = [
   'Denite',
   'DeniteCursorWord',
 ]
 hook_add = '''
-nnoremap <silent> <Space><Space> :<C-u>Denite -resume<CR>
-nnoremap <silent> <Space>ff :<C-u>Denite file_rec<CR>
-nnoremap <silent> <Space>dd :<C-u>Denite directory_rec<CR>
-nnoremap <silent> <Space>hh :<C-u>Denite help<CR>
-nnoremap <silent> <Space>gg :<C-u>Denite grep<CR>
-nnoremap <silent> <Space>jj :<C-u>Denite jump<CR>
-nnoremap <silent> <Space>ss :<C-u>Denite menu:shortcut<CR>
-nnoremap <silent> <Space>qq :<C-u>Denite -default-action=cd ghq<CR>
-nnoremap <silent> <Space>oo :<C-u>Denite file_old<CR>
-nnoremap <silent> <Space>ww :<C-u>Denite buffer<CR>
+nnoremap <silent> <Leader>nn :<C-u>Denite -resume<CR>
+nnoremap <silent> <Leader>nf :<C-u>Denite file_rec<CR>
+nnoremap <silent> <Leader>nd :<C-u>Denite directory_rec<CR>
+nnoremap <silent> <Leader>nh :<C-u>Denite help<CR>
+nnoremap <silent> <Leader>ng :<C-u>Denite grep<CR>
+nnoremap <silent> <Leader>nj :<C-u>Denite jump<CR>
+nnoremap <silent> <Leader>ns :<C-u>Denite menu:shortcut<CR>
+nnoremap <silent> <Leader>nq :<C-u>Denite -default-action=cd ghq<CR>
+nnoremap <silent> <Leader>no :<C-u>Denite file_old<CR>
+nnoremap <silent> <Leader>nw :<C-u>Denite buffer<CR>
 '''
-hook_source = '''
+hook_post_source = '''
 execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/denite.vim'))
 '''
 
@@ -747,26 +748,8 @@ repo = 'kana/vim-operator-replace'
 depends = 'vim-operator-user'
 on_map = [['nx', '<Plug>']]
 hook_add = '''
-nmap -r <Plug>(operator-replace)
-xmap -r <Plug>(operator-replace)
-'''
-
-[[plugins]]
-repo = 'sgur/vim-operator-openbrowser'
-depends = 'vim-operator-user'
-on_map = [['nx', '<Plug>']]
-hook_add = '''
-nmap -o <Plug>(operator-openbrowser)
-xmap -o <Plug>(operator-openbrowser)
-'''
-
-[[plugins]]
-repo = 'rhysd/vim-operator-trailingspace-killer'
-depends = 'vim-operator-user'
-on_map = [['nx', '<Plug>']]
-hook_add = '''
-nmap -k <Plug>(operator-trailingspace-killer)
-xmap -k <Plug>(operator-trailingspace-killer)
+nmap R <Plug>(operator-replace)
+xmap R <Plug>(operator-replace)
 '''
 
 [[plugins]]
@@ -775,17 +758,6 @@ depends = 'vim-operator-user'
 hook_add = '''
 nmap s <Nop>
 xmap s <Nop>
-'''
-
-[[plugins]]
-repo = 'lambdalisue/vim-operator-breakline'
-depends = 'vim-operator-user'
-on_map = [['nx', '<Plug>']]
-hook_add = '''
-nmap -b <Plug>(operator-breakline-manual)
-nmap -B <Plug>(operator-breakline-textwidth)
-xmap -b <Plug>(operator-breakline-manual)
-xmap -B <Plug>(operator-breakline-textwidth)
 '''
 
 # }}}

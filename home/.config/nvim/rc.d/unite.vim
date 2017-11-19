@@ -5,6 +5,7 @@ call unite#custom#profile('default', 'context', {
 call unite#custom#default_action('directory', 'cd')
 call unite#custom#alias('file', 'edit', 'open')
 
+
 " grep
 if executable('pt')
   " Use pt (the platinum searcher)

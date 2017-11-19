@@ -1,26 +1,14 @@
 " vim -u ~/.vim/vimrc.min
 if has('vim_starting')
-  source $VIMRUNTIME/defaults.vim
+  if !has('nvim')
+    source $VIMRUNTIME/defaults.vim
+  endif
+  set runtimepath+=~/Code/github.com/lambdalisue/gina.vim
 endif
 
-" vim-plug でインストールするプラグインは call plug#begin(...) から
-" call plug#end() の間に Plug ... として記載する。
-call plug#begin('~/.vim/plugged')
-
-" gina.vim の指定
-Plug 'lambdalisue/gina.vim'
-
-" 上記したプラグインの初期化処理
-call plug#end()
-
-" vimdiff で横分割を使う設定
-" Gina は diffopt の値で分割方向を決めるので、ここで指定する
-set diffopt+=vertical
-
-" ----------------------------------------------------------------------------
+" Personal preference
 nnoremap ; :
 nnoremap : ;
-set background=light
-set columns=141
-set lines=40
 
+filetype plugin indent on
+syntax on
