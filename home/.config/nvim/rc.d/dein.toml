@@ -465,6 +465,8 @@ endif
 repo = 'Shougo/deoplete.nvim'
 hook_add = '''
 let g:deoplete#enable_at_startup = 1
+'''
+hook_post_source = '''
 call deoplete#custom#source('omni', 'is_silent', 1)
 '''
 
