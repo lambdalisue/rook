@@ -444,6 +444,7 @@ if has('nvim')
     autocmd BufEnter docs/conf.py let b:neomake_python_enabled_markers = ['python']
   augroup END
 
+  let g:neomake_ft_maker_remove_invalid_entries = 1
   let g:neomake_error_sign = {
         \ 'text': 'E-',
         \ 'texthl': 'NeomakeErrorSign'
