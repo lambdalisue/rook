@@ -12,6 +12,9 @@ repo = 'lambdalisue/vim-unified-diff'
 repo = 'lambdalisue/readablefold.vim'
 
 [[plugins]]
+repo = 'lambdalisue/trashbin.vim'
+
+[[plugins]]
 repo = 'lambdalisue/smarttw.vim'
 
 [[plugins]]
@@ -30,6 +33,13 @@ repo = 'Shougo/echodoc.vim'
 on_event = 'InsertEnter'
 
 [[plugins]]
+repo = 'rhysd/clever-f.vim'
+hook_add = '''
+let g:clever_f_across_no_line = 1
+let g:clever_f_smart_case = 1
+'''
+
+[[plugins]]
 repo = 'lambdalisue/smarthl.vim'
 hook_add = '''
 let g:smarthl_default_mappings = 0
@@ -43,15 +53,15 @@ nmap g? <Plug>(smarthl-g?)
 nmap g* <Plug>(smarthl-g*)
 '''
 
-[[plugins]]
-repo = 'haya14busa/vim-asterisk'
-on_map = '<Plug>'
-hook_add = '''
-map *   <Plug>(asterisk-*)
-map g*  <Plug>(asterisk-g*)
-map z*  <Plug>(asterisk-z*)
-map gz* <Plug>(asterisk-gz*)
-'''
+# [[plugins]]
+# repo = 'haya14busa/vim-asterisk'
+# on_map = '<Plug>'
+# hook_add = '''
+# map *   <Plug>(asterisk-*)
+# map g*  <Plug>(asterisk-g*)
+# map z*  <Plug>(asterisk-z*)
+# map gz* <Plug>(asterisk-gz*)
+# '''
 
 [[plugins]]
 repo = 'Shougo/junkfile.vim'
