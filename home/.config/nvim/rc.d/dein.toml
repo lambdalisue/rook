@@ -21,6 +21,9 @@ repo = 'lambdalisue/smarttw.vim'
 repo = 'lambdalisue/smartcl.vim'
 
 [[plugins]]
+repo = 'lambdalisue/compl_local_filename.vim'
+
+[[plugins]]
 repo = 'lambdalisue/trimmer.vim'
 hook_add = '''
 augroup trimmer
@@ -476,6 +479,7 @@ endif
 repo = 'Shougo/deoplete.nvim'
 hook_add = '''
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#file#enable_buffer_path = 1
 '''
 hook_post_source = '''
 call deoplete#custom#source('omni', 'is_silent', 1)

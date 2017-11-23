@@ -58,4 +58,3 @@ augroup filetypedetect
   " Neovim terminal
   autocmd TermOpen * setfiletype terminal
 augroup END
-
