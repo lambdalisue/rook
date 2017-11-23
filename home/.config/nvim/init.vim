@@ -557,11 +557,17 @@ nmap Q <Plug>(my-toggle-quickfix)
 
 " Toggle location list window with L {{{
 function! s:toggle_ll() abort
-  let nwin = winnr('$')
-  lclose
-  if nwin == winnr('$')
-    botright lopen
-  endif
+  try
+    let nwin = winnr('$')
+    lclose
+    if nwin == winnr('$')
+      botright lopen
+    endif
+  catch /^Vim\%((\a\+)\)\=:E776/
+    echohl WarningMsg
+    redraw | echo 'No location list'
+    echohl None
+  endtry
 endfunction
 nnoremap <silent> <Plug>(my-toggle-locationlist)
       \ :<C-u>call <SID>toggle_ll()<CR>
@@ -588,7 +594,7 @@ nnoremap <silent> <Plug>(my-source-script)
 nmap <Leader>ss <Plug>(my-source-script)
 " }}}
 
-" Zoom widnow temporary with <C-w>o {{{
+" Zoom widnow temporary with <C-w>z {{{
 function! s:toggle_window_zoom() abort
     if exists('t:zoom_winrestcmd')
         execute t:zoom_winrestcmd
@@ -601,8 +607,8 @@ function! s:toggle_window_zoom() abort
 endfunction
 nnoremap <silent> <Plug>(my-zoom-window)
       \ :<C-u>call <SID>toggle_window_zoom()<CR>
-nmap <C-w>o <Plug>(my-zoom-window)
-nmap <C-w><C-o> <Plug>(my-zoom-window)
+nmap <C-w>z <Plug>(my-zoom-window)
+nmap <C-w><C-z> <Plug>(my-zoom-window)
 " }}}
 
 " }}}
