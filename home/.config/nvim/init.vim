@@ -615,7 +615,7 @@ nmap <C-w><C-z> <Plug>(my-zoom-window)
 
 " Plugin {{{
 let $MYVIM_HOME = s:is_windows
-      \ ? expand("$LOCALAPPDATA\nvim")
+      \ ? expand('$LOCALAPPDATA/nvim')
       \ : expand('~/.config/nvim')
 let s:bundle_root = expand('~/.cache/dein')
 let s:bundle_dein = s:bundle_root . '/repos/github.com/Shougo/dein.vim'
