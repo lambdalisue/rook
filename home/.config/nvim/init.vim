@@ -614,7 +614,9 @@ nmap <C-w><C-z> <Plug>(my-zoom-window)
 " }}}
 
 " Plugin {{{
-let $MYVIM_HOME = expand('~/.config/nvim')
+let $MYVIM_HOME = s:is_windows
+      \ ? expand("$LOCALAPPDATA\nvim")
+      \ : expand('~/.config/nvim')
 let s:bundle_root = expand('~/.cache/dein')
 let s:bundle_dein = s:bundle_root . '/repos/github.com/Shougo/dein.vim'
 if isdirectory(s:bundle_dein)
@@ -623,17 +625,17 @@ if isdirectory(s:bundle_dein)
   endif
   if dein#load_state(s:bundle_root)
     call dein#begin(s:bundle_root, [
-          \ expand('~/.config/nvim/init.vim'),
-          \ expand('~/.config/nvim/rc.d/dein.toml'),
+          \ expand('$MYVIM_HOME/init.vim'),
+          \ expand('$MYVIM_HOME/rc.d/dein.toml'),
           \])
-    call dein#load_toml(expand('~/.config/nvim/rc.d/dein.toml'))
+    call dein#load_toml(expand('$MYVIM_HOME/rc.d/dein.toml'))
     call dein#local(expand('~/Code/github.com/lambdalisue'))
     call dein#end()
     call dein#save_state()
   endif
   if has('vim_starting')
     call dein#call_hook('source')
-    autocmd VimEnter * call dein#call_hook('post_source')
+    autocmd MyAutoCmd VimEnter * call dein#call_hook('post_source')
   else
     call dein#call_hook('source')
     call dein#call_hook('post_source')
