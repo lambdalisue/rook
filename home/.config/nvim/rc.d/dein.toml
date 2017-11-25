@@ -24,6 +24,9 @@ repo = 'lambdalisue/smartcl.vim'
 repo = 'lambdalisue/compl_local_filename.vim'
 
 [[plugins]]
+repo = 'lambdalisue/suda.vim'
+
+[[plugins]]
 repo = 'lambdalisue/trimmer.vim'
 hook_add = '''
 augroup trimmer
@@ -202,7 +205,7 @@ endfunction
 autocmd MyAutoCmd FileType vaffle call s:my_vaffle()
 
 nnoremap <silent> <Leader>ee :<C-u>Vaffle <C-r>=empty(expand('%')) ? '' : expand('%:h')<CR><CR>
-nnoremap <silent> <Leader>eE :<C-u>Vaffle<CR>
+nnoremap <silent> <Leader>EE :<C-u>Vaffle<CR>
 '''
 
 [[plugins]]
@@ -476,7 +479,14 @@ endif
 
 # Deoplete {{{
 [[plugins]]
+repo = 'roxma/nvim-yarp'
+
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+ 
+[[plugins]]
 repo = 'Shougo/deoplete.nvim'
+depends = 'nvim-yarp'
 hook_add = '''
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#file#enable_buffer_path = 1

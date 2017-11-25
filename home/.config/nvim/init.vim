@@ -53,6 +53,17 @@ endif
 " }}}
 
 " Utility {{{
+if has('nvim')
+  let s:mkdir = function('mkdir')
+else
+  function! s:mkdir(...) abort
+    if isdirectory(a:1)
+      return
+    endif
+    return call('mkdir', a:000)
+  endfunction
+endif
+
 function! s:configure_path(name, pathlist) abort
   let path_separator = s:is_windows ? ';' : ':'
   let pathlist = split(expand(a:name), path_separator)
@@ -104,9 +115,9 @@ set undodir=~/.cache/nvim/undo
 set spellfile=~/.cache/nvim/spell/spellfile.utf-8.add
 
 " Make sure required directories exist
-call mkdir(&viewdir, 'p')
-call mkdir(&undodir, 'p')
-call mkdir(fnamemodify(&spellfile, ':p:h'), 'p')
+call s:mkdir(&viewdir, 'p')
+call s:mkdir(&undodir, 'p')
+call s:mkdir(fnamemodify(&spellfile, ':p:h'), 'p')
 
 if s:is_windows
   call s:configure_path('$PATH', [
@@ -402,17 +413,6 @@ function! s:workon(dir, bang) abort
 endfunction
 autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
 command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
-" }}}
-
-" Open terminal window {{{
-if has('nvim')
-  function! s:open_terminal_window() abort
-    vnew
-    execute 'terminal'
-    nnoremap <buffer><silent> q :<C-u>quit<CR>
-  endfunction
-  nnoremap <silent> T :<C-u>call <SID>open_terminal_window()<CR>
-endif
 " }}}
 
 " Enable sudo {{{
