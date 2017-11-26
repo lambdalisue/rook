@@ -53,6 +53,17 @@ endif
 " }}}
 
 " Utility {{{
+if has('nvim')
+  let s:mkdir = function('mkdir')
+else
+  function! s:mkdir(...) abort
+    if isdirectory(a:1)
+      return
+    endif
+    return call('mkdir', a:000)
+  endfunction
+endif
+
 function! s:configure_path(name, pathlist) abort
   let path_separator = s:is_windows ? ';' : ':'
   let pathlist = split(expand(a:name), path_separator)
@@ -104,9 +115,9 @@ set undodir=~/.cache/nvim/undo
 set spellfile=~/.cache/nvim/spell/spellfile.utf-8.add
 
 " Make sure required directories exist
-call mkdir(&viewdir, 'p')
-call mkdir(&undodir, 'p')
-call mkdir(fnamemodify(&spellfile, ':p:h'), 'p')
+call s:mkdir(&viewdir, 'p')
+call s:mkdir(&undodir, 'p')
+call s:mkdir(fnamemodify(&spellfile, ':p:h'), 'p')
 
 if s:is_windows
   call s:configure_path('$PATH', [
@@ -404,17 +415,6 @@ autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
 command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
 " }}}
 
-" Open terminal window {{{
-if has('nvim')
-  function! s:open_terminal_window() abort
-    vnew
-    execute 'terminal'
-    nnoremap <buffer><silent> q :<C-u>quit<CR>
-  endfunction
-  nnoremap <silent> T :<C-u>call <SID>open_terminal_window()<CR>
-endif
-" }}}
-
 " Enable sudo {{{
 if has('nvim')
   function! s:sudo_write(path) abort
@@ -557,11 +557,17 @@ nmap Q <Plug>(my-toggle-quickfix)
 
 " Toggle location list window with L {{{
 function! s:toggle_ll() abort
-  let nwin = winnr('$')
-  lclose
-  if nwin == winnr('$')
-    botright lopen
-  endif
+  try
+    let nwin = winnr('$')
+    lclose
+    if nwin == winnr('$')
+      botright lopen
+    endif
+  catch /^Vim\%((\a\+)\)\=:E776/
+    echohl WarningMsg
+    redraw | echo 'No location list'
+    echohl None
+  endtry
 endfunction
 nnoremap <silent> <Plug>(my-toggle-locationlist)
       \ :<C-u>call <SID>toggle_ll()<CR>
@@ -588,7 +594,7 @@ nnoremap <silent> <Plug>(my-source-script)
 nmap <Leader>ss <Plug>(my-source-script)
 " }}}
 
-" Zoom widnow temporary with <C-w>o {{{
+" Zoom widnow temporary with <C-w>z {{{
 function! s:toggle_window_zoom() abort
     if exists('t:zoom_winrestcmd')
         execute t:zoom_winrestcmd
@@ -601,14 +607,16 @@ function! s:toggle_window_zoom() abort
 endfunction
 nnoremap <silent> <Plug>(my-zoom-window)
       \ :<C-u>call <SID>toggle_window_zoom()<CR>
-nmap <C-w>o <Plug>(my-zoom-window)
-nmap <C-w><C-o> <Plug>(my-zoom-window)
+nmap <C-w>z <Plug>(my-zoom-window)
+nmap <C-w><C-z> <Plug>(my-zoom-window)
 " }}}
 
 " }}}
 
 " Plugin {{{
-let $MYVIM_HOME = expand('~/.config/nvim')
+let $MYVIM_HOME = s:is_windows
+      \ ? expand('$LOCALAPPDATA/nvim')
+      \ : expand('~/.config/nvim')
 let s:bundle_root = expand('~/.cache/dein')
 let s:bundle_dein = s:bundle_root . '/repos/github.com/Shougo/dein.vim'
 if isdirectory(s:bundle_dein)
@@ -617,17 +625,17 @@ if isdirectory(s:bundle_dein)
   endif
   if dein#load_state(s:bundle_root)
     call dein#begin(s:bundle_root, [
-          \ expand('~/.config/nvim/init.vim'),
-          \ expand('~/.config/nvim/rc.d/dein.toml'),
+          \ expand('$MYVIM_HOME/init.vim'),
+          \ expand('$MYVIM_HOME/rc.d/dein.toml'),
           \])
-    call dein#load_toml(expand('~/.config/nvim/rc.d/dein.toml'))
+    call dein#load_toml(expand('$MYVIM_HOME/rc.d/dein.toml'))
     call dein#local(expand('~/Code/github.com/lambdalisue'))
     call dein#end()
     call dein#save_state()
   endif
   if has('vim_starting')
     call dein#call_hook('source')
-    autocmd VimEnter * call dein#call_hook('post_source')
+    autocmd MyAutoCmd VimEnter * call dein#call_hook('post_source')
   else
     call dein#call_hook('source')
     call dein#call_hook('post_source')

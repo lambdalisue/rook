@@ -1,215 +1,149 @@
-scriptencoding utf-8
-
-function! s:is_filelike() abort
-  return &buftype =~# '^\|nowrite\|acwrite$'
+function! s:readonly() abort
+  return &l:readonly ? 'x' : ''
 endfunction
 
-let s:Symbols = {
-      \ 'branch': '',
-      \ 'readonly': '☼',
-      \ 'modified': '∙',
-      \ 'nomodifiable': '¬',
-      \ 'error': '',
-      \ 'python': 'ρ ',
-      \ 'unix': '',
-      \ 'dos': '¶',
-      \ 'separator_left': '',
-      \ 'separator_right': '',
-      \}
-
-let g:lightline = {
-      \ 'colorscheme': 'iceberg',
-      \ 'active': {
-      \   'left': [
-      \     [ 'mode', 'paste' ],
-      \     [ 'filename' ],
-      \   ],
-      \   'right': [
-      \     [ 'qfstatusline' ],
-      \     [ 'fileinfo' ],
-      \     [ 'filetype' ],
-      \   ],
-      \ },
-      \ 'inactive': {
-      \   'left': [
-      \     [ 'filename' ],
-      \   ],
-      \   'right': [
-      \     [ 'fileinfo' ],
-      \     [ 'filetype' ],
-      \   ],
-      \ },
-      \ 'tabline': {
-      \   'left': [
-      \     [ 'cwd' ],
-      \     [ 'tabs' ],
-      \   ],
-      \   'right': [
-      \     [
-      \       'wifi',
-      \       'battery',
-      \       'datetime',
-      \     ],
-      \     [
-      \       'pyvenv',
-      \       'gina_branch',
-      \       'gina_traffic',
-      \       'gina_status',
-      \     ],
-      \   ],
-      \ },
-      \ 'component_expand': {
-      \   'qfstatusline': 'g:lightline.my.qfstatusline',
-      \ },
-      \ 'component_type': {
-      \   'qfstatusline': 'error',
-      \ },
-      \ 'component_function': {
-      \   'mode': 'lightline#mode',
-      \   'wifi': 'wifi#component',
-      \   'battery': 'battery#component',
-      \   'cwd': 'g:lightline.my.cwd',
-      \   'filename': 'g:lightline.my.filename',
-      \   'fileinfo': 'g:lightline.my.fileinfo',
-      \   'filetype': 'g:lightline.my.filetype',
-      \   'datetime': 'g:lightline.my.datetime',
-      \   'gina_branch': 'g:lightline.my.gina_branch',
-      \   'gina_traffic': 'g:lightline.my.gina_traffic',
-      \   'gina_status': 'g:lightline.my.gina_status',
-      \   'pyvenv': 'g:lightline.my.pyvenv',
-      \ },
-      \ 'separator': {
-      \   'left': s:Symbols.separator_left,
-      \   'right': s:Symbols.separator_right,
-      \ },
-      \ 'tabline_separator': {
-      \   'left': s:Symbols.separator_left,
-      \   'right': s:Symbols.separator_right,
-      \ },
-      \ 'mode_map': {
-      \   'n' : 'n',
-      \   'i' : 'i',
-      \   'R' : 'R',
-      \   'v' : 'v',
-      \   'V' : 'V',
-      \   "\<C-v>": '^',
-      \   'c' : 'c',
-      \   's' : 's',
-      \   'S' : 'S',
-      \   "\<C-s>": '^',
-      \   't': 't',
-      \ }
-      \}
-
-" Note:
-"   component_function cannot be a script local function so use
-"   g:lightline.my namespace instead of s:
-let g:lightline.my = {}
-
-function! g:lightline.my.cwd() abort
-  return fnamemodify(getcwd(), ':~')
+function! s:modified() abort
+  execute printf(
+        \ 'highlight! link ModifiedColor %s',
+        \ &l:modifiable
+        \   ? 'LightlineLeft_normal_error'
+        \   : 'LightlineLeft_normal_tabsel'
+        \)
+  return !&l:modifiable ? ' - ' : &l:modified ? ' + ' : ''
 endfunction
 
-function! g:lightline.my.readonly() abort
-  return s:is_filelike() && &readonly
-        \ ? s:Symbols.readonly
-        \ : ''
-endfunction
-
-function! g:lightline.my.modified() abort
-  return s:is_filelike() && &modified
-        \ ? s:Symbols.modified
-        \ : ''
-endfunction
-
-function! g:lightline.my.nomodifiable() abort
-  return s:is_filelike() && !&modifiable
-        \ ? s:Symbols.nomodifiable
-        \ : ''
-endfunction
-
-function! g:lightline.my.filename() abort
-  if &filetype =~# '\v%(unite|vimfiler|vimshell)'
-    return {&filetype}#get_status_string()
-  elseif &filetype =~# '\v%(gina-blame-navi)'
-    let fname = winwidth(0) > 79
-          \ ? expand('%:~:.')
-          \ : get(split(expand('%:~:.'), ':'), 2, 'NAVI')
-    return fname
-  elseif &filetype ==# 'gista-list'
-    return gista#command#list#get_status_string()
-  else
-    let fname = winwidth(0) > 79
-          \ ? expand('%:~:.')
-          \ : pathshorten(expand('%:~:.'))
-    let readonly = g:lightline.my.readonly()
-    let modified = g:lightline.my.modified()
-    let nomodifiable = g:lightline.my.nomodifiable()
-    return '' .
-          \ (empty(readonly) ? '' : readonly . ' ') .
-          \ (empty(fname) ? '[No name]' : fname) .
-          \ (empty(nomodifiable) ? '' : ' ' . nomodifiable) .
-          \ (empty(modified) ? '' : ' ' . modified)
-  endif
-  return ''
-endfunction
-
-function! g:lightline.my.fileinfo() abort
-  let encoding = (strlen(&fileencoding) ? &fileencoding : &encoding)
-  let fileformat = &fileformat ==# 'unix'
-        \ ? s:Symbols.unix
-        \ : s:Symbols.dos
-  return encoding . ' ' . fileformat
-endfunction
-
-function! g:lightline.my.filetype() abort
-  return &filetype
-endfunction
-
-function! g:lightline.my.gina_branch() abort
-  if !dein#is_sourced('gina.vim')
-    return ''
-  endif
-  return gina#component#repo#preset('fancy')
-endfunction
-
-function! g:lightline.my.gina_traffic() abort
-  if !dein#is_sourced('gina.vim')
-    return ''
-  endif
-  return gina#component#traffic#preset('fancy')
-endfunction
-
-function! g:lightline.my.gina_status() abort
-  if !dein#is_sourced('gina.vim')
-    return ''
-  endif
-  return gina#component#status#preset()
-endfunction
-
-function! g:lightline.my.pyvenv() abort
-  if !dein#is_sourced('pyvenv.vim')
-    return ''
-  endif
-  return printf('%s(%s)', s:Symbols.python, pyvenv#component())
-endfunction
-
-function! g:lightline.my.qfstatusline() abort
-  if dein#is_sourced('neomake')
-    if empty(neomake#statusline#LoclistCounts())
-      return neomake#statusline#QflistStatus()
-    else
-      return neomake#statusline#LoclistStatus()
-    endif
-  else
-    return ''
-  endif
-endfunction
-
-function! g:lightline.my.datetime() abort
+function! s:datetime() abort
   return strftime('%a %m/%d %H:%M')
 endfunction
 
+function! s:pyvenv() abort
+  if !exists('g:loaded_pyvenv')
+    return ''
+  endif
+  return pyenv#component()
+endfunction
+
+function! s:gina() abort
+  if !exists('g:loaded_gina')
+    return ''
+  endif
+  let components = [
+        \ gina#component#repo#preset('fancy'),
+        \ gina#component#status#preset('fancy'),
+        \ gina#component#traffic#preset('fancy'),
+        \]
+  return join(filter(components, '!empty(v:val)'), ' | ')
+endfunction
+
+function! s:info() abort
+  if &buftype =~# '\%(nofile\|quickfix\|help\)'
+    return ''
+  elseif &buftype ==# 'terminal'
+    return 'Hit <C-\><C-n> to escape'
+  else
+    let info = printf(
+          \ '%s | %s | %s',
+          \ &l:fileformat,
+          \ &l:fileencoding ==# '' ? &encoding : &l:fileencoding,
+          \ &l:filetype ==# '' ? 'no ft' : &l:filetype,
+          \)
+    return substitute(info, '%', '%%', 'g')
+  endif
+endfunction
+
+
+let g:lightline = {
+      \ 'colorscheme': 'iceberg',
+      \ 'mode_map': {
+      \   'n' : ' ',
+      \   'i' : ' ',
+      \   'R' : ' ',
+      \   'v' : ' ',
+      \   'V' : ' ',
+      \   "\<C-v>": ' ',
+      \   'c' : ' ',
+      \   's' : ' ',
+      \   'S' : ' ',
+      \   "\<C-s>": ' ',
+      \   't': ' ',
+      \ }
+      \}
+
+let g:lightline.active = {
+      \ 'left': [
+      \   ['mode', 'paste'],
+      \   ['readonly'],
+      \   ['modified'],
+      \   ['relativepath'],
+      \ ],
+      \ 'right': [
+      \   ['locationlist'],
+      \   ['info'],
+      \ ],
+      \}
+
+let g:lightline.inactive = {
+      \ 'left': [
+      \   ['relativepath'],
+      \ ],
+      \ 'right': [
+      \   ['filetype'],
+      \ ],
+      \}
+
+let g:lightline.tabline = {
+      \ 'left': [
+      \   ['cwd'],
+      \   ['tabs'],
+      \ ],
+      \ 'right': [
+      \   ['quickfix'],
+      \   ['wifi', 'battery', 'datetime'],
+      \   ['gina'],
+      \   ['pyvenv'],
+      \ ],
+      \}
+
+let g:lightline.component = {
+      \ 'cwd': '%{fnamemodify(getcwd(), '':~'')}',
+      \ 'modified': printf(
+      \   '%%#ModifiedColor#%%{%s()}',
+      \   get(function('s:modified'), 'name'),
+      \ ),
+      \}
+
+let g:lightline.component_raw = {
+      \ 'mode': 1,
+      \ 'modified': 1,
+      \}
+
+let g:lightline.component_type = {
+      \ 'readonly': 'warning',
+      \ 'quickfix': 'error',
+      \ 'locationlist': 'error',
+      \}
+
+let g:lightline.component_expand = {
+      \ 'readonly': get(function('s:readonly'), 'name'),
+      \ 'pyvenv': get(function('s:pyvenv'), 'name'),
+      \ 'gina': get(function('s:gina'), 'name'),
+      \ 'quickfix': 'neomake#statusline#QflistStatus',
+      \ 'locationlist': 'neomake#statusline#LoclistStatus',
+      \}
+
+let g:lightline.component_function = {
+      \ 'datetime': get(function('s:datetime'), 'name'),
+      \ 'info': get(function('s:info'), 'name'),
+      \ 'wifi': 'wifi#component',
+      \ 'battery': 'battery#component',
+      \}
+
 if !has('vim_starting')
   call lightline#init()
+  call lightline#colorscheme()
+  call lightline#update()
+endif
+
+if !exists('s:timer')
+  let s:timer = timer_start(30000, { timer -> lightline#update() })
 endif

@@ -56,5 +56,7 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.isl setfiletype iss
 
   " Neovim terminal
-  autocmd BufNewFile,BufRead term://*   setfiletype terminal
+  if exists('#TermOpen')
+    autocmd TermOpen * setfiletype terminal
+  endif
 augroup END

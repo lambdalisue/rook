@@ -12,10 +12,19 @@ repo = 'lambdalisue/vim-unified-diff'
 repo = 'lambdalisue/readablefold.vim'
 
 [[plugins]]
+repo = 'lambdalisue/trashbin.vim'
+
+[[plugins]]
 repo = 'lambdalisue/smarttw.vim'
 
 [[plugins]]
 repo = 'lambdalisue/smartcl.vim'
+
+[[plugins]]
+repo = 'lambdalisue/compl_local_filename.vim'
+
+[[plugins]]
+repo = 'lambdalisue/suda.vim'
 
 [[plugins]]
 repo = 'lambdalisue/trimmer.vim'
@@ -28,6 +37,13 @@ augroup END
 [[plugins]]
 repo = 'Shougo/echodoc.vim'
 on_event = 'InsertEnter'
+
+[[plugins]]
+repo = 'rhysd/clever-f.vim'
+hook_add = '''
+let g:clever_f_across_no_line = 1
+let g:clever_f_smart_case = 1
+'''
 
 [[plugins]]
 repo = 'lambdalisue/smarthl.vim'
@@ -43,15 +59,15 @@ nmap g? <Plug>(smarthl-g?)
 nmap g* <Plug>(smarthl-g*)
 '''
 
-[[plugins]]
-repo = 'haya14busa/vim-asterisk'
-on_map = '<Plug>'
-hook_add = '''
-map *   <Plug>(asterisk-*)
-map g*  <Plug>(asterisk-g*)
-map z*  <Plug>(asterisk-z*)
-map gz* <Plug>(asterisk-gz*)
-'''
+# [[plugins]]
+# repo = 'haya14busa/vim-asterisk'
+# on_map = '<Plug>'
+# hook_add = '''
+# map *   <Plug>(asterisk-*)
+# map g*  <Plug>(asterisk-g*)
+# map z*  <Plug>(asterisk-z*)
+# map gz* <Plug>(asterisk-gz*)
+# '''
 
 [[plugins]]
 repo = 'Shougo/junkfile.vim'
@@ -210,7 +226,7 @@ endfunction
 autocmd MyAutoCmd FileType vaffle call s:my_vaffle()
 
 nnoremap <silent> <Leader>ee :<C-u>Vaffle <C-r>=empty(expand('%')) ? '' : expand('%:h')<CR><CR>
-nnoremap <silent> <Leader>eE :<C-u>Vaffle<CR>
+nnoremap <silent> <Leader>EE :<C-u>Vaffle<CR>
 '''
 
 [[plugins]]
@@ -455,6 +471,7 @@ if has('nvim')
     autocmd BufEnter docs/conf.py let b:neomake_python_enabled_markers = ['python']
   augroup END
 
+  let g:neomake_ft_maker_remove_invalid_entries = 1
   let g:neomake_error_sign = {
         \ 'text': 'E-',
         \ 'texthl': 'NeomakeErrorSign'
@@ -483,9 +500,17 @@ endif
 
 # Deoplete {{{
 [[plugins]]
+repo = 'roxma/nvim-yarp'
+
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+ 
+[[plugins]]
 repo = 'Shougo/deoplete.nvim'
+depends = 'nvim-yarp'
 hook_add = '''
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#file#enable_buffer_path = 1
 '''
 hook_post_source = '''
 call deoplete#custom#source('omni', 'is_silent', 1)
