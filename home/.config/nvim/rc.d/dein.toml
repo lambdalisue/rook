@@ -183,8 +183,29 @@ let g:gista#client#default_username = 'lambdalisue'
 # repo = 'cocopon/vaffle.vim'
 repo = 'lambdalisue/vaffle.vim'
 hook_add = '''
+let g:vaffle_use_default_mappings = 0
+
 function! s:my_vaffle() abort
-  nmap <buffer> <C-j> <Plug>(vaffle-toggle-current)
+  " Toggle
+  nmap <buffer> <silent> <C-j>      <Plug>(vaffle-toggle-current)
+  nmap <buffer> <silent> .          <Plug>(vaffle-toggle-hidden)
+  nmap <buffer> <silent> *          <Plug>(vaffle-toggle-all)
+  vmap <buffer> <silent> <C-j>      <Plug>(vaffle-toggle-current)
+  " Operations for selected items
+  nmap <buffer> <nowait> <silent> d <Plug>(vaffle-delete-selected)
+  nmap <buffer> <silent> x          <Plug>(vaffle-fill-cmdline)
+  nmap <buffer> <silent> m          <Plug>(vaffle-move-selected)
+  nmap <buffer> <silent> <CR>       <Plug>(vaffle-open-selected)
+  nmap <buffer> <silent> r          <Plug>(vaffle-rename-selected)
+  " Operations for a item on cursor
+  nmap <buffer> <silent> l          <Plug>(vaffle-open-current)
+  " Misc
+  nmap <buffer> <silent> o          <Plug>(vaffle-mkdir)
+  nmap <buffer> <silent> i          <Plug>(vaffle-new-file)
+  nmap <buffer> <silent> ~          <Plug>(vaffle-open-home)
+  nmap <buffer> <silent> h          <Plug>(vaffle-open-parent)
+  nmap <buffer> <silent> q          <Plug>(vaffle-quit)
+  nmap <buffer> <silent> R          <Plug>(vaffle-refresh)
 endfunction
 autocmd MyAutoCmd FileType vaffle call s:my_vaffle()
 
