@@ -21,7 +21,7 @@ repo = 'lambdalisue/smarttw.vim'
 repo = 'lambdalisue/smartcl.vim'
 
 [[plugins]]
-repo = 'lambdalisue/compl_local_filename.vim'
+repo = 'lambdalisue/compl-local-filename.vim'
 
 [[plugins]]
 repo = 'lambdalisue/suda.vim'
@@ -37,6 +37,11 @@ augroup END
 [[plugins]]
 repo = 'Shougo/echodoc.vim'
 on_event = 'InsertEnter'
+hook_add = '''
+set noshowmode
+set shortmess+=c
+let g:echodoc#enable_at_startup = 1
+'''
 
 [[plugins]]
 repo = 'rhysd/clever-f.vim'
@@ -570,13 +575,13 @@ function! s:configure_typescript() abort
   nnoremap <silent><buffer> <Plug>(typescript-show-documentation) :<C-u>TSDoc<CR>
   nnoremap <silent><buffer> <Plug>(typescript-echo-type) :<C-u>TSType<CR>
 
-  nmap <buffer> <LocalLeader>d <Plug>(typescript-goto-definitions)
-  nmap <buffer> <LocalLeader>g <Plug>(typescript-goto-assignments)
-  nmap <buffer> <LocalLeader>r <Plug>(typescript-rename)
-  nmap <buffer> <LocalLeader>u <Plug>(typescript-usages)
-  nmap <buffer> <LocalLeader>i <Plug>(typescript-import)
+  nmap <buffer> gs <Plug>(typescript-usages)
+  nmap <buffer> gd <Plug>(typescript-goto-definitions)
+  nmap <buffer> gD <Plug>(typescript-goto-assignments)
   nmap <buffer> K <Plug>(typescript-show-documentation)
   nmap <buffer> <C-k> <Plug>(typescript-echo-type)
+  nmap <buffer> <F2> <Plug>(typescript-rename)
+  nmap <buffer> <F3> <Plug>(typescript-import)
 endfunction
 
 augroup my_typescript
@@ -939,11 +944,11 @@ function! s:configure_jedi() abort
   nnoremap <buffer><silent> <Plug>(jedi-rename) :<C-u>call jedi#rename()<CR>
   nnoremap <buffer><silent> <Plug>(jedi-usages) :<C-u>call jedi#usages()<CR>
   nnoremap <buffer><silent> <Plug>(jedi-show-documentation) :<C-u>call jedi#show_documentation()<CR>
-  nmap <buffer> <LocalLeader>d <Plug>(jedi-goto-definitions)
-  nmap <buffer> <LocalLeader>g <Plug>(jedi-goto-assignments)
-  nmap <buffer> <LocalLeader>r <Plug>(jedi-rename)
-  nmap <buffer> <LocalLeader>u <Plug>(jedi-usages)
+  nmap <buffer> gs <Plug>(jedi-usages)
+  nmap <buffer> gd <Plug>(jedi-goto-definitions)
+  nmap <buffer> gD <Plug>(jedi-goto-assignments)
   nmap <buffer> K <Plug>(jedi-show-documentation)
+  nmap <buffer> <F2> <Plug>(jedi-rename)
 endfunction
 
 augroup my_jedi

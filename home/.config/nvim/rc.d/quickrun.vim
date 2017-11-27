@@ -1,8 +1,6 @@
 let g:quickrun_config = extend(get(g:, 'quickrun_config', {}), {
       \ '_': {
-      \   'runner': 'vimproc',
       \   'runner/job/interval': 200,
-      \   'runner/vimproc/interval': 200,
       \   'outputter/buffer/split': ':botright 8sp',
       \   'outputter/buffer/close_on_empty': 1,
       \   'hook/time/enable': 1,

@@ -35,12 +35,9 @@ call denite#custom#option('_', 'cursor_wrap', v:true)
 
 function! s:build_filemenu(description, precursors) abort
   let candidates = []
-  for precursor in a:precursors
-    if type(precursor) == type('')
-      call add(candidates, [precursor, expand(precursor)])
-    else
-      call add(candidates, precursor)
-    endif
+  for precursor in sort(a:precursors)
+    let precursor = fnamemodify(expand(precursor), ':~')
+    call add(candidates, [precursor, precursor])
   endfor
   let menu = {'description': a:description}
   let menu.file_candidates = candidates
@@ -49,25 +46,22 @@ endfunction
 
 let s:menus = {}
 let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
-      \ '~/.homesick/repos/rook',
-      \ '~/Code/github.com/lambdalisue',
+      \ '$HOME/.homesick/repos/rook',
+      \ '$HOME/Code/github.com/lambdalisue',
       \ '$MYVIM_HOME/',
       \ '$MYVIM_HOME/ftplugin/',
       \ '$MYVIM_HOME/syntax/',
       \ '$MYVIM_HOME/template/',
-      \ '~/.vimrc.local',
-      \ '~/.gvimrc.local',
+      \ '$HOME/.vimrc.local',
+      \ '$HOME/.gvimrc.local',
       \ '$MYVIM_HOME/init.vim',
       \ '$MYVIM_HOME/ginit.vim',
       \ '$MYVIM_HOME/vimrc.min',
       \ '$MYVIM_HOME/filetype.vim',
       \ '$MYVIM_HOME/rc.d/gina.vim',
       \ '$MYVIM_HOME/rc.d/dein.toml',
-      \ '$MYVIM_HOME/rc.d/unite.vim',
       \ '$MYVIM_HOME/rc.d/denite.vim',
       \ '$MYVIM_HOME/rc.d/lexima.vim',
-      \ '$MYVIM_HOME/rc.d/vimfiler.vim',
-      \ '$MYVIM_HOME/rc.d/vimshell.vim',
       \ '$MYVIM_HOME/rc.d/lightline.vim',
       \ '$MYVIM_HOME/rc.d/quickrun.vim',
       \ '$MYVIM_HOME/after/ftplugin/vim.vim',
@@ -80,35 +74,35 @@ let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
       \ '$MYVIM_HOME/after/ftplugin/help.vim',
       \ '$MYVIM_HOME/after/ftplugin/html.vim',
       \ '$MYVIM_HOME/after/ftplugin/qf.vim',
-      \ '~/.config/nyaovim/nyaovimrc.html',
-      \ '~/.config/nyaovim/browser-config.json',
-      \ '~/.themisrc',
-      \ '~/.config/zsh/',
-      \ '~/.config/zsh/rc.d/',
-      \ '~/.zshenv',
-      \ '~/.config/zsh/.zshrc',
-      \ '~/.config/zsh/zplug.zsh',
-      \ '~/.config/zsh/bookmark.txt',
-      \ '~/.config/zsh/rc.d/10_config.zsh',
-      \ '~/.config/zsh/rc.d/10_theme.zsh',
-      \ '~/.config/zsh/rc.d/20_keymap.zsh',
-      \ '~/.config/zsh/rc.d/50_config_peco.zsh',
-      \ '~/.config/zsh/rc.d/50_extend_rsync.zsh',
-      \ '~/.config/zsh/rc.d/90_functions.zsh',
-      \ '~/.config/tmux/',
-      \ '~/.config/tmux/tmux.conf',
-      \ '~/.config/tmux/rc.d/00_keymap.conf',
-      \ '~/.config/tmux/rc.d/50_plugin.conf',
-      \ '~/.config/karabiner/karabiner.json',
-      \ '~/.config/karabiner/assets/complex_modifications/pinkyless.json',
-      \ '~/.config/karabiner/assets/complex_modifications/terminal.json',
-      \ '~/.config/alacritty/alacritty.yml',
-      \ '~/.config/lemonade.toml',
-      \ '~/.gitconfig.local',
-      \ '~/.gitconfig',
-      \ '~/.gitignore',
-      \ '~/.vimperatorrc',
-      \ '~/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1',
+      \ '$HOME/.config/nyaovim/nyaovimrc.html',
+      \ '$HOME/.config/nyaovim/browser-config.json',
+      \ '$HOME/.themisrc',
+      \ '$HOME/.config/zsh/',
+      \ '$HOME/.config/zsh/rc.d/',
+      \ '$HOME/.zshenv',
+      \ '$HOME/.config/zsh/.zshrc',
+      \ '$HOME/.config/zsh/zplug.zsh',
+      \ '$HOME/.config/zsh/bookmark.txt',
+      \ '$HOME/.config/zsh/rc.d/10_config.zsh',
+      \ '$HOME/.config/zsh/rc.d/10_theme.zsh',
+      \ '$HOME/.config/zsh/rc.d/20_keymap.zsh',
+      \ '$HOME/.config/zsh/rc.d/50_config_peco.zsh',
+      \ '$HOME/.config/zsh/rc.d/50_extend_rsync.zsh',
+      \ '$HOME/.config/zsh/rc.d/90_functions.zsh',
+      \ '$HOME/.config/tmux/',
+      \ '$HOME/.config/tmux/tmux.conf',
+      \ '$HOME/.config/tmux/rc.d/00_keymap.conf',
+      \ '$HOME/.config/tmux/rc.d/50_plugin.conf',
+      \ '$HOME/.config/karabiner/karabiner.json',
+      \ '$HOME/.config/karabiner/assets/complex_modifications/pinkyless.json',
+      \ '$HOME/.config/karabiner/assets/complex_modifications/terminal.json',
+      \ '$HOME/.config/alacritty/alacritty.yml',
+      \ '$HOME/.config/lemonade.toml',
+      \ '$HOME/.gitconfig.local',
+      \ '$HOME/.gitconfig',
+      \ '$HOME/.gitignore',
+      \ '$HOME/.vimperatorrc',
+      \ '$HOME/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1',
       \ 'https://raw.githubusercontent.com/codemirror/CodeMirror/HEAD/keymap/vim.js',
       \])
 call denite#custom#var('menu', 'menus', s:menus)
