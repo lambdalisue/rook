@@ -56,7 +56,12 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.isl setfiletype iss
 
   " Neovim terminal
-  if exists('#TermOpen')
+  if has('nvim')
     autocmd TermOpen * setfiletype terminal
+  else
+    autocmd BufWinEnter *
+          \ if &filetype ==# '' && &buftype ==# 'terminal' |
+          \   setfiletype terminal |
+          \ endif
   endif
 augroup END

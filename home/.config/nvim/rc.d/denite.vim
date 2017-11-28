@@ -14,9 +14,9 @@ call denite#custom#map('insert', '<C-a>', '<Home>')
 call denite#custom#map('insert', '<C-e>', '<End>')
 call denite#custom#map('insert', '<C-d>', '<Del>')
 
-" Use <C-Space> to select candidate in insert mode
-call denite#custom#map('insert', '<C-@>', '<denite:toggle_select_down>', 'noremap')
-call denite#custom#map('insert', '<C-Space>', '<denite:toggle_select_down>', 'noremap')
+" Use <C-j>/<C-k> to select candidate
+call denite#custom#map('insert', '<C-k>', '<denite:toggle_select_up>', 'noremap')
+call denite#custom#map('insert', '<C-j>', '<denite:toggle_select_down>', 'noremap')
 
 " grep
 if executable('pt')
@@ -28,6 +28,12 @@ if executable('pt')
   call denite#custom#var('grep', 'separator', [])
   call denite#custom#var('grep', 'default_opts', [
         \ '--nocolor', '--nogroup', '--column',
+        \])
+
+  call denite#custom#var('file_rec', 'command', [
+        \ 'pt', '--follow', '--nocolor', '--nogroup',
+        \ has('win32') ? '-g:' : '-g=',
+        \ '',
         \])
 endif
 
@@ -68,6 +74,7 @@ let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
       \ '$MYVIM_HOME/after/ftplugin/perl.vim',
       \ '$MYVIM_HOME/after/ftplugin/python.vim',
       \ '$MYVIM_HOME/after/ftplugin/jason.vim',
+      \ '$MYVIM_HOME/after/ftplugin/terminal.vim',
       \ '$MYVIM_HOME/after/ftplugin/javascript.vim',
       \ '$MYVIM_HOME/after/ftplugin/typescript.vim',
       \ '$MYVIM_HOME/after/ftplugin/xslate.vim',

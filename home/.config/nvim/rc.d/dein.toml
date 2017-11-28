@@ -89,7 +89,7 @@ repo = 'thinca/vim-localrc'
 repo = 'lambdalisue/vim-marron'
 on_map = [['n', '<Plug>']]
 hook_add = '''
-nmap <Leader><Leader>r <Plug>(marron-reload-vimrc)<Plug>(marron-reload-gvimrc)
+nmap <F10> <Plug>(marron-reload-vimrc)<Plug>(marron-reload-gvimrc)
 '''
 
 [[plugins]]
@@ -600,16 +600,16 @@ on_cmd = [
   'DeniteCursorWord',
 ]
 hook_add = '''
-nnoremap <silent> <Leader>nn :<C-u>Denite -resume<CR>
-nnoremap <silent> <Leader>nf :<C-u>Denite file_rec<CR>
-nnoremap <silent> <Leader>nd :<C-u>Denite directory_rec<CR>
-nnoremap <silent> <Leader>nh :<C-u>Denite help<CR>
-nnoremap <silent> <Leader>ng :<C-u>Denite grep<CR>
-nnoremap <silent> <Leader>nj :<C-u>Denite jump<CR>
-nnoremap <silent> <Leader>ns :<C-u>Denite menu:shortcut<CR>
-nnoremap <silent> <Leader>nq :<C-u>Denite -default-action=cd ghq<CR>
-nnoremap <silent> <Leader>no :<C-u>Denite file_old<CR>
-nnoremap <silent> <Leader>nw :<C-u>Denite buffer<CR>
+nnoremap <silent> g<Leader><Leader> :<C-u>Denite -resume<CR>
+nnoremap <silent> <Leader><Leader>f :<C-u>Denite file_rec<CR>
+nnoremap <silent> <Leader><Leader>d :<C-u>Denite directory_rec<CR>
+nnoremap <silent> <Leader><Leader>h :<C-u>Denite help<CR>
+nnoremap <silent> <Leader><Leader>g :<C-u>Denite grep<CR>
+nnoremap <silent> <Leader><Leader>j :<C-u>Denite jump<CR>
+nnoremap <silent> <Leader><Leader>s :<C-u>Denite menu:shortcut<CR>
+nnoremap <silent> <Leader><Leader>q :<C-u>Denite -default-action=cd ghq<CR>
+nnoremap <silent> <Leader><Leader>o :<C-u>Denite file_old<CR>
+nnoremap <silent> <Leader><Leader>w :<C-u>Denite buffer<CR>
 '''
 hook_post_source = '''
 execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/denite.vim'))
