@@ -59,8 +59,8 @@ augroup filetypedetect
   if has('nvim')
     autocmd TermOpen * setfiletype terminal
   else
-    autocmd BufNewFile,BufRead !*
-          \ if &buftype ==# 'terminal' |
+    autocmd BufWinEnter *
+          \ if &filetype ==# '' && &buftype ==# 'terminal' |
           \   setfiletype terminal |
           \ endif
   endif

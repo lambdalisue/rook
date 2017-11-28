@@ -68,6 +68,7 @@ let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
       \ '$MYVIM_HOME/after/ftplugin/perl.vim',
       \ '$MYVIM_HOME/after/ftplugin/python.vim',
       \ '$MYVIM_HOME/after/ftplugin/jason.vim',
+      \ '$MYVIM_HOME/after/ftplugin/terminal.vim',
       \ '$MYVIM_HOME/after/ftplugin/javascript.vim',
       \ '$MYVIM_HOME/after/ftplugin/typescript.vim',
       \ '$MYVIM_HOME/after/ftplugin/xslate.vim',
