@@ -982,6 +982,7 @@ let g:impsort_method_imports = ['alpha', 'length']
 # Vimscript development {{{
 [[plugins]]
 repo = 'thinca/vim-themis'
+rev = '1.5.4dev'
 
 [[plugins]]
 repo = 'lambdalisue/vim-backslash'
