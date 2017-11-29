@@ -36,7 +36,6 @@ augroup END
 
 [[plugins]]
 repo = 'Shougo/echodoc.vim'
-on_event = 'InsertEnter'
 hook_add = '''
 set noshowmode
 set shortmess+=c
@@ -567,8 +566,8 @@ let g:nvim_typescript#type_info_on_hold = 0
 let g:nvim_typescript#default_mappings = 0
 
 function! s:configure_typescript() abort
-  nnoremap <silent><buffer> <Plug>(typescript-goto-definitions) :<C-u>TSTypeDef<CR>
-  nnoremap <silent><buffer> <Plug>(typescript-goto-assignments) :<C-u>TSDef<CR>
+  nnoremap <silent><buffer> <Plug>(typescript-goto-type-definitions) :<C-u>TSTypeDef<CR>
+  nnoremap <silent><buffer> <Plug>(typescript-goto-definitions) :<C-u>TSDef<CR>
   nnoremap <silent><buffer> <Plug>(typescript-rename) :<C-u>TSRename<CR>
   nnoremap <silent><buffer> <Plug>(typescript-usages) :<C-u>TSRefs<CR>
   nnoremap <silent><buffer> <Plug>(typescript-import) :<C-u>TSImport<CR>
@@ -577,8 +576,8 @@ function! s:configure_typescript() abort
 
   nmap <buffer> gs <Plug>(typescript-usages)
   nmap <buffer> gd <Plug>(typescript-goto-definitions)
-  nmap <buffer> gD <Plug>(typescript-goto-assignments)
-  nmap <buffer> K <Plug>(typescript-show-documentation)
+  nmap <buffer> gD <Plug>(typescript-goto-type-definitions)
+  nmap <buffer> K <Plug>(typescript-show-documentation)<C-w>p
   nmap <buffer> <C-k> <Plug>(typescript-echo-type)
   nmap <buffer> <F2> <Plug>(typescript-rename)
   nmap <buffer> <F3> <Plug>(typescript-import)
