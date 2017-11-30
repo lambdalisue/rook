@@ -18,6 +18,6 @@ function! s:add_node_modules() abort
   if empty(node_modules)
     return
   endif
-  execute printf('setl path+=%s', node_modules)
+  execute printf('setl path+=%s', fnamemodify(node_modules, ':p'))
 endfunction
 call s:add_node_modules()
