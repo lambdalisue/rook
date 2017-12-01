@@ -533,42 +533,6 @@ repo = 'wellle/tmux-complete.vim'
 depends = 'deoplete.nvim'
 on_ft = 'tmux'
 
-# NOTE:
-# This plugins often cause 'channel' exception...
-# [[plugins]]
-# repo = 'mhartington/nvim-typescript'
-# depends = 'deoplete.nvim'
-# on_ft = 'typescript'
-# hook_source = '''
-# let g:nvim_typescript#javascript_support = 1
-# let g:nvim_typescript#vue_support = 1
-# let g:nvim_typescript#type_info_on_hold = 0
-# let g:nvim_typescript#default_mappings = 0
-#
-# function! s:configure_typescript() abort
-#   nnoremap <silent><buffer> <Plug>(typescript-goto-type-definitions) :<C-u>TSTypeDef<CR>
-#   nnoremap <silent><buffer> <Plug>(typescript-goto-definitions) :<C-u>TSDef<CR>
-#   nnoremap <silent><buffer> <Plug>(typescript-rename) :<C-u>TSRename<CR>
-#   nnoremap <silent><buffer> <Plug>(typescript-usages) :<C-u>TSRefs<CR>
-#   nnoremap <silent><buffer> <Plug>(typescript-import) :<C-u>TSImport<CR>
-#   nnoremap <silent><buffer> <Plug>(typescript-show-documentation) :<C-u>TSDoc<CR>
-#   nnoremap <silent><buffer> <Plug>(typescript-echo-type) :<C-u>TSType<CR>
-#
-#   nmap <buffer> gs <Plug>(typescript-usages)
-#   nmap <buffer> gd <Plug>(typescript-goto-definitions)
-#   nmap <buffer> gD <Plug>(typescript-goto-type-definitions)
-#   nmap <buffer> K <Plug>(typescript-show-documentation)<C-w>p
-#   nmap <buffer> <C-k> <Plug>(typescript-echo-type)
-#   nmap <buffer> <F2> <Plug>(typescript-rename)
-#   nmap <buffer> <F3> <Plug>(typescript-import)
-# endfunction
-#
-# augroup my_typescript
-#   autocmd! *
-#   autocmd FileType typescript call s:configure_typescript()
-# augroup END
-# '''
-
 # }}}
 
 # Denite {{{
@@ -824,8 +788,9 @@ repo = 'jdkanani/vim-material-theme'
 [[plugins]]
 repo = 'PProvost/vim-ps1'
 
-[[plugins]]
-repo = 'posva/vim-vue'
+# [[plugins]]
+# repo = 'posva/vim-vue'
+# repo = 'darthmall/vim-vue'
 
 [[plugins]]
 repo = 'othree/html5.vim'

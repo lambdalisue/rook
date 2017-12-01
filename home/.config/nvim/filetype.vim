@@ -55,6 +55,9 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.pp setfiletype pascal
   autocmd BufNewFile,BufRead *.isl setfiletype iss
 
+  " Vue.js
+  autocmd BufNewFile,BufRead *.vue setfiletype vue.html.css
+
   " Neovim terminal
   if has('nvim')
     autocmd TermOpen * setfiletype terminal
