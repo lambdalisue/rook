@@ -56,7 +56,7 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.isl setfiletype iss
 
   " Vue.js
-  autocmd BufNewFile,BufRead *.vue setfiletype vue.html.css
+  autocmd BufNewFile,BufRead *.vue setfiletype vue
 
   " Neovim terminal
   if has('nvim')
