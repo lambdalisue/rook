@@ -52,29 +52,29 @@ let g:clever_f_across_no_line = 1
 let g:clever_f_smart_case = 1
 '''
 
-[[plugins]]
-repo = 'lambdalisue/smarthl.vim'
-hook_add = '''
-let g:smarthl_default_mappings = 0
-nmap / <Plug>(smarthl-/)
-nmap ? <Plug>(smarthl-?)
-nmap * <Plug>(smarthl-*)
-nmap n <Plug>(smarthl-n)
-nmap N <Plug>(smarthl-N)
-nmap g/ <Plug>(smarthl-g/)
-nmap g? <Plug>(smarthl-g?)
-nmap g* <Plug>(smarthl-g*)
-'''
-
 # [[plugins]]
-# repo = 'haya14busa/vim-asterisk'
-# on_map = '<Plug>'
+# repo = 'lambdalisue/smarthl.vim'
 # hook_add = '''
-# map *   <Plug>(asterisk-*)
-# map g*  <Plug>(asterisk-g*)
-# map z*  <Plug>(asterisk-z*)
-# map gz* <Plug>(asterisk-gz*)
+# let g:smarthl_default_mappings = 0
+# nmap / <Plug>(smarthl-/)
+# nmap ? <Plug>(smarthl-?)
+# nmap * <Plug>(smarthl-*)
+# nmap n <Plug>(smarthl-n)
+# nmap N <Plug>(smarthl-N)
+# nmap g/ <Plug>(smarthl-g/)
+# nmap g? <Plug>(smarthl-g?)
+# nmap g* <Plug>(smarthl-g*)
 # '''
+
+[[plugins]]
+repo = 'haya14busa/vim-asterisk'
+on_map = '<Plug>'
+hook_add = '''
+map *   <Plug>(asterisk-*)
+map g*  <Plug>(asterisk-g*)
+map z*  <Plug>(asterisk-z*)
+map gz* <Plug>(asterisk-gz*)
+'''
 
 [[plugins]]
 repo = 'Shougo/junkfile.vim'
@@ -110,6 +110,14 @@ xmap gx <Plug>(openbrowser-smart-search)
 
 [[plugins]]
 repo = 'Konfekt/FastFold'
+hook_add = '''
+let g:fastfold_savehook = 1
+let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
+let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
+nmap zuz <Plug>(FastFoldUpdate)
+xnoremap iz :<C-u>FastFoldUpdate<CR><Esc>:<C-u>normal! ]zv[z<CR>
+xnoremap az :<C-u>FastFoldUpdate<CR><Esc>:<C-u>normal! ]zV[z<CR>
+'''
 
 [[plugins]]
 repo = 'kana/vim-repeat'
@@ -178,6 +186,7 @@ on_cmd = 'ColorSwatchGenerate'
 
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
+#on_cmd = 'Gina'
 hook_add = '''
 nnoremap <silent> <Leader>aa :<C-u>Gina status<CR>
 nnoremap <silent> <Leader>ac :<C-u>Gina commit<CR>
@@ -474,12 +483,12 @@ nmap ga <Plug>(EasyAlign)
 repo = 'lambdalisue/vim-findent'
 on_cmd = 'Findent'
 
-[[plugins]]
-repo = 'lambdalisue/vim-foldround'
-on_map = '<Plug>'
-hook_add = '''
-nmap <Leader>ff <Plug>(foldround-forward)
-'''
+# [[plugins]]
+# repo = 'lambdalisue/vim-foldround'
+# on_map = '<Plug>'
+# hook_add = '''
+# nmap <Leader>ff <Plug>(foldround-forward)
+# '''
 
 # }}}
 
