@@ -203,6 +203,37 @@ let g:gista#client#default_username = 'lambdalisue'
 '''
 
 [[plugins]]
+repo = 'junegunn/goyo.vim'
+on_cmd = 'Goyo'
+hook_source = '''
+function! s:goyo_enter() abort
+  call timer_start(0, {timer -> smartcl#disable()})
+  silent !tmux set status off
+  silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  setlocal nolist
+  highlight EndOfBuffer ctermfg=bg guifg=bg
+  Limelight
+endfunction
+
+function! s:goyo_leave() abort
+  call timer_start(0, {timer -> smartcl#enable()})
+  silent !tmux set status on
+  silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  Limelight!
+endfunction
+
+augroup my_goyo_config
+  autocmd! *
+  autocmd User GoyoEnter nested call s:goyo_enter()
+  autocmd User GoyoLeave nested call s:goyo_leave()
+augroup END
+'''
+
+[[plugins]]
+repo = 'junegunn/limelight.vim'
+on_cmd = 'Limelight'
+
+[[plugins]]
 # repo = 'cocopon/vaffle.vim'
 repo = 'lambdalisue/vaffle.vim'
 hook_add = '''

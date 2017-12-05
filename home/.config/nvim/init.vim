@@ -44,10 +44,10 @@ if has('vim_starting')
   let g:loaded_man               = 1
   " NOTE:
   " The Netrw is use to download a missing spellfile
-  let g:loaded_netrw             = 1
-  let g:loaded_netrwPlugin       = 1
-  let g:loaded_netrwSettings     = 1
-  let g:loaded_netrwFileHandlers = 1
+  " let g:loaded_netrw             = 1
+  " let g:loaded_netrwPlugin       = 1
+  " let g:loaded_netrwSettings     = 1
+  " let g:loaded_netrwFileHandlers = 1
 endif
 
 " }}}
@@ -413,35 +413,6 @@ function! s:workon(dir, bang) abort
 endfunction
 autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
 command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
-" }}}
-
-" Enable sudo {{{
-if has('nvim')
-  function! s:sudo_write(path) abort
-    let bufnr = bufnr('%')
-    let path = fnamemodify(expand(a:path), ':p')
-    let temp = tempname()
-    let command = printf(
-          \ 'sudo true | cat "%s" | sudo tee "%s" >/dev/null && rm "%s"',
-          \ temp, path, temp
-          \)
-    call writefile(getline(1, '$'), temp)
-    execute printf('%s %dnew', 'belowright', 5)
-    setlocal bufhidden=wipe
-    augroup sudo_write
-      autocmd! * <buffer>
-      execute printf(
-            \ 'autocmd BufWipeout <buffer> call setbufvar(%d, "&modified", 0)',
-            \ bufnr,
-            \)
-    augroup END
-    execute printf('term %s', command)
-  endfunction
-  command! -nargs=1 SudoWrite call s:sudo_write(<q-args>)
-  cnoreabbrev w!! call <SID>sudo_write('%')<CR>
-else
-  cnoreabbrev w!! w !sudo tee % >/dev/null
-endif
 " }}}
 
 " Enhance performance of scroll in vsplit mode via DECSLRM {{{
