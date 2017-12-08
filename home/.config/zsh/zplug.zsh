@@ -41,8 +41,6 @@ zplug "motemen/ghq", \
 #   from:gh-r, \
 #   rename-to:hub
 
-zplug "glidenote/hub-zsh-completion", \
-  on:"github/hub"
 
 # Command-line fuzzy finder
 zplug "junegunn/fzf-bin", \
@@ -66,6 +64,8 @@ zplug "b4b4r07/enhancd", \
 
 # Add extra zsh-completions
 zplug "zsh-users/zsh-completions"
+zplug "felixr/docker-zsh-completion"
+zplug "glidenote/hub-zsh-completion"
 
 # zsh-syntax-highlighting requires to be loaded AFTER
 # 'compinit' command and sourcing other plugins
