@@ -52,33 +52,33 @@ let g:clever_f_across_no_line = 1
 let g:clever_f_smart_case = 1
 '''
 
-# [[plugins]]
-# repo = 'lambdalisue/smarthl.vim'
-# hook_add = '''
-# let g:smarthl_default_mappings = 0
-# nmap / <Plug>(smarthl-/)
-# nmap ? <Plug>(smarthl-?)
-# nmap * <Plug>(smarthl-*)
-# nmap n <Plug>(smarthl-n)
-# nmap N <Plug>(smarthl-N)
-# nmap g/ <Plug>(smarthl-g/)
-# nmap g? <Plug>(smarthl-g?)
-# nmap g* <Plug>(smarthl-g*)
-# '''
-
 [[plugins]]
-repo = 'haya14busa/vim-asterisk'
-on_map = '<Plug>'
+repo = 'lambdalisue/smarthl.vim'
 hook_add = '''
-map *   <Plug>(asterisk-*)
-map #   <Plug>(asterisk-#)
-map g*  <Plug>(asterisk-g*)
-map g#  <Plug>(asterisk-g#)
-map z*  <Plug>(asterisk-z*)
-map gz* <Plug>(asterisk-gz*)
-map z#  <Plug>(asterisk-z#)
-map gz# <Plug>(asterisk-gz#)
+let g:smarthl_default_mappings = 0
+nmap / <Plug>(smarthl-/)
+nmap ? <Plug>(smarthl-?)
+nmap * <Plug>(smarthl-*)
+nmap n <Plug>(smarthl-n)
+nmap N <Plug>(smarthl-N)
+nmap g/ <Plug>(smarthl-g/)
+nmap g? <Plug>(smarthl-g?)
+nmap g* <Plug>(smarthl-g*)
 '''
+
+# [[plugins]]
+# repo = 'haya14busa/vim-asterisk'
+# on_map = '<Plug>'
+# hook_add = '''
+# map *   <Plug>(asterisk-*)
+# map #   <Plug>(asterisk-#)
+# map g*  <Plug>(asterisk-g*)
+# map g#  <Plug>(asterisk-g#)
+# map z*  <Plug>(asterisk-z*)
+# map gz* <Plug>(asterisk-gz*)
+# map z#  <Plug>(asterisk-z#)
+# map gz# <Plug>(asterisk-gz#)
+# '''
 
 [[plugins]]
 repo = 'Shougo/junkfile.vim'
@@ -134,6 +134,7 @@ nmap <C-r> <Plug>(repeat-<C-r>)
 nmap g-    <Plug>(repeat-g-)
 nmap g+    <Plug>(repeat-g+)
 '''
+
 [[plugins]]
 repo = 'cohama/lexima.vim'
 hook_post_source = '''
@@ -247,38 +248,57 @@ repo = 'junegunn/limelight.vim'
 on_cmd = 'Limelight'
 
 [[plugins]]
-# repo = 'cocopon/vaffle.vim'
-repo = 'lambdalisue/vaffle.vim'
-hook_add = '''
-let g:vaffle_use_default_mappings = 0
+repo = 'Shougo/unite.vim'
 
-function! s:my_vaffle() abort
-  " Toggle
-  nmap <buffer> <silent> <C-j>      <Plug>(vaffle-toggle-current)
-  nmap <buffer> <silent> .          <Plug>(vaffle-toggle-hidden)
-  nmap <buffer> <silent> *          <Plug>(vaffle-toggle-all)
-  vmap <buffer> <silent> <C-j>      <Plug>(vaffle-toggle-current)
-  " Operations for selected items
-  nmap <buffer> <nowait> <silent> d <Plug>(vaffle-delete-selected)
-  nmap <buffer> <silent> x          <Plug>(vaffle-fill-cmdline)
-  nmap <buffer> <silent> m          <Plug>(vaffle-move-selected)
-  nmap <buffer> <silent> <CR>       <Plug>(vaffle-open-selected)
-  nmap <buffer> <silent> r          <Plug>(vaffle-rename-selected)
-  " Operations for a item on cursor
-  nmap <buffer> <silent> l          <Plug>(vaffle-open-current)
-  " Misc
-  nmap <buffer> <silent> o          <Plug>(vaffle-mkdir)
-  nmap <buffer> <silent> i          <Plug>(vaffle-new-file)
-  nmap <buffer> <silent> ~          <Plug>(vaffle-open-home)
-  nmap <buffer> <silent> h          <Plug>(vaffle-open-parent)
-  nmap <buffer> <silent> q          <Plug>(vaffle-quit)
-  nmap <buffer> <silent> R          <Plug>(vaffle-refresh)
+[[plugins]]
+repo = 'Shougo/vimfiler.vim'
+depends = 'unite.vim'
+hook_post_source = '''
+function! s:my_vimfiler() abort
+  unmap <buffer> <Space>
+  nmap <buffer> J <Plug>(vimfiler_toggle_mark_current_line)
+  nmap <buffer> K <Plug>(vimfiler_toggle_mark_current_line_up)
+  nmap <buffer> l <Plug>(vimfiler_expand_tree)
 endfunction
-autocmd MyAutoCmd FileType vaffle call s:my_vaffle()
-
-nnoremap <silent> <Leader>ee :<C-u>Vaffle <C-r>=empty(expand('%')) ? '' : expand('%:h')<CR><CR>
-nnoremap <silent> <Leader>EE :<C-u>Vaffle<CR>
+autocmd MyAutoCmd FileType vimfiler call s:my_vimfiler()
+nnoremap <silent> <Leader>ee :<C-u>VimFilerBufferDir -force-hide -simple<CR>
+nnoremap <silent> <Leader>EE :<C-u>VimFilerCurrentDir -force-hide -simple<CR>
 '''
+
+
+# [[plugins]]
+# # repo = 'cocopon/vaffle.vim'
+# repo = 'lambdalisue/vaffle.vim'
+# hook_add = '''
+# let g:vaffle_use_default_mappings = 0
+#
+# function! s:my_vaffle() abort
+#   " Toggle
+#   nmap <buffer> <silent> <C-j>      <Plug>(vaffle-toggle-current)
+#   nmap <buffer> <silent> .          <Plug>(vaffle-toggle-hidden)
+#   nmap <buffer> <silent> *          <Plug>(vaffle-toggle-all)
+#   vmap <buffer> <silent> <C-j>      <Plug>(vaffle-toggle-current)
+#   " Operations for selected items
+#   nmap <buffer> <nowait> <silent> d <Plug>(vaffle-delete-selected)
+#   nmap <buffer> <silent> x          <Plug>(vaffle-fill-cmdline)
+#   nmap <buffer> <silent> m          <Plug>(vaffle-move-selected)
+#   nmap <buffer> <silent> <CR>       <Plug>(vaffle-open-selected)
+#   nmap <buffer> <silent> r          <Plug>(vaffle-rename-selected)
+#   " Operations for a item on cursor
+#   nmap <buffer> <silent> l          <Plug>(vaffle-open-current)
+#   " Misc
+#   nmap <buffer> <silent> o          <Plug>(vaffle-mkdir)
+#   nmap <buffer> <silent> i          <Plug>(vaffle-new-file)
+#   nmap <buffer> <silent> ~          <Plug>(vaffle-open-home)
+#   nmap <buffer> <silent> h          <Plug>(vaffle-open-parent)
+#   nmap <buffer> <silent> q          <Plug>(vaffle-quit)
+#   nmap <buffer> <silent> R          <Plug>(vaffle-refresh)
+# endfunction
+# autocmd MyAutoCmd FileType vaffle call s:my_vaffle()
+#
+# nnoremap <silent> <Leader>ee :<C-u>Vaffle <C-r>=empty(expand('%')) ? '' : expand('%:h')<CR><CR>
+# nnoremap <silent> <Leader>EE :<C-u>Vaffle<CR>
+# '''
 
 [[plugins]]
 repo = 'mbbill/undotree'

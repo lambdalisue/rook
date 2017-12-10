@@ -364,6 +364,17 @@ autocmd MyAutoCmd BufReadPost *
       \ endif
 " }}}
 
+" Automatically restore 'view' {{{
+function! s:is_view_available() abort
+  if &buftype =~# '^\%(help\|nofile\|quickfix\|terminal\)$'
+    return 0
+  endif
+  return &buflisted && filereadable(expand('<afile>'))
+endfunction
+autocmd MyAutoCmd BufWinLeave * if s:is_view_available() | silent mkview! | endif
+autocmd MyAutoCmd BufWinEnter * if s:is_view_available() | silent! loadview | endif
+" }}}
+
 " Automatically create missing directories {{{
 function! s:auto_mkdir(dir, force) abort
   if empty(a:dir) || a:dir =~# '^\w\+://' || isdirectory(a:dir) || a:dir =~# '^sudo:'
@@ -545,11 +556,11 @@ nnoremap <silent> <Plug>(my-toggle-locationlist)
 nmap L <Plug>(my-toggle-locationlist)
 " }}}
 
-" Source Vim script file with <Leader><Leader>s {{{
+" Source Vim script file with <Leader>ss {{{
 if !exists('*s:source_script')
   function s:source_script(path) abort
     let path = expand(a:path)
-    if !filereadable(path)
+    if !filereadable(path) || getbufvar(a:path, '&filetype') !=# 'vim'
       return
     endif
     execute 'source' fnameescape(path)
