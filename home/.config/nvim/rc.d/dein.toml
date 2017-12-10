@@ -390,7 +390,7 @@ let g:wifi#update_tabline = 1
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
-hook_add = '''
+hook_post_source = '''
 execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/lightline.vim'))
 '''
 
