@@ -253,6 +253,7 @@ set wildoptions=tagfile
 " }}}
 
 " Behavior {{{
+set autoread            " automatically read
 set hidden              " hide the buffer instead of close
 set switchbuf=useopen   " use an existing buffer instaed of creating a new one
 
