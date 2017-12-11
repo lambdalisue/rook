@@ -261,7 +261,7 @@ let g:vimfiler_ignore_pattern = printf('\%%(%s\)', join([
       \ '^__pycache__$',
       \ '\.egg-info$',
       \], '\|'))
-nnoremap <silent> <Leader>ee :<C-u>VimFilerExplorer<CR>
+nnoremap <silent> <Leader>ee :<C-u>VimFiler -simple -force-quit<CR>
 '''
 hook_post_source = '''
 call vimfiler#custom#profile('default', 'context', {
