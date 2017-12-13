@@ -290,5 +290,6 @@ selection:
 #
 shell:
   program: /usr/local/bin/tmux
+  # program: /usr/local/bin/zsh
 #  args:
 #    - --login
