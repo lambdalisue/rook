@@ -514,22 +514,22 @@ nmap gco  <Plug>(caw:jump:comment-next)
 nmap gcO  <Plug>(caw:jump:comment-prev)
 '''
 
-[[plugins]]
-repo = 'LeafCage/yankround.vim'
-on_map = '<Plug>'
-hook_add = '''
-nmap p     <Plug>(yankround-p)
-nmap P     <Plug>(yankround-P)
-nmap gp    <Plug>(yankround-gp)
-nmap gP    <Plug>(yankround-gP)
-nmap <expr><C-k> yankround#is_active()
-      \ ? "\<Plug>(yankround-prev)"
-      \ : "\<C-k>"
-nmap <expr><C-j> yankround#is_active()
-      \ ? "\<Plug>(yankround-next)"
-      \ : "\<C-j>"
-let g:yankround_use_region_hl = 1
-'''
+# [[plugins]]
+# repo = 'LeafCage/yankround.vim'
+# on_map = '<Plug>'
+# hook_add = '''
+# nmap p     <Plug>(yankround-p)
+# nmap P     <Plug>(yankround-P)
+# nmap gp    <Plug>(yankround-gp)
+# nmap gP    <Plug>(yankround-gP)
+# nmap <expr><C-k> yankround#is_active()
+#       \ ? "\<Plug>(yankround-prev)"
+#       \ : "\<C-k>"
+# nmap <expr><C-j> yankround#is_active()
+#       \ ? "\<Plug>(yankround-next)"
+#       \ : "\<C-j>"
+# let g:yankround_use_region_hl = 1
+# '''
 
 [[plugins]]
 repo = 'AndrewRadev/switch.vim'
@@ -1078,6 +1078,14 @@ let g:impsort_method_imports = ['alpha', 'length']
 
 # }}}
 
+# HTML development {{{
+[[plugins]]
+repo = 'mattn/emmet-vim'
+hook_add = '''
+let g:user_emmet_leader_key = '<C-y>'
+'''
+
+# }}}
 # Vimscript development {{{
 [[plugins]]
 repo = 'thinca/vim-themis'
