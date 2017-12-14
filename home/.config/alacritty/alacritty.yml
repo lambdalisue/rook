@@ -289,6 +289,6 @@ selection:
 # Entries in shell.args are passed unmodified as arguments to the shell.
 #
 shell:
-  program: /usr/local/bin/tmux
+  program: /usr/local/bin/tmux -u
 #  args:
 #    - --login
