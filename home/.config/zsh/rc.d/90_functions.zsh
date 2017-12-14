@@ -107,6 +107,22 @@ homeshick::unlink() {
   fi
 }
 
+test::ecma48() {
+    echo "\x1b[1mbold\e[0m"
+    echo "\x1b[3mitalic\e[0m"
+    echo "\x1b[4munderline\e[0m"
+    echo "\x1b[9mstrikethrough\e[0m"
+    echo "\x1b[31mred\e[0m"
+}
+test::256color() {
+    for i in {0..255} ; do
+        printf "\x1b[48;5;%sm%3d\e[0m " "$i" "$i"
+        if (( i == 15 )) || (( i > 15 )) && (( (i-15) % 6 == 0 )); then
+            printf "\n";
+        fi
+    done
+}
+
 test::truecolor() {
   awk 'BEGIN{
     s="/\\/\\/\\/\\/\\"; s=s s s s s s s s s s s s s s s s s s s s s s s;
