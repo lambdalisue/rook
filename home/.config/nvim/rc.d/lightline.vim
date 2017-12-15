@@ -2,16 +2,6 @@ function! s:readonly() abort
   return &l:readonly ? 'x' : ''
 endfunction
 
-function! s:modified() abort
-  execute printf(
-        \ 'highlight! link ModifiedColor %s',
-        \ &l:modifiable
-        \   ? 'LightlineLeft_normal_error'
-        \   : 'LightlineLeft_normal_tabsel'
-        \)
-  return !&l:modifiable ? ' - ' : &l:modified ? ' + ' : ''
-endfunction
-
 function! s:datetime() abort
   return strftime('%a %m/%d %H:%M')
 endfunction
@@ -106,15 +96,10 @@ let g:lightline.tabline = {
 
 let g:lightline.component = {
       \ 'cwd': '%{fnamemodify(getcwd(), '':~'')}',
-      \ 'modified': printf(
-      \   '%%#ModifiedColor#%%{%s()}',
-      \   get(function('s:modified'), 'name'),
-      \ ),
       \}
 
 let g:lightline.component_raw = {
       \ 'mode': 1,
-      \ 'modified': 1,
       \}
 
 let g:lightline.component_type = {
