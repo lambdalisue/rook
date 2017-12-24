@@ -1,4 +1,3 @@
-" NOTE: Vim 7.4.1842 is required for get(Fn, 'name')
 let s:is_windows = has('win32') || has('win64')
 
 " Prelude {{{
@@ -10,7 +9,7 @@ if has('vim_starting')
   " Use as many color as possible
   if !has('gui_running')
         \ && exists('&termguicolors')
-        \ && $COLORTERM ==# 'truecolor'
+        \ && $COLORTERM =~# '^\%(truecolor\|24bit\)$'
     " https://medium.com/@dubistkomisch/how-to-actually-get-italics-and-true-colour-to-work-in-iterm-tmux-vim-9ebe55ebc2be
     if !has('nvim')
       let &t_8f = "\e[38;2;%lu;%lu;%lum"
@@ -32,19 +31,19 @@ if has('vim_starting')
   set ttimeoutlen=100
 
   " Disable unnecessary default plugins
-  " let g:loaded_gzip              = 1
-  " let g:loaded_tar               = 1
-  " let g:loaded_tarPlugin         = 1
-  " let g:loaded_zip               = 1
-  " let g:loaded_zipPlugin         = 1
+  let g:loaded_gzip              = 1
+  let g:loaded_tar               = 1
+  let g:loaded_tarPlugin         = 1
+  let g:loaded_zip               = 1
+  let g:loaded_zipPlugin         = 1
   let g:loaded_rrhelper          = 1
-  " let g:loaded_2html_plugin      = 1
+  let g:loaded_2html_plugin      = 1
   let g:loaded_vimball           = 1
   let g:loaded_vimballPlugin     = 1
   let g:loaded_getscript         = 1
   let g:loaded_getscriptPlugin   = 1
   let g:loaded_logipat           = 1
-  " let g:loaded_matchparen        = 1
+  let g:loaded_matchparen        = 1
   let g:loaded_man               = 1
   " NOTE:
   " The Netrw is use to download a missing spellfile
@@ -227,7 +226,6 @@ set noshowmode          " do not display mode on the last line
 set laststatus=2        " always shows statusline
 set showtabline=2       " always shows tabline
 set breakindent         " every wrapped line will continue visually indented
-set display=truncate    " Show @@@ in the last line if it is truncated.
 set report=0            " reports any changes
 set previewheight=40    " specify previewwindow height
 set splitright          " vertically split right
@@ -352,7 +350,7 @@ augroup END
 
 " Automatically re-assign filetype {{{
 autocmd MyAutoCmd BufWritePost *
-      \ if &filetype ==# '' || exists('b:ftdetect') |
+      \ if &filetype ==# '' && exists('b:ftdetect') |
       \  unlet! b:ftdetect |
       \  filetype detect |
       \ endif
@@ -561,6 +559,14 @@ nnoremap <silent> <Plug>(my-toggle-locationlist)
 nmap L <Plug>(my-toggle-locationlist)
 " }}}
 
+" Open vimrc with <F1> {{{
+if has('nvim')
+    nnoremap <silent> <F1> :<C-u>e ~/.config/nvim/init.vim<CR>
+else
+    nnoremap <silent> <F1> :<C-u>e ~/.vim/vimrc<CR>
+endif
+" }}}
+
 " Source Vim script file with <Leader>ss {{{
 if !exists('*s:source_script')
   function s:source_script(path) abort
@@ -576,9 +582,7 @@ if !exists('*s:source_script')
           \)
   endfunction
 endif
-nnoremap <silent> <Plug>(my-source-script)
-      \ :<C-u>call <SID>source_script('%')<CR>
-nmap <Leader>ss <Plug>(my-source-script)
+nnoremap <F10> :<C-u>call <SID>source_script('%')<CR>
 " }}}
 
 " Zoom widnow temporary with <C-w>z {{{

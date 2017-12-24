@@ -95,7 +95,7 @@ repo = 'thinca/vim-localrc'
 repo = 'lambdalisue/vim-marron'
 on_map = [['n', '<Plug>']]
 hook_add = '''
-nmap <F10> <Plug>(marron-reload-vimrc)<Plug>(marron-reload-gvimrc)
+nmap <F9> <Plug>(marron-reload-vimrc)<Plug>(marron-reload-gvimrc)
 '''
 
 [[plugins]]
