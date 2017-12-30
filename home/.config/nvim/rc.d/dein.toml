@@ -59,8 +59,8 @@ let g:smarthl_default_mappings = 0
 nmap / <Plug>(smarthl-/)
 nmap ? <Plug>(smarthl-?)
 nmap * <Plug>(smarthl-*)
-nmap n <Plug>(smarthl-n)
-nmap N <Plug>(smarthl-N)
+nmap n <Plug>(smarthl-n)zv
+nmap N <Plug>(smarthl-N)zv
 nmap g/ <Plug>(smarthl-g/)
 nmap g? <Plug>(smarthl-g?)
 nmap g* <Plug>(smarthl-g*)
@@ -191,7 +191,7 @@ on_cmd = 'ColorSwatchGenerate'
 
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
-#on_cmd = 'Gina'
+on_cmd = 'Gina'
 hook_add = '''
 nnoremap <silent> <Leader>aa :<C-u>Gina status<CR>
 nnoremap <silent> <Leader>ac :<C-u>Gina commit<CR>
@@ -1108,7 +1108,6 @@ on_cmd = 'Capture'
 
 [[plugins]]
 repo = 'vim-jp/vital.vim'
-on_cmd = 'Vitalize'
 
 [[plugins]]
 repo = 'vim-jp/vital-complete'
