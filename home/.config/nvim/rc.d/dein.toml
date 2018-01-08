@@ -6,6 +6,10 @@ repo = 'Shougo/dein.vim'
 repo = 'lambdalisue/vim-protocol'
 
 [[plugins]]
+repo = 'lambdalisue/session.vim'
+on_cmd = ['SessionOpen', 'SessionSave', 'SessionClose', 'SessionRemove', 'SessionList']
+
+[[plugins]]
 repo = 'lambdalisue/ake.vim'
 
 [[plugins]]
