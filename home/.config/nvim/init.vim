@@ -441,15 +441,31 @@ function! s:session_complete(arglead, cmdline, cursorpos) abort
         \)
 endfunction
 
-function! s:session_save(...) abort
+function! s:session_save(bang, ...) abort
+  let filename = a:0 && !empty(a:1)
+        \ ? printf('%s/%s.vim', g:session_dir, a:1)
+        \ : empty(v:this_session)
+        \   ? printf('%s/default.vim', g:session_dir)
+        \   : v:this_session
+  try
+    execute 'mksession' . a:bang filename
+    redraw | echo printf('session file "%s" is saved', filename)
+  catch
+    echohl WarningMsg
+    echo matchstr(v:exception, '.\{-}:\zs.*')
+    echohl None
+  endtry
+endfunction
+
+function! s:session_remove(...) abort
   let filename = a:0 && !empty(a:1)
         \ ? printf('%s/%s.vim', g:session_dir, a:1)
         \ : empty(v:this_session)
         \   ? printf('%s/default.vim', g:session_dir)
         \   : v:this_session
   if filewritable(filename)
-    execute 'mksession!' filename
-    redraw | echo printf('session file "%s" is saved', filename)
+    call delete(filename)
+    redraw | echo printf('session file "%s" is removed', filename)
   else
     echohl WarningMsg
     redraw | echo printf('session file "%s" is not writable', filename)
@@ -497,17 +513,24 @@ function! s:session_list(bang) abort
   setlocal nomodifiable nomodified nobuflisted buftype=nofile bufhidden=wipe
   nnoremap <silent><buffer> <Return>
         \ :<C-u>call <SID>session_open('', matchstr(getline('.'), '^[* ] \zs.*'))<CR>
+  nnoremap <silent><buffer> dd
+        \ :<C-u>call <SID>session_remove(matchstr(getline('.'), '^[* ] \zs.*'))<CR>
+        \ :<C-u>call <SID>session_list('')<CR>
+  vnoremap <silent><buffer> dd
+        \ :call <SID>session_remove(matchstr(getline('.'), '^[* ] \zs.*'))<CR>
+        \ :<C-u>call <SID>session_list('')<CR>
 endfunction
 
 command! -bang -nargs=? -complete=customlist,s:session_complete SessionOpen call s:session_open(<q-bang>, <q-args>)
-command! -nargs=? -complete=customlist,s:session_complete SessionSave call s:session_save(<q-args>)
+command! -bang -nargs=? -complete=customlist,s:session_complete SessionSave call s:session_save(<q-bang>, <q-args>)
+command! -nargs=? -complete=customlist,s:session_complete SessionRemove call s:session_remove(<q-args>)
 command! -bang SessionClose call s:session_close(<q-bang>)
 command! -bang SessionList call s:session_list(<q-bang>)
 
-nnoremap <silent> sl :<C-u>SessionList<CR>
-nnoremap <silent> so :<C-u>SessionOpen<CR>
-nnoremap <silent> ss :<C-u>SessionSave<CR>
-nnoremap <silent> sc :<C-u>SessionClose<CR>
+nnoremap Sl :<C-u>SessionList<CR>
+nnoremap Sc :<C-u>SessionClose<CR>
+execute 'nnoremap So :<C-u>SessionOpen '
+execute 'nnoremap Ss :<C-u>SessionSave '
 
 let g:session_dir = expand('~/.cache/nvim/session')
 call s:mkdir(g:session_dir, 'p')
