@@ -41,7 +41,9 @@ augroup my_neomake
   autocmd! *
   autocmd FileReadPost * Neomake
   autocmd BufWritePost * Neomake
-  autocmd User NeomakeFinished nested call lightline#update()
+  if exists('g:loaded_lightline')
+    autocmd User NeomakeFinished nested call lightline#update()
+  endif
 augroup END
 
 augroup my_neomake_buffer_local

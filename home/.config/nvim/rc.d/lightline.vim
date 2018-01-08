@@ -130,5 +130,5 @@ if !has('vim_starting')
 endif
 
 if !exists('s:timer')
-  let s:timer = timer_start(30000, { timer -> lightline#update() })
+  let s:timer = timer_start(30000, { timer -> lightline#update() }, { 'repeat': -1 })
 endif

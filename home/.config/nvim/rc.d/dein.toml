@@ -1108,6 +1108,7 @@ on_cmd = 'Capture'
 
 [[plugins]]
 repo = 'vim-jp/vital.vim'
+on_cmd = 'Vitalize'
 
 [[plugins]]
 repo = 'vim-jp/vital-complete'
