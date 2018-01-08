@@ -429,6 +429,90 @@ autocmd MyAutoCmd VimEnter * call s:workon(expand('<afile>'), 1)
 command! -nargs=? -complete=dir -bang Workon call s:workon('<args>', '<bang>')
 " }}}
 
+" Session management {{{
+function! s:session_complete(arglead, cmdline, cursorpos) abort
+  let candidates = map(
+        \ glob(g:session_dir . '/*.vim', 1, 1),
+        \ 'fnamemodify(v:val, '':t:r'')',
+        \)
+  return sort(
+        \ filter(candidates, 'v:val =~# ''^'' . a:arglead'),
+        \ { a, b -> len(a) - len(b) }
+        \)
+endfunction
+
+function! s:session_save(...) abort
+  let filename = a:0 && !empty(a:1)
+        \ ? printf('%s/%s.vim', g:session_dir, a:1)
+        \ : empty(v:this_session)
+        \   ? printf('%s/default.vim', g:session_dir)
+        \   : v:this_session
+  if filewritable(filename)
+    execute 'mksession!' filename
+    redraw | echo printf('session file "%s" is saved', filename)
+  else
+    echohl WarningMsg
+    redraw | echo printf('session file "%s" is not writable', filename)
+    echohl None
+  endif
+endfunction
+
+function! s:session_open(bang, ...) abort
+  if !empty(v:this_session)
+    call s:session_close(a:bang)
+  endif
+  let filename = a:0 && !empty(a:1)
+        \ ? printf('%s/%s.vim', g:session_dir, a:1)
+        \ : empty(v:this_session)
+        \   ? printf('%s/default.vim', g:session_dir)
+        \   : v:this_session
+  if filereadable(filename)
+    execute 'source' filename
+    redraw | echo printf('session file "%s" is opened', filename)
+  else
+    echohl WarningMsg
+    echo printf('session file "%s" is not readable', filename)
+    echohl None
+  endif
+endfunction
+
+function! s:session_close(bang) abort
+  if empty(v:this_session)
+    return
+  endif
+  if a:bang ==# '!'
+    silent tabonly! | silent only! | silent enew!
+  else
+    silent tabonly | silent only | silent enew
+  endif
+  let v:this_session = ''
+endfunction
+
+function! s:session_list(bang) abort
+  let sessions = s:session_complete('', '', [])
+  let current = fnamemodify(v:this_session, ':t:r')
+  execute 'enew' . a:bang
+  call map(sessions, '(v:val ==# current ? ''* '' : ''  '') . v:val')
+  call setline(1, sessions)
+  setlocal nomodifiable nomodified nobuflisted buftype=nofile bufhidden=wipe
+  nnoremap <silent><buffer> <Return>
+        \ :<C-u>call <SID>session_open('', matchstr(getline('.'), '^[* ] \zs.*'))<CR>
+endfunction
+
+command! -bang -nargs=? -complete=customlist,s:session_complete SessionOpen call s:session_open(<q-bang>, <q-args>)
+command! -nargs=? -complete=customlist,s:session_complete SessionSave call s:session_save(<q-args>)
+command! -bang SessionClose call s:session_close(<q-bang>)
+command! -bang SessionList call s:session_list(<q-bang>)
+
+nnoremap <silent> sl :<C-u>SessionList<CR>
+nnoremap <silent> so :<C-u>SessionOpen<CR>
+nnoremap <silent> ss :<C-u>SessionSave<CR>
+nnoremap <silent> sc :<C-u>SessionClose<CR>
+
+let g:session_dir = expand('~/.cache/nvim/session')
+call s:mkdir(g:session_dir, 'p')
+" }}}
+
 " Enhance performance of scroll in vsplit mode via DECSLRM {{{
 " NOTE: Neovim (libvterm) already support it but Vim
 " Ref: http://qiita.com/kefir_/items/c725731d33de4d8fb096
