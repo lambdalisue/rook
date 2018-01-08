@@ -1086,10 +1086,10 @@ let g:user_emmet_leader_key = '<C-y>'
 '''
 
 # }}}
+
 # Vimscript development {{{
 [[plugins]]
 repo = 'thinca/vim-themis'
-rev = '1.5.4dev'
 
 [[plugins]]
 repo = 'lambdalisue/vim-backslash'
