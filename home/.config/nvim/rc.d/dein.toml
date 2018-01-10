@@ -7,7 +7,11 @@ repo = 'lambdalisue/vim-protocol'
 
 [[plugins]]
 repo = 'lambdalisue/session.vim'
-on_cmd = ['SessionOpen', 'SessionSave', 'SessionClose', 'SessionRemove', 'SessionList']
+hook_post_source = '''
+if exists('g:loaded_session')
+  call session#last#enable()
+endif
+'''
 
 [[plugins]]
 repo = 'lambdalisue/ake.vim'
