@@ -97,7 +97,6 @@ local.properties
 # Vim
 .*.sw[a-z]
 *.un~
-Session.vim
 .ropeproject
 .vim-bookmarks
 
