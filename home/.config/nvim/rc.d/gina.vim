@@ -1,6 +1,3 @@
-call gina#custom#command#alias('branch', 'br')
-call gina#custom#command#option('br', '-v', 'v')
-call gina#custom#command#option('br', '--all')
 call gina#custom#command#option(
       \ 'commit', '-v|--verbose'
       \)
@@ -19,41 +16,6 @@ call gina#custom#command#option(
 call gina#custom#command#option(
       \ 'status',
       \ '-s|--short'
-      \)
-call gina#custom#command#option(
-      \ '/\%(status\|branch\|changes\|tag\)',
-      \ '--opener',
-      \ 'topleft 10split',
-      \)
-call gina#custom#command#option(
-      \ '/\%(status\|branch\|changes\|tag\)',
-      \ '--group',
-      \ 'gina-top10',
-      \)
-call gina#custom#command#option(
-      \ '/\%(ls\|grep\)',
-      \ '--opener',
-      \ 'botright 30split',
-      \)
-call gina#custom#command#option(
-      \ '/\%(ls\|grep\)',
-      \ '--group',
-      \ 'gina-bot30',
-      \)
-call gina#custom#command#option(
-      \ '/\%(log\|reflog\)',
-      \ '--opener',
-      \ 'topleft 80vsplit',
-      \)
-call gina#custom#command#option(
-      \ '/\%(log\|reflog\)',
-      \ '--group',
-      \ 'gina-left80',
-      \)
-call gina#custom#command#option(
-      \ '/\%(commit\)',
-      \ '--opener',
-      \ 'botright 80vsplit',
       \)
 
 call gina#custom#action#alias(
@@ -106,14 +68,6 @@ call gina#custom#mapping#nmap(
       \ {'noremap': 1, 'silent': 1}
       \)
 
-call gina#custom#execute(
-      \ '/\%(status\|branch\|ls\|grep\|changes\|tag\)',
-      \ 'setlocal winfixheight',
-      \)
-call gina#custom#execute(
-      \ '/\%(log\|reflog\)',
-      \ 'setlocal winfixwidth',
-      \)
 call gina#custom#execute(
       \ '/\%(ls\|log\|reflog\|grep\)',
       \ 'setlocal noautoread',

@@ -200,7 +200,7 @@ hook_add = '''
 nnoremap <silent> <Leader>aa :<C-u>Gina status<CR>
 nnoremap <silent> <Leader>ac :<C-u>Gina commit<CR>
 nnoremap <silent> <Leader>aC :<C-u>Gina commit --amend<CR>
-nnoremap <silent> <Leader>ab :<C-u>Gina br<CR>
+nnoremap <silent> <Leader>ab :<C-u>Gina branch -a<CR>
 nnoremap <silent> <Leader>at :<C-u>Gina tag<CR>
 nnoremap <silent> <Leader>ag :<C-u>Gina grep<CR>
 nnoremap <silent> <Leader>aq :<C-u>Gina qrep<CR>
