@@ -7,6 +7,12 @@ repo = 'lambdalisue/vim-protocol'
 
 [[plugins]]
 repo = 'lambdalisue/session.vim'
+hook_add = '''
+nnoremap Sa :<C-u>SessionOpen last<CR>
+nnoremap Sl :<C-u>SessionList<CR>
+nnoremap So :<C-u>SessionOpen<CR>
+nnoremap Ss :<C-u>SessionSave
+'''
 hook_post_source = '''
 if exists('g:loaded_session')
   call session#last#enable()
@@ -204,7 +210,7 @@ hook_add = '''
 nnoremap <silent> <Leader>aa :<C-u>Gina status<CR>
 nnoremap <silent> <Leader>ac :<C-u>Gina commit<CR>
 nnoremap <silent> <Leader>aC :<C-u>Gina commit --amend<CR>
-nnoremap <silent> <Leader>ab :<C-u>Gina branch -a<CR>
+nnoremap <silent> <Leader>ab :<C-u>Gina branch -av<CR>
 nnoremap <silent> <Leader>at :<C-u>Gina tag<CR>
 nnoremap <silent> <Leader>ag :<C-u>Gina grep<CR>
 nnoremap <silent> <Leader>aq :<C-u>Gina qrep<CR>
@@ -712,7 +718,8 @@ nnoremap <silent> <Leader><Leader>d :<C-u>Denite directory_rec<CR>
 nnoremap <silent> <Leader><Leader>h :<C-u>Denite help<CR>
 nnoremap <silent> <Leader><Leader>g :<C-u>Denite grep<CR>
 nnoremap <silent> <Leader><Leader>j :<C-u>Denite jump<CR>
-nnoremap <silent> <Leader><Leader>s :<C-u>Denite menu:shortcut<CR>
+nnoremap <silent> <Leader><Leader>i :<C-u>Denite menu:shortcut<CR>
+nnoremap <silent> <Leader><Leader>s :<C-u>Denite session<CR>
 nnoremap <silent> <Leader><Leader>q :<C-u>Denite -default-action=cd ghq<CR>
 nnoremap <silent> <Leader><Leader>o :<C-u>Denite file_old<CR>
 nnoremap <silent> <Leader><Leader>w :<C-u>Denite buffer<CR>
@@ -1024,6 +1031,10 @@ on_ft = 'perl'
 
 [[plugins]]
 repo = 'lambdalisue/vim-riot'
+
+[[plugins]]
+repo = 'faith/vim-go'
+on_ft = 'go'
 
 # }}}
 
