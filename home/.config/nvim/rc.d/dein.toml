@@ -205,6 +205,7 @@ on_cmd = 'ColorSwatchGenerate'
 
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
+rev = 'next'
 on_cmd = 'Gina'
 hook_add = '''
 nnoremap <silent> <Leader>aa :<C-u>Gina status<CR>
@@ -1033,7 +1034,7 @@ on_ft = 'perl'
 repo = 'lambdalisue/vim-riot'
 
 [[plugins]]
-repo = 'faith/vim-go'
+repo = 'fatih/vim-go'
 on_ft = 'go'
 
 # }}}
@@ -1137,7 +1138,7 @@ autocmd MyAutoCmd FileType vim,vimspec setlocal omnifunc=vital_complete#complete
 
 # External Vital modules {{{
 [[plugins]]
-repo = 'lambdalisue/vital-Config'
+repo = 'lambdalisue/vital-Whisky'
 on_source = 'vital.vim'
 
 [[plugins]]
@@ -1149,36 +1150,11 @@ repo = 'lambdalisue/vital-ProgressBar'
 on_source = 'vital.vim'
 
 [[plugins]]
-repo = 'lambdalisue/vital-Vim-Buffer-Opener'
-on_source = 'vital.vim'
-
-[[plugins]]
-repo = 'lambdalisue/vital-Vim-Buffer-Anchor'
-on_source = 'vital.vim'
-
-[[plugins]]
-repo = 'lambdalisue/vital-Vim-Buffer-ANSI'
-on_source = 'vital.vim'
-
-[[plugins]]
-repo = 'lambdalisue/vital-Vim-Console'
-on_source = 'vital.vim'
-
-
-[[plugins]]
 repo = 'lambdalisue/vital-Vim-Validate'
 on_source = 'vital.vim'
 
 [[plugins]]
-repo = 'lambdalisue/vital-Vim-Window'
-on_source = 'vital.vim'
-
-[[plugins]]
 repo = 'lambdalisue/vital-Vim-Lua-String'
-on_source = 'vital.vim'
-
-[[plugins]]
-repo = 'lambdalisue/vital-Data-List-Chunker'
 on_source = 'vital.vim'
 
 [[plugins]]
@@ -1187,10 +1163,6 @@ on_source = 'vital.vim'
 
 [[plugins]]
 repo = 'lambdalisue/vital-Data-String-Formatter'
-on_source = 'vital.vim'
-
-[[plugins]]
-repo = 'lambdalisue/vital-System-Job'
 on_source = 'vital.vim'
 # }}}
 
