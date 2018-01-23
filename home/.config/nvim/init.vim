@@ -179,12 +179,12 @@ endif
 if executable('lemonade')
   let g:clipboard = {
         \ 'copy': {
-        \   '+': 'lemonade copy',
-        \   '*': 'lemonade copy',
+        \   '+': 'lemonade copy --no-fallback-messages',
+        \   '*': 'lemonade copy --no-fallback-messages',
         \ },
         \ 'paste': {
-        \   '+': 'lemonade paste',
-        \   '*': 'lemonade paste',
+        \   '+': 'lemonade paste --no-fallback-messages',
+        \   '*': 'lemonade paste --no-fallback-messages',
         \ },
         \}
 endif

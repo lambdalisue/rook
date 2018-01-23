@@ -12,11 +12,11 @@ zplug "monochromegane/the_platinum_searcher", \
   from:gh-r, \
   rename-to:pt
 
-# Remote utility tool over TCP
-zplug "pocke/lemonade", \
-  as:command, \
-  from:gh-r, \
-  rename-to:lemonade
+# # Remote utility tool over TCP
+# zplug "pocke/lemonade", \
+#   as:command, \
+#   from:gh-r, \
+#   rename-to:lemonade
 
 # Cross-platform clipboard
 zplug "lambdalisue/circlip", \
