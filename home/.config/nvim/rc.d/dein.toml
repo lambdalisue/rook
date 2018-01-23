@@ -8,6 +8,7 @@ repo = 'lambdalisue/vim-protocol'
 [[plugins]]
 repo = 'lambdalisue/session.vim'
 hook_add = '''
+let g:session_dir = expand('~/.cache/session.vim')
 nnoremap Sa :<C-u>SessionOpen last<CR>
 nnoremap Sl :<C-u>SessionList<CR>
 nnoremap So :<C-u>SessionOpen<CR>
@@ -643,8 +644,20 @@ depends = 'deoplete.nvim'
 
 [[plugins]]
 repo = 'zchee/deoplete-go'
+build = 'make'
 depends = 'deoplete.nvim'
 on_ft = 'go'
+hook_add = '''
+let g:deoplete#sources#go#gocode_binary = expand('$GOPATH/bin/gocode')
+let g:deoplete#sources#go#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+'''
+hook_post_update = '''
+if !executable('gocode')
+  echohl ErrorMsg
+  echomsg '"gocode" is not found. Install it via "go get -u github.com/nsf/gocode" to enable deoplete-go.'
+  echohl None
+endif
+'''
 
 [[plugins]]
 repo = 'zchee/deoplete-jedi'
@@ -1035,7 +1048,6 @@ repo = 'lambdalisue/vim-riot'
 
 [[plugins]]
 repo = 'fatih/vim-go'
-on_ft = 'go'
 
 # }}}
 
