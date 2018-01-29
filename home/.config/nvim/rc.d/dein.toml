@@ -206,7 +206,6 @@ on_cmd = 'ColorSwatchGenerate'
 
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
-rev = 'next'
 on_cmd = 'Gina'
 hook_add = '''
 nnoremap <silent> <Leader>aa :<C-u>Gina status<CR>
@@ -620,6 +619,7 @@ repo = 'roxma/vim-hug-neovim-rpc'
  
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
+rev = 'parallel'
 # depends = 'nvim-yarp'
 hook_add = '''
 let g:deoplete#enable_at_startup = 1
