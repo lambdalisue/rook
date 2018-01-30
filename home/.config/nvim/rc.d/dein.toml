@@ -281,9 +281,9 @@ nnoremap <silent> <Leader>ee :<C-u>call <SID>smart_vimfiler()<CR>
 function! s:smart_vimfiler() abort
   let path = expand('%:p')
   if filereadable(path) || isdirectory(path)
-    VimFilerBufferDir -simple -force-quit
+    VimFilerBufferDir -simple
   else
-    VimFilerCurrentDir -simple -force-quit
+    VimFilerCurrentDir -simple
   endif
 endfunction
 '''
