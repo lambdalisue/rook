@@ -1140,7 +1140,6 @@ on_cmd = 'Capture'
 
 [[plugins]]
 repo = 'vim-jp/vital.vim'
-on_cmd = 'Vitalize'
 
 [[plugins]]
 repo = 'vim-jp/vital-complete'
@@ -1151,31 +1150,24 @@ autocmd MyAutoCmd FileType vim,vimspec setlocal omnifunc=vital_complete#complete
 # External Vital modules {{{
 [[plugins]]
 repo = 'lambdalisue/vital-Whisky'
-on_source = 'vital.vim'
 
 [[plugins]]
 repo = 'lambdalisue/vital-ArgumentParser'
-on_source = 'vital.vim'
 
 [[plugins]]
 repo = 'lambdalisue/vital-ProgressBar'
-on_source = 'vital.vim'
 
 [[plugins]]
 repo = 'lambdalisue/vital-Vim-Validate'
-on_source = 'vital.vim'
 
 [[plugins]]
 repo = 'lambdalisue/vital-Vim-Lua-String'
-on_source = 'vital.vim'
 
 [[plugins]]
 repo = 'lambdalisue/vital-Data-Dict-Option'
-on_source = 'vital.vim'
 
 [[plugins]]
 repo = 'lambdalisue/vital-Data-String-Formatter'
-on_source = 'vital.vim'
 # }}}
 
 # }}}
