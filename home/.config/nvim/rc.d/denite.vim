@@ -106,6 +106,7 @@ let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
       \ '$HOME/.config/karabiner/assets/complex_modifications/terminal.json',
       \ '$HOME/.config/alacritty/alacritty.yml',
       \ '$HOME/.config/lemonade.toml',
+      \ '$HOME/.config/kitty/kitty.conf',
       \ '$HOME/.gitconfig.local',
       \ '$HOME/.gitconfig',
       \ '$HOME/.gitignore',
