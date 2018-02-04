@@ -570,12 +570,12 @@ nmap ga <Plug>(EasyAlign)
 repo = 'lambdalisue/vim-findent'
 on_cmd = 'Findent'
 
-# [[plugins]]
-# repo = 'lambdalisue/vim-foldround'
-# on_map = '<Plug>'
-# hook_add = '''
-# nmap <Leader>ff <Plug>(foldround-forward)
-# '''
+[[plugins]]
+repo = 'lambdalisue/vim-foldround'
+on_map = '<Plug>'
+hook_add = '''
+nmap <Leader>ff <Plug>(foldround-forward)
+'''
 
 # }}}
 
@@ -1140,6 +1140,7 @@ on_cmd = 'Capture'
 
 [[plugins]]
 repo = 'vim-jp/vital.vim'
+merged = 0
 
 [[plugins]]
 repo = 'vim-jp/vital-complete'

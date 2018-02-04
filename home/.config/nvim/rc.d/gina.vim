@@ -17,6 +17,10 @@ call gina#custom#command#option(
       \ 'status',
       \ '-s|--short'
       \)
+call gina#custom#command#option(
+      \ '/\%(commit\|tag\)',
+      \ '--restore'
+      \)
 
 call gina#custom#action#alias(
       \ 'branch', 'track',

@@ -9,3 +9,5 @@ setl expandtab
 setl autoindent
 setl smartindent
 setl foldmethod=syntax
+
+setl keywordprg=:help

@@ -337,7 +337,7 @@ set showfulltag         " show both the tag name and the search pattern
 set pumheight=20        " strict the item counts of completion
 
 " K to search the help with the cursor word
-set keywordprg=:help
+set keywordprg&
 
 " Allow backspacing over everything in insert mode.
 set backspace=indent,eol,start

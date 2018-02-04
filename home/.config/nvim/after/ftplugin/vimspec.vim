@@ -7,3 +7,5 @@ setl expandtab
 setl autoindent
 setl smartindent
 setl foldmethod=expr
+
+setl keywordprg=:help
