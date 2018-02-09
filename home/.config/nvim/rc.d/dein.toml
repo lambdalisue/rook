@@ -619,7 +619,6 @@ repo = 'roxma/vim-hug-neovim-rpc'
  
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-rev = 'parallel'
 # depends = 'nvim-yarp'
 hook_add = '''
 let g:deoplete#enable_at_startup = 1
