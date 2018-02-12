@@ -67,33 +67,33 @@ let g:clever_f_across_no_line = 1
 let g:clever_f_smart_case = 1
 '''
 
-[[plugins]]
-repo = 'lambdalisue/smarthl.vim'
-hook_add = '''
-let g:smarthl_default_mappings = 0
-nmap / <Plug>(smarthl-/)
-nmap ? <Plug>(smarthl-?)
-nmap * <Plug>(smarthl-*)
-nmap n <Plug>(smarthl-n)zv
-nmap N <Plug>(smarthl-N)zv
-nmap g/ <Plug>(smarthl-g/)
-nmap g? <Plug>(smarthl-g?)
-nmap g* <Plug>(smarthl-g*)
-'''
-
 # [[plugins]]
-# repo = 'haya14busa/vim-asterisk'
-# on_map = '<Plug>'
+# repo = 'lambdalisue/smarthl.vim'
 # hook_add = '''
-# map *   <Plug>(asterisk-*)
-# map #   <Plug>(asterisk-#)
-# map g*  <Plug>(asterisk-g*)
-# map g#  <Plug>(asterisk-g#)
-# map z*  <Plug>(asterisk-z*)
-# map gz* <Plug>(asterisk-gz*)
-# map z#  <Plug>(asterisk-z#)
-# map gz# <Plug>(asterisk-gz#)
+# let g:smarthl_default_mappings = 0
+# nmap / <Plug>(smarthl-/)
+# nmap ? <Plug>(smarthl-?)
+# nmap * <Plug>(smarthl-*)
+# nmap n <Plug>(smarthl-n)zv
+# nmap N <Plug>(smarthl-N)zv
+# nmap g/ <Plug>(smarthl-g/)
+# nmap g? <Plug>(smarthl-g?)
+# nmap g* <Plug>(smarthl-g*)
 # '''
+
+[[plugins]]
+repo = 'haya14busa/vim-asterisk'
+on_map = '<Plug>'
+hook_add = '''
+map *   <Plug>(asterisk-*)
+" map #   <Plug>(asterisk-#)
+map g*  <Plug>(asterisk-g*)
+" map g#  <Plug>(asterisk-g#)
+map z*  <Plug>(asterisk-z*)
+map gz* <Plug>(asterisk-gz*)
+" map z#  <Plug>(asterisk-z#)
+" map gz# <Plug>(asterisk-gz#)
+'''
 
 [[plugins]]
 repo = 'Shougo/junkfile.vim'
@@ -120,7 +120,6 @@ on_cmd = ['MANPAGER', 'Man']
 [[plugins]]
 repo = 'tyru/open-browser.vim'
 normalized_name='openbrowser'
-on_map = [['nx', '<Plug>']]
 hook_add = '''
 let g:netrw_nogx = 1 " disable netrw's gx mapping
 nmap gx <Plug>(openbrowser-smart-search)
@@ -140,7 +139,6 @@ xnoremap az :<C-u>FastFoldUpdate<CR><Esc>:<C-u>normal! ]zV[z<CR>
 
 [[plugins]]
 repo = 'kana/vim-repeat'
-on_map = '<Plug>'
 hook_add = '''
 nmap .     <Plug>(repeat-.)
 nmap u     <Plug>(repeat-u)
@@ -185,7 +183,7 @@ repo = 'tyru/current-func-info.vim'
 [[plugins]]
 repo = 'koturn/vim-replica'
 on_cmd = ['Replica', 'ReplicaInternal']
-on_source = '''
+hook_add = '''
 let g:replica#prompt = '» '
 let g:replica#opener = 'botright vsplit'
 '''
@@ -227,14 +225,14 @@ execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/gina.vim'))
 [[plugins]]
 repo = 'lambdalisue/vim-gista'
 on_cmd = 'Gista'
-hook_source = '''
+hook_add = '''
 let g:gista#client#default_username = 'lambdalisue'
 '''
 
 [[plugins]]
 repo = 'junegunn/goyo.vim'
 on_cmd = 'Goyo'
-hook_source = '''
+hook_add = '''
 function! s:goyo_enter() abort
   call timer_start(0, {timer -> smartcl#disable()})
   silent !tmux set status off
@@ -383,7 +381,6 @@ nnoremap <silent> <Leader>tt :<C-u>TagbarToggle<CR>
 
 [[plugins]]
 repo = 'lambdalisue/lista.nvim'
-on_cmd = 'Lista'
 hook_add = '''
 let g:lista#custom_mappings = [
       \ ['<C-b>', '<Left>'],
@@ -425,16 +422,11 @@ on_cmd = 'AnsiEsc'
 [[plugins]]
 repo = 'kannokanno/previm'
 depends = 'open-browser.vim'
-on_cmd = 'PrevimOpen'
-hook_source = 'let g:previm_show_header = 0'
+hook_add = 'let g:previm_show_header = 0'
 
 [[plugins]]
 repo = 't9md/vim-quickhl'
 depends = 'vim-operator-user'
-on_map = [
-    '<Plug>',
-    '<Plug>(operator-quickhl-manual'
-]
 hook_add = 'map H <Plug>(operator-quickhl-manual-this-motion)'
 
 [[plugins]]
@@ -502,7 +494,6 @@ depends = [
   'vim-repeat',
   'context_filetype.vim',
 ]
-on_map = [['nx', '<Plug>']]
 hook_add = '''
 let g:caw_no_default_keymappings = 1
 nmap gc   <Plug>(caw:prefix)
@@ -611,7 +602,6 @@ endif
 
 # Deoplete {{{
 [[plugins]]
-if = '!has("nvim")'
 repo = 'roxma/nvim-yarp'
 
 [[plugins]]
@@ -619,8 +609,7 @@ repo = 'roxma/vim-hug-neovim-rpc'
  
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-rev = 'parallel'
-# depends = 'nvim-yarp'
+depends = 'nvim-yarp'
 hook_add = '''
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#file#enable_buffer_path = 1
@@ -632,7 +621,6 @@ call deoplete#custom#source('omni', 'is_silent', 1)
 [[plugins]]
 repo = 'Shougo/neco-vim'
 depends = 'deoplete.nvim'
-on_ft = 'vim'
 
 [[plugins]]
 repo = 'Shougo/neco-syntax'
@@ -646,7 +634,6 @@ depends = 'deoplete.nvim'
 repo = 'zchee/deoplete-go'
 build = 'make'
 depends = 'deoplete.nvim'
-on_ft = 'go'
 hook_add = '''
 let g:deoplete#sources#go#gocode_binary = expand('$GOPATH/bin/gocode')
 let g:deoplete#sources#go#go#sort_class = ['package', 'func', 'type', 'var', 'const']
@@ -662,25 +649,21 @@ endif
 [[plugins]]
 repo = 'zchee/deoplete-jedi'
 depends = 'deoplete.nvim'
-on_ft = ['python', 'python3']
 
 [[plugins]]
 repo = 'zchee/deoplete-zsh'
 depends = 'deoplete.nvim'
-on_ft = 'zsh'
 
 [[plugins]]
 repo = 'wellle/tmux-complete.vim'
 depends = 'deoplete.nvim'
-on_ft = 'tmux'
 
 # NOTE:
 # This plugins often cause 'channel' exception...
 [[plugins]]
 repo = 'mhartington/nvim-typescript'
 depends = 'deoplete.nvim'
-on_ft = 'typescript'
-hook_source = '''
+hook_add = '''
 let g:nvim_typescript#javascript_support = 1
 let g:nvim_typescript#vue_support = 1
 let g:nvim_typescript#type_info_on_hold = 0
@@ -722,10 +705,6 @@ augroup END
 # Denite {{{
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-on_cmd = [
-  'Denite',
-  'DeniteCursorWord',
-]
 hook_add = '''
 nnoremap <silent> g<Leader><Leader> :<C-u>Denite -resume<CR>
 nnoremap <silent> <Leader><Leader>f :<C-u>Denite file_rec<CR>
@@ -752,7 +731,6 @@ on_source = 'denite.nvim'
 [[plugins]]
 repo = 'kana/vim-textobj-entire'
 depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
 hook_add = '''
 let g:textobj_entire_no_default_key_mappings = 1
 omap ae <Plug>(textobj-entire-a)
@@ -764,7 +742,6 @@ xmap ie <Plug>(textobj-entire-i)
 [[plugins]]
 repo = 'kana/vim-textobj-line'
 depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
 hook_add = '''
 let g:textobj_line_no_default_key_mappings = 1
 omap al <Plug>(textobj-line-a)
@@ -776,7 +753,6 @@ xmap il <Plug>(textobj-line-i)
 [[plugins]]
 repo = 'kana/vim-textobj-syntax'
 depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
 hook_add = '''
 let g:textobj_syntax_no_default_key_mappings = 1
 omap ay <Plug>(textobj-syntax-a)
@@ -788,7 +764,6 @@ xmap iy <Plug>(textobj-syntax-i)
 [[plugins]]
 repo = 'kana/vim-textobj-indent'
 depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
 hook_add = '''
 let g:textobj_indent_no_default_key_mappings = 1
 omap ai <Plug>(textobj-indent-a)
@@ -804,7 +779,6 @@ xmap iI <Plug>(textobj-indent-same-i)
 [[plugins]]
 repo = 'kana/vim-textobj-datetime'
 depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
 hook_add = '''
 let g:textobj_datetime_no_default_key_mappings = 1
 omap ad <Plug>(textobj-datetime-auto)
@@ -816,7 +790,6 @@ xmap id <Plug>(textobj-datetime-auto)
 [[plugins]]
 repo = 'thinca/vim-textobj-comment'
 depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
 hook_add = '''
 let g:textobj_comment_no_default_key_mappings = 1
 omap ac <Plug>(textobj-comment-a)
@@ -828,7 +801,6 @@ xmap ic <Plug>(textobj-comment-i)
 [[plugins]]
 repo = 'kana/vim-textobj-fold'
 depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
 hook_add = '''
 let g:textobj_fold_no_default_key_mappings = 1
 omap az <Plug>(textobj-fold-a)
@@ -840,7 +812,6 @@ xmap iz <Plug>(textobj-fold-i)
 [[plugins]]
 repo = 'mattn/vim-textobj-url'
 depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
 hook_add = '''
 let g:textobj_url_no_default_key_mappings = 1
 omap au <Plug>(textobj-url-a)
@@ -852,12 +823,6 @@ xmap iu <Plug>(textobj-url-i)
 [[plugins]]
 repo = 'kana/vim-textobj-function'
 depends = 'vim-textobj-user'
-on_map = [
-  ['ox', '<Plug>(textobj-function-i)'],
-  ['ox', '<Plug>(textobj-function-I)'],
-  ['ox', '<Plug>(textobj-function-a)'],
-  ['ox', '<Plug>(textobj-function-A)'],
-]
 hook_add = '''
 let g:textobj_function_no_default_key_mappings = 1
 omap af <Plug>(textobj-function-a)
@@ -874,12 +839,10 @@ xmap iF <Plug>(textobj-function-I)
 [[plugins]]
 repo = 'haya14busa/vim-textobj-function-syntax'
 depends = 'vim-textobj-function'
-on_source = 'vim-textobj-function'
 
 [[plugins]]
 repo = 'sgur/vim-textobj-parameter'
 depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
 hook_add = '''
 let g:textobj_parameter_no_default_key_mappings = 1
 omap aP <Plug>(textobj-parameter-a)
@@ -891,7 +854,6 @@ xmap iP <Plug>(textobj-parameter-i)
 [[plugins]]
 repo = 'osyo-manga/vim-textobj-multiblock'
 depends = 'vim-textobj-user'
-on_map = [['ox', '<Plug>']]
 hook_add = '''
 let g:textobj_multiblock_no_default_key_mappings = 1
 omap ab <Plug>(textobj-multiblock-a)
@@ -903,12 +865,6 @@ xmap ib <Plug>(textobj-multiblock-i)
 [[plugins]]
 repo = 'rhysd/vim-textobj-word-column'
 depends = 'vim-textobj-user'
-on_map = [
-  ['ox', '<Plug>(textobj-wordcolumn-W-i)'],
-  ['ox', '<Plug>(textobj-wordcolumn-w-i)'],
-  ['ox', '<Plug>(textobj-wordcolumn-W-a)'],
-  ['ox', '<Plug>(textobj-wordcolumn-w-a)'],
-]
 hook_add = '''
 let g:textobj_wordcolumn_no_default_key_mappings = 1
 omap av <Plug>(textobj-wordcolumn-w-a)
@@ -927,7 +883,6 @@ xmap iV <Plug>(textobj-wordcolumn-W-i)
 [[plugins]]
 repo = 'kana/vim-operator-replace'
 depends = 'vim-operator-user'
-on_map = [['nx', '<Plug>']]
 hook_add = '''
 nmap R <Plug>(operator-replace)
 xmap R <Plug>(operator-replace)
@@ -1021,7 +976,6 @@ repo = 'othree/es.next.syntax.vim'
 
 [[plugins]]
 repo = 'leafgarland/typescript-vim'
-on_ft = 'typescript'
 
 [[plugins]]
 repo = 'vim-scripts/applescript.vim'
@@ -1038,11 +992,9 @@ repo = 'lambdalisue/vim-cython-syntax'
 
 [[plugins]]
 repo = 'hotchpotch/perldoc-vim'
-on_ft = 'perl'
 
 [[plugins]]
 repo = 'c9s/perlomni.vim'
-on_ft = 'perl'
 
 [[plugins]]
 repo = 'lambdalisue/vim-riot'
@@ -1055,14 +1007,11 @@ repo = 'fatih/vim-go'
 # Python development {{{
 [[plugins]]
 repo = 'lambdalisue/pyvenv.vim'
-on_cmd = ['PyvenvActivate', 'PyvenvDeactivate']
-on_ft = ['python', 'python3']
 
 [[plugins]]
 repo = 'davidhalter/jedi-vim'
-on_ft = ['python', 'python3']
 build = 'pip install jedi'
-hook_source = '''
+hook_add = '''
 let g:jedi#auto_initialization = 0
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#popup_on_dot = 0
@@ -1091,7 +1040,6 @@ augroup END
 
 [[plugins]]
 repo = 'tell-k/vim-autopep8'
-on_ft = ['python', 'python3']
 build = 'pip install autopep8'
  
 [[plugins]]
@@ -1102,8 +1050,7 @@ repo = 'hynek/vim-python-pep8-indent'
 
 [[plugins]]
 repo = 'tweekmonster/impsort.vim'
-on_ft = ['python', 'python3']
-hook_source = '''
+hook_add = '''
 let g:impsort_method_group = ['alpha', 'length']
 let g:impsort_method_module = ['alpha', 'length', 'depth']
 let g:impsort_method_imports = ['alpha', 'length']
