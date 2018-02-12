@@ -685,6 +685,7 @@ let g:nvim_typescript#javascript_support = 1
 let g:nvim_typescript#vue_support = 1
 let g:nvim_typescript#type_info_on_hold = 0
 let g:nvim_typescript#default_mappings = 0
+let g:nvim_typescript#signature_complete = 1
 
 function! s:configure_typescript() abort
   nnoremap <silent><buffer> <Plug>(typescript-goto-definitions) :<C-u>TSTypeDef<CR>
@@ -1078,7 +1079,7 @@ function! s:configure_jedi() abort
   nmap <buffer> gs <Plug>(jedi-usages)
   nmap <buffer> gd <Plug>(jedi-goto-definitions)
   nmap <buffer> gD <Plug>(jedi-goto-assignments)
-  nmap <buffer> K <Plug>(jedi-show-documentation)
+  " nmap <buffer> K <Plug>(jedi-show-documentation)
   nmap <buffer> <F2> <Plug>(jedi-rename)
 endfunction
 

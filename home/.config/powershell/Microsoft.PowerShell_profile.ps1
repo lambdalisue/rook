@@ -2,7 +2,7 @@ Import-Module PSReadline
 Set-PSReadlineOption -EditMode Emacs
 Set-PSReadlineKeyHandler -Key 'Ctrl+p' -Function HistorySearchBackward
 Set-PSReadlineKeyHandler -Key 'Ctrl+n' -Function HistorySearchForward
-Set-PSReadlineKeyHandler -Chord 'Ctrl+s' -ScriptBlock {
+Set-PSReadlineKeyHandler -Chord 'Ctrl+x Ctrl+q' -ScriptBlock {
   [Microsoft.PowerShell.PSConsoleReadline]::RevertLine()
   [Microsoft.PowerShell.PSConsoleReadline]::Insert("cd $(ghq list -p | peco)")
   [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
