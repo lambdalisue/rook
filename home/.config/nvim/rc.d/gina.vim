@@ -76,6 +76,10 @@ call gina#custom#execute(
       \ '/\%(ls\|log\|reflog\|grep\)',
       \ 'setlocal noautoread',
       \)
+call gina#custom#execute(
+      \ '/\%(status\|branch\|ls\|log\|reflog\|grep\)',
+      \ 'setlocal cursorline',
+      \)
 
 " Echo chunk info with j/k
 call gina#custom#mapping#nmap(

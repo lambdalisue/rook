@@ -35,8 +35,8 @@ repo = 'lambdalisue/trashbin.vim'
 [[plugins]]
 repo = 'lambdalisue/smarttw.vim'
 
-[[plugins]]
-repo = 'lambdalisue/smartcl.vim'
+# [[plugins]]
+# repo = 'lambdalisue/smartcl.vim'
 
 [[plugins]]
 repo = 'lambdalisue/compl-local-filename.vim'
@@ -542,7 +542,7 @@ repo = 'AndrewRadev/switch.vim'
 on_cmd = 'Switch'
 hook_add = '''
 let g:switch_mapping = ''
-nnoremap <silent> - :<C-u>Switch<CR>
+nnoremap <silent> ss :<C-u>Switch<CR>
 '''
 
 [[plugins]]
