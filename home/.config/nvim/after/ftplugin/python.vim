@@ -27,6 +27,6 @@ nmap <buffer> gK <Plug>(my-python-pypi)
 
 if exists(':ImpSortAuto')
   if impsort#is_sorted()
-    ImpSortAuto!
+    silent ImpSortAuto!
   endif
 endif

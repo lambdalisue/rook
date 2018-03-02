@@ -380,7 +380,7 @@ autocmd MyAutoCmd BufWinEnter * if s:is_view_available() | silent! loadview | en
 
 " Automatically create missing directories {{{
 function! s:auto_mkdir(dir, force) abort
-  if empty(a:dir) || a:dir =~# '^\w\+://' || isdirectory(a:dir) || a:dir =~# '^sudo:'
+  if empty(a:dir) || a:dir =~# '^\w\+://' || isdirectory(a:dir) || a:dir =~# '^suda:'
       return
   endif
   if !a:force
