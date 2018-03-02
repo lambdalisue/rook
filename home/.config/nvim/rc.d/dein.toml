@@ -606,7 +606,7 @@ repo = 'roxma/nvim-yarp'
 
 [[plugins]]
 repo = 'roxma/vim-hug-neovim-rpc'
- 
+
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 depends = 'nvim-yarp'
@@ -1028,7 +1028,7 @@ function! s:configure_jedi() abort
   nmap <buffer> gs <Plug>(jedi-usages)
   nmap <buffer> gd <Plug>(jedi-goto-definitions)
   nmap <buffer> gD <Plug>(jedi-goto-assignments)
-  " nmap <buffer> K <Plug>(jedi-show-documentation)
+  nmap <buffer> K <Plug>(jedi-show-documentation)
   nmap <buffer> <F2> <Plug>(jedi-rename)
 endfunction
 
@@ -1041,7 +1041,7 @@ augroup END
 [[plugins]]
 repo = 'tell-k/vim-autopep8'
 build = 'pip install autopep8'
- 
+
 [[plugins]]
 repo = 'vim-scripts/python_match.vim'
 
@@ -1054,6 +1054,7 @@ hook_add = '''
 let g:impsort_method_group = ['alpha', 'length']
 let g:impsort_method_module = ['alpha', 'length', 'depth']
 let g:impsort_method_imports = ['alpha', 'length']
+let g:impsort_textwidth = 78
 '''
 
 # }}}

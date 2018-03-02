@@ -27,6 +27,9 @@
 [github]
 	user = lambdalisue
 
+[url "git@bitbucket.org:kompira"]
+        insteadOf = https://bitbucket.org/kompira
+
 [ghq]
 	root = ~/Code
 	root = ~/.ghq

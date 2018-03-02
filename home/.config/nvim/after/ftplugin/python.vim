@@ -24,3 +24,9 @@ endfunction
 
 nnoremap <buffer><silent> <Plug>(my-python-pypi) :<C-u>call <SID>open_pypi(expand('<cWORD>'))<CR>
 nmap <buffer> gK <Plug>(my-python-pypi)
+
+if exists(':ImpSortAuto')
+  if impsort#is_sorted()
+    ImpSortAuto!
+  endif
+endif
