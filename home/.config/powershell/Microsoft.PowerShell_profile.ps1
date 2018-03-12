@@ -12,6 +12,10 @@ Set-PSReadlineKeyHandler -Chord 'Ctrl+r' -ScriptBlock {
   [Microsoft.PowerShell.PSConsoleReadline]::Insert("$(Get-History | % { $_.CommandLine } | peco)")
   [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
 }
+Set-PSReadlineKeyHandler -Key 'Ctrl+l' -ScriptBlock {
+  Clear-Host
+  [Microsoft.PowerShell.PSConsoleReadline]::RevertLine()
+}
 
 # Chocolatey profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
