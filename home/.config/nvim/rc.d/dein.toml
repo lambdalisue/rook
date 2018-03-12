@@ -217,6 +217,8 @@ nnoremap <silent> <Leader>ad :<C-u>Gina changes origin/HEAD...<CR>
 nnoremap <silent> <Leader>al :<C-u>Gina log<CR>
 nnoremap <silent> <Leader>aL :<C-u>Gina log :%<CR>
 nnoremap <silent> <Leader>af :<C-u>Gina ls<CR>
+nnoremap <silent> <Leader>ars :<C-u>Gina show <C-r><C-w><CR>
+nnoremap <silent> <Leader>arc :<C-u>Gina changes <C-r><C-w><CR>
 '''
 hook_post_source = '''
 execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/gina.vim'))
