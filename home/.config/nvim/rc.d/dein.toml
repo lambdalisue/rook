@@ -1016,11 +1016,13 @@ build = 'pip install jedi'
 hook_add = '''
 let g:jedi#auto_initialization = 0
 let g:jedi#auto_vim_configuration = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 0
 let g:jedi#show_call_signatures = 0
+let g:jedi#show_call_signatures_delay = 0
 let g:jedi#completions_enabled = 0
-
+let g:jedi#force_py_version = 3
+let g:jedi#smart_auto_mappings = 0
+'''
+hook_post_source = '''
 function! s:configure_jedi() abort
   nnoremap <buffer><silent> <Plug>(jedi-goto-definitions) :<C-u>call jedi#goto()<CR>
   nnoremap <buffer><silent> <Plug>(jedi-goto-assignments) :<C-u>call jedi#goto_assignments()<CR>
@@ -1032,6 +1034,7 @@ function! s:configure_jedi() abort
   nmap <buffer> gD <Plug>(jedi-goto-assignments)
   nmap <buffer> K <Plug>(jedi-show-documentation)
   nmap <buffer> <F2> <Plug>(jedi-rename)
+  setlocal omnifunc=jedi#completions
 endfunction
 
 augroup my_jedi
@@ -1039,6 +1042,7 @@ augroup my_jedi
   autocmd FileType python,python3 call s:configure_jedi()
 augroup END
 '''
+
 
 [[plugins]]
 repo = 'tell-k/vim-autopep8'

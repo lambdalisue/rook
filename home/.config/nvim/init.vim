@@ -265,6 +265,11 @@ set tagcase=match       " use case sensitive for tag
 set smartcase           " override the ignorecase if the search pattern contains
                         " upper case characters
 
+" Do NOT store current directory and options/mappings in view
+set viewoptions&
+      \ viewoptions-=curdir
+      \ viewoptions-=options
+
 " Show the effects of a command incrementally
 if exists('&inccommand')
   set inccommand=nosplit
