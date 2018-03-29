@@ -274,6 +274,10 @@ set viewoptions&
 if exists('&inccommand')
   set inccommand=nosplit
 endif
+
+if executable('rg')
+  set grepprg=rg\ --vimgrep
+endif
 " }}}
 
 " Editing {{{

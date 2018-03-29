@@ -43,6 +43,9 @@ repo = 'lambdalisue/compl-local-filename.vim'
 
 [[plugins]]
 repo = 'lambdalisue/suda.vim'
+hook_add = '''
+cnoreabbrev w!! w suda://%
+'''
 
 [[plugins]]
 repo = 'lambdalisue/trimmer.vim'
