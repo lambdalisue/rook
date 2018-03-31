@@ -3,6 +3,10 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
+repo = 'lambdalisue/filta'
+merged = 0
+
+[[plugins]]
 repo = 'lambdalisue/vim-protocol'
 
 [[plugins]]
