@@ -590,6 +590,7 @@ execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/quickrun.vim'))
 '''
 
 [[plugins]]
+if = "!(has('win32') || has('win64'))"
 repo = 'neomake/neomake'
 hook_source = '''
 if has('nvim')
@@ -664,12 +665,14 @@ repo = 'zchee/deoplete-zsh'
 depends = 'deoplete.nvim'
 
 [[plugins]]
+if = "!(has('win32') || has('win64'))"
 repo = 'wellle/tmux-complete.vim'
 depends = 'deoplete.nvim'
 
 # NOTE:
 # This plugins often cause 'channel' exception...
 [[plugins]]
+if = "!(has('win32') || has('win64'))"
 repo = 'mhartington/nvim-typescript'
 depends = 'deoplete.nvim'
 hook_add = '''
