@@ -110,7 +110,7 @@ let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
       \ '$HOME/.gitconfig.local',
       \ '$HOME/.gitconfig',
       \ '$HOME/.gitignore',
-      \ '$HOME/.vimperatorrc',
+      \ '$HOME/.hyper.js',
       \ '$HOME/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1',
       \ 'https://raw.githubusercontent.com/codemirror/CodeMirror/HEAD/keymap/vim.js',
       \])
