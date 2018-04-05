@@ -3,10 +3,6 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'lambdalisue/filta'
-merged = 0
-
-[[plugins]]
 repo = 'lambdalisue/vim-protocol'
 
 [[plugins]]
@@ -388,20 +384,29 @@ hook_add = '''
 nnoremap <silent> <Leader>tt :<C-u>TagbarToggle<CR>
 '''
 
+
 [[plugins]]
-repo = 'lambdalisue/lista.nvim'
+repo = 'lambdalisue/lista.vim'
 hook_add = '''
-let g:lista#custom_mappings = [
-      \ ['<C-b>', '<Left>'],
-      \ ['<C-f>', '<Right>'],
-      \ ['<C-a>', '<Home>'],
-      \ ['<C-e>', '<End>'],
-      \ ['<C-d>', '<Del>'],
-      \]
 nnoremap #  :<C-u>Lista<CR>
 nnoremap g# :<C-u>ListaResume<CR>
-nnoremap !# :<C-u>ListaCursorWord<CR>
+nnoremap z# :<C-u>ListaCursorWord<CR>
 '''
+
+# [[plugins]]
+# repo = 'lambdalisue/lista.nvim'
+# hook_add = '''
+# let g:lista#custom_mappings = [
+#       \ ['<C-b>', '<Left>'],
+#       \ ['<C-f>', '<Right>'],
+#       \ ['<C-a>', '<Home>'],
+#       \ ['<C-e>', '<End>'],
+#       \ ['<C-d>', '<Del>'],
+#       \]
+# nnoremap #  :<C-u>Lista<CR>
+# nnoremap g# :<C-u>ListaResume<CR>
+# nnoremap !# :<C-u>ListaCursorWord<CR>
+# '''
 
 # }}}
 
