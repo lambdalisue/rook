@@ -44,6 +44,7 @@ repo = 'lambdalisue/compl-local-filename.vim'
 [[plugins]]
 repo = 'lambdalisue/suda.vim'
 hook_add = '''
+cnoreabbrev e!! e suda://%
 cnoreabbrev w!! w suda://%
 '''
 
