@@ -412,6 +412,26 @@ nnoremap z# :<C-u>ListaCursorWord<CR>
 
 # Visualize {{{
 [[plugins]]
+repo = 'airblade/vim-gitgutter'
+hook_add = '''
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
+omap ih <Plug>GitGutterTextObjectInnerPending
+omap ah <Plug>GitGutterTextObjectOuterPending
+xmap ih <Plug>GitGutterTextObjectInnerVisual
+xmap ah <Plug>GitGutterTextObjectOuterVisual
+'''
+hook_post_source = '''
+if exists('g:loaded_gitgutter')
+  call timer_start(
+        \ 100,
+        \ { -> gitgutter#process_buffer(bufnr(''), 0) },
+        \ { 'repeat': -1 }
+        \)
+endif
+'''
+
+[[plugins]]
 repo = 'lambdalisue/battery.vim'
 hook_add = '''
 let g:battery#update_tabline = 1

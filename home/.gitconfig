@@ -30,6 +30,9 @@
 [url "git@bitbucket.org:kompira"]
         insteadOf = https://bitbucket.org/kompira
 
+[url "git@github.com:fixpoint"]
+        insteadOf = https://github.com/fixpoint
+
 [ghq]
 	root = ~/Code
 	root = ~/.ghq
