@@ -188,6 +188,14 @@ if __rook::has 'pip3'; then
   }
 fi
 
+if __rook::has 'pipenv'; then
+  pipenv() {
+    unset -f pipenv
+    eval "$(pipenv --completion)"
+    pipenv "$@"
+  }
+fi
+
 # Homeshick
 if [[ -f "$HOME/.homesick/repos/homeshick/homeshick.sh" ]]; then
   homeshick() {
