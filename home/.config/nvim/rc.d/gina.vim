@@ -21,6 +21,10 @@ call gina#custom#command#option(
       \ '/\%(commit\|tag\)',
       \ '--restore'
       \)
+call gina#custom#command#option(
+      \ 'show',
+      \ '--show-signature'
+      \)
 
 call gina#custom#action#alias(
       \ 'branch', 'track',
