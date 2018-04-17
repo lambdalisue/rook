@@ -4,6 +4,7 @@
 [user]
 	name  = lambdalisue
 	email = lambdalisue@hashnote.net
+	signingkey = B90A2400
 
 [core]
 	excludesfile = ~/.gitignore
@@ -48,3 +49,6 @@
 	changelog-head = !python $HOME/.gittag-changelog/src/gittag_changelog.py --include-head
 	changelog-latest-head = !python $HOME/.gittag-changelog/src/gittag_changelog.py --latest-only --include-head
 	ask = "!f(){ echo -n 'Input: '; read STDIN; echo \"hello '$STDIN'\"; };f"
+
+[commit]
+	gpgsign = true
