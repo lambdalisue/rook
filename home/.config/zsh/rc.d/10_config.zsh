@@ -204,3 +204,10 @@ if [[ -f "$HOME/.homesick/repos/homeshick/homeshick.sh" ]]; then
     homeshick "$@"
   }
 fi
+
+# GPG
+# https://github.com/GPGTools/pinentry-mac/blob/b34748f3e443d8f4f90e720d0eddc32510550397/Source/main.m#L52-L73
+if [[ -n "$SSH_CONNECTION" ]]; then
+    export GPG_TTY=$(tty)
+    export PINENTRY_USER_DATA="USE_CURSES=1"
+fi
