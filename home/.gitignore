@@ -30,11 +30,11 @@ __pycache__
 *.py[co]
 *.egg
 *.egg-info
-dist
-build
-eggs
-parts
-develop-eggs
+/dist
+/build
+/eggs
+/parts
+/develop-eggs
 .installed.cfg
 pip-log.txt
 .python-version
