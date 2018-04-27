@@ -33,8 +33,8 @@ require([
 
   CodeMirror.Vim.map("<C-a>", "<Esc>^i", "insert");
   CodeMirror.Vim.map("<C-e>", "<Esc>$a", "insert");
-  CodeMirror.Vim.map("<C-f>", "<Esc>lwi", "insert");
-  CodeMirror.Vim.map("<C-b>", "<Esc>lbi", "insert");
+  CodeMirror.Vim.map("<C-f>", "<Esc>la", "insert");
+  CodeMirror.Vim.map("<C-b>", "<Esc>ha", "insert");
 
   console.log('Custom keymaps are applied.');
 });

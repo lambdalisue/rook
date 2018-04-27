@@ -20,7 +20,8 @@
     "usability/hide_input_all/main": true,
     "vim_binding": true,
     "usability/codefolding/main": true,
-    "usability/runtools/main": true
+    "usability/runtools/main": true,
+    "nbextensions_configurator/config_menu/main": true
   },
   "collapsible_headings_add_button": false,
   "autoscroll_set_on_load": true,
