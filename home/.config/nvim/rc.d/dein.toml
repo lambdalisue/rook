@@ -236,6 +236,10 @@ let g:gista#client#default_username = 'lambdalisue'
 '''
 
 [[plugins]]
+merged = 0
+repo = 'lambdalisue/filta.vim'
+
+[[plugins]]
 repo = 'junegunn/goyo.vim'
 on_cmd = 'Goyo'
 hook_add = '''
