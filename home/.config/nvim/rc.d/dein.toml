@@ -1083,6 +1083,12 @@ augroup my_jedi
 augroup END
 '''
 
+[[plugins]]
+repo = 'lambdalisue/doctest.vim'
+on_cmd = 'Doctest'
+hook_add = '''
+nnoremap <silent> <F8> :<C-u>Doctest<CR>
+'''
 
 [[plugins]]
 repo = 'tell-k/vim-autopep8'

@@ -357,6 +357,25 @@ augroup MyAutoCmd
   autocmd!
 augroup END
 
+function! s:cwindow() abort
+  let winid = win_getid()
+  cwindow
+  if win_getid() != winid
+    call win_gotoid(winid)
+  endif
+endfunction
+
+function! s:lwindow() abort
+  let winid = win_getid()
+  lwindow
+  if win_getid() != winid
+    call win_gotoid(winid)
+  endif
+endfunction
+
+autocmd MyAutoCmd QuickFixCmdPost [^l]* nested call s:cwindow()
+autocmd MyAutoCmd QuickFixCmdPost l* nested call s:lwindow()
+
 " Automatically re-assign filetype {{{
 autocmd MyAutoCmd BufWritePost *
       \ if &filetype ==# '' && exists('b:ftdetect') |
