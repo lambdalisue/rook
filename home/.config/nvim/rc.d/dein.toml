@@ -64,12 +64,12 @@ set shortmess+=c
 let g:echodoc#enable_at_startup = 1
 '''
 
-[[plugins]]
-repo = 'rhysd/clever-f.vim'
-hook_add = '''
-let g:clever_f_across_no_line = 1
-let g:clever_f_smart_case = 1
-'''
+# [[plugins]]
+# repo = 'rhysd/clever-f.vim'
+# hook_add = '''
+# let g:clever_f_across_no_line = 1
+# let g:clever_f_smart_case = 1
+# '''
 
 # [[plugins]]
 # repo = 'lambdalisue/smarthl.vim'
@@ -1089,6 +1089,10 @@ on_cmd = 'Doctest'
 hook_add = '''
 nnoremap <silent> <F8> :<C-u>Doctest<CR>
 '''
+
+[[plugins]]
+repo = 'lambdalisue/ake.vim'
+on_cmd = 'Ake'
 
 [[plugins]]
 repo = 'tell-k/vim-autopep8'

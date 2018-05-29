@@ -505,10 +505,10 @@ noremap <3-MiddleMouse> <Nop>
 noremap <4-MiddleMouse> <Nop>
 
 " Swap ; and : in Normal and Visual mode [US keyboard]
-nnoremap ; :
-nnoremap : ;
-vnoremap ; :
-vnoremap : ;
+" nnoremap ; :
+" nnoremap : ;
+" vnoremap ; :
+" vnoremap : ;
 
 " Emacs like movement in Insert/Command
 noremap! <C-a> <Home>
