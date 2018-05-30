@@ -285,6 +285,7 @@ let g:vimfiler_ignore_pattern = printf('\%%(%s\)', join([
       \ '\.egg-info$',
       \], '\|'))
 nnoremap <silent> <Leader>ee :<C-u>call <SID>smart_vimfiler()<CR>
+nnoremap <silent> <Leader>EE :<C-u>VimFilerExplorer<CR>
 
 function! s:smart_vimfiler() abort
   let path = expand('%:p')
