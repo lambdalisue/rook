@@ -620,14 +620,14 @@ hook_source = '''
 execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/quickrun.vim'))
 '''
 
-[[plugins]]
-if = "!(has('win32') || has('win64'))"
-repo = 'neomake/neomake'
-hook_source = '''
-if has('nvim')
-  execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/neomake.vim'))
-endif
-'''
+# [[plugins]]
+# if = "!(has('win32') || has('win64'))"
+# repo = 'neomake/neomake'
+# hook_source = '''
+# if has('nvim')
+#   execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/neomake.vim'))
+# endif
+# '''
 
 # }}}
 
@@ -638,106 +638,162 @@ endif
 # let g:LanguageClient_autoStart = 1
 # execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/lsp.vim'))
 # '''
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+hook_add = '''
+let g:lsp_signs_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
+
+augroup my-lsp
+  autocmd! *
+  if executable('typescript-language-server')
+    autocmd User lsp_setup call lsp#register_server({
+          \ 'name': 'typescript-language-server',
+          \ 'cmd': { si -> [&shell, &shellcmdflag, 'typescript-language-server --stdio'] },
+          \ 'root_uri': { si -> lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json')) },
+          \ 'whitelist': ['typescript'],
+          \})
+  endif
+  
+  if executable('pyls')
+     autocmd User lsp_setup call lsp#register_server({
+          \ 'name': 'pyls',
+          \ 'cmd': { si -> ['pyls'] },
+          \ 'whitelist': ['python'],
+          \})
+  endif
+augroup END
+'''
+
+[[plugins]]
+repo = 'prabirshrestha/async.vim'
+
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete.vim'
+hook_add = '''
+let g:asyncomplete_remove_duplicates = 1
+'''
+
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete-buffer.vim'
+
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete-emoji.vim'
+
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete-file.vim'
+
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete-gocode.vim'
+
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete-omni.vim'
+
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete-necovim.vim'
+
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete-lsp.vim'
 
 # }}}
 
 # Deoplete {{{
-[[plugins]]
-if = '!has("nvim")'
-repo = 'roxma/nvim-yarp'
-
-[[plugins]]
-if = '!has("nvim")'
-repo = 'roxma/vim-hug-neovim-rpc'
-
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-hook_add = '''
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#file#enable_buffer_path = 1
-'''
-hook_post_source = '''
-call deoplete#custom#source('omni', 'is_silent', 1)
-'''
-
-[[plugins]]
-repo = 'Shougo/neco-vim'
-depends = 'deoplete.nvim'
-
-[[plugins]]
-repo = 'Shougo/neco-syntax'
-depends = 'deoplete.nvim'
-
-[[plugins]]
-repo = 'fszymanski/deoplete-emoji'
-depends = 'deoplete.nvim'
-
-[[plugins]]
-repo = 'zchee/deoplete-go'
-build = 'make'
-depends = 'deoplete.nvim'
-hook_add = '''
-let g:deoplete#sources#go#gocode_binary = expand('$GOPATH/bin/gocode')
-let g:deoplete#sources#go#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-'''
-hook_post_update = '''
-if !executable('gocode')
-  echohl ErrorMsg
-  echomsg '"gocode" is not found. Install it via "go get -u github.com/nsf/gocode" to enable deoplete-go.'
-  echohl None
-endif
-'''
-
-[[plugins]]
-repo = 'zchee/deoplete-jedi'
-depends = 'deoplete.nvim'
-
-[[plugins]]
-repo = 'zchee/deoplete-zsh'
-depends = 'deoplete.nvim'
-
-# NOTE:
-# This plugins often cause 'channel' exception...
-[[plugins]]
-repo = 'mhartington/nvim-typescript'
-build = './install.sh'
-hook_add = '''
-let g:nvim_typescript#javascript_support = 1
-let g:nvim_typescript#vue_support = 1
-let g:nvim_typescript#type_info_on_hold = 0
-let g:nvim_typescript#default_mappings = 0
-let g:nvim_typescript#signature_complete = 1
-
-function! s:configure_typescript() abort
-  nnoremap <silent><buffer> <Plug>(typescript-goto-definitions) :<C-u>TSTypeDef<CR>
-  nnoremap <silent><buffer> <Plug>(typescript-goto-assignments) :<C-u>TSDef<CR>
-  nnoremap <silent><buffer> <Plug>(typescript-rename) :<C-u>TSRename<CR>
-  nnoremap <silent><buffer> <Plug>(typescript-usages) :<C-u>TSRefs<CR>
-  nnoremap <silent><buffer> <Plug>(typescript-import) :<C-u>TSImport<CR>
-  nnoremap <silent><buffer> <Plug>(typescript-show-documentation) :<C-u>TSDoc<CR>
-  nnoremap <silent><buffer> <Plug>(typescript-echo-type) :<C-u>TSType<CR>
-  vnoremap <silent><buffer> <Plug>(typescript-goto-definitions) :TSTypeDef<CR>
-  vnoremap <silent><buffer> <Plug>(typescript-goto-assignments) :TSDef<CR>
-  vnoremap <silent><buffer> <Plug>(typescript-rename) :TSRename<CR>
-  vnoremap <silent><buffer> <Plug>(typescript-usages) :TSRefs<CR>
-  vnoremap <silent><buffer> <Plug>(typescript-import) :TSImport<CR>
-  vnoremap <silent><buffer> <Plug>(typescript-show-documentation) :TSDoc<CR>
-  vnoremap <silent><buffer> <Plug>(typescript-echo-type) :TSType<CR>
-
-  nmap <buffer> gd <Plug>(typescript-goto-definitions)
-  nmap <buffer> gs <Plug>(typescript-goto-assignments)
-  nmap <buffer> gu <Plug>(typescript-usages)
-  nmap <buffer> K <Plug>(typescript-show-documentation)
-  nmap <buffer> <C-k> <Plug>(typescript-echo-type)
-  nmap <buffer> <F2> <Plug>(typescript-rename)
-  nmap <buffer> <F3> <Plug>(typescript-import)
-endfunction
-
-augroup my_typescript
-  autocmd! *
-  autocmd FileType typescript call s:configure_typescript()
-augroup END
-'''
+# [[plugins]]
+# if = '!has("nvim")'
+# repo = 'roxma/nvim-yarp'
+#
+# [[plugins]]
+# if = '!has("nvim")'
+# repo = 'roxma/vim-hug-neovim-rpc'
+#
+# [[plugins]]
+# repo = 'Shougo/deoplete.nvim'
+# hook_add = '''
+# let g:deoplete#enable_at_startup = 1
+# let g:deoplete#file#enable_buffer_path = 1
+# '''
+# hook_post_source = '''
+# call deoplete#custom#source('omni', 'is_silent', 1)
+# '''
+#
+# [[plugins]]
+# repo = 'Shougo/neco-vim'
+# depends = 'deoplete.nvim'
+#
+# [[plugins]]
+# repo = 'Shougo/neco-syntax'
+# depends = 'deoplete.nvim'
+#
+# [[plugins]]
+# repo = 'fszymanski/deoplete-emoji'
+# depends = 'deoplete.nvim'
+#
+# [[plugins]]
+# repo = 'zchee/deoplete-go'
+# build = 'make'
+# depends = 'deoplete.nvim'
+# hook_add = '''
+# let g:deoplete#sources#go#gocode_binary = expand('$GOPATH/bin/gocode')
+# let g:deoplete#sources#go#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+# '''
+# hook_post_update = '''
+# if !executable('gocode')
+#   echohl ErrorMsg
+#   echomsg '"gocode" is not found. Install it via "go get -u github.com/nsf/gocode" to enable deoplete-go.'
+#   echohl None
+# endif
+# '''
+#
+# [[plugins]]
+# repo = 'zchee/deoplete-jedi'
+# depends = 'deoplete.nvim'
+#
+# [[plugins]]
+# repo = 'zchee/deoplete-zsh'
+# depends = 'deoplete.nvim'
+#
+# # NOTE:
+# # This plugins often cause 'channel' exception...
+# [[plugins]]
+# repo = 'mhartington/nvim-typescript'
+# build = './install.sh'
+# hook_add = '''
+# let g:nvim_typescript#javascript_support = 0
+# let g:nvim_typescript#vue_support = 0
+# let g:nvim_typescript#type_info_on_hold = 0
+# let g:nvim_typescript#default_mappings = 0
+# let g:nvim_typescript#signature_complete = 1
+#
+# function! s:configure_typescript() abort
+#   nnoremap <silent><buffer> <Plug>(typescript-goto-definitions) :<C-u>TSTypeDef<CR>
+#   nnoremap <silent><buffer> <Plug>(typescript-goto-assignments) :<C-u>TSDef<CR>
+#   nnoremap <silent><buffer> <Plug>(typescript-rename) :<C-u>TSRename<CR>
+#   nnoremap <silent><buffer> <Plug>(typescript-usages) :<C-u>TSRefs<CR>
+#   nnoremap <silent><buffer> <Plug>(typescript-import) :<C-u>TSImport<CR>
+#   nnoremap <silent><buffer> <Plug>(typescript-show-documentation) :<C-u>TSDoc<CR>
+#   nnoremap <silent><buffer> <Plug>(typescript-echo-type) :<C-u>TSType<CR>
+#   vnoremap <silent><buffer> <Plug>(typescript-goto-definitions) :TSTypeDef<CR>
+#   vnoremap <silent><buffer> <Plug>(typescript-goto-assignments) :TSDef<CR>
+#   vnoremap <silent><buffer> <Plug>(typescript-rename) :TSRename<CR>
+#   vnoremap <silent><buffer> <Plug>(typescript-usages) :TSRefs<CR>
+#   vnoremap <silent><buffer> <Plug>(typescript-import) :TSImport<CR>
+#   vnoremap <silent><buffer> <Plug>(typescript-show-documentation) :TSDoc<CR>
+#   vnoremap <silent><buffer> <Plug>(typescript-echo-type) :TSType<CR>
+#
+#   nmap <buffer> gd <Plug>(typescript-goto-definitions)
+#   nmap <buffer> gs <Plug>(typescript-goto-assignments)
+#   nmap <buffer> gu <Plug>(typescript-usages)
+#   nmap <buffer> K <Plug>(typescript-show-documentation)
+#   nmap <buffer> <C-k> <Plug>(typescript-echo-type)
+#   nmap <buffer> <F2> <Plug>(typescript-rename)
+#   nmap <buffer> <F3> <Plug>(typescript-import)
+# endfunction
+#
+# augroup my_typescript
+#   autocmd! *
+#   autocmd FileType typescript call s:configure_typescript()
+# augroup END
+# '''
 # }}}
 
 # Denite {{{
