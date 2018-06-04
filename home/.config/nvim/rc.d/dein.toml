@@ -643,14 +643,15 @@ endif
 
 # Deoplete {{{
 [[plugins]]
+if = '!has("nvim")'
 repo = 'roxma/nvim-yarp'
 
 [[plugins]]
+if = '!has("nvim")'
 repo = 'roxma/vim-hug-neovim-rpc'
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-depends = 'nvim-yarp'
 hook_add = '''
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#file#enable_buffer_path = 1
@@ -695,17 +696,11 @@ depends = 'deoplete.nvim'
 repo = 'zchee/deoplete-zsh'
 depends = 'deoplete.nvim'
 
-[[plugins]]
-if = "!(has('win32') || has('win64'))"
-repo = 'wellle/tmux-complete.vim'
-depends = 'deoplete.nvim'
-
 # NOTE:
 # This plugins often cause 'channel' exception...
 [[plugins]]
-if = "!(has('win32') || has('win64'))"
 repo = 'mhartington/nvim-typescript'
-depends = 'deoplete.nvim'
+build = './install.sh'
 hook_add = '''
 let g:nvim_typescript#javascript_support = 1
 let g:nvim_typescript#vue_support = 1
