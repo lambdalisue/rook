@@ -28,9 +28,7 @@ __rook::is_linux() {
 
 __rook::compile() {
   local filename="$1"
-  if [ ! -f "${filename}.zwc" -o "${filename}" -nt "${filename}.zwc" ]; then
-    zcompile "${filename}"
-  fi
+  zrecompile "${filename}"
 }
 
 __rook::source() {
@@ -72,6 +70,9 @@ setopt magic_equal_subst
 TRAPWINCH() {
     zle && { zle reset-prompt; zle -R }
 }
+
+# Enable 'zrecompile'
+autoload -U zrecompile
 
 # NOTE: https://carlosbecker.com/posts/speeding-up-zsh/
 autoload -Uz compinit
