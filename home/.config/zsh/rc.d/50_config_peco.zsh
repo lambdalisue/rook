@@ -157,7 +157,7 @@ bindkey '^X^H' __peco::homeshick::zle
 bindkey '^X^?' __peco::homeshick::zle
 # }}}
 
-# ^X^Q: GHQ {{{
+# ^X^G: GHQ {{{
 peco::ghq() {
   print -z $(__peco::ghq $1)
 }
@@ -175,7 +175,7 @@ __peco::ghq::zle() {
 }
 
 zle -N __peco::ghq::zle
-bindkey '^X^Q' __peco::ghq::zle
+bindkey '^X^G' __peco::ghq::zle
 # }}}
 
 # fshow - git commit browser (enter for show, ctrl-d for diff) {{{
