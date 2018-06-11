@@ -39,15 +39,3 @@ function! s:isort() abort
   endif
 endfunction
 command! -buffer Isort call s:isort()
-
-function! s:on_BufWritePre() abort
-  " Automatically add newline at end of file
-  if getline('$') !=# ''
-    call append(line('$'), '')
-  endif
-endfunction
-
-augroup my_python_ftplugin
-  autocmd! * <buffer>
-  autocmd BufWritePre <buffer> call s:on_BufWritePre()
-augroup END
