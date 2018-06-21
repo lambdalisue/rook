@@ -593,7 +593,7 @@ on_cmd = 'Linediff'
 repo = 'junegunn/vim-easy-align'
 on_map = '<Plug>(EasyAlign)'
 hook_add = '''
-vmap <Enter> <Plug>(EasyAlign)
+vmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 '''
 
@@ -631,6 +631,17 @@ execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/quickrun.vim'))
 
 # }}}
 
+# Lint {{{
+[[plugins]]
+repo = 'w0rp/ale'
+hook_add = '''
+let g:ale_fixers = {
+      \ 'javascript': ['prettier', 'eslint'],
+      \ 'typescript': ['prettier', 'eslint', 'tslint'],
+      \}
+let g:ale_fix_on_save = 1
+'''
+# }}}
 # Language client protocol {{{
 # [[plugins]]
 # repo = 'autozimu/LanguageClient-neovim'
@@ -641,9 +652,6 @@ execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/quickrun.vim'))
 [[plugins]]
 repo = 'prabirshrestha/vim-lsp'
 hook_add = '''
-let g:lsp_signs_enabled = 1
-let g:lsp_diagnostics_echo_cursor = 1
-
 augroup my-lsp
   autocmd! *
   if executable('typescript-language-server')
@@ -653,16 +661,30 @@ augroup my-lsp
           \ 'root_uri': { si -> lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json')) },
           \ 'whitelist': ['typescript'],
           \})
+    autocmd FileType typescript call s:configure_lsp()
   endif
-  
+ 
   if executable('pyls')
      autocmd User lsp_setup call lsp#register_server({
           \ 'name': 'pyls',
           \ 'cmd': { si -> ['pyls'] },
           \ 'whitelist': ['python'],
           \})
+    autocmd FileType python call s:configure_lsp()
   endif
 augroup END
+
+function! s:configure_lsp() abort
+  nnoremap <buffer> gd :<C-u>LspDefinition<CR>
+  nnoremap <buffer> gD :<C-u>LspReferences<CR>
+  nnoremap <buffer> gs :<C-u>LspDocumentSymbol<CR>
+  nnoremap <buffer> gS :<C-u>LspWorkspaceSymbol<CR>
+  nnoremap <buffer> gQ :<C-u>LspDocumentFormat<CR>
+  vnoremap <buffer> gQ :LspDocumentRangeFormat<CR>
+  nnoremap <buffer> K :<C-u>LspHover<CR>
+  nnoremap <buffer> <F1> :<C-u>LspImplementation<CR>
+  nnoremap <buffer> <F2> :<C-u>LspRename<CR>
+endfunction
 '''
 
 [[plugins]]
@@ -675,25 +697,63 @@ let g:asyncomplete_remove_duplicates = 1
 '''
 
 [[plugins]]
+repo = 'prabirshrestha/asyncomplete-lsp.vim'
+
+[[plugins]]
 repo = 'prabirshrestha/asyncomplete-buffer.vim'
+hook_add = '''
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+    \ 'name': 'buffer',
+    \ 'whitelist': ['*'],
+    \ 'blacklist': ['go'],
+    \ 'completor': function('asyncomplete#sources#buffer#completor'),
+    \ }))
+'''
 
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete-emoji.vim'
+hook_add = '''
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#emoji#get_source_options({
+    \ 'name': 'emoji',
+    \ 'whitelist': ['*'],
+    \ 'completor': function('asyncomplete#sources#emoji#completor'),
+    \ }))
+'''
 
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete-file.vim'
+hook_add = '''
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+    \ 'name': 'file',
+    \ 'whitelist': ['*'],
+    \ 'priority': 10,
+    \ 'completor': function('asyncomplete#sources#file#completor')
+    \ }))
+'''
 
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete-gocode.vim'
+hook_add = '''
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#gocode#get_source_options({
+    \ 'name': 'gocode',
+    \ 'whitelist': ['go'],
+    \ 'completor': function('asyncomplete#sources#gocode#completor'),
+    \ 'config': {
+    \    'gocode_path': expand('~/go/bin/gocode')
+    \  },
+    \ }))
+'''
 
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete-omni.vim'
-
-[[plugins]]
-repo = 'prabirshrestha/asyncomplete-necovim.vim'
-
-[[plugins]]
-repo = 'prabirshrestha/asyncomplete-lsp.vim'
+hook_add = '''
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
+    \ 'name': 'omni',
+    \ 'whitelist': ['*'],
+    \ 'blacklist': ['c', 'cpp', 'html'],
+    \ 'completor': function('asyncomplete#sources#omni#completor')
+    \  }))
+'''
 
 # }}}
 
@@ -1102,38 +1162,38 @@ repo = 'fatih/vim-go'
 [[plugins]]
 repo = 'lambdalisue/pyvenv.vim'
 
-[[plugins]]
-repo = 'davidhalter/jedi-vim'
-build = 'pip install jedi'
-hook_add = '''
-let g:jedi#auto_initialization = 0
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#show_call_signatures = 0
-let g:jedi#show_call_signatures_delay = 0
-let g:jedi#completions_enabled = 0
-let g:jedi#force_py_version = 3
-let g:jedi#smart_auto_mappings = 0
-'''
-hook_post_source = '''
-function! s:configure_jedi() abort
-  nnoremap <buffer><silent> <Plug>(jedi-goto-definitions) :<C-u>call jedi#goto()<CR>
-  nnoremap <buffer><silent> <Plug>(jedi-goto-assignments) :<C-u>call jedi#goto_assignments()<CR>
-  nnoremap <buffer><silent> <Plug>(jedi-rename) :<C-u>call jedi#rename()<CR>
-  nnoremap <buffer><silent> <Plug>(jedi-usages) :<C-u>call jedi#usages()<CR>
-  nnoremap <buffer><silent> <Plug>(jedi-show-documentation) :<C-u>call jedi#show_documentation()<CR>
-  nmap <buffer> gs <Plug>(jedi-usages)
-  nmap <buffer> gd <Plug>(jedi-goto-definitions)
-  nmap <buffer> gD <Plug>(jedi-goto-assignments)
-  nmap <buffer> K <Plug>(jedi-show-documentation)
-  nmap <buffer> <F2> <Plug>(jedi-rename)
-  setlocal omnifunc=jedi#completions
-endfunction
-
-augroup my_jedi
-  autocmd! *
-  autocmd FileType python,python3 call s:configure_jedi()
-augroup END
-'''
+# [[plugins]]
+# repo = 'davidhalter/jedi-vim'
+# build = 'pip install jedi'
+# hook_add = '''
+# let g:jedi#auto_initialization = 0
+# let g:jedi#auto_vim_configuration = 0
+# let g:jedi#show_call_signatures = 0
+# let g:jedi#show_call_signatures_delay = 0
+# let g:jedi#completions_enabled = 0
+# let g:jedi#force_py_version = 3
+# let g:jedi#smart_auto_mappings = 0
+# '''
+# hook_post_source = '''
+# function! s:configure_jedi() abort
+#   nnoremap <buffer><silent> <Plug>(jedi-goto-definitions) :<C-u>call jedi#goto()<CR>
+#   nnoremap <buffer><silent> <Plug>(jedi-goto-assignments) :<C-u>call jedi#goto_assignments()<CR>
+#   nnoremap <buffer><silent> <Plug>(jedi-rename) :<C-u>call jedi#rename()<CR>
+#   nnoremap <buffer><silent> <Plug>(jedi-usages) :<C-u>call jedi#usages()<CR>
+#   nnoremap <buffer><silent> <Plug>(jedi-show-documentation) :<C-u>call jedi#show_documentation()<CR>
+#   nmap <buffer> gs <Plug>(jedi-usages)
+#   nmap <buffer> gd <Plug>(jedi-goto-definitions)
+#   nmap <buffer> gD <Plug>(jedi-goto-assignments)
+#   nmap <buffer> K <Plug>(jedi-show-documentation)
+#   nmap <buffer> <F2> <Plug>(jedi-rename)
+#   setlocal omnifunc=jedi#completions
+# endfunction
+#
+# augroup my_jedi
+#   autocmd! *
+#   autocmd FileType python,python3 call s:configure_jedi()
+# augroup END
+# '''
 
 [[plugins]]
 repo = 'lambdalisue/doctest.vim'

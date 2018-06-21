@@ -25,8 +25,17 @@ endfunction
 nnoremap <buffer><silent> <Plug>(my-python-pypi) :<C-u>call <SID>open_pypi(expand('<cWORD>'))<CR>
 nmap <buffer> gK <Plug>(my-python-pypi)
 
-if exists(':ImpSortAuto')
-  if impsort#is_sorted()
-    silent ImpSortAuto!
+function! s:isort() abort
+  function! s:on_then(result) abort
+    let [result, options] = a:result
+    if !&modified && bufnr('%') is# options.bufnr
+      silent edit
+    endif
+  endfunction
+
+  if executable('isort')
+    call ake#ake(['isort', expand('%')], { 'ake_silent': v:true })
+          \.then(funcref('s:on_then'))
   endif
-endif
+endfunction
+command! -buffer Isort call s:isort()
