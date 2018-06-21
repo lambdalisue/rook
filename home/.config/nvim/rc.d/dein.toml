@@ -1144,7 +1144,7 @@ nnoremap <silent> <F8> :<C-u>Doctest<CR>
 
 [[plugins]]
 repo = 'lambdalisue/ake.vim'
-on_cmd = 'Ake'
+on_cmd = ['Ake', 'Cake', 'Lake']
 
 [[plugins]]
 repo = 'tell-k/vim-autopep8'
