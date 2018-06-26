@@ -702,6 +702,8 @@ repo = 'prabirshrestha/async.vim'
 repo = 'prabirshrestha/asyncomplete.vim'
 hook_add = '''
 let g:asyncomplete_remove_duplicates = 1
+let g:asyncomplete_auto_popup = 1
+imap <C-x><C-u> <Plug>(asyncomplete_force_refresh)
 '''
 
 [[plugins]]
