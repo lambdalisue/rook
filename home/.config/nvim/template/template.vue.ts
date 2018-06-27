@@ -5,4 +5,3 @@ import { Component } from 'vue-property-decorator';
 export default class View extends Vue {
   <+CURSOR+>
 }
-
