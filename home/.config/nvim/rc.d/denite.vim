@@ -104,6 +104,7 @@ let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
       \ '$HOME/.config/karabiner/karabiner.json',
       \ '$HOME/.config/karabiner/assets/complex_modifications/pinkyless.json',
       \ '$HOME/.config/karabiner/assets/complex_modifications/terminal.json',
+      \ '$HOME/.config/karabiner/assets/complex_modifications/virtualbox.json',
       \ '$HOME/.config/alacritty/alacritty.yml',
       \ '$HOME/.config/lemonade.toml',
       \ '$HOME/.config/kitty/kitty.conf',
