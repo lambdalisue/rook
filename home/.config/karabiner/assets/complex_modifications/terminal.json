@@ -2,7 +2,7 @@
   "title": "Terminal.app",
   "rules": [
     {
-      "description": "Ctrl+6 -> Ctrl+^",
+      "description": "Replace Ctrl+6 -> Ctrl+^ in Terminal",
       "manipulators": [
         {
           "conditions": [

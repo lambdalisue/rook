@@ -1,10 +1,11 @@
 {
-  "title": "Pinkyless",
+  "title": "Pinkyless Mapping",
   "rules": [
     {
-      "description": "Pinkyless (Apple JIS)",
+      "description": "Pinkyless for Apple JIS",
       "manipulators": [
         {
+          "description": "Replace CapsLock -> Eisu",
           "conditions": [
             {
               "identifiers": [
@@ -20,7 +21,6 @@
               "type": "device_if"
             }
           ],
-          "description": "caps -> Eisu",
           "from": {
             "key_code": "caps_lock"
           },
@@ -37,6 +37,7 @@
           "type": "basic"
         },
         {
+          "description": "Replace Eisuu -> Space",
           "conditions": [
             {
               "identifiers": [
@@ -52,7 +53,6 @@
               "type": "device_if"
             }
           ],
-          "description": "Eisuu -> Space",
           "from": {
             "key_code": "japanese_eisuu"
           },
@@ -64,6 +64,7 @@
           "type": "basic"
         },
         {
+          "description": "Replace Space -> Ctrl/Space",
           "conditions": [
             {
               "identifiers": [
@@ -79,7 +80,6 @@
               "type": "device_if"
             }
           ],
-          "description": "Space -> Ctrl|Space",
           "from": {
             "key_code": "spacebar"
           },
@@ -96,6 +96,7 @@
           "type": "basic"
         },
         {
+          "description": "Replace Kana -> Shift/Return",
           "conditions": [
             {
               "identifiers": [
@@ -111,7 +112,6 @@
               "type": "device_if"
             }
           ],
-          "description": "Kana -> Shift|Return",
           "from": {
             "key_code": "lang1"
           },
@@ -128,6 +128,7 @@
           "type": "basic"
         },
         {
+          "description": "Replace Right Command -> Return",
           "conditions": [
             {
               "identifiers": [
@@ -143,7 +144,6 @@
               "type": "device_if"
             }
           ],
-          "description": "Right Command -> Return",
           "from": {
             "key_code": "right_command"
           },
@@ -155,6 +155,7 @@
           "type": "basic"
         },
         {
+          "description": "Replace fn -> Kana",
           "conditions": [
             {
               "identifiers": [
@@ -170,7 +171,6 @@
               "type": "device_if"
             }
           ],
-          "description": "fn -> Kana",
           "from": {
             "key_code": "fn"
           },
@@ -188,4 +188,5 @@
         }
       ]
     }
+  ]
 }
