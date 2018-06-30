@@ -95,6 +95,7 @@ let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
       \ '$HOME/.config/zsh/rc.d/10_theme.zsh',
       \ '$HOME/.config/zsh/rc.d/20_keymap.zsh',
       \ '$HOME/.config/zsh/rc.d/50_config_peco.zsh',
+      \ '$HOME/.config/zsh/rc.d/50_config_fzf.zsh',
       \ '$HOME/.config/zsh/rc.d/50_extend_rsync.zsh',
       \ '$HOME/.config/zsh/rc.d/90_functions.zsh',
       \ '$HOME/.config/tmux/',

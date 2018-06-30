@@ -93,7 +93,9 @@ module.exports = {
     shellArgs: [],
 
     // for environment variables
-    env: {},
+    env: {
+      TERM: '',
+    },
 
     // set to false for no bell
     bell: 'SOUND',
