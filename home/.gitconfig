@@ -35,20 +35,8 @@
         insteadOf = https://github.com/fixpoint
 
 [ghq]
-	root = ~/Code
 	root = ~/.ghq
 	root = ~/.go/src
-
-[alias]
-	subadd = "!f () { git subtree add --prefix=${1}  --squash ${2}  ${3} ;};f"
-	subpush = "!f () { git subtree push --prefix=${1}  --squash ${2}  ${3} ;};f"
-	subpull = "!f () { git subtree pull --prefix=${1}  --squash ${2}  ${3} ;};f"
-	graph = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
-	changelog = !python $HOME/.gittag-changelog/src/gittag_changelog.py
-	changelog-latest = !python $HOME/.gittag-changelog/src/gittag_changelog.py --latest-only
-	changelog-head = !python $HOME/.gittag-changelog/src/gittag_changelog.py --include-head
-	changelog-latest-head = !python $HOME/.gittag-changelog/src/gittag_changelog.py --latest-only --include-head
-	ask = "!f(){ echo -n 'Input: '; read STDIN; echo \"hello '$STDIN'\"; };f"
 
 [commit]
 	gpgsign = true

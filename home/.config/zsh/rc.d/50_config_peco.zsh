@@ -6,7 +6,7 @@ __str::tail() {
   echo "$1" | awk '{print $NF}'
 }
 
-# ^T: File {{{
+# File {{{
 peco::file() {
   print -z $(__peco::file $1)
 }
@@ -25,11 +25,9 @@ __peco::file::zle() {
 }
 
 zle -N __peco::file::zle
-bindkey '^T' __peco::file::zle
-
 # }}}
 
-# ^R: History {{{
+# History {{{
 peco::history() {
   print -z $(__peco::history $1)
 }
@@ -48,10 +46,9 @@ __peco::history::zle() {
 }
 
 zle -N __peco::history::zle
-bindkey '^R' __peco::history::zle
 # }}}
 
-# ^X^D: CDR {{{
+# CDR {{{
 peco::cdr() {
   print -z $(__peco::cdr $1)
 }
@@ -69,10 +66,9 @@ __peco::cdr::zle() {
 }
 
 zle -N __peco::cdr::zle
-bindkey '^X^D' __peco::cdr::zle
 # }}}
-#
-# ^X^B: Bookmark {{{
+
+# Bookmark {{{
 peco::bookmark() {
   print -z $(__peco::bookmark $1)
 }
@@ -90,10 +86,9 @@ __peco::bookmark::zle() {
 }
 
 zle -N __peco::bookmark::zle
-bindkey '^X^B' __peco::bookmark::zle
 # }}}
 
-# ^X^L: List keymap {{{
+# List keymap {{{
 peco::list_keymap() {
   print -z $(__peco::list_keymap $1)
 }
@@ -111,10 +106,9 @@ __peco::list_keymap::zle() {
 }
 
 zle -N __peco::list_keymap::zle
-bindkey '^X^L' __peco::list_keymap::zle
 # }}}
 
-# ^X^K: Kill {{{
+# Kill {{{
 peco::kill() {
   print -z $(__peco::kill $1)
 }
@@ -132,10 +126,9 @@ __peco::kill::zle() {
 }
 
 zle -N __peco::kill::zle
-bindkey '^X^K' __peco::kill::zle
 # }}}
 
-# ^X^H (^X^?): Homeshick {{{
+# Homeshick {{{
 peco::homeshick() {
   print -z $(__peco::homeshick $1)
 }
@@ -153,11 +146,9 @@ __peco::homeshick::zle() {
 }
 
 zle -N __peco::homeshick::zle
-bindkey '^X^H' __peco::homeshick::zle
-bindkey '^X^?' __peco::homeshick::zle
 # }}}
 
-# ^X^G: GHQ {{{
+# GHQ {{{
 peco::ghq() {
   print -z $(__peco::ghq $1)
 }
@@ -175,28 +166,16 @@ __peco::ghq::zle() {
 }
 
 zle -N __peco::ghq::zle
-bindkey '^X^G' __peco::ghq::zle
 # }}}
 
-# fshow - git commit browser (enter for show, ctrl-d for diff) {{{
-fshow() {
-  local out shas sha q k
-  while out=$(
-      git log --graph --color=always \
-          --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" | peco --query "$q"); do
-    q=$(head -1 <<< "$out")
-    k=$(head -2 <<< "$out" | tail -1)
-    shas=$(sed '1,2d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
-    [ -z "$shas" ] && continue
-    if [ "$k" = ctrl-d ]; then
-      git diff --color=always $shas | less -R
-    else
-      for sha in $shas; do
-        git show --color=always $sha | less -R
-      done
-    fi
-  done
-}
-# }}}
+# bindkey '^T' __peco::file::zle
+# bindkey '^R' __peco::history::zle
+# bindkey '^X^D' __peco::cdr::zle
+# bindkey '^X^B' __peco::bookmark::zle
+# bindkey '^X^L' __peco::list_keymap::zle
+# bindkey '^X^K' __peco::kill::zle
+# bindkey '^X^H' __peco::homeshick::zle
+# bindkey '^X^?' __peco::homeshick::zle
+# bindkey '^X^G' __peco::ghq::zle
 
 # vim: foldmethod=marker

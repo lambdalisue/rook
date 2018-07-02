@@ -1,9 +1,0 @@
-~/.config
-~/.config/nvim
-~/.config/nvim/rc
-~/.config/tmux
-~/.config/tmux/rc.d
-~/.config/zsh
-~/.config/zsh/rc.d
-~/Downloads
-~/Public

@@ -12,11 +12,11 @@ zplug "monochromegane/the_platinum_searcher", \
   from:gh-r, \
   rename-to:pt
 
-# # Remote utility tool over TCP
-# zplug "pocke/lemonade", \
-#   as:command, \
-#   from:gh-r, \
-#   rename-to:lemonade
+# Remote utility tool over TCP
+zplug "pocke/lemonade", \
+  as:command, \
+  from:gh-r, \
+  rename-to:lemonade
 
 # Cross-platform clipboard
 zplug "lambdalisue/circlip", \
@@ -35,12 +35,11 @@ zplug "motemen/ghq", \
   from:gh-r, \
   rename-to:ghq
 
-# # GitHub integration CLI tool
-# zplug "github/hub", \
-#   as:command, \
-#   from:gh-r, \
-#   rename-to:hub
-
+# GitHub integration CLI tool
+zplug "github/hub", \
+  as:command, \
+  from:gh-r, \
+  rename-to:hub
 
 # Command-line fuzzy finder
 zplug "junegunn/fzf-bin", \
