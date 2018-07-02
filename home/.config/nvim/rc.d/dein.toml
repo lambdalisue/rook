@@ -756,7 +756,7 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
 
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete-omni.vim'
-merge = 0
+merged = false
 hook_add = '''
 au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
     \ 'name': 'omni',
