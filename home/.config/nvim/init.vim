@@ -176,18 +176,18 @@ else
         \])
 endif
 
-if executable('lemonade')
-  let g:clipboard = {
-        \ 'copy': {
-        \   '+': 'lemonade copy --no-fallback-messages',
-        \   '*': 'lemonade copy --no-fallback-messages',
-        \ },
-        \ 'paste': {
-        \   '+': 'lemonade paste --no-fallback-messages',
-        \   '*': 'lemonade paste --no-fallback-messages',
-        \ },
-        \}
-endif
+" if executable('lemonade')
+"   let g:clipboard = {
+"         \ 'copy': {
+"         \   '+': 'lemonade copy --no-fallback-messages',
+"         \   '*': 'lemonade copy --no-fallback-messages',
+"         \ },
+"         \ 'paste': {
+"         \   '+': 'lemonade paste --no-fallback-messages',
+"         \   '*': 'lemonade paste --no-fallback-messages',
+"         \ },
+"         \}
+" endif
 " }}}
 
 " Language {{{
