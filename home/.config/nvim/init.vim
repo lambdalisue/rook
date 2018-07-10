@@ -649,7 +649,7 @@ if isdirectory(s:bundle_dein)
           \ expand('$MYVIM_HOME/rc.d/dein.toml'),
           \])
     call dein#load_toml(expand('$MYVIM_HOME/rc.d/dein.toml'))
-    call dein#local(expand('~/Code/github.com/lambdalisue'))
+    call dein#local(expand('~/.ghq/github.com/lambdalisue'))
     call dein#end()
     call dein#save_state()
   endif

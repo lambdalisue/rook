@@ -645,6 +645,7 @@ let g:ale_fixers = {
 let g:ale_fix_on_save = 1
 '''
 # }}}
+
 # Language client protocol {{{
 # [[plugins]]
 # repo = 'autozimu/LanguageClient-neovim'
@@ -1263,6 +1264,10 @@ on_cmd = 'Capture'
 
 [[plugins]]
 repo = 'vim-jp/vital.vim'
+merged = 0
+
+[[plugins]]
+repo = 'lambdalisue/vital-Whisky'
 merged = 0
 
 [[plugins]]
