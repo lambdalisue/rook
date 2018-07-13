@@ -151,6 +151,7 @@ else
         \ '~/.anyenv/envs/plenv/shims',
         \ '~/.anyenv/envs/rbenv/shims',
         \ '~/.anyenv/envs/ndenv/shims',
+        \ '~/.go/bin',
         \ '~/.cabal/bin',
         \ '~/.cache/dein/repos/github.com/thinca/vim-themis/bin',
         \ '/usr/local/texlive/2017basic/bin/x86_64-darwin',
