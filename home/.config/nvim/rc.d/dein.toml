@@ -185,6 +185,12 @@ repo = 'tyru/current-func-info.vim'
 
 # App {{{
 [[plugins]]
+repo = 'rhysd/devdocs.vim'
+hook_add = '''
+nmap <C-k> <Plug>(devdocs-under-cursor)
+'''
+
+[[plugins]]
 repo = 'koturn/vim-replica'
 on_cmd = ['Replica', 'ReplicaInternal']
 hook_add = '''
