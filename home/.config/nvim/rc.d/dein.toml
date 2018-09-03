@@ -393,28 +393,28 @@ nnoremap <silent> <Leader>tt :<C-u>TagbarToggle<CR>
 '''
 
 
+# [[plugins]]
+# repo = 'lambdalisue/lista.vim'
+# hook_add = '''
+# nnoremap #  :<C-u>Lista<CR>
+# nnoremap g# :<C-u>ListaResume<CR>
+# nnoremap z# :<C-u>ListaCursorWord<CR>
+# '''
+
 [[plugins]]
-repo = 'lambdalisue/lista.vim'
+repo = 'lambdalisue/lista.nvim'
 hook_add = '''
+let g:lista#custom_mappings = [
+      \ ['<C-b>', '<Left>'],
+      \ ['<C-f>', '<Right>'],
+      \ ['<C-a>', '<Home>'],
+      \ ['<C-e>', '<End>'],
+      \ ['<C-d>', '<Del>'],
+      \]
 nnoremap #  :<C-u>Lista<CR>
 nnoremap g# :<C-u>ListaResume<CR>
 nnoremap z# :<C-u>ListaCursorWord<CR>
 '''
-
-# [[plugins]]
-# repo = 'lambdalisue/lista.nvim'
-# hook_add = '''
-# let g:lista#custom_mappings = [
-#       \ ['<C-b>', '<Left>'],
-#       \ ['<C-f>', '<Right>'],
-#       \ ['<C-a>', '<Home>'],
-#       \ ['<C-e>', '<End>'],
-#       \ ['<C-d>', '<Del>'],
-#       \]
-# nnoremap #  :<C-u>Lista<CR>
-# nnoremap g# :<C-u>ListaResume<CR>
-# nnoremap !# :<C-u>ListaCursorWord<CR>
-# '''
 
 # }}}
 
@@ -422,6 +422,8 @@ nnoremap z# :<C-u>ListaCursorWord<CR>
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
 hook_add = '''
+let g:gitgutter_map_keys = 0
+
 nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
 omap ih <Plug>GitGutterTextObjectInnerPending
@@ -430,10 +432,14 @@ xmap ih <Plug>GitGutterTextObjectInnerVisual
 xmap ah <Plug>GitGutterTextObjectOuterVisual
 '''
 hook_post_source = '''
+function s:silently_process_gitgutter() abort
+  silent call gitgutter#process_buffer(bufnr(''), 0)
+endfunction
+
 if exists('g:loaded_gitgutter')
   call timer_start(
         \ 100,
-        \ { -> gitgutter#process_buffer(bufnr(''), 0) },
+        \ { -> s:silently_process_gitgutter() },
         \ { 'repeat': -1 }
         \)
 endif
@@ -639,14 +645,14 @@ repo = 'w0rp/ale'
 hook_add = '''
 let g:ale_linters = {
       \ 'javascript': ['eslint', 'tslint'],
-      \ 'typescript': ['eslint', 'tslint'],
+      \ 'typescript': ['tslint'],
       \}
 let g:ale_linter_aliases = {
       \ 'javascript': 'typescript',
       \}
 let g:ale_fixers = {
       \ 'javascript': ['remove_trailing_lines', 'trim_whitespace', 'eslint', 'tslint'],
-      \ 'typescript': ['remove_trailing_lines', 'trim_whitespace', 'eslint', 'tslint'],
+      \ 'typescript': ['remove_trailing_lines', 'trim_whitespace', 'tslint'],
       \}
 let g:ale_fix_on_save = 1
 '''
@@ -712,16 +718,16 @@ imap <C-x><C-u> <Plug>(asyncomplete_force_refresh)
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete-lsp.vim'
 
-[[plugins]]
-repo = 'prabirshrestha/asyncomplete-buffer.vim'
-hook_add = '''
-au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-    \ 'name': 'buffer',
-    \ 'whitelist': ['*'],
-    \ 'blacklist': ['go'],
-    \ 'completor': function('asyncomplete#sources#buffer#completor'),
-    \ }))
-'''
+# [[plugins]]
+# repo = 'prabirshrestha/asyncomplete-buffer.vim'
+# hook_add = '''
+# au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+#     \ 'name': 'buffer',
+#     \ 'whitelist': ['*'],
+#     \ 'blacklist': ['go'],
+#     \ 'completor': function('asyncomplete#sources#buffer#completor'),
+#     \ }))
+# '''
 
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete-emoji.vim'
@@ -733,16 +739,16 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
     \ }))
 '''
 
-[[plugins]]
-repo = 'prabirshrestha/asyncomplete-file.vim'
-hook_add = '''
-au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-    \ 'name': 'file',
-    \ 'whitelist': ['*'],
-    \ 'priority': 10,
-    \ 'completor': function('asyncomplete#sources#file#completor')
-    \ }))
-'''
+# [[plugins]]
+# repo = 'prabirshrestha/asyncomplete-file.vim'
+# hook_add = '''
+# au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+#     \ 'name': 'file',
+#     \ 'whitelist': ['*'],
+#     \ 'priority': 10,
+#     \ 'completor': function('asyncomplete#sources#file#completor')
+#     \ }))
+# '''
 
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete-gocode.vim'
@@ -757,16 +763,16 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
     \ }))
 '''
 
-[[plugins]]
-repo = 'prabirshrestha/asyncomplete-omni.vim'
-merged = false
-hook_add = '''
-au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
-    \ 'name': 'omni',
-    \ 'whitelist': ['*'],
-    \ 'completor': function('asyncomplete#sources#omni#completor')
-    \ }))
-'''
+# [[plugins]]
+# repo = 'prabirshrestha/asyncomplete-omni.vim'
+# merged = false
+# hook_add = '''
+# au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
+#     \ 'name': 'omni',
+#     \ 'whitelist': ['*'],
+#     \ 'completor': function('asyncomplete#sources#omni#completor')
+#     \ }))
+# '''
 
 # }}}
 
@@ -778,7 +784,7 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
 # [[plugins]]
 # if = '!has("nvim")'
 # repo = 'roxma/vim-hug-neovim-rpc'
-#
+
 # [[plugins]]
 # repo = 'Shougo/deoplete.nvim'
 # hook_add = '''
@@ -825,8 +831,6 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
 # repo = 'zchee/deoplete-zsh'
 # depends = 'deoplete.nvim'
 #
-# # NOTE:
-# # This plugins often cause 'channel' exception...
 # [[plugins]]
 # repo = 'mhartington/nvim-typescript'
 # build = './install.sh'
@@ -1143,6 +1147,9 @@ repo = 'othree/es.next.syntax.vim'
 
 [[plugins]]
 repo = 'leafgarland/typescript-vim'
+
+# [[plugins]]
+# repo = 'HerringtonDarkholme/yats.vim'
 
 [[plugins]]
 repo = 'vim-scripts/applescript.vim'

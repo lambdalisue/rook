@@ -11,6 +11,9 @@ setl smartindent
 setl indentkeys+=0.
 setl foldmethod=syntax
 
+" https://github.com/leafgarland/typescript-vim#indenting
+let g:typescript_opfirst='\%([<>=,?^%|*/&]\|\([-:+]\)\1\@!\|!=\|in\%(stanceof\)\=\>\)'
+
 " Find 'node_modules' directory
 function! s:add_node_modules() abort
   let anchor = simplify(expand('%:p:h'))
