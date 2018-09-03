@@ -2,10 +2,6 @@ require([
   'codemirror/keymap/vim',
   'nbextensions/vim_binding/vim_binding'
 ], function() {
-  // Use ; as : in normal/visual mode
-  CodeMirror.Vim.map(";", ":", "normal");
-  CodeMirror.Vim.map(";", ":", "visual");
-
   // Use gj/gk instead of j/k
   CodeMirror.Vim.map("j", "<Plug>(vim-binding-gj)", "normal");
   CodeMirror.Vim.map("k", "<Plug>(vim-binding-gk)", "normal");
