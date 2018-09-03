@@ -30,3 +30,6 @@ function touch {
 New-Alias open Invoke-Item
 New-Alias grep Select-String
 New-Alias which Get-Command
+
+# https://github.com/junegunn/fzf/issues/963
+$Env:TERM = ""
