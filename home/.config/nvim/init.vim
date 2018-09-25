@@ -408,6 +408,25 @@ autocmd MyAutoCmd BufWinLeave * if s:is_view_available() | silent mkview! | endi
 autocmd MyAutoCmd BufWinEnter * if s:is_view_available() | silent! loadview | endif
 " }}}
 
+" Delete view
+function! s:delete_view(bang) abort
+  if &modified && a:bang !=# '!'
+    echohl WarningMsg
+    echo 'Use bang to forcedly remove view file on modified buffer'
+    echohl None
+    return
+  endif
+  let path = substitute(expand('%:p:~'), '=', '==', 'g')
+  let path = substitute(path, '/', '=+', 'g') . '='
+  let path = printf('%s/%s', &viewdir, path)
+  if filewritable(path)
+    call delete(path)
+    silent edit! %
+    echo 'View file has removed: ' . path
+  endif
+endfunction
+command! -bang Delview call s:delete_view(<q-bang>)
+
 " Automatically create missing directories {{{
 function! s:auto_mkdir(dir, force) abort
   if empty(a:dir) || a:dir =~# '^\w\+://' || isdirectory(a:dir) || a:dir =~# '^suda:'

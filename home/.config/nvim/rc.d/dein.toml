@@ -644,14 +644,14 @@ execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/quickrun.vim'))
 repo = 'w0rp/ale'
 hook_add = '''
 let g:ale_linters = {
-      \ 'javascript': ['eslint', 'tslint'],
+      \ 'javascript': ['tslint'],
       \ 'typescript': ['tslint'],
       \}
 let g:ale_linter_aliases = {
       \ 'javascript': 'typescript',
       \}
 let g:ale_fixers = {
-      \ 'javascript': ['remove_trailing_lines', 'trim_whitespace', 'eslint', 'tslint'],
+      \ 'javascript': ['remove_trailing_lines', 'trim_whitespace', 'tslint'],
       \ 'typescript': ['remove_trailing_lines', 'trim_whitespace', 'tslint'],
       \}
 let g:ale_fix_on_save = 1
