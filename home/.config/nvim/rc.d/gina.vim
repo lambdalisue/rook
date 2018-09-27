@@ -76,6 +76,18 @@ call gina#custom#mapping#nmap(
       \ {'noremap': 1, 'silent': 1}
       \)
 
+call gina#custom#action#alias(
+      \ '/\%(blame\|log\|reflog\)',
+      \ 'changes',
+      \ 'topleft changes:of:preview',
+      \)
+call gina#custom#mapping#nmap(
+      \ '/\%(blame\|log\|reflog\)',
+      \ 'c',
+      \ ':<C-u>call gina#action#call(''changes'')<CR>',
+      \ {'noremap': 1, 'silent': 1}
+      \)
+
 call gina#custom#execute(
       \ '/\%(ls\|log\|reflog\|grep\)',
       \ 'setlocal noautoread',
@@ -84,13 +96,3 @@ call gina#custom#execute(
       \ '/\%(status\|branch\|ls\|log\|reflog\|grep\)',
       \ 'setlocal cursorline',
       \)
-
-" " Echo chunk info with j/k
-" call gina#custom#mapping#nmap(
-"      \ 'blame', 'j',
-"      \ 'j<Plug>(gina-blame-echo)'
-"      \)
-" call gina#custom#mapping#nmap(
-"      \ 'blame', 'k',
-"      \ 'k<Plug>(gina-blame-echo)'
-"      \)
