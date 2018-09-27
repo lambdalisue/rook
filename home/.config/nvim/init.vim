@@ -665,19 +665,22 @@ filetype indent plugin on
 silent! colorscheme slate
 silent! colorscheme iceberg
 
-highlight Normal ctermbg=NONE guibg=NONE
-highlight NonText ctermbg=NONE guibg=NONE
-highlight EndOfBuffer ctermbg=NONE guibg=NONE
-highlight Folded ctermbg=NONE guibg=NONE
-highlight LineNr ctermbg=NONE guibg=NONE
-highlight CursorLineNr ctermbg=NONE guibg=NONE
-highlight SpecialKey ctermbg=NONE guibg=NONE
-highlight ALEErrorSign ctermbg=NONE guibg=NONE
-highlight ALEWarningSign ctermbg=NONE guibg=NONE
-highlight GitGutterAdd ctermbg=NONE guibg=NONE
-highlight GitGutterChange ctermbg=NONE guibg=NONE
-highlight GitGutterChangeDelete ctermbg=NONE guibg=NONE
-highlight GitGutterDelete ctermbg=NONE guibg=NONE
+" Transparent background
+function! s:transparent() abort
+  highlight Normal ctermbg=NONE guibg=NONE
+  highlight NonText ctermbg=NONE guibg=NONE
+  highlight EndOfBuffer ctermbg=NONE guibg=NONE
+  highlight Folded ctermbg=NONE guibg=NONE
+  highlight LineNr ctermbg=NONE guibg=NONE
+  highlight CursorLineNr ctermbg=NONE guibg=NONE
+  highlight SpecialKey ctermbg=NONE guibg=NONE
+  highlight ALEErrorSign ctermbg=NONE guibg=NONE
+  highlight ALEWarningSign ctermbg=NONE guibg=NONE
+  highlight GitGutterAdd ctermbg=NONE guibg=NONE
+  highlight GitGutterChange ctermbg=NONE guibg=NONE
+  highlight GitGutterChangeDelete ctermbg=NONE guibg=NONE
+  highlight GitGutterDelete ctermbg=NONE guibg=NONE
+endfunction
 
 set secure
 " }}}
