@@ -665,6 +665,10 @@ filetype indent plugin on
 silent! colorscheme slate
 silent! colorscheme iceberg
 
+highlight Normal ctermbg=NONE guibg=NONE
+highlight NonText ctermbg=NONE guibg=NONE
+highlight EndOfBuffer ctermbg=NONE guibg=NONE
+
 set secure
 " }}}
 "-----------------------------------------------------------------------------
