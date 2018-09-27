@@ -187,7 +187,7 @@ repo = 'tyru/current-func-info.vim'
 [[plugins]]
 repo = 'rhysd/devdocs.vim'
 hook_add = '''
-nmap <C-k> <Plug>(devdocs-under-cursor)
+nmap <F1> <Plug>(devdocs-under-cursor)
 '''
 
 [[plugins]]
@@ -217,6 +217,7 @@ repo = 'lambdalisue/gina.vim'
 merged = 0
 hook_add = '''
 nnoremap <silent> <Leader>aa :<C-u>Gina status<CR>
+nnoremap <silent> <Leader>aA :<C-u>Gina changes HEAD<CR>
 nnoremap <silent> <Leader>ac :<C-u>Gina commit<CR>
 nnoremap <silent> <Leader>aC :<C-u>Gina commit --amend<CR>
 nnoremap <silent> <Leader>ab :<C-u>Gina branch -av<CR>
@@ -643,18 +644,9 @@ execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/quickrun.vim'))
 [[plugins]]
 repo = 'w0rp/ale'
 hook_add = '''
-let g:ale_linters = {
-      \ 'javascript': ['tslint'],
-      \ 'typescript': ['tslint'],
-      \}
-let g:ale_linter_aliases = {
-      \ 'javascript': 'typescript',
-      \}
-let g:ale_fixers = {
-      \ 'javascript': ['remove_trailing_lines', 'trim_whitespace', 'tslint'],
-      \ 'typescript': ['remove_trailing_lines', 'trim_whitespace', 'tslint'],
-      \}
 let g:ale_fix_on_save = 1
+nmap <C-k> <Plug>(ale_previous_wrap)
+nmap <C-j> <Plug>(ale_next_wrap)
 '''
 # }}}
 

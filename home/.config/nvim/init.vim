@@ -176,6 +176,7 @@ else
         \ '/bin/python3',
         \])
 endif
+" }}}
 
 " Language {{{
 
@@ -394,7 +395,7 @@ autocmd MyAutoCmd BufWinLeave * if s:is_view_available() | silent mkview! | endi
 autocmd MyAutoCmd BufWinEnter * if s:is_view_available() | silent! loadview | endif
 " }}}
 
-" Delete view
+" Delete view {{{
 function! s:delete_view(bang) abort
   if &modified && a:bang !=# '!'
     echohl WarningMsg
@@ -412,6 +413,7 @@ function! s:delete_view(bang) abort
   endif
 endfunction
 command! -bang Delview call s:delete_view(<q-bang>)
+" }}}
 
 " Automatically create missing directories {{{
 function! s:auto_mkdir(dir, force) abort
@@ -586,14 +588,6 @@ endfunction
 nnoremap <silent> <Plug>(my-toggle-locationlist)
       \ :<C-u>call <SID>toggle_ll()<CR>
 nmap L <Plug>(my-toggle-locationlist)
-" }}}
-
-" Open vimrc with <F1> {{{
-if has('nvim')
-    nnoremap <silent> <F1> :<C-u>e ~/.config/nvim/init.vim<CR>
-else
-    nnoremap <silent> <F1> :<C-u>e ~/.vim/vimrc<CR>
-endif
 " }}}
 
 " Source Vim script file with <Leader>ss {{{
