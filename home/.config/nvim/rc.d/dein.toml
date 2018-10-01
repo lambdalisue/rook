@@ -6,6 +6,10 @@ repo = 'Shougo/dein.vim'
 repo = 'lambdalisue/vim-protocol'
 
 [[plugins]]
+merged = 0
+repo = 'lambdalisue/trea.vim'
+
+[[plugins]]
 repo = 'kana/vim-altr'
 hook_add = '''
 nmap <C-a>n <Plug>(altr-forward)
@@ -14,8 +18,7 @@ nmap <C-a><C-n> <Plug>(altr-forward)
 nmap <C-a><C-p> <Plug>(altr-back)
 '''
 hook_post_source = '''
-call altr#define('src/%.vue', 'src/%.vue.ts', 'tests/unit/%.vue.test.js')
-call altr#define('src/%.ts', 'src/%.js', 'tests/unit/%.test.js', 'tests/unit/%.spec.js')
+execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/altr.vim'))
 '''
 
 [[plugins]]
@@ -323,10 +326,10 @@ function! s:configure_vimfiler() abort
   silent! nunmap <buffer> <Space>
   silent! nunmap <buffer> <S-Space>
   silent! vunmap <buffer> <Space>
-  nmap <buffer> J <Plug>(vimfiler_toggle_mark_current_line)
-  vmap <buffer> J <Plug>(vimfiler_toggle_mark_selected_lines)
-  nmap <buffer> K <Plug>(vimfiler_toggle_mark_current_line_up)
-  vmap <buffer> K <Plug>(vimfiler_toggle_mark_current_line_up)
+  nmap <buffer> <C-j> <Plug>(vimfiler_toggle_mark_current_line)
+  vmap <buffer> <C-j> <Plug>(vimfiler_toggle_mark_selected_lines)
+  nmap <buffer> <C-k> <Plug>(vimfiler_toggle_mark_current_line_up)
+  vmap <buffer> <C-k> <Plug>(vimfiler_toggle_mark_current_line_up)
   " ^^ to go parent directory
   nmap <buffer> ^^ <Plug>(vimfiler_switch_to_parent_directory)
   " X to execute on the directory
