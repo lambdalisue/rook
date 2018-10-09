@@ -668,6 +668,9 @@ let g:ale_fix_on_save = 1
 nmap <C-k> <Plug>(ale_previous_wrap)
 nmap <C-j> <Plug>(ale_next_wrap)
 '''
+hook_post_source = '''
+execute 'source' fnameescape(expand('$MYVIM_HOME/rc.d/ale.vim'))
+'''
 # }}}
 
 # Language client protocol {{{
