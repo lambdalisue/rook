@@ -18,6 +18,9 @@ call denite#custom#map('insert', '<C-d>', '<Del>')
 call denite#custom#map('insert', '<C-k>', '<denite:toggle_select_up>', 'noremap')
 call denite#custom#map('insert', '<C-j>', '<denite:toggle_select_down>', 'noremap')
 
+" Use regex matcher
+call denite#custom#map('insert', '<C-^>', '<denite:toggle_matchers:matcher/regexp>', 'noremap')
+
 " grep
 if executable('pt')
   " Use pt (the platinum searcher)
@@ -38,6 +41,7 @@ if executable('pt')
 endif
 
 call denite#custom#option('_', 'cursor_wrap', v:true)
+call denite#custom#source('_', 'matchers', ['matcher/substring'])
 
 function! s:build_filemenu(description, precursors) abort
   let candidates = []

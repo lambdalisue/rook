@@ -452,7 +452,7 @@ hook_post_source = '''
 function! s:silently_process_gitgutter() abort
   let bufnr = bufnr('%')
   if bufnr isnot# -1
-    silent call gitgutter#process_buffer(bufnr, 0)
+    silent! call gitgutter#process_buffer(bufnr, 0)
   endif
 endfunction
 
