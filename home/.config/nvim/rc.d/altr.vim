@@ -8,8 +8,8 @@ call altr#define(
       \ 'src/%/View.vue.ts',
       \ 'src/%/index.js',
       \ 'src/%/index.ts',
-      \ 'tests/unit/%s.test.js',
-      \ 'tests/unit/%s.vue.test.js',
-      \ 'tests/unit/%s/View.vue.test.js',
+      \ 'tests/unit/%.test.js',
+      \ 'tests/unit/%.vue.test.js',
+      \ 'tests/unit/%/View.vue.test.js',
       \)
 
