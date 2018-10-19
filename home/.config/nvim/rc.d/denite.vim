@@ -68,6 +68,7 @@ let s:menus.shortcut = s:build_filemenu('Shortcut menu:', [
       \ '$MYVIM_HOME/ginit.vim',
       \ '$MYVIM_HOME/vimrc.min',
       \ '$MYVIM_HOME/filetype.vim',
+      \ '$MYVIM_HOME/rc.d/ale.vim',
       \ '$MYVIM_HOME/rc.d/altr.vim',
       \ '$MYVIM_HOME/rc.d/lsp.vim',
       \ '$MYVIM_HOME/rc.d/gina.vim',
