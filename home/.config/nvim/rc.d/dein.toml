@@ -3,11 +3,18 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
+repo = 't9md/vim-choosewin'
+
+[[plugins]]
 repo = 'lambdalisue/vim-protocol'
 
 [[plugins]]
 merged = 0
 repo = 'lambdalisue/trea.vim'
+hook_add = '''
+nnoremap <silent> <Leader>EE :<C-u>call trea#drawer(getcwd())<CR>
+nnoremap <silent> <Leader>ee :<C-u>call trea#viewer()<CR>
+'''
 
 [[plugins]]
 repo = 'kana/vim-altr'
@@ -296,15 +303,15 @@ repo = 'Shougo/unite.vim'
 repo = 'Shougo/vimfiler.vim'
 depends = 'unite.vim'
 hook_add = '''
-let g:vimfiler_as_default_explorer = 1
+" let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_ignore_pattern = printf('\%%(%s\)', join([
       \ '^\..*',
       \ '\.pyc$',
       \ '^__pycache__$',
       \ '\.egg-info$',
       \], '\|'))
-nnoremap <silent> <Leader>ee :<C-u>call <SID>smart_vimfiler()<CR>
-nnoremap <silent> <Leader>EE :<C-u>VimFilerExplorer<CR>
+" nnoremap <silent> <Leader>ee :<C-u>call <SID>smart_vimfiler()<CR>
+" nnoremap <silent> <Leader>EE :<C-u>call VimFilerExplorer<CR>
 
 function! s:smart_vimfiler() abort
   let path = expand('%:p')
@@ -349,12 +356,12 @@ autocmd MyAutoCmd FileType vimfiler call s:configure_vimfiler()
 "   Somehow, &winfixwidth of a buffer opened from VimFilerExplorer is set to
 "   1 and thus <C-w>= or those kind of command doesn't work.
 "   This work around stands for fixing that.
-function! s:force_nofixwidth() abort
-  if &buftype =~# '^\%(\|nowrite\|acwrite\)$'
-    setlocal nowinfixwidth
-  endif
-endfunction
-autocmd MyAutoCmd BufWinEnter * call s:force_nofixwidth()
+" function! s:force_nofixwidth() abort
+"   if &buftype =~# '^\%(\|nowrite\|acwrite\)$'
+"     setlocal nowinfixwidth
+"   endif
+" endfunction
+" autocmd MyAutoCmd BufWinEnter * call s:force_nofixwidth()
 '''
 
 # [[plugins]]
