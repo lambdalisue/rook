@@ -12,11 +12,10 @@ let g:choosewin_overlay_enable = 1
 repo = 'lambdalisue/vim-protocol'
 
 [[plugins]]
-merged = 0
-repo = 'lambdalisue/trea.vim'
+repo = 'lambdalisue/fila.vim'
 hook_add = '''
-nnoremap <silent> <Leader>EE :<C-u>call trea#drawer(getcwd())<CR>
-nnoremap <silent> <Leader>ee :<C-u>call trea#viewer()<CR>
+nnoremap <silent> <Leader>EE :<C-u>FilaDrawer .<CR>
+nnoremap <silent> <Leader>ee :<C-u>Fila<CR>
 '''
 
 [[plugins]]
