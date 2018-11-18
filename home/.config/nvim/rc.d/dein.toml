@@ -16,6 +16,12 @@ repo = 'lambdalisue/fila.vim'
 hook_add = '''
 nnoremap <silent> <Leader>EE :<C-u>FilaDrawer .<CR>
 nnoremap <silent> <Leader>ee :<C-u>Fila<CR>
+
+function! s:fila_action_define() abort
+  nmap <buffer> <C-j> <Plug>(fila-action-mark-toggle)j
+  nmap <buffer> <C-k> <Plug>(fila-action-mark-toggle)k
+endfunction
+autocmd MyAutoCmd User FilaActionDefine call s:fila_action_define()
 '''
 
 [[plugins]]
