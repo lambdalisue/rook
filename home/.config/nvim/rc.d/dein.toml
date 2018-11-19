@@ -18,10 +18,10 @@ nnoremap <silent> <Leader>EE :<C-u>FilaDrawer .<CR>
 nnoremap <silent> <Leader>ee :<C-u>Fila<CR>
 
 function! s:fila_viewer_init() abort
-  nnoremap <buffer><expr> <Plug>(fila-custom-smart-enter) fila#drawer#is_drawer(win_getid())
+  nmap <buffer><expr> <Plug>(fila-custom-smart-enter) fila#drawer#is_drawer(win_getid())
         \ ? "\<Plug>(fila-action-enter-or-open)\<Plug>(fila-action-tcd)"
         \ : "\<Plug>(fila-action-enter-or-open)"
-  nnoremap <buffer><expr> <Plug>(fila-custom-smart-leave) fila#drawer#is_drawer(win_getid())
+  nmap <buffer><expr> <Plug>(fila-custom-smart-leave) fila#drawer#is_drawer(win_getid())
         \ ? "\<Plug>(fila-action-leave)\<Plug>(fila-action-tcd)"
         \ : "\<Plug>(fila-action-leave)"
 
