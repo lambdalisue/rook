@@ -385,14 +385,14 @@ autocmd MyAutoCmd BufReadPost *
 " }}}
 
 " Automatically restore 'view' {{{
-function! s:is_view_available() abort
-  if &buftype =~# '^\%(help\|nofile\|quickfix\|terminal\)$'
-    return 0
-  endif
-  return &buflisted && filereadable(expand('<afile>'))
-endfunction
-autocmd MyAutoCmd BufWinLeave * if s:is_view_available() | silent mkview! | endif
-autocmd MyAutoCmd BufWinEnter * if s:is_view_available() | silent! loadview | endif
+" function! s:is_view_available() abort
+"   if &buftype =~# '^\%(help\|nofile\|quickfix\|terminal\)$'
+"     return 0
+"   endif
+"   return &buflisted && filereadable(expand('<afile>'))
+" endfunction
+" autocmd MyAutoCmd BufWinLeave * if s:is_view_available() | silent mkview! | endif
+" autocmd MyAutoCmd BufWinEnter * if s:is_view_available() | silent! loadview | endif
 " }}}
 
 " Delete view {{{
