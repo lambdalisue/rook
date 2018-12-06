@@ -9,6 +9,10 @@ let g:choosewin_overlay_enable = 1
 '''
 
 [[plugins]]
+repo = 'lambdalisue/vim-amake'
+merge = 0
+
+[[plugins]]
 repo = 'lambdalisue/vim-protocol'
 
 [[plugins]]
@@ -790,16 +794,16 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
     \ }))
 '''
 
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete-file.vim'
-# hook_add = '''
-# au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-#     \ 'name': 'file',
-#     \ 'whitelist': ['*'],
-#     \ 'priority': 10,
-#     \ 'completor': function('asyncomplete#sources#file#completor')
-#     \ }))
-# '''
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete-file.vim'
+hook_add = '''
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+    \ 'name': 'file',
+    \ 'whitelist': ['*'],
+    \ 'priority': 10,
+    \ 'completor': function('asyncomplete#sources#file#completor')
+    \ }))
+'''
 
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete-gocode.vim'

@@ -681,7 +681,7 @@ function! s:transparent() abort
   highlight GitGutterChangeDelete ctermbg=NONE guibg=NONE
   highlight GitGutterDelete ctermbg=NONE guibg=NONE
 endfunction
-if !has('win32')
+if !has('gui_running')
   call s:transparent()
 endif
 
