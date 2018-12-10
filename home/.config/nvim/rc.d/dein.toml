@@ -13,6 +13,10 @@ repo = 'lambdalisue/vim-amake'
 merge = 0
 
 [[plugins]]
+repo = 'vim-vital/vital-core'
+merge = 0
+
+[[plugins]]
 repo = 'lambdalisue/vim-protocol'
 
 [[plugins]]
