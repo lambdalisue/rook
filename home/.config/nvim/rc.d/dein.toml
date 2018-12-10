@@ -731,6 +731,7 @@ augroup my-lsp
           \ 'cmd': { si -> [&shell, &shellcmdflag, 'typescript-language-server --stdio'] },
           \ 'root_uri': { si -> lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json')) },
           \ 'whitelist': ['javascript', 'typescript'],
+          \ 'priority': 5,
           \})
     autocmd FileType javascript call s:configure_lsp()
     autocmd FileType typescript call s:configure_lsp()
@@ -741,6 +742,7 @@ augroup my-lsp
           \ 'name': 'pyls',
           \ 'cmd': { si -> ['pyls'] },
           \ 'whitelist': ['python'],
+          \ 'priority': 5,
           \})
     autocmd FileType python call s:configure_lsp()
   endif
@@ -763,33 +765,14 @@ endfunction
 repo = 'prabirshrestha/async.vim'
 
 [[plugins]]
-repo = 'prabirshrestha/asyncomplete.vim'
-hook_add = '''
-let g:asyncomplete_remove_duplicates = 1
-let g:asyncomplete_auto_popup = 1
-imap <C-x><C-u> <Plug>(asyncomplete_force_refresh)
-'''
-
-[[plugins]]
 repo = 'prabirshrestha/asyncomplete-lsp.vim'
-
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete-buffer.vim'
-# hook_add = '''
-# au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-#     \ 'name': 'buffer',
-#     \ 'whitelist': ['*'],
-#     \ 'blacklist': ['go'],
-#     \ 'completor': function('asyncomplete#sources#buffer#completor'),
-#     \ }))
-# '''
 
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete-emoji.vim'
 hook_add = '''
 au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#emoji#get_source_options({
     \ 'name': 'emoji',
-    \ 'whitelist': ['*'],
+    \ 'whitelist': ['markdown', 'gitcommit', 'gina-commit'],
     \ 'completor': function('asyncomplete#sources#emoji#completor'),
     \ }))
 '''
@@ -815,19 +798,18 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
     \ 'config': {
     \    'gocode_path': expand('~/go/bin/gocode')
     \  },
+    \ 'priority': 10,
     \ }))
 '''
 
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete-omni.vim'
-# merged = false
-# hook_add = '''
-# au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
-#     \ 'name': 'omni',
-#     \ 'whitelist': ['*'],
-#     \ 'completor': function('asyncomplete#sources#omni#completor')
-#     \ }))
-# '''
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete.vim'
+hook_add = '''
+let g:asyncomplete_remove_duplicates = 1
+let g:asyncomplete_smart_completion = 1
+let g:asyncomplete_auto_popup = 1
+imap <C-x><C-u> <Plug>(asyncomplete_force_refresh)
+'''
 
 # }}}
 

@@ -37,7 +37,7 @@ let g:ale_fixers = {
       \   'isort',
       \   'remove_trailing_lines',
       \   'trim_whitespace',
-      \   'black',
+      \   'yapf',
       \ ],
       \ 'typescript': ['eslint', 'prettier', 'remove_trailing_lines', 'trim_whitespace'],
       \ 'javascript': ['eslint', 'prettier', 'remove_trailing_lines', 'trim_whitespace'],
