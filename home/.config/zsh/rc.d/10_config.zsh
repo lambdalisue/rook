@@ -211,3 +211,8 @@ if [[ -n "$SSH_CONNECTION" ]]; then
     export GPG_TTY=$(tty)
     export PINENTRY_USER_DATA="USE_CURSES=1"
 fi
+
+# Miniconda
+if [[ -f "/usr/local/miniconda3/etc/profile.d/conda.sh" ]]; then
+    source "/usr/local/miniconda3/etc/profile.d/conda.sh"
+fi
