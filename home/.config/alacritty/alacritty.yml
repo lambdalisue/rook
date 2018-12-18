@@ -496,6 +496,9 @@ key_bindings:
   - { key: F12,      mods: Command, chars: "\x1b[24;3~"                  }
   - { key: NumpadEnter,             chars: "\n"                          }
   - { key: Key6,     mods: Control, chars: "\x1e"                        }
+  # Support macOS Yen (JIS)
+  - { key: Yen,                     chars: "\\"                          } # \
+  - { key: Yen,      mods: Control, chars: "\x1c"                        } # Ctrl-\
   # Use Option as Alt
   # https://github.com/jwilm/alacritty/issues/62
   # - { key: A,         mods: Alt,       chars: "\x1ba"                       }
