@@ -1,6 +1,0 @@
-{
-    "Keymap": {
-        "C-t": "peco.SelectUp",
-        "C-g": "peco.SelectDown"
-    }
-}
